@@ -36,4 +36,7 @@ build/
 #.rvmrc
 
 .idea
+.DS_Store
+spec/configure_cloud.rb
+
 
