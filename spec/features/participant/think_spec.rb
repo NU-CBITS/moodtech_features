@@ -13,12 +13,6 @@ describe "Think", :type => :feature, :sauce => false do
 
   before(:each) do
     Capybara.default_driver = :selenium
-  end
-
-#tests
-
-  #Testing the #1-Identifying portion of the THINK tool
-  it "- identifying" do
     visit ENV['Base_URL']+ '/participants/sign_in'
     within("#new_participant") do
       fill_in 'participant_email', :with => ENV['Participant_Email']
@@ -26,11 +20,14 @@ describe "Think", :type => :feature, :sauce => false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+    visit ENV['Base_URL'] + '/navigator/contexts/THINK'
+    expect(page).to have_content 'Add a New Thought'
+  end
 
-    click_on 'THINK'
-    click_on 'THINK Home'
-    expect(page).to have_content 'Add a New Harmful Thought'
+#tests
 
+  #Testing the #1-Identifying portion of the THINK tool
+  it "- identifying" do
     click_on '#1 Identifying'
     expect(page).to have_content 'You are what you think...'
     click_on 'Continue'
@@ -62,18 +59,6 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing the #2-Patterns portion of the THINK tool
   it "- patterns" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'THINK'
-    click_on 'THINK Home'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
     click_on '#2 Patterns'
     expect(page).to have_content 'Thinking Patterns'
     click_on 'Continue'
@@ -117,18 +102,6 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing the #3-Reshape portion of the THINK tool
   it "- reshape" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'THINK'
-    click_on 'THINK Home'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
     click_on '#3 Reshape'
     expect(page).to have_content 'Challenging Harmful Thoughts'
     click_on 'Continue'
@@ -178,18 +151,6 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing the Add a New Thought portion of the THINK tool
   it "- add a new thought" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'THINK'
-    click_on 'THINK Home'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
     click_on 'Add a New Harmful Thought'
     expect(page).to have_content 'Add a New Harmful Thought'
     fill_in 'thought_content', :with => 'Testing add a new thought'
@@ -205,18 +166,6 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing the Cancel button in Add a New Thought
   it "- add a new thought, cancel" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'THINK'
-    click_on 'THINK Home'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
     click_on 'Add a New Harmful Thought'
     expect(page).to have_content 'Add a New Harmful Thought'
 
@@ -226,18 +175,6 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing the Thoughts portion of the THINK tool
   it "- check thoughts" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'THINK'
-    click_on 'THINK Home'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
     click_on 'Thoughts'
     expect(page).to have_content 'Harmful Thoughts'
     expect(page).to have_content 'Example thought 1'
@@ -245,18 +182,6 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing the skip functionality in the first slideshows of the first three portions of the THINK tool
   it "- skip functionality" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'THINK'
-    click_on 'THINK Home'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
     click_on '#1 Identifying'
     expect(page).to have_content 'You are what you think...'
     click_on 'Skip'
@@ -286,16 +211,8 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing navbar functionality specifically surrounding the THINK tool
   it "- navbar functionality" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
     click_on 'THINK'
-    click_on('THINK Home')
+    click_on 'THINK Home'
     expect(page).to have_content 'Add a New Harmful Thought'
 
     within("#navbar-collapse") do
@@ -324,18 +241,6 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing the THINK tool visualization
   it "- visualization" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'THINK'
-    click_on 'THINK Home'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
     if page.has_text?('Click a bubble for more info')
       find('.thoughtviz_text.viz-clickable', :text => 'Magnifying or Minimizing').click
       expect(page).to have_content 'Click a bubble for more info'

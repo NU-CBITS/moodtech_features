@@ -13,12 +13,6 @@ describe "Feel", :type => :feature, :sauce => false do
 
   before(:each) do
     Capybara.default_driver = :selenium
-  end
-
-#tests
-
-  #Testing Tracking Your Mood and Emotions in the FEEL to
-  it "- tracking your mood and emotions" do
     visit ENV['Base_URL']+ '/participants/sign_in'
     within("#new_participant") do
       fill_in 'participant_email', :with => ENV['Participant_Email']
@@ -26,11 +20,14 @@ describe "Feel", :type => :feature, :sauce => false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
-
-    click_on 'FEEL'
-    click_on 'FEEL Home'
+    visit ENV['Base_URL'] + '/navigator/contexts/FEEL'
     expect(page).to have_content 'Tracking Your Mood and Emotions'
+  end
 
+#tests
+
+  #Testing Tracking Your Mood and Emotions in the FEEL to
+  it "- tracking your mood and emotions" do
     click_on 'Tracking Your Mood and Emotions'
     expect(page).to have_content 'Rate your Mood'
     select '6', :from => 'mood[rating]'
@@ -55,18 +52,6 @@ describe "Feel", :type => :feature, :sauce => false do
 
   #Testing the View Your Recent Emotions portion of the FEEL to
   it "- view your recent emotions" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'FEEL'
-    click_on 'FEEL Home'
-    expect(page).to have_content 'Tracking Your Mood and Emotions'
-
     click_on 'View Your Recent Emotions'
     expect(page).to have_content 'Mood'
     click_on 'Continue'
@@ -75,14 +60,6 @@ describe "Feel", :type => :feature, :sauce => false do
 
   #Testing navbar functionality specifically surrounding the FEEL to
   it "- navbar functionality" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
     click_on 'FEEL'
     click_on 'Tracking Your Mood and Emotions'
     expect(page).to have_content 'Rate your Mood'

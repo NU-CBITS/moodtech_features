@@ -13,6 +13,15 @@ describe "Do", :type => :feature, :sauce => false do
 
   before(:each) do
     Capybara.default_driver = :selenium
+    visit ENV['Base_URL']+ '/participants/sign_in'
+    within("#new_participant") do
+      fill_in 'participant_email', :with => ENV['Participant_Email']
+      fill_in 'participant_password', :with => ENV['Participant_Password']
+    end
+    click_on 'Sign in'
+    expect(page).to have_content 'Signed in successfully'
+    visit ENV['Base_URL'] + '/navigator/contexts/DO'
+    expect(page).to have_content 'Add a New Activity'
   end
 
 #define methods for this spec file
@@ -24,17 +33,6 @@ describe "Do", :type => :feature, :sauce => false do
 
   #Testing the #1 Awareness portion of the DO tool
   it "- awareness" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'DO'
-    click_on 'DO Home'
-    expect(page).to have_content 'Plan a New Activity'
     click_on '#1 Awareness'
     expect(page).to have_content 'You are what you do'
 
@@ -102,17 +100,6 @@ describe "Do", :type => :feature, :sauce => false do
 
   #Testing that previously entered and completed wake period is not available
   it "- awareness, already entered wake period" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'DO'
-    click_on 'DO Home'
-    expect(page).to have_content 'Plan a New Activity'
     click_on '#1 Awareness'
     expect(page).to have_content 'You are what you do'
 
@@ -127,17 +114,6 @@ describe "Do", :type => :feature, :sauce => false do
   #this test passes because I do not select a time in the "future_time_picker_0" - this is likely going to be updated
   #I will update this test when that is completed
   it "- planning" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'DO'
-    click_on 'DO Home'
-    expect(page).to have_content 'Plan a New Activity'
     click_on '#2 Planning'
     expect(page).to have_content 'The last few times you were here...'
 
@@ -171,17 +147,6 @@ describe "Do", :type => :feature, :sauce => false do
 
   #Testing the #3-Reviewing section of the DO tool
   it "- reviewing" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'DO'
-    click_on 'DO Home'
-    expect(page).to have_content 'Plan a New Activity'
     click_on '#3 Reviewing'
     expect(page).to have_content 'Welcome back!'
     click_on 'Continue'
@@ -218,18 +183,6 @@ describe "Do", :type => :feature, :sauce => false do
 
   #Testing Plan a New Activity portion of the DO tool
   it "- plan a new activity" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'DO'
-    click_on 'DO Home'
-    expect(page).to have_content 'Plan a New Activity'
-
     click_on 'Plan a New Activity'
     expect(page).to have_content "But you don't have to start from scratch,"
     fill_in 'activity_activity_type_new_title', :with => 'New planned activity'
@@ -242,17 +195,6 @@ describe "Do", :type => :feature, :sauce => false do
 
   #Testing Your Activities portion of the DO tool
   it "- your activities" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'DO'
-    click_on 'DO Home'
-    expect(page).to have_content 'Plan a New Activity'
     click_on 'Your Activities'
     expect(page).to have_content 'Activities Overview'
     expect(page).to have_content 'Over the past week'
@@ -264,14 +206,6 @@ describe "Do", :type => :feature, :sauce => false do
 
   #Testing the navbar functionality specifically surrounding the DO tool
   it "- navbar functionality" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
     click_on 'DO'
     click_on '#1 Awareness'
     expect(page).to have_content 'You are what you do'
@@ -299,17 +233,6 @@ describe "Do", :type => :feature, :sauce => false do
 
   #Testing the skip functionality in the slideshow portions of the first three parts of the DO tool
   it "- skip functionality" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'DO'
-    click_on 'DO Home'
-    expect(page).to have_content 'Plan a New Activity'
     click_on '#1 Awareness'
     expect(page).to have_content 'You are what you do'
 
@@ -339,18 +262,6 @@ describe "Do", :type => :feature, :sauce => false do
 
   #Testing the DO tool visualization
   it "- visualization" do
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    click_on 'DO'
-    click_on 'DO Home'
-    expect(page).to have_content 'Plan a New Activity'
-
     if page.has_text?('Recent Past Activities')
       click_on 'Edit'
       expect(page).to have_content 'You said you were going to'

@@ -11,25 +11,23 @@ require_relative '../../../spec/configure_cloud'
 #to run on Sauce Labs comment this block out
   describe "Messages", :type => :feature, :sauce => false do
 
-    before(:each) do
-      Capybara.default_driver = :selenium
+  before(:each) do
+    Capybara.default_driver = :selenium
+    visit ENV['Base_URL']+ '/participants/sign_in'
+    within("#new_participant") do
+      fill_in 'participant_email', :with => ENV['Participant_Email']
+      fill_in 'participant_password', :with => ENV['Participant_Password']
     end
+    click_on 'Sign in'
+    expect(page).to have_content 'Signed in successfully'
+    visit ENV['Base_URL'] + '/navigator/contexts/MESSAGES'
+    expect(page).to have_content 'Inbox'
+  end
 
 #tests
 
     #Testing Compose a new message
     it "- compose new" do
-      visit ENV['Base_URL']+ '/participants/sign_in'
-      within("#new_participant") do
-        fill_in 'participant_email', :with => ENV['Participant_Email']
-        fill_in 'participant_password', :with => ENV['Participant_Password']
-      end
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
-
-      click_on 'MESSAGES'
-      expect(page).to have_content 'Inbox'
-
       click_on 'Compose'
       expect(page).to have_content 'To Your Coach'
 
@@ -44,16 +42,6 @@ require_relative '../../../spec/configure_cloud'
 
     #Testing reading a new message in inbox
     it "- read new" do
-      visit ENV['Base_URL']+ '/participants/sign_in'
-      within("#new_participant") do
-        fill_in 'participant_email', :with => ENV['Participant_Email']
-        fill_in 'participant_password', :with => ENV['Participant_Password']
-      end
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
-
-      click_on 'MESSAGES'
-      expect(page).to have_content 'Inbox'
       click_on 'Sent'
       expect(page).to have_content 'To: Coach'
 
@@ -63,17 +51,6 @@ require_relative '../../../spec/configure_cloud'
 
     #Testing the links provided by a Coach in the messages
     it "- accessing ALL links from a message in inbox" do
-      visit ENV['Base_URL']+ '/participants/sign_in'
-      within("#new_participant") do
-        fill_in 'participant_email', :with => ENV['Participant_Email']
-        fill_in 'participant_password', :with => ENV['Participant_Password']
-      end
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
-
-      click_on 'MESSAGES'
-      expect(page).to have_content 'Inbox'
-
       if page.has_text?('GO TO INTRO')
         click_on 'GO TO INTRO'
         expect(page).to have_content 'Introduction to ThinkFeelDo'
@@ -231,16 +208,6 @@ require_relative '../../../spec/configure_cloud'
 
     #Testing the reply functionality
     it "- reply" do
-      visit ENV['Base_URL']+ '/participants/sign_in'
-      within("#new_participant") do
-        fill_in 'participant_email', :with => ENV['Participant_Email']
-        fill_in 'participant_password', :with => ENV['Participant_Password']
-      end
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
-
-      click_on 'MESSAGES'
-      expect(page).to have_content 'Inbox'
       click_on 'GO TO INTRO'
       expect(page).to have_content 'Introduction to ThinkFeelDo'
 
@@ -256,16 +223,6 @@ require_relative '../../../spec/configure_cloud'
 
     #Testing composing a message from reading a message
     it "- compose while reading a message" do
-      visit ENV['Base_URL']+ '/participants/sign_in'
-      within("#new_participant") do
-        fill_in 'participant_email', :with => ENV['Participant_Email']
-        fill_in 'participant_password', :with => ENV['Participant_Password']
-      end
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
-
-      click_on 'MESSAGES'
-      expect(page).to have_content 'Inbox'
       click_on 'GO TO INTRO'
       expect(page).to have_content 'Introduction to ThinkFeelDo'
 
@@ -275,16 +232,6 @@ require_relative '../../../spec/configure_cloud'
 
     #Testing the cancel button in compose
     it "- cancel button" do
-      visit ENV['Base_URL']+ '/participants/sign_in'
-      within("#new_participant") do
-        fill_in 'participant_email', :with => ENV['Participant_Email']
-        fill_in 'participant_password', :with => ENV['Participant_Password']
-      end
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
-
-      click_on 'MESSAGES'
-      expect(page).to have_content 'Inbox'
       click_on 'Compose'
       expect(page).to have_content 'To Your Coach'
       click_on 'Cancel'
@@ -293,16 +240,6 @@ require_relative '../../../spec/configure_cloud'
 
     #Testing the return button in compose
     it "- return button" do
-      visit ENV['Base_URL']+ '/participants/sign_in'
-      within("#new_participant") do
-        fill_in 'participant_email', :with => ENV['Participant_Email']
-        fill_in 'participant_password', :with => ENV['Participant_Password']
-      end
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
-
-      click_on 'MESSAGES'
-      expect(page).to have_content 'Inbox'
       click_on 'Compose'
       expect(page).to have_content 'To Your Coach'
       click_on 'Return'
