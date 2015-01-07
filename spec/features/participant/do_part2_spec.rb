@@ -1,4 +1,4 @@
-#filename: alt_do_spec.rb
+#filename: do_part2_spec.rb
 
 #this file is to test the functionality of using the DO tool
 

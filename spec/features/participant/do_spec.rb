@@ -210,6 +210,10 @@ describe "Do", :type => :feature, :sauce => false do
     fill_in 'future_date_picker_0', :with => tomorrow.strftime('%d %b, %Y')
     choose_rating("pleasure_0", 4)
     choose_rating("accomplishment_0", 3)
+    click_on 'Continue'
+    page.accept_alert "Are you sure that you would like to make this activity public?"
+    expect(page).to have_content 'Activity saved'
+    expect(page).to have_content 'Add a New Activity'
   end
 
   #Testing Your Activities portion of the DO tool
