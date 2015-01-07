@@ -256,35 +256,35 @@ describe "Do", :type => :feature, :sauce => false do
     click_on 'DO Home'
     expect(page).to have_content 'Add a New Activity'
   end
-  #
-  # #Testing the skip functionality in the slideshow portions of the first three parts of the DO tool
-  # it "- skip functionality" do
-  #   click_on '#1 Awareness'
-  #   expect(page).to have_content 'You are what you do'
-  #
-  #   click_on 'Skip'
-  #   expect(page).to have_content "OK, let's talk about yesterday."
-  #
-  #   click_on 'DO'
-  #   click_on '#2 Planning'
-  #   expect(page).to have_content 'The last few times you were here...'
-  #
-  #   click_on 'Skip'
-  #   expect(page).to have_content 'We want you to plan one fun thing'
-  #
-  #   click_on 'DO'
-  #   click_on '#3 Reviewing'
-  #   expect(page).to have_content 'Welcome back!'
-  #
-  #   click_on 'Skip'
-  #
-  #   if page.has_text?('You said you were going to')
-  #     expect(page).to have_content 'You said you were going to'
-  #
-  #   else
-  #     expect(page).to have_content "It doesn't look like there are any activities for you to review at this time"
-  #   end
-  # end
+
+  #Testing the skip functionality in the slideshow portions of the first three parts of the DO tool
+  it "- skip functionality" do
+    click_on '#1 Awareness'
+    expect(page).to have_content 'This is just the beginning...'
+
+    click_on 'Skip'
+    expect(page).to have_content "OK, let's talk about yesterday."
+
+    click_on 'DO'
+    click_on '#2 Planning'
+    expect(page).to have_content 'The last few times you were here...'
+
+    click_on 'Skip'
+    expect(page).to have_content 'We want you to plan one fun thing'
+
+    click_on 'DO'
+    click_on '#3 Doing'
+    expect(page).to have_content 'Welcome back!'
+
+    click_on 'Skip'
+
+    if page.has_text?('You said you were going to')
+      expect(page).to have_content 'You said you were going to'
+
+    else
+      expect(page).to have_content "It doesn't look like there are any activities for you to review at this time"
+    end
+  end
 
   #Testing the DO tool visualization
   it "- visualization" do
