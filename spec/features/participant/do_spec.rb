@@ -96,12 +96,13 @@ describe "Do", :type => :feature, :sauce => false do
     click_on 'Continue'
     page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Activity saved'
+    expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
     click_on 'Continue'
     expect(page).to have_content 'Things you found fun.'
     click_on 'Continue'
     expect(page).to have_content "Things that make you feel like you've accomplished something."
     click_on 'Continue'
-    expect(page).to have_content 'Plan a New Activity'
+    expect(page).to have_content 'Add a New Activity'
   end
 
   #Testing that previously entered and completed wake period is not available
