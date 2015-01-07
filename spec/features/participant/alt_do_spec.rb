@@ -67,4 +67,10 @@ describe "Do", :type => :feature, :sauce => false do
     click_on 'Continue'
     expect(page).to have_content 'Your Activities'
   end
+
+  it "- visualization" do
+    expect(page).to have_content 'Recent Past Activities'
+    click_on 'Edit'
+    expect(page).to have_content 'You said you were going to'
+  end
 end
