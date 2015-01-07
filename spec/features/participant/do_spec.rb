@@ -45,21 +45,15 @@ describe "Do", :type => :feature, :sauce => false do
   #Testing the #1 Awareness portion of the DO tool
   it "- awareness" do
     click_on '#1 Awareness'
-    expect(page).to have_content 'You are what you do'
+    expect(page).to have_content 'This is just the beginning...'
 
     click_on 'Continue'
     expect(page).to have_content "OK, let's talk about yesterday."
-
-    if page.has_text?('Last Recorded Awake Period:')
-      click_on 'Complete'
-
-    else
-      yesterday=Date.today.prev_day
-      select yesterday.strftime('%a') + ' 7 AM', :from => 'awake_period_start_time'
-      select yesterday.strftime('%a') + ' 10 PM', :from => 'awake_period_end_time'
-      click_on 'Create'
-      expect(page).to have_content 'Awake Period saved'
-    end
+    yesterday=Date.today.prev_day
+    select yesterday.strftime('%a') + ' 7 AM', :from => 'awake_period_start_time'
+    select yesterday.strftime('%a') + ' 10 PM', :from => 'awake_period_end_time'
+    click_on 'Create'
+    expect(page).to have_content 'Awake Period saved'
 
     fill_in 'activity_type_0', :with => 'Get ready for work'
     choose_rating("pleasure_0", 6)
@@ -100,6 +94,7 @@ describe "Do", :type => :feature, :sauce => false do
     choose_rating("accomplishment_14", 3)
 
     click_on 'Continue'
+    page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Activity saved'
     click_on 'Continue'
     expect(page).to have_content 'Things you found fun.'
@@ -112,7 +107,7 @@ describe "Do", :type => :feature, :sauce => false do
   #Testing that previously entered and completed wake period is not available
   it "- awareness, already entered wake period" do
     click_on '#1 Awareness'
-    expect(page).to have_content 'You are what you do'
+    expect(page).to have_content 'This is just the beginning...'
 
     click_on 'Continue'
     expect(page).to have_content "OK, let's talk about yesterday."
