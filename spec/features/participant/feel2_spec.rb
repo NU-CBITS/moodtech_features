@@ -1,4 +1,4 @@
-#filename: feel_spec.rb
+#filename: feel2_spec.rb
 
 #this file is to test the functionality of using the FEEL to
 
@@ -10,13 +10,13 @@ require_relative '../../../spec/configure_cloud'
 #   before(:each) do
 #     visit ENV['Base_URL']+ '/participants/sign_in'
 #     within("#new_participant") do
-#       fill_in 'participant_email', :with => ENV['Participant_Email']
-#       fill_in 'participant_password', :with => ENV['Participant_Password']
+#       fill_in 'participant_email', :with => ENV['Alt_Participant_Email']
+#       fill_in 'participant_password', :with => ENV['Alt_Participant_Password']
 #     end
 #     click_on 'Sign in'
 #     expect(page).to have_content 'Signed in successfully'
 #     visit ENV['Base_URL'] + '/navigator/contexts/FEEL'
-#     expect(page).to have_content 'Tracking Your Mood and Emotions'
+#     expect(page).to have_content 'Tracking Your Mood & Emotions'
 #   end
 
 #to run on Sauce Labs comment this block out
@@ -26,20 +26,20 @@ describe "Feel", :type => :feature, :sauce => false do
     Capybara.default_driver = :selenium
     visit ENV['Base_URL']+ '/participants/sign_in'
     within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
+      fill_in 'participant_email', :with => ENV['Alt_Participant_Email']
+      fill_in 'participant_password', :with => ENV['Alt_Participant_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
     visit ENV['Base_URL'] + '/navigator/contexts/FEEL'
-    expect(page).to have_content 'Tracking Your Mood and Emotions'
+    expect(page).to have_content 'Tracking Your Mood & Emotions'
   end
 
 #tests
 
   #Testing Tracking Your Mood and Emotions in the FEEL to
   it "- tracking your mood and emotions" do
-    click_on 'Tracking Your Mood and Emotions'
+    click_on 'Tracking Your Mood & Emotions'
     expect(page).to have_content 'Rate your Mood'
     select '6', :from => 'mood[rating]'
     click_on 'Continue'
@@ -58,29 +58,30 @@ describe "Feel", :type => :feature, :sauce => false do
     expect(page).to have_content 'Emotional Rating saved'
     expect(page).to have_content 'Your Recent Emotions'
     click_on 'Continue'
-    expect(page).to have_content 'Tracking Your Mood and Emotions'
+    expect(page).to have_content 'Tracking Your Mood & Emotions'
   end
 
   #Testing the View Your Recent Emotions portion of the FEEL to
   it "- view your recent emotions" do
-    click_on 'View Your Recent Emotions'
+    click_on 'Your Recent Moods & Emotions'
     expect(page).to have_content 'Mood'
     click_on 'Continue'
-    expect(page).to have_content 'Tracking Your Mood and Emotions'
+    expect(page).to have_content 'Tracking Your Mood & Emotions'
   end
 
   #Testing navbar functionality specifically surrounding the FEEL to
   it "- navbar functionality" do
+    visit ENV['Base_URL'] + '/navigator/modules/86966983'
     click_on 'FEEL'
-    click_on 'Tracking Your Mood and Emotions'
-    expect(page).to have_content 'Rate your Mood'
-
-    click_on 'FEEL'
-    click_on 'View Your Recent Emotions'
+    click_on 'Your Recent Moods & Emotions'
     expect(page).to have_content 'Your Recent Emotions'
 
     click_on 'FEEL'
+    click_on 'Tracking Your Mood & Emotions'
+    expect(page).to have_content 'Rate your Mood'
+
+    click_on 'FEEL'
     click_on 'FEEL Home'
-    expect(page).to have_content 'Tracking Your Mood and Emotions'
+    expect(page).to have_content 'Tracking Your Mood & Emotions'
   end
 end
