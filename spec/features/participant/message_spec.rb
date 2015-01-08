@@ -40,13 +40,11 @@ require_relative '../../../spec/configure_cloud'
     #Testing Compose a new message
     it "- compose new" do
       click_on 'Compose'
-      expect(page).to have_content 'To Your Coach'
-
+      expect(page).to have_content 'To Your Moderator'
       within ("#new_message") do
         fill_in 'message_subject', :with => 'New message'
-        fill_in 'message_body', :with => 'This is a test message to my coach. Hello, Coach! How are you??'
+        fill_in 'message_body', :with => 'This is a test message to my moderator. Hello, Moderator! How are you??'
       end
-
       click_on 'Send'
       expect(page).to have_content 'Message saved'
     end
@@ -54,10 +52,9 @@ require_relative '../../../spec/configure_cloud'
     #Testing reading a new message in inbox
     it "- read new" do
       click_on 'Sent'
-      expect(page).to have_content 'To: Coach'
-
-      click_on 'I need some help with Planning an Activity'
-      expect(page).to have_content 'I forgot where this is.'
+      expect(page).to have_content 'To: TFD Moderator'
+      click_on 'I like this app'
+      expect(page).to have_content 'This app is really helpful!'
     end
 
     #Testing the links provided by a Coach in the messages

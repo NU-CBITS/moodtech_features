@@ -59,7 +59,7 @@ describe "Think", :type => :feature, :sauce => false do
     fill_in 'thought_content', :with => 'Testing negative thought'
 
     click_on 'Continue'
-    # page.accept_alert "Are you sure that you would like to make this activity public?"
+    page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'Just one more'
     fill_in 'thought_content', :with => 'Forced negative thought'
