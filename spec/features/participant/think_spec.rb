@@ -42,11 +42,9 @@ describe "Think", :type => :feature, :sauce => false do
     click_on '#1 Identifying'
     expect(page).to have_content 'You are what you think...'
     click_on 'Continue'
-    expect(page).to have_content 'Types of thoughts'
-    click_on 'Continue'
     expect(page).to have_content 'Helpful thoughts are...'
     click_on 'Continue'
-    expect(page).to have_content 'Harmful thoughts are...'
+    expect(page).to have_content 'Harmful thoughts are:'
     click_on 'Continue'
     expect(page).to have_content 'Some quick examples...'
 
@@ -55,59 +53,69 @@ describe "Think", :type => :feature, :sauce => false do
     fill_in 'thought_content', :with => 'Testing helpful thought'
 
     click_on 'Continue'
+    page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'Now list another harmful thought...'
     fill_in 'thought_content', :with => 'Testing negative thought'
 
-
     click_on 'Continue'
+    # page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'Just one more'
     fill_in 'thought_content', :with => 'Forced negative thought'
     click_on 'Continue'
+    page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Good work'
+    click_on 'Continue'
+    expect(page).to have_content 'Add a New Thought'
   end
 
   #Testing the #2-Patterns portion of the THINK tool
   it "- patterns" do
     click_on '#2 Patterns'
-    expect(page).to have_content 'Thinking Patterns'
+    expect(page).to have_content 'Like we said, you are what you think...'
     click_on 'Continue'
-    expect(page).to have_content 'Patterns of Harmful Thoughts'
+    expect(page).to have_content 'All-or-Nothing'
     click_on 'Continue'
-    expect(page).to have_content 'Examples of Patterns'
+    expect(page).to have_content 'Overgeneralization'
     click_on 'Continue'
-    expect(page).to have_content 'Your Turn'
-
+    expect(page).to have_content 'Mental Filter'
+    click_on 'Continue'
+    expect(page).to have_content 'Fortune Telling'
+    click_on 'Continue'
+    expect(page).to have_content 'Magnification or Catastrophizing'
+    click_on 'Continue'
+    expect(page).to have_content '\"Should\" Statements'
+    click_on 'Continue'
+    expect(page).to have_content 'Labeling and Mislabeling'
+    click_on 'Continue'
+    expect(page).to have_content 'Personalization'
+    click_on 'Continue'
+    expect(page).to have_content 'Helpful Thoughts'
+    expect(page).to have_content 'Last time you were here...'
     click_on 'Continue'
     expect(page).to have_content "Let's start by"
-
-    if page.has_text?("You haven't listed any negative thoughts")
+    select 'Personalization', :from => 'thought_pattern_id'
+    click_on 'Continue'
+    expect(page).to have_content 'Thought saved'
+    select 'Magnification or Catastrophizing', :from => 'thought_pattern_id'
+    click_on 'Continue'
+    expect(page).to have_content 'Testing helpful thought'
+    select 'Magnification or Catastrophizing', :from => 'thought_pattern_id'
+    click_on 'Continue'
+    expect(page).to have_content 'I am insignificant'
+    select 'Magnification or Catastrophizing', :from => 'thought_pattern_id'
+    click_on 'Continue'
+    expect(page).to have_content 'ARG!'
+    select 'Magnification or Catastrophizing', :from => 'thought_pattern_id'
+    click_on 'Continue'
+    expect(page).to have_content 'Thought saved'
+    if page.has_text?('Good work!')
+      expect(page).to have_content 'We know this can be challenging...'
       click_on 'Continue'
-
+      expect(page).to have_content 'Add a New Thought'
     else
-      select 'Personalization', :from => 'thought_pattern_id'
-      click_on 'Continue'
-    end
-
-    if page.has_content?("One thought you had:")
-      select 'Magnifying or Minimizing', :from => 'thought_pattern_id'
-      click_on 'Continue'
-
-    else
-
-      if page.has_content?("One thought you had:")
-        select 'Magnifying or Minimizing', :from => 'thought_pattern_id'
-        click_on 'Continue'
-        expect(page).to have_content 'Good work!'
-        click_on 'Continue'
-        expect(page).to have_content 'Add a New Harmful Thought'
-
-      else
-        expect(page).to have_content 'Good work!'
-        click_on 'Continue'
-        expect(page).to have_content 'Add a New Harmful Thought'
-      end
+      expect(page).to have_content 'Add a New Thought'
     end
   end
 
@@ -116,70 +124,68 @@ describe "Think", :type => :feature, :sauce => false do
     click_on '#3 Reshape'
     expect(page).to have_content 'Challenging Harmful Thoughts'
     click_on 'Continue'
-    if page.has_text?("You don't have any harmful thoughts that you've logged and haven't challenged.")
-      click_on 'THINK'
-      find(:xpath, ".//*[@id='navbar-collapse']/ul[1]/li[2]/ul/li[1]/a")
-      expect(page).to have_content 'Add a New Harmful Thought'
-    else
-      expect(page).to have_content 'You said you had the following unhelpful thoughts:'
-      click_on 'Continue'
-      expect(page).to have_content 'Challenging a thought means'
-      click_on 'Continue'
-      expect(page).to have_content 'You said that you thought...'
-
-      click_on 'Continue'
-      expect(page).to have_content 'Come up with a challenging'
-      fill_in 'thought[challenging_thought]', :with => 'Example challenge'
-
-      click_on 'Continue'
-      expect(page).to have_content 'Thought saved'
-      expect(page).to have_content 'Because what you THINK, FEEL, Do'
-
-      click_on 'Continue'
-      expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
-      fill_in 'thought_act_as_if', :with => 'Example act-as-if'
-
-      click_on 'Continue'
-      expect(page).to have_content 'Thought saved'
-      expect(page).to have_content 'You said that you thought...'
-
-      click_on 'Continue'
-      expect(page).to have_content 'Come up with a challenging'
-      fill_in 'thought[challenging_thought]', :with => 'Example challenge'
-
-      click_on 'Continue'
-      expect(page).to have_content 'Thought saved'
-      expect(page).to have_content 'Because what you THINK, FEEL, Do'
-
-      click_on 'Continue'
-      expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
-      fill_in 'thought_act_as_if', :with => 'Example act-as-if'
-
-      click_on 'Continue'
-      expect(page).to have_content 'Thought saved'
-    end
+    expect(page).to have_content 'You said you had the following unhelpful thoughts:'
+    click_on 'Continue'
+    expect(page).to have_content 'Challenging a thought means'
+    click_on 'Continue'
+    expect(page).to have_content 'You said that you thought...'
+    click_on 'Continue'
+    expect(page).to have_content 'Come up with a challenging'
+    fill_in 'thought[challenging_thought]', :with => 'Example challenge'
+    click_on 'Continue'
+    expect(page).to have_content 'Thought saved'
+    expect(page).to have_content 'Because what you THINK, FEEL, Do'
+    click_on 'Continue'
+    expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
+    fill_in 'thought_act_as_if', :with => 'Example act-as-if'
+    click_on 'Continue'
+    expect(page).to have_content 'Thought saved'
+    expect(page).to have_content 'You said that you thought...'
+    click_on 'Continue'
+    expect(page).to have_content 'Come up with a challenging'
+    fill_in 'thought[challenging_thought]', :with => 'Example challenge'
+    click_on 'Continue'
+    expect(page).to have_content 'Thought saved'
+    expect(page).to have_content 'Because what you THINK, FEEL, Do'
+    click_on 'Continue'
+    expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
+    fill_in 'thought_act_as_if', :with => 'Example act-as-if'
+    click_on 'Continue'
+    expect(page).to have_content 'Thought saved'
+    expect(page).to have_content 'You said that you thought...'
+    click_on 'Continue'
+    expect(page).to have_content 'Come up with a challenging'
+    fill_in 'thought[challenging_thought]', :with => 'Example challenge'
+    click_on 'Continue'
+    expect(page).to have_content 'Thought saved'
+    expect(page).to have_content 'Because what you THINK, FEEL, Do'
+    click_on 'Continue'
+    expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
+    fill_in 'thought_act_as_if', :with => 'Example act-as-if'
+    click_on 'Continue'
+    expect(page).to have_content 'Thought saved'
+    expect(page).to have_content 'Add a New Thought'
   end
 
   #Testing the Add a New Thought portion of the THINK tool
   it "- add a new thought" do
-    click_on 'Add a New Harmful Thought'
+    click_on 'Add a New Thought'
     expect(page).to have_content 'Add a New Harmful Thought'
     fill_in 'thought_content', :with => 'Testing add a new thought'
-    select 'Magnifying or Minimizing', :from => 'thought_pattern_id'
+    select 'Magnification or Catastrophizing', :from => 'thought_pattern_id'
     fill_in 'thought_challenging_thought', :with => 'Testing challenge thought'
     fill_in 'thought_act_as_if', :with => 'Testing act-as-if action'
-
     click_on 'Continue'
+    page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Thought saved'
     click_on 'Continue'
-    expect(page).to have_content 'Add a New Harmful Thought'
+    expect(page).to have_content 'Add a New Thought'
   end
 
   #Testing the Cancel button in Add a New Thought
   it "- add a new thought, cancel" do
-    click_on 'Add a New Harmful Thought'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
+    click_on 'Add a New Thought'
+    expect(page).to have_content 'Add a New Thought'
     click_on 'Cancel'
     expect(page).to have_content '#1 Identifying'
   end
@@ -188,7 +194,7 @@ describe "Think", :type => :feature, :sauce => false do
   it "- check thoughts" do
     click_on 'Thoughts'
     expect(page).to have_content 'Harmful Thoughts'
-    expect(page).to have_content 'Example thought 1'
+    expect(page).to have_content 'I am insignificant'
   end
 
   #Testing the skip functionality in the first slideshows of the first three portions of the THINK tool
@@ -197,24 +203,17 @@ describe "Think", :type => :feature, :sauce => false do
     expect(page).to have_content 'You are what you think...'
     click_on 'Skip'
     expect(page).to have_content 'Now, your turn...'
-
     click_on 'THINK'
-    click_on 'THINK Home'
     click_on '#2 Patterns'
-    expect(page).to have_content 'Thinking Patterns'
+    expect(page).to have_content 'Like we said, you are what you think... '
     click_on 'Skip'
-    expect(page).to have_content "Let's start by figuring out which thought patterns the harmful thoughts you
-    identified might match."
-
+    expect(page).to have_content 'All-or-Nothing'
     click_on 'THINK'
-    click_on 'THINK Home'
     click_on '#3 Reshape'
     expect(page).to have_content 'Challenging Harmful Thoughts'
     click_on 'Skip'
-
     if page.has_text?('You said you had')
       expect(page).to have_content "In case you've forgotten"
-
     else
       expect(page).to have_content "You don't have"
     end
@@ -222,28 +221,19 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing navbar functionality specifically surrounding the THINK tool
   it "- navbar functionality" do
-    click_on 'THINK'
-    click_on 'THINK Home'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
-    within("#navbar-collapse") do
-      click_on 'THINK'
-      click_on '#1 Identifying'
-    end
-    expect(page).to have_content 'You are what you think...'
-
+    visit ENV['Base_URL'] + '/navigator/modules/954850709'
     click_on 'THINK'
     click_on '#2 Patterns'
-    expect(page).to have_content 'Thinking Patterns'
-
+    expect(page).to have_content 'Like we said, you are what you think...'
+    click_on 'THINK'
+    click_on '#1 Identifying'
+    expect(page).to have_content 'You are what you think...'
     click_on 'THINK'
     click_on '#3 Reshape'
     expect(page).to have_content 'Challenging Harmful Thoughts'
-
     click_on 'THINK'
-    click_on 'Add a New Harmful Thought'
+    click_on 'Add a New Thought'
     expect(page).to have_content 'Add a New Harmful Thought'
-
     click_on 'THINK'
     click_on 'Thoughts'
     expect(page).to have_content 'Harmful Thoughts'
@@ -252,19 +242,12 @@ describe "Think", :type => :feature, :sauce => false do
 
   #Testing the THINK tool visualization
   it "- visualization" do
-    if page.has_text?('Click a bubble for more info')
-      find('.thoughtviz_text.viz-clickable', :text => 'Magnifying or Minimizing').click
-      expect(page).to have_content 'Click a bubble for more info'
-
-      find('.thoughtviz_text.viz-clickable', :text => 'Magnifying or Minimizing').click
-      expect(page).to have_content "Some Thoughts You've Entered"
-      expect(page).to have_content 'Example thought 1'
-
-      click_on 'Close'
-      expect(page).to have_content 'Click a bubble for more info'
-
-    else
-      expect(page).to have_content 'Thoughts'
-    end
+    find('.thoughtviz_text.viz-clickable', :text => 'Magnification or Catastro...').click
+    expect(page).to have_content 'Click a bubble for more info'
+    find('.thoughtviz_text.viz-clickable', :text => 'Magnification or Catastro...').click
+    expect(page).to have_content "Some Thoughts You've Entered"
+    expect(page).to have_content 'I am insignificant'
+    click_on 'Close'
+    expect(page).to have_content 'Click a bubble for more info'
   end
 end
