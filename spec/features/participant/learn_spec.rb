@@ -16,7 +16,7 @@ require_relative '../../../spec/configure_cloud'
 #     end
 #     click_on 'Sign in'
 #     expect(page).to have_content 'Signed in successfully'
-#     visit ENV['Base_URL'] + 'navigator/contexts/LEARN'
+#     visit ENV['Base_URL'] + '/navigator/contexts/LEARN'
 #     expect(page).to have_content 'You have read'
 #   end
 
@@ -32,33 +32,16 @@ describe "Learn", :type => :feature, :sauce => false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
-    visit ENV['Base_URL'] + 'navigator/contexts/LEARN'
+    visit ENV['Base_URL'] + '/navigator/contexts/LEARN'
     expect(page).to have_content 'You have read'
   end
 
 #tests
   it "- read Lesson 1" do
-    click_on 'Think, Feel, Do Your Way Out of Depression'
-    expect(page).to have_content 'Welcome to ThinkFeelDo!'
+    expect(page).to have_content 'You have read 0 lessons out of 1.'
+    click_on 'Do - Awareness Introduction'
+    expect(page).to have_content 'This is just the beginning...'
     click_on 'Continue'
-    expect(page).to have_content 'Why should I use ThinkFeelDo?'
-    click_on 'Continue'
-    expect(page).to have_content 'Am I just having a bad day?'
-    click_on 'Continue'
-    expect(page).to have_content 'Depression is treatable'
-    click_on 'Continue'
-    expect(page).to have_content 'How does ThinkFeelDo work?'
-    click_on 'Continue'
-    expect(page).to have_content 'Doing less, or doing things that are not enjoyable'
-    click_on 'Continue'
-    expect(page).to have_content 'Negative thoughts tend to make you disengage'
-    click_on 'Continue'
-    expect(page).to have_content 'What to expect from the ThinkFeelDo site'
-    click_on 'Continue'
-    expect(page).to have_content 'Getting Started'
-    click_on 'Continue'
-    expect(page).to have_content 'Wrapping Up'
-    click_on 'Continue'
-    expect(page).to have_content 'You have read'
+    expect(page).to have_content 'You have read 1 lesson out of 1.'
   end
 end
