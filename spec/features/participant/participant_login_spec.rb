@@ -38,7 +38,10 @@ describe "Login", :type => :feature, :sauce => false do
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    find(:xpath, 'html/body/div[1]/div[1]/div/nav/div/div[2]/ul[2]/li/a').click
+    within ".navbar-collapse" do
+      click_on 'participant1'
+      click_on 'Sign Out'
+    end
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
@@ -61,7 +64,7 @@ describe "Login", :type => :feature, :sauce => false do
       fill_in 'participant_password', :with => ENV['Old_Participant_Password']
     end
     click_on 'Sign in'
-    expect(page).to have_content 'You need to sign in or sign up before continuing'
+    expect(page).to have_content "We're sorry, but you can't sign in yet because you are not assigned to a group"
   end
 
   #Testing redirect to login screen
@@ -74,19 +77,7 @@ describe "Login", :type => :feature, :sauce => false do
   it "- not logged in, intro slideshow" do
     visit ENV['Base_URL']+ '/participants/sign_in'
     click_on 'Introduction to ThinkFeelDo'
-    expect(page).to have_content 'Welcome to ThinkFeelDo'
-    click_on 'Continue'
-    expect(page).to have_content 'How to Maximize Your Benefit from ThinkFeelDo'
-    click_on 'Continue'
-    expect(page).to have_content 'What Should I Do When I Log in?'
-    click_on 'Continue'
-    expect(page).to have_content "How Do I Know What's New on the Site?"
-    click_on 'Continue'
-    expect(page).to have_content 'What Should I Expect?'
-    click_on 'Continue'
-    expect(page).to have_content 'What Might Get in the Way?'
-    click_on 'Continue'
-    expect(page).to have_content 'Get Started'
+    expect(page).to have_content 'Welcome to ThiFeDo'
     click_on 'Done'
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
