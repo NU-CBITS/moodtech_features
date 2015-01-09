@@ -52,10 +52,15 @@ describe "Do", :type => :feature, :sauce => false do
     expect(page).to have_content 'Last Recorded Awake Period:'
     click_on 'Complete'
     expect(page).to have_content 'Review Your Day'
-
     fill_in 'activity_type_0', :with => 'Get ready for work'
     choose_rating("pleasure_0", 6)
     choose_rating("accomplishment_0", 7)
+    fill_in 'activity_type_1', :with => 'Travel to work'
+    choose_rating("pleasure_1", 2)
+    choose_rating("accomplishment_1", 3)
+    fill_in 'activity_type_2', :with => 'Work'
+    choose_rating("pleasure_2", 8)
+    choose_rating("accomplishment_2", 9)
     click_on 'Continue'
     page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Activity saved'

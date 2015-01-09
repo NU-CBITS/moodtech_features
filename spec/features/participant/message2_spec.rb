@@ -10,8 +10,8 @@ require_relative '../../../spec/configure_cloud'
 #   before(:each) do
 #     visit ENV['Base_URL']+ '/participants/sign_in'
 #     within("#new_participant") do
-#       fill_in 'participant_email', :with => ENV['Participant_3_Email']
-#       fill_in 'participant_password', :with => ENV['Participant_3_Password']
+#       fill_in 'participant_email', :with => ENV['Alt_Participant_Email']
+#       fill_in 'participant_password', :with => ENV['Alt_Participant_Password']
 #     end
 #     click_on 'Sign in'
 #     expect(page).to have_content 'Signed in successfully'
@@ -26,8 +26,8 @@ describe "Messages", :type => :feature, :sauce => false do
     Capybara.default_driver = :selenium
     visit ENV['Base_URL']+ '/participants/sign_in'
     within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_3_Email']
-      fill_in 'participant_password', :with => ENV['Participant_3_Password']
+      fill_in 'participant_email', :with => ENV['Alt_Participant_Email']
+      fill_in 'participant_password', :with => ENV['Alt_Participant_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
