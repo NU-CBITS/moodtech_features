@@ -1,4 +1,4 @@
-#filename: tfd_so_loader.rb
+#filename: Rakefile
 
 desc "Setting database and starting think_feel_do_so for testing locally"
 
