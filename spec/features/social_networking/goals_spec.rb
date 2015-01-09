@@ -46,5 +46,11 @@ describe "Goals", :type => :feature, :sauce => false do
     click_on 'Save'
     expect(page).to have_content '+ add a goal'
     expect(page).to have_content 'eat a whole pizza'
+    visit ENV['Base_URL']
+    expect(page).to have_content 'created a Goal: eat a whole pizza'
+    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335043"]/div[2]/button[5]/i').click
+    today =  Date.today
+    end_of_study = today + 4
+    expect(page).to have_content 'due ' + end_of_study.strftime('%b. %e, %Y') + ' at 12:00AM'
   end
 end
