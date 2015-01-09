@@ -15,8 +15,7 @@ require_relative '../../../spec/configure_cloud'
 #     end
 #     click_on 'Sign in'
 #     expect(page).to have_content 'Signed in successfully'
-#     visit ENV['Base_URL'] + '/navigator/contexts/MESSAGES'
-#     expect(page).to have_content 'Inbox'
+#     expect(page).to have_content "What's on your mind?"
 #   end
 
 #to run on Sauce Labs comment this block out
