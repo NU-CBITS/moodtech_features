@@ -56,4 +56,8 @@ describe "Nudges", :type => :feature, :sauce => false do
       expect(page).to have_content 'clinician1@example.com nudged you!'
     end
   end
+
+  it "- expect to see nudge on landing page" do
+    expect(page).to have_content 'nudged participant1'
+  end
 end
