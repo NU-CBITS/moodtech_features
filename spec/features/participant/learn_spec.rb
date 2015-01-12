@@ -43,5 +43,8 @@ describe "Learn", :type => :feature, :sauce => false do
     expect(page).to have_content 'This is just the beginning...'
     click_on 'Continue'
     expect(page).to have_content 'You have read 1 lesson out of 1.'
+    expect(page).to have_css '.label.label-success'
+    visit ENV['Base_URL']
+    expect(page).to have_content 'read a Lesson: Do - Awareness Introduction'
   end
 end

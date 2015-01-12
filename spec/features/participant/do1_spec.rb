@@ -189,7 +189,6 @@ describe "Do", :type => :feature, :sauce => false do
     click_on 'Continue'
     expect(page).to have_content "Let's do this..."
     click_on 'Continue'
-
     page.has_text?('You said you were going to')
     find(:xpath, "(/html/body/div[1]/div[1]/div/div[2]/form[1]/div[2]/label[1])").click
     select '7', :from => 'activity[actual_pleasure_intensity]'
@@ -198,6 +197,10 @@ describe "Do", :type => :feature, :sauce => false do
     page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Activity saved'
     expect(page).to have_content 'Add a New Activity'
+    visit ENV['Base-URL']
+    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335043"]/div[2]/button[5]/i').click
+    expect(page).to have_content 'actual accomplishment: 5'
+    expect(page).to have_content 'actual pleasure: 7'
   end
 
   #Testing Plan a New Activity portion of the DO tool
