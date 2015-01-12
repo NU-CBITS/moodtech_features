@@ -53,4 +53,28 @@ describe "Goals", :type => :feature, :sauce => false do
     end_of_study = today + 4
     expect(page).to have_content 'due ' + end_of_study.strftime('%b. %e, %Y') + ' at 12:00AM'
   end
+
+  it "- complete a goal" do
+    find(:xpath, '//*[@id="goal-809335042"]/div/button[1]/span/i').click
+    click_on 'Completed'
+    expect(page).to_not have_content 'p1 gamma'
+    expect(page).to have_content 'p1 alpha'
+  end
+
+  it "- delete a goal" do
+    find(:xpath, '//*[@id="goal-614371357"]/div/button[3]/i').click
+    expect(page).to_not have_content 'p1 gamma'
+    click_on 'Deleted'
+    expect(page).to_not have_content 'p1 alpha'
+    expect(page).to have_content 'p1 gamma'
+  end
+
+  it "- reinstate a previously deleted goal" do
+    click_on 'Deleted'
+    expect(page).to have_content 'p1 delta'
+    find(:xpath, '//*[@id="goal-916373174"]/div/button/i').click
+    expect(page).to_not have_content 'p1 delta'
+    click_on 'All'
+    expect(page).to have_content 'p1 delta'
+  end
 end
