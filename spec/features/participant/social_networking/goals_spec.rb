@@ -2,8 +2,8 @@
 
 #this file is to test the messaging functionality
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
+require_relative '../../../../spec/spec_helper'
+require_relative '../../../../spec/configure_cloud'
 
 #to run locally comment this block out
 # describe "Goals", :type => :feature, :sauce => true do
@@ -48,7 +48,7 @@ describe "Goals", :type => :feature, :sauce => false do
     expect(page).to have_content 'eat a whole pizza'
     visit ENV['Base_URL']
     expect(page).to have_content 'created a Goal: eat a whole pizza'
-    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335043"]/div[2]/button[5]/i').click
+    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335066"]/div[2]/button[5]/i').click
     today =  Date.today
     end_of_study = today + 4
     expect(page).to have_content 'due ' + end_of_study.strftime('%b. %e, %Y') + ' at 12:00AM'

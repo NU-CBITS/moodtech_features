@@ -2,8 +2,8 @@
 
 #this file is to test the messaging functionality
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
+require_relative '../../../../spec/spec_helper'
+require_relative '../../../../spec/configure_cloud'
 
 #to run locally comment this block out
 # describe "Social Networking landing page", :type => :feature, :sauce => true do
@@ -61,8 +61,8 @@ describe "Social Networking landing page", :type => :feature, :sauce => false do
   end
 
   it '- select link in TODO list' do
-    click_on 'LEARN: Do - Awareness Introduction'
-    expect(page).to have_content 'This is just the beginning...'
+    click_on 'FEEL: Your Recent Moods & Emotions'
+    expect(page).to have_content 'Your Recent Emotions'
   end
 
   it '- view another participants profile' do

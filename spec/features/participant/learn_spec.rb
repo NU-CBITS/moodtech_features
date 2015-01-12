@@ -33,16 +33,15 @@ describe "Learn", :type => :feature, :sauce => false do
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
     visit ENV['Base_URL'] + '/navigator/contexts/LEARN'
-    expect(page).to have_content 'You have read'
+    expect(page).to have_content 'Lessons'
   end
 
 #tests
   it "- read Lesson 1" do
-    expect(page).to have_content 'You have read 0 lessons out of 1.'
+    expect(page).to have_content 'Week 1'
     click_on 'Do - Awareness Introduction'
     expect(page).to have_content 'This is just the beginning...'
     click_on 'Continue'
-    expect(page).to have_content 'You have read 1 lesson out of 1.'
     expect(page).to have_css '.label.label-success'
     visit ENV['Base_URL']
     expect(page).to have_content 'read a Lesson: Do - Awareness Introduction'

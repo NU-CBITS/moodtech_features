@@ -2,8 +2,8 @@
 
 #this file is to test the messaging functionality
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
+require_relative '../../../../spec/spec_helper'
+require_relative '../../../../spec/configure_cloud'
 
 #to run locally comment this block out
 # describe "Nudges", :type => :feature, :sauce => true do

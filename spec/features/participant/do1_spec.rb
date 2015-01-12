@@ -125,8 +125,8 @@ describe "Do", :type => :feature, :sauce => false do
     click_on 'Continue'
     expect(page).to have_content "OK, let's talk about yesterday."
     today=Date.today
-    select today.strftime('%a') + ' 3 AM', :from => 'awake_period_start_time'
-    select today.strftime('%a') + ' 4 AM', :from => 'awake_period_end_time'
+    select today.strftime('%a') + ' 2 AM', :from => 'awake_period_start_time'
+    select today.strftime('%a') + ' 3 AM', :from => 'awake_period_end_time'
     click_on 'Create'
     expect(page).to have_content 'Awake Period saved'
 
@@ -198,7 +198,7 @@ describe "Do", :type => :feature, :sauce => false do
     expect(page).to have_content 'Activity saved'
     expect(page).to have_content 'Add a New Activity'
     visit ENV['Base-URL']
-    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335043"]/div[2]/button[5]/i').click
+    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335061"]/div[2]/button[5]/i').click
     expect(page).to have_content 'actual accomplishment: 5'
     expect(page).to have_content 'actual pleasure: 7'
   end
