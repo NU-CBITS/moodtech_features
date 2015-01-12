@@ -59,6 +59,8 @@ describe "Goals", :type => :feature, :sauce => false do
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
     expect(page).to have_content 'p1 alpha'
+    visit ENV['Base_URL']
+    expect(page).to have_content 'completed a Goal: p1 alpha'
   end
 
   it "- delete a goal" do
