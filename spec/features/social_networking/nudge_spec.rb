@@ -5,7 +5,7 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-#to run locally comment this line out
+#to run locally comment this block out
 # describe "Nudges", :type => :feature, :sauce => true do
 #   before(:each) do
 #     visit ENV['Base_URL']+ '/participants/sign_in'
