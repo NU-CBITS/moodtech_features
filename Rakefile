@@ -18,6 +18,7 @@ end
 desc "Setting test database for testing on staging"
 
 task :load_tfdso_test do
+  system( "export Base_URL=https://moodtech-staging.cbits.northwestern.edu" )
   Dir.chdir('User/Chris/Work/think_feel_do_so') do
     system( "cap staging deploy:use_test_db" )
     system( "cap staging deploy:clean_db" )
