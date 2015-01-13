@@ -36,44 +36,43 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
 #tests
   #Testing inbox
   it "- inbox" do
-    click_on 'This message is a test to my coach'
-    expect(page).to have_content 'This message is for testing the inbox functionality on the coach dashboard.'
+    click_on 'I like this app'
+    expect(page).to have_content 'From TFD-1111'
+    expect(page).to have_content 'This app is really helpful!'
   end
 
   #Testing reply
   it "- reply" do
-    click_on 'This message is a test to my coach'
-    expect(page).to have_content 'This message is for testing the inbox functionality on the coach dashboard.'
+    click_on 'I like this app'
+    expect(page).to have_content 'This app is really helpful!'
     click_on 'Reply'
-    expect(page).to have_content 'To You'
     fill_in 'message_body', :with => 'This message is to test the reply functionality'
     click_on 'Send'
     expect(page).to have_content 'Message saved'
     expect(page).to have_content 'Inbox'
     expect(page).to have_content 'Sent'
     expect(page).to have_content 'Compose'
-    expect(page).to have_content 'This message is a test to my coach'
+    expect(page).to have_content 'I like this app'
   end
 
   #Testing sent box
   it "- sent box" do
     click_on 'Sent'
-    expect(page).to have_content 'Testing sent message'
-    click_on 'Testing sent message'
-    expect(page).to have_content 'From You'
-    expect(page).to have_content 'This message is to a participant for testing the sent box functionality.'
+    expect(page).to have_content 'Try out the LEARN tool'
+    click_on 'Try out the LEARN tool'
+    expect(page).to have_content 'I think you will find it helpful.'
     click_on 'Messages'
     expect(page).to have_content 'Inbox'
     expect(page).to have_content 'Sent'
     expect(page).to have_content 'Compose'
-    expect(page).to have_content 'This message is a test to my coach'
+    expect(page).to have_content 'I like this app'
   end
 
   #Testing compose
   it "- compose" do
     click_on 'Compose'
     expect(page).to have_content 'Compose Message'
-    select 'ChrisBrennerTest', :from => 'message_recipient_id'
+    select 'TFD-1111', :from => 'message_recipient_id'
     fill_in 'message_subject', :with => 'Testing compose functionality'
     select 'Introduction to ThinkFeelDo', :from => 'coach-message-link-selection'
     fill_in 'message_body', :with => 'This message is to test the compose functionality.'
@@ -82,13 +81,13 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
     expect(page).to have_content 'Inbox'
     expect(page).to have_content 'Sent'
     expect(page).to have_content 'Compose'
-    expect(page).to have_content 'This message is a test to my coach'
+    expect(page).to have_content 'I like this app'
   end
 
   #Testing search functionality
   it "- search" do
-    select 'ChrisBrennerTest', :from => 'search'
+    select 'TFD-1111', :from => 'search'
     click_on 'Search'
-    expect(page).to have_content 'This message is a test to my coach'
+    expect(page).to have_content 'I like this app'
   end
 end
