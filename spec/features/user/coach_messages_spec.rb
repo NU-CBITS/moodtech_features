@@ -13,11 +13,6 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
 
   before(:each) do
     Capybara.default_driver = :selenium
-  end
-
-#tests
-  #Testing inbox
-  it "- inbox" do
     visit ENV['Base_URL']+ '/users/sign_in'
     within("#new_user") do
       fill_in 'user_email', :with => ENV['User_Email']
@@ -27,37 +22,24 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
     expect(page).to have_content 'Signed in successfully'
     click_on 'Groups'
     expect(page).to have_content 'Listing Groups'
-    click_on 'fake'
+    # click_on 'fake'
     expect(page).to have_content 'Participant Info'
     click_on 'Messaging'
     click_on 'Messages'
     expect(page).to have_content 'Inbox'
-    expect(page).to have_content 'Sent'
+    # expect(page).to have_content 'Sent'
     expect(page).to have_content 'Compose'
-    expect(page).to have_content 'This message is a test to my coach'
+  end
+
+#tests
+  #Testing inbox
+  it "- inbox" do
     click_on 'This message is a test to my coach'
     expect(page).to have_content 'This message is for testing the inbox functionality on the coach dashboard.'
   end
 
   #Testing reply
   it "- reply" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Groups'
-    expect(page).to have_content 'Listing Groups'
-    click_on 'fake'
-    expect(page).to have_content 'Participant Info'
-    click_on 'Messaging'
-    click_on 'Messages'
-    expect(page).to have_content 'Inbox'
-    expect(page).to have_content 'Sent'
-    expect(page).to have_content 'Compose'
-    expect(page).to have_content 'This message is a test to my coach'
     click_on 'This message is a test to my coach'
     expect(page).to have_content 'This message is for testing the inbox functionality on the coach dashboard.'
     click_on 'Reply'
@@ -73,23 +55,6 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
 
   #Testing sent box
   it "- sent box" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Groups'
-    expect(page).to have_content 'Listing Groups'
-    click_on 'fake'
-    expect(page).to have_content 'Participant Info'
-    click_on 'Messaging'
-    click_on 'Messages'
-    expect(page).to have_content 'Inbox'
-    expect(page).to have_content 'Sent'
-    expect(page).to have_content 'Compose'
-    expect(page).to have_content 'This message is a test to my coach'
     click_on 'Sent'
     expect(page).to have_content 'Testing sent message'
     click_on 'Testing sent message'
@@ -104,23 +69,6 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
 
   #Testing compose
   it "- compose" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Groups'
-    expect(page).to have_content 'Listing Groups'
-    click_on 'fake'
-    expect(page).to have_content 'Participant Info'
-    click_on 'Messaging'
-    click_on 'Messages'
-    expect(page).to have_content 'Inbox'
-    expect(page).to have_content 'Sent'
-    expect(page).to have_content 'Compose'
-    expect(page).to have_content 'This message is a test to my coach'
     click_on 'Compose'
     expect(page).to have_content 'Compose Message'
     select 'ChrisBrennerTest', :from => 'message_recipient_id'
@@ -137,22 +85,6 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
 
   #Testing search functionality
   it "- search" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Groups'
-    expect(page).to have_content 'Listing Groups'
-    click_on 'fake'
-    expect(page).to have_content 'Participant Info'
-    click_on 'Messaging'
-    click_on 'Messages'
-    expect(page).to have_content 'Inbox'
-    expect(page).to have_content 'Sent'
-    expect(page).to have_content 'Compose'
     select 'ChrisBrennerTest', :from => 'search'
     click_on 'Search'
     expect(page).to have_content 'This message is a test to my coach'
