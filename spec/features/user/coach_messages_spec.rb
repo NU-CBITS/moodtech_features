@@ -53,6 +53,7 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
     expect(page).to have_content 'Sent'
     expect(page).to have_content 'Compose'
     expect(page).to have_content 'I like this app'
+# Does the participant receive the reply?
   end
 
   #Testing sent box
@@ -82,6 +83,7 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
     expect(page).to have_content 'Sent'
     expect(page).to have_content 'Compose'
     expect(page).to have_content 'I like this app'
+# Does the participant receive the message?
   end
 
   #Testing search functionality
