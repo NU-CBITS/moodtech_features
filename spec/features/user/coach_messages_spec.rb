@@ -15,19 +15,21 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
     Capybara.default_driver = :selenium
     visit ENV['Base_URL']+ '/users/sign_in'
     within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
+      fill_in 'user_email', :with => ENV['Clinician_Email']
+      fill_in 'user_password', :with => ENV['Clinician_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
-    click_on 'Groups'
-    expect(page).to have_content 'Listing Groups'
-    # click_on 'fake'
-    expect(page).to have_content 'Participant Info'
+    click_on 'Arms'
+    expect(page).to have_content 'Listing Arms'
+    click_on 'Arm 1'
+    expect(page).to have_content 'Title: Arm 1'
+    click_on 'Group 1'
+    expect(page).to have_content 'Title: Group 1'
     click_on 'Messaging'
     click_on 'Messages'
     expect(page).to have_content 'Inbox'
-    # expect(page).to have_content 'Sent'
+    expect(page).to have_content 'Sent'
     expect(page).to have_content 'Compose'
   end
 
