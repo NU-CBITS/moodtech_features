@@ -197,7 +197,7 @@ describe "Do", :type => :feature, :sauce => false do
     page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Activity saved'
     expect(page).to have_content 'Add a New Activity'
-    visit ENV['Base-URL']
+    visit ENV['Base_URL']
     find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335061"]/div[2]/button[5]/i').click
     expect(page).to have_content 'actual accomplishment: 5'
     expect(page).to have_content 'actual pleasure: 7'
