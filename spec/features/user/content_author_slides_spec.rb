@@ -13,15 +13,10 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   before(:each) do
     Capybara.default_driver = :selenium
-  end
-
-#tests
-  #testing adding a slide to a lesson
-  it "- adding a slide to a lesson" do
     visit ENV['Base_URL']+ '/users/sign_in'
     within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
+      fill_in 'user_email', :with => ENV['Content_Author_Email']
+      fill_in 'user_password', :with => ENV['Content_Author_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -30,10 +25,15 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
     click_on 'Manage Content'
+  end
+
+#tests
+  #testing adding a slide to a lesson
+  it "- adding a slide to a lesson" do
     click_on 'Lesson Modules'
     expect(page).to have_content 'Listing Lesson Modules'
     click_on 'Testing adding/updating slides/lessons'
-    expect(page).to have_content 'Test video slide 1'
+    expect(page).to have_content "It's simple"
     click_on 'Add Slide'
     expect(page).to have_content 'New Slide for Lesson'
     expect(page).to have_content 'Testing adding/updating slides/lessons'
@@ -47,22 +47,10 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing updating a slide in a lesson
   it "- updating a slide in a lesson" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Lesson Modules'
     expect(page).to have_content 'Listing Lesson Modules'
     click_on 'Testing adding/updating slides/lessons'
-    expect(page).to have_content 'Test video slide 1'
+    expect(page).to have_content "It's simple"
     find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[1]/span[3]/a[1]').click
     expect(page).to have_content 'Edit Slide'
     uncheck 'slide_is_title_visible'
@@ -77,45 +65,22 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing viewing a slide in a lesson
   it "- viewing a slide in a lesson" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Lesson Modules'
     expect(page).to have_content 'Listing Lesson Modules'
     click_on 'Testing adding/updating slides/lessons'
-    expect(page).to have_content 'Test video slide 1'
+    expect(page).to have_content "It's simple."
     click_on 'Slide 2'
     expect(page).to have_content 'Log in once a day'
     click_on 'Done'
-    expect(page).to have_content 'Test video slide 1'
+    expect(page).to have_content "It's simple."
   end
 
   #testing destroying a slide in a lesson
   it "- destroying a slide in a lesson" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Lesson Modules'
     expect(page).to have_content 'Listing Lesson Modules'
     click_on 'Testing adding/updating slides/lessons'
-    expect(page).to have_content 'Test video slide 1'
+    expect(page).to have_content "It's simple"
     find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[2]').click
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Slide deleted'
@@ -124,22 +89,10 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing adding a video slide to a lesson
   it "- adding a video slide to a lesson" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Lesson Modules'
     expect(page).to have_content 'Listing Lesson Modules'
     click_on 'Testing adding/updating slides/lessons'
-    expect(page).to have_content 'Test video slide 1'
+    expect(page).to have_content "It's simple"
     click_on 'Add Video Slide'
     expect(page).to have_content 'New Slide for Lesson'
     expect(page).to have_content 'Testing adding/updating slides/lessons'
@@ -153,29 +106,17 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing updating a video slide in a lesson
   it "- updating a video slide in a lesson" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Lesson Modules'
     expect(page).to have_content 'Listing Lesson Modules'
     click_on 'Testing adding/updating slides/lessons'
-    expect(page).to have_content 'Test video slide 1'
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[4]/span[3]/a[1]').click
+    expect(page).to have_content 'Test video slide 2'
+    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[1]').click
     expect(page).to have_content 'Edit Slide'
-    expect(page).to have_content 'Test video slide 1'
+    expect(page).to have_content 'Test video slide 2'
     uncheck 'slide_is_title_visible'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated slide for lesson'
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[4]/span[3]/a[1]').click
+    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[1]').click
     expect(page).to have_content 'Edit Slide'
     check 'slide_is_title_visible'
     click_on 'Update'
@@ -184,67 +125,30 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing viewing a video slide in a lesson
   it "- viewing a video slide in a lesson" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Lesson Modules'
     expect(page).to have_content 'Listing Lesson Modules'
     click_on 'Testing adding/updating slides/lessons'
-    expect(page).to have_content 'Test video slide 1'
-    click_on 'Test video slide 1'
-    expect(page).to have_content 'This slide was added for automated testing purposes'
+    expect(page).to have_content 'Test video slide 2'
+    click_on 'Test video slide 2'
+    expect(page).to have_content 'This is a video slide'
   end
 
   #testing destroying a video slide in a lesson
   it "- destroying a video slide in a lesson" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Lesson Modules'
     expect(page).to have_content 'Listing Lesson Modules'
     click_on 'Testing adding/updating slides/lessons'
-    expect(page).to have_content 'Test video slide 1'
+    expect(page).to have_content 'Test video slide 2'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[2]').click
     page.accept_alert 'Are you sure?'
-    expect(page).to have_content 'Slide deleted'
     expect(page).to_not have_content 'Test video slide 2'
   end
 
   #testing adding a slide to a slideshow
   it "- adding a slide to a slideshow" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Slideshows'
     expect(page).to have_content 'Listing Slideshows'
-    click_on 'Home Introduction'
+    click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
     expect(page).to have_content 'Slide 2'
     click_on 'Add Slide'
@@ -258,21 +162,9 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing updating a slide in a slideshow
   it "- updating a slide in a slideshow" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Slideshows'
     expect(page).to have_content 'Listing Slideshows'
-    click_on 'Home Introduction'
+    click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
     expect(page).to have_content 'Slide 2'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[2]/span[3]/a[1]').click
@@ -289,21 +181,9 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing viewing a slide to a slideshow
   it "- viewing a slide in a slideshow" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Slideshows'
     expect(page).to have_content 'Listing Slideshows'
-    click_on 'Home Introduction'
+    click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
     expect(page).to have_content 'Slide 2'
     click_on 'Slide 2'
@@ -315,21 +195,9 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing destroying a slide in a slideshow
   it "- destroying a slide in a slideshow" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Slideshows'
     expect(page).to have_content 'Listing Slideshows'
-    click_on 'Home Introduction'
+    click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
     expect(page).to have_content 'Slide 2'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[2]').click
@@ -339,21 +207,9 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing adding a video slide to a slideshow
   it "- adding a video slide to a slideshow" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Slideshows'
     expect(page).to have_content 'Listing Slideshows'
-    click_on 'Home Introduction'
+    click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
     expect(page).to have_content 'Slide 2'
     click_on 'Add Video Slide'
@@ -368,21 +224,9 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing updating a video slide in a slideshow
   it "- updating a video slide in a slideshow" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Slideshows'
     expect(page).to have_content 'Listing Slideshows'
-    click_on 'Home Introduction'
+    click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
     expect(page).to have_content 'Slide 2'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[4]/span[3]/a[1]').click
@@ -399,44 +243,20 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
 
   #testing viewing a video slide in a slideshow
   it "- viewing a video slide in a slideshow" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Slideshows'
     expect(page).to have_content 'Listing Slideshows'
-    click_on 'Home Introduction'
+    click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
     expect(page).to have_content 'Slide 2'
-    click_on 'Test video slide 1'
+    click_on 'Test video slide 2'
     expect(page).to have_content 'This slide was added for automated testing purposes'
   end
 
   #testing destroying a video slide to a slideshow
   it "- destroying a video slide to a slideshow" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
-    click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-    click_on 'Manage Content'
     click_on 'Slideshows'
     expect(page).to have_content 'Listing Slideshows'
-    click_on 'Home Introduction'
+    click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
     expect(page).to have_content 'Slide 2'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[2]').click
