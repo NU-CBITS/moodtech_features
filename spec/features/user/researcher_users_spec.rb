@@ -13,6 +13,16 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   before(:each) do
     Capybara.default_driver = :selenium
+    visit ENV['Base_URL']+ '/users/sign_in'
+    within("#new_user") do
+      fill_in 'user_email', :with => ENV['Researcher_Email']
+      fill_in 'user_password', :with => ENV['Researcher_Password']
+    end
+    click_on 'Sign in'
+    expect(page).to have_content 'Signed in successfully'
+    expect(page).to have_content 'CSV Reports'
+    click_on 'Users'
+    expect(page).to have_content 'Listing Users'
   end
 
 #tests
@@ -20,16 +30,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
   #Super Users
   #Testing creating a super user
   it "- create a super user" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on 'New'
     fill_in 'user_email', :with => 'superuser@test.com'
     check 'user_is_admin'
@@ -41,16 +41,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   #Testing updating a super user
   it "- update a super user" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on 'genericadmin@test.com'
     expect(page).to have_content 'Email: genericadmin@test.com'
     click_on 'Edit'
@@ -73,17 +63,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   #Testing detroying a super user
   it "- destroy a super user" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on 'superuser@test.com'
     expect(page).to have_content 'Email: superuser@test.com'
     click_on 'Destroy'
@@ -95,16 +74,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
   #Researchers
   #Testing creating a Researcher
   it "- create a researcher" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on 'New'
     fill_in 'user_email', :with => 'researcher@test.com'
     check 'user_user_roles_researcher'
@@ -117,16 +86,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   #Testing updating a researcher
   it "- update a researcher" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on ENV['Researcher_Email']
     expect(page).to have_content 'Email: ' + ENV['Researcher_Email']
     click_on 'Edit'
@@ -154,16 +113,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   #Testing detroying a researcher
   it "- destroy a researcher" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on 'researcher@test.com'
     expect(page).to have_content 'Email: researcher@test.com'
     click_on 'Destroy'
@@ -175,16 +124,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
   #Clinicians
   #Testing creating a clinician
   it "- create a clincian" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on 'New'
     fill_in 'user_email', :with => 'clinician@test.com'
     check 'user_user_roles_clinician'
@@ -197,16 +136,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   #Testing updating a clinician
   it "- update a clinician" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on ENV['Clinician_Email']
     expect(page).to have_content 'Email: ' + ENV['Clinician_Email']
     click_on 'Edit'
@@ -234,16 +163,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   #Testing detroying a clinician
   it "- destroy a clinician" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on 'clinician@test.com'
     expect(page).to have_content 'Email: clinician@test.com'
     click_on 'Destroy'
@@ -255,16 +174,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
   #Content Authors
   #Testing creating a content author
   it "- create a content author" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on 'New'
     fill_in 'user_email', :with => 'contentauthor@test.com'
     check 'user_user_roles_content_author'
@@ -277,16 +186,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   #Testing updating a content author
   it "- update a content author" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on ENV['Content_Author_Email']
     expect(page).to have_content 'Email: ' + ENV['Content_Author_Email']
     click_on 'Edit'
@@ -314,16 +213,6 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   #Testing detroying a content author
   it "- destroy a content author" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Users'
-    expect(page).to have_content 'Listing Users'
     click_on 'contentauthor@test.com'
     expect(page).to have_content 'Email: contentauthor@test.com'
     click_on 'Destroy'
