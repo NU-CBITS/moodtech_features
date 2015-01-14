@@ -21,14 +21,14 @@ describe "Super User, Arms", :type => :feature, :sauce => false do
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
     expect(page).to have_content 'CSV Reports'
-    click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
   end
 
 #tests
 
   #Testing creating an arm
   it "- create an arm" do
+    click_on 'Arms'
+    expect(page).to have_content 'Listing Arms'
     click_on 'New'
     expect(page).to have_content 'New Arm'
     fill_in 'arm_title', :with => 'Test Arm'
@@ -38,6 +38,8 @@ describe "Super User, Arms", :type => :feature, :sauce => false do
 
   #Testing updating an arm
   it "- update an arm" do
+    click_on 'Arms'
+    expect(page).to have_content 'Listing Arms'
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
     click_on 'Edit'
@@ -56,6 +58,8 @@ describe "Super User, Arms", :type => :feature, :sauce => false do
 
   #Testing destroying an arm
   it "- destroys an arm" do
+    click_on 'Arms'
+    expect(page).to have_content 'Listing Arms'
     click_on 'Test Arm'
     expect(page).to have_content 'Title: Test Arm'
     click_on 'Destroy'
@@ -66,6 +70,8 @@ describe "Super User, Arms", :type => :feature, :sauce => false do
 
   #Testing creating a super user
   it "- create a super user" do
+    click_on 'Users'
+    expect(page).to have_content 'Listing Users'
     click_on 'New'
     fill_in 'user_email', :with => 'superuser@test.com'
     check 'user_is_admin'
@@ -77,6 +83,8 @@ describe "Super User, Arms", :type => :feature, :sauce => false do
 
   #Testing updating a super user
   it "- update a super user" do
+    click_on 'Users'
+    expect(page).to have_content 'Listing Users'
     click_on 'superuser@test.com'
     expect(page).to have_content 'Email: superuser@test.com'
     click_on 'Edit'
@@ -99,6 +107,8 @@ describe "Super User, Arms", :type => :feature, :sauce => false do
 
   #Testing detroying a super user
   it "- destroy a super user" do
+    click_on 'Users'
+    expect(page).to have_content 'Listing Users'
     click_on 'superuser@test.com'
     expect(page).to have_content 'Email: superuser@test.com'
     click_on 'Destroy'
