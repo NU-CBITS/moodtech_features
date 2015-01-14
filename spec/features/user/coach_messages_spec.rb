@@ -53,7 +53,16 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
     expect(page).to have_content 'Sent'
     expect(page).to have_content 'Compose'
     expect(page).to have_content 'I like this app'
-# Does the participant receive the reply?
+
+    visit ENV['Base_URL'] + '/participants/sign_in'
+    within("#new_participant") do
+      fill_in 'participant_email', :with => ENV['Participant_Email']
+      fill_in 'participant_password', :with => ENV['Participant_Password']
+    end
+    click_on 'Sign in'
+    expect(page).to have_content 'Signed in successfully'
+    visit ENV['Base_URL'] + '/navigator/contexts/MESSAGES'
+    expect(page).to have_content 'Reply: I like this app'
   end
 
   #Testing sent box
@@ -83,7 +92,16 @@ describe "Coach, Messages", :type => :feature, :sauce => false do
     expect(page).to have_content 'Sent'
     expect(page).to have_content 'Compose'
     expect(page).to have_content 'I like this app'
-# Does the participant receive the message?
+
+    visit ENV['Base_URL'] + '/participants/sign_in'
+    within("#new_participant") do
+      fill_in 'participant_email', :with => ENV['Participant_Email']
+      fill_in 'participant_password', :with => ENV['Participant_Password']
+    end
+    click_on 'Sign in'
+    expect(page).to have_content 'Signed in successfully'
+    visit ENV['Base_URL'] + '/navigator/contexts/MESSAGES'
+    expect(page).to have_content 'Testing compose functionality'
   end
 
   #Testing search functionality
