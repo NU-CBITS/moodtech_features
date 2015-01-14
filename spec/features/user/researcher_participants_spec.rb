@@ -13,22 +13,22 @@ describe "Research, Participants", :type => :feature, :sauce => false do
 
   before(:each) do
     Capybara.default_driver = :selenium
-  end
-
-#tests
-
-#Testing creating a participant
-  it "- create a participant" do
     visit ENV['Base_URL']+ '/users/sign_in'
     within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
+      fill_in 'user_email', :with => ENV['Researcher_Email']
+      fill_in 'user_password', :with => ENV['Researcher_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
     expect(page).to have_content 'CSV Reports'
     click_on 'Participants'
     expect(page).to have_content 'Listing Participants'
+  end
+
+#tests
+
+#Testing creating a participant
+  it "- create a participant" do
     click_on 'New'
     expect(page).to have_content 'New Participant'
     fill_in 'participant_study_id', :with => 'Tests'
@@ -45,54 +45,34 @@ describe "Research, Participants", :type => :feature, :sauce => false do
 
   #Testing updating a participant
   it "- updating a participant" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Participants'
-    expect(page).to have_content 'Listing Participants'
-    click_on 'fake'
-    expect(page).to have_content 'Study Id: fake'
+    click_on 'TFD-1111'
+    expect(page).to have_content 'Study Id: TFD-1111'
     click_on 'Edit'
     expect(page).to have_content 'Editing Participant'
-    fill_in 'participant_study_id', :with => 'Updated fake'
+    fill_in 'participant_study_id', :with => 'Updated TFD-1111'
     fill_in 'participant_email', :with => 'updatedfake@test.com'
     fill_in 'participant_phone_number', :with => ENV['Participant_Phone_Number']
     click_on 'Update'
     expect(page).to have_content 'Participant was successfully updated.'
-    expect(page).to have_content 'Study Id: Updated fake'
+    expect(page).to have_content 'Study Id: Updated TFD-1111'
     expect(page).to have_content 'Email: updatedfake@test.com'
     expect(page).to have_content 'Phone Number: ' + ENV['Participant_Phone_Number_1']
     expect(page).to have_content 'Contact Preference: Email'
     click_on 'Edit'
     expect(page).to have_content 'Editing Participant'
-    fill_in 'participant_study_id', :with => 'fake'
-    fill_in 'participant_email', :with => 'fake@test.com'
+    fill_in 'participant_study_id', :with => 'TFD-1111'
+    fill_in 'participant_email', :with => ENV['Participant_Email']
     fill_in 'participant_phone_number', :with => ENV['Participant_Phone_Number']
     click_on 'Update'
     expect(page).to have_content 'Participant was successfully updated.'
-    expect(page).to have_content 'Study Id: fake'
-    expect(page).to have_content 'Email: fake@test.com'
+    expect(page).to have_content 'Study Id: TFD-1111'
+    expect(page).to have_content 'Email: ' + ENV['Participant_Email']
     expect(page).to have_content 'Phone Number: ' + ENV['Participant_Phone_Number_1']
     expect(page).to have_content 'Contact Preference: Email'
   end
 
   #Testing assigning a coach
   it "- assign a coach" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Participants'
-    expect(page).to have_content 'Listing Participants'
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Assign Coach'
@@ -106,21 +86,11 @@ describe "Research, Participants", :type => :feature, :sauce => false do
 
   #Testing creating a group membership
   it "- create a group membership" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Participants'
-    expect(page).to have_content 'Listing Participants'
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Assign New Group'
     expect(page).to have_content 'Assigning New Group to Participant'
-    select 'fake', :from => 'membership_group_id'
+    select 'Group 1', :from => 'membership_group_id'
     yesterday=Date.today.prev_day
     fill_in 'membership_start_date', :with => yesterday.strftime('%Y-%m-%d')
     today=Date.today
@@ -129,22 +99,12 @@ describe "Research, Participants", :type => :feature, :sauce => false do
     click_on 'Assign'
     expect(page).to have_content 'Group was successfully assigned'
     expect(page).to have_content 'Study Id: Tests'
-    expect(page).to have_content 'Group: fake'
+    expect(page).to have_content 'Group: Group 1'
     expect(page).to have_content 'Membership Status: Active'
   end
 
   #Testing destroying a participant
   it "- destroy a participant" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-    expect(page).to have_content 'CSV Reports'
-    click_on 'Participants'
-    expect(page).to have_content 'Listing Participants'
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Destroy'
