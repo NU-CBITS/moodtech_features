@@ -36,7 +36,7 @@ describe "Content Author, Lesson Modules", :type => :feature, :sauce => false do
   it "- new lesson" do
     click_on 'New'
     fill_in 'lesson_title', :with => 'Test lesson'
-    fill_in 'lesson_position', :with => '45'
+    fill_in 'lesson_position', :with => '19'
     click_on 'Create'
     expect(page).to have_content 'Successfully created lesson'
     expect(page).to have_content 'Test lesson'
@@ -85,7 +85,7 @@ describe "Content Author, Lesson Modules", :type => :feature, :sauce => false do
 
   #Testing destroying  a lesson
   it "- destroy lesson" do
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[17]/td[4]/a[2]').click
+    find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[18]/td[4]/a[2]').click
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Lesson deleted'
     expect(page).to_not have_content 'Test lesson'
