@@ -27,51 +27,7 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
 #tests
 
-  #Super Users
-  #Testing creating a super user
-  it "- create a super user" do
-    click_on 'New'
-    fill_in 'user_email', :with => 'superuser@test.com'
-    check 'user_is_admin'
-    click_on 'Create'
-    expect(page).to have_content 'User was successfully created.'
-    expect(page).to have_content 'Super User: Yes'
-    expect(page).to have_content 'Email: superuser@test.com'
-  end
-
-  #Testing updating a super user
-  it "- update a super user" do
-    click_on 'genericadmin@test.com'
-    expect(page).to have_content 'Email: genericadmin@test.com'
-    click_on 'Edit'
-    expect(page).to have_content 'Editing User'
-    check 'user_user_roles_clinician'
-    click_on 'Update'
-    expect(page).to have_content 'User was successfully updated.'
-    expect(page).to have_content 'Super User: Yes'
-    expect(page).to have_content 'Email: genericadmin@test.com'
-    expect(page).to have_content 'Roles: Clinician'
-    click_on 'Edit'
-    expect(page).to have_content 'Editing User'
-    uncheck 'user_user_roles_clinician'
-    click_on 'Update'
-    expect(page).to have_content 'User was successfully updated.'
-    expect(page).to have_content 'Super User: Yes'
-    expect(page).to have_content 'Email: genericadmin@test.com'
-    expect(page).to_not have_content 'Roles: Clinician'
-  end
-
-  #Testing detroying a super user
-  it "- destroy a super user" do
-    click_on 'superuser@test.com'
-    expect(page).to have_content 'Email: superuser@test.com'
-    click_on 'Destroy'
-    page.accept_alert 'Are you sure?'
-    expect(page).to have_content 'User was successfully destroyed.'
-    expect(page).to_not have_content 'superuser@test.com'
-  end
-
-  #Researchers
+#Researchers
   #Testing creating a Researcher
   it "- create a researcher" do
     click_on 'New'
@@ -86,15 +42,15 @@ describe "Research, Users", :type => :feature, :sauce => false do
 
   #Testing updating a researcher
   it "- update a researcher" do
-    click_on ENV['Researcher_Email']
-    expect(page).to have_content 'Email: ' + ENV['Researcher_Email']
+    click_on 'researcher@test.com'
+    expect(page).to have_content 'Email: researcher@test.com'
     click_on 'Edit'
     expect(page).to have_content 'Editing User'
     check 'user_user_roles_clinician'
     click_on 'Update'
     expect(page).to have_content 'User was successfully updated.'
     expect(page).to have_content 'Super User: No'
-    expect(page).to have_content 'Email: ' + ENV['Researcher_Email']
+    expect(page).to have_content 'Email: researcher@test.com'
     if page.has_text?("Roles: Researcher and Clinician")
       expect(page).to_not have_content 'Roles: Clinician and Researcher'
     else
@@ -106,7 +62,7 @@ describe "Research, Users", :type => :feature, :sauce => false do
     click_on 'Update'
     expect(page).to have_content 'User was successfully updated.'
     expect(page).to have_content 'Super User: No'
-    expect(page).to have_content 'Email: ' + ENV['Researcher_Email']
+    expect(page).to have_content 'Email: researcher@test.com'
     expect(page).to have_content 'Roles: Researcher'
     expect(page).to_not have_content 'Roles: Clinician and Researcher'
   end
@@ -121,7 +77,7 @@ describe "Research, Users", :type => :feature, :sauce => false do
     expect(page).to_not have_content 'researcher@test.com'
   end
 
-  #Clinicians
+#Clinicians
   #Testing creating a clinician
   it "- create a clincian" do
     click_on 'New'
@@ -171,7 +127,7 @@ describe "Research, Users", :type => :feature, :sauce => false do
     expect(page).to_not have_content 'clinician@test.com'
   end
 
-  #Content Authors
+#Content Authors
   #Testing creating a content author
   it "- create a content author" do
     click_on 'New'

@@ -1,4 +1,4 @@
-#filename: super_user_arms_spec.rb
+#filename: super_user_spec.rb
 
 #this is to test the arm functionality on the researcher dashboard.
 
@@ -62,5 +62,48 @@ describe "Super User, Arms", :type => :feature, :sauce => false do
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Arm was successfully destroyed.'
     expect(page).to_not have_content 'Test Arm'
+  end
+
+  #Testing creating a super user
+  it "- create a super user" do
+    click_on 'New'
+    fill_in 'user_email', :with => 'superuser@test.com'
+    check 'user_is_admin'
+    click_on 'Create'
+    expect(page).to have_content 'User was successfully created.'
+    expect(page).to have_content 'Super User: Yes'
+    expect(page).to have_content 'Email: superuser@test.com'
+  end
+
+  #Testing updating a super user
+  it "- update a super user" do
+    click_on 'superuser@test.com'
+    expect(page).to have_content 'Email: superuser@test.com'
+    click_on 'Edit'
+    expect(page).to have_content 'Editing User'
+    check 'user_user_roles_clinician'
+    click_on 'Update'
+    expect(page).to have_content 'User was successfully updated.'
+    expect(page).to have_content 'Super User: Yes'
+    expect(page).to have_content 'Email: superuser@test.com'
+    expect(page).to have_content 'Roles: Clinician'
+    click_on 'Edit'
+    expect(page).to have_content 'Editing User'
+    uncheck 'user_user_roles_clinician'
+    click_on 'Update'
+    expect(page).to have_content 'User was successfully updated.'
+    expect(page).to have_content 'Super User: Yes'
+    expect(page).to have_content 'Email: superuser@test.com'
+    expect(page).to_not have_content 'Roles: Clinician'
+  end
+
+  #Testing detroying a super user
+  it "- destroy a super user" do
+    click_on 'superuser@test.com'
+    expect(page).to have_content 'Email: superuser@test.com'
+    click_on 'Destroy'
+    page.accept_alert 'Are you sure?'
+    expect(page).to have_content 'User was successfully destroyed.'
+    expect(page).to_not have_content 'superuser@test.com'
   end
 end
