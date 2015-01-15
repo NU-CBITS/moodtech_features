@@ -39,13 +39,18 @@ describe "Coach, Patients", :type => :feature, :sauce => false do
   #Testing specific patient report
   it "- view patient report" do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
+    expect(page).to have_content 'General Patient Info'
+  end
+
+  #Testing viewing Mood and PHQ9 scores viz
+  it "- views Mood/Emotions and PHQ9 viz" do
     expect(page).to have_content 'Patient Mood Ratings and PHQ9 Assessment Scores'
   end
 
   #Testing managing PHQ9 in patient report
   it "- managing PHQ9" do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
-    expect(page).to have_content 'Patient Mood Ratings and PHQ9 Assessment Scores'
+    expect(page).to have_content 'General Patient Info'
     click_on 'Manage'
     expect(page).to have_content 'PHQ assessments for '
     click_on 'New Phq assessment'
@@ -65,13 +70,13 @@ describe "Coach, Patients", :type => :feature, :sauce => false do
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Phq assessment was successfully destroyed.'
     click_on 'Patient dashboard'
-    expect(page).to have_content 'Patient Mood Ratings and PHQ9 Assessment Scores'
+    expect(page).to have_content 'General Patient Info'
   end
 
   #Testing viewing activities viz in patient report
   it "- view activities viz" do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
-    expect(page).to have_content 'Patient Mood Ratings and PHQ9 Assessment Scores'
+    expect(page).to have_content 'General Patient Info'
     click_on 'Activities visualization'
     expect(page).to have_content 'Activities Overview'
     page.find("#nav_main li:nth-child(2) a").click
@@ -87,7 +92,7 @@ describe "Coach, Patients", :type => :feature, :sauce => false do
   #Testing viewing thoughts viz in patient report
   it "- view thoughts viz" do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
-    expect(page).to have_content 'Patient Mood Ratings and PHQ9 Assessment Scores'
+    expect(page).to have_content 'General Patient Info'
     click_on 'Thoughts visualization'
     page.find("#ThoughtVizContainer")
   end

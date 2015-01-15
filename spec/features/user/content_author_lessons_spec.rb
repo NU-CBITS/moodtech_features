@@ -87,7 +87,6 @@ describe "Content Author, Lesson Modules", :type => :feature, :sauce => false do
   it "- destroy lesson" do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[18]/td[4]/a[2]').click
     page.accept_alert 'Are you sure?'
-    expect(page).to have_content 'Lesson deleted'
     expect(page).to_not have_content 'Test lesson'
   end
 end

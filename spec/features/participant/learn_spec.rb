@@ -42,8 +42,21 @@ describe "Learn", :type => :feature, :sauce => false do
     click_on 'Do - Awareness Introduction'
     expect(page).to have_content 'This is just the beginning...'
     click_on 'Continue'
-    expect(page).to have_css '.label.label-success'
+    today = Date.today
+    expect(page).to have_content 'Read on ' + today.strftime('%b %e')
+    expect(page).to have_content 'Printable'
     visit ENV['Base_URL']
     expect(page).to have_content 'read a Lesson: Do - Awareness Introduction'
+  end
+
+  it "- print a read lesson" do
+    expect(page).to have_content 'Week 1'
+    today = Date.today
+    expect(page).to have_content 'Read on ' + today.strftime('%b %e')
+    click_on 'Printable'
+    expect(page).to have_content 'Print'
+    expect(page).to have_content 'Return to Lessons'
+    click_on 'Return to Lessons'
+    expect(page).to have_content 'Week 1'
   end
 end

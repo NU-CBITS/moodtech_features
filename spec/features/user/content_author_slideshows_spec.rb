@@ -69,7 +69,6 @@ describe "Content Author, Slideshows", :type => :feature, :sauce => false do
     click_on 'Test slideshow'
     click_on 'Delete'
     page.accept_alert 'Are you sure?'
-    expect(page).to have_content 'Slideshow deleted'
     expect(page).to_not have_content 'Test slideshow'
   end
 end

@@ -83,7 +83,6 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
     expect(page).to have_content "It's simple"
     find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[2]').click
     page.accept_alert 'Are you sure?'
-    expect(page).to have_content 'Slide deleted'
     expect(page).to_not have_content 'Test slide 2'
   end
 
@@ -249,7 +248,7 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
     expect(page).to have_content "It's simple"
     expect(page).to have_content 'Slide 2'
     click_on 'Test video slide 2'
-    expect(page).to have_content 'This slide was added for automated testing purposes'
+    expect(page).to have_content 'This is a video slide'
   end
 
   #testing destroying a video slide to a slideshow

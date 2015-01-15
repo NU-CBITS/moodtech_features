@@ -85,7 +85,7 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
     select 'LEARN: Home Introduction', :from => 'content_provider_bit_core_content_module_id'
     select 'slideshow provider', :from => 'content_provider_type'
     select 'BitCore::Slideshow', :from => 'content_provider_source_content_type'
-    select 'Home Introduction', :from => 'content_provider_source_content_id'
+    select 'Home Intro', :from => 'content_provider_source_content_id'
     fill_in 'content_provider_position', :with => '4'
     check 'content_provider_show_next_nav'
     check 'content_provider_is_skippable_after_first_viewing'
@@ -95,7 +95,7 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
     expect(page).to have_content 'Module: Home Introduction'
     expect(page).to have_content 'Position: 4 / 4'
     expect(page).to have_content 'Is skippable after first viewing: true'
-    expect(page).to have_content 'Slideshow: Home Introduction'
+    expect(page).to have_content 'Slideshow: Home Intro'
   end
 
   #Testing updating a provider
@@ -104,7 +104,7 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
     expect(page).to have_content 'New Provider'
     click_on '1 slideshow provider'
     expect(page).to have_content 'Content Provider'
-    expect(page).to have_content 'Slideshow: Home Introduction'
+    expect(page).to have_content 'Slideshow: Testing adding/updating slides/lessons'
     click_on 'Edit'
     expect(page).to have_content 'Editing'
     fill_in 'content_provider_position', :with => '10'
@@ -124,7 +124,7 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
     click_on 'Home Introduction'
     expect(page).to have_content 'Edit'
     click_on '4 slideshow provider'
-    expect(page).to have_content 'Slideshow: Home Introduction'
+    expect(page).to have_content 'Slideshow: Home Intro'
     click_on 'Destroy'
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Content Providers'
