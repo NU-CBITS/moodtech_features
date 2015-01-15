@@ -49,19 +49,7 @@ describe "Login", :type => :feature, :sauce => false do
   it "- not logged in, intro slideshow" do
     visit ENV['Base_URL']+ '/users/sign_in'
     click_on 'Introduction to ThinkFeelDo'
-    expect(page).to have_content 'Welcome to ThinkFeelDo'
-    click_on 'Continue'
-    expect(page).to have_content 'How to Maximize Your Benefit from ThinkFeelDo'
-    click_on 'Continue'
-    expect(page).to have_content 'What Should I Do When I Log in?'
-    click_on 'Continue'
-    expect(page).to have_content "How Do I Know What's New on the Site?"
-    click_on 'Continue'
-    expect(page).to have_content 'What Should I Expect?'
-    click_on 'Continue'
-    expect(page).to have_content 'What Might Get in the Way?'
-    click_on 'Continue'
-    expect(page).to have_content 'Get Started'
+    expect(page).to have_content 'Welcome to ThiFeDo'
     click_on 'Done'
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
@@ -93,8 +81,8 @@ describe "Login", :type => :feature, :sauce => false do
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
     expect(page).to_not have_content 'Manage Content'
-    click_on 'fake'
-    expect(page).to have_content 'Title: fake'
+    click_on 'Group 1'
+    expect(page).to have_content 'Title: Group 1'
     expect(page).to have_content 'Patients'
     expect(page).to have_content 'Messaging'
     expect(page).to_not have_content 'Manage Tasks'
@@ -109,13 +97,18 @@ describe "Login", :type => :feature, :sauce => false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+    expect(page).to have_content 'Arms'
+    expect(page).to have_content 'Groups'
+    expect(page).to have_content 'Participants'
+    expect(page).to have_content 'Users'
+    expect(page).to have_content 'CSV Reports'
     click_on 'Arms'
     expect(page).to have_content 'Listing Arms'
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
     expect(page).to_not have_content 'Manage Content'
-    click_on 'Access to Everything'
-    expect(page).to have_content 'Title: Access to Everything'
+    click_on 'Group 1'
+    expect(page).to have_content 'Title: Group 1'
     expect(page).to_not have_content 'Messaging'
     expect(page).to have_content 'Manage Tasks'
   end
@@ -133,6 +126,7 @@ describe "Login", :type => :feature, :sauce => false do
     expect(page).to have_content 'Listing Arms'
     click_on 'Arm 1'
     expect(page).to have_content 'Manage Content'
+    expect(page).to_not have_content 'Group 1'
   end
 
   #Testing authorization - Super User
