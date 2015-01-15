@@ -128,6 +128,5 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
     click_on 'Destroy'
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Content Providers'
-    expect(page).to have_content 'Content provider was successfully destroyed.'
   end
 end
