@@ -28,6 +28,21 @@ describe "Login", :type => :feature, :sauce => false do
     expect(page).to have_content 'Signed in successfully'
   end
 
+  #Testing Brand Link functionality
+  it "- brand link redirect" do
+    visit ENV['Base_URL']+ '/participants/sign_in'
+    within("#new_participant") do
+      fill_in 'participant_email', :with => ENV['Participant_Email']
+      fill_in 'participant_password', :with => ENV['Participant_Password']
+    end
+    click_on 'Sign in'
+    expect(page).to have_content 'Signed in successfully'
+    visit ENV['Base_URL']+ '/navigator/contexts/LEARN'
+    expect(page).to have_content 'Lessons'
+    find(:css, '.navbar-brand').click
+    expect(page).to have_content "What's on your mind?"
+  end
+
   #Testing the Sign Out functionality
   it "- sign out" do
     visit ENV['Base_URL']+ '/participants/sign_in'
