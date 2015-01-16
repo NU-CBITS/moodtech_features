@@ -44,7 +44,22 @@ describe "Coach, Patients", :type => :feature, :sauce => false do
 
   #Testing viewing Mood and PHQ9 scores viz
   it "- views Mood/Emotions and PHQ9 viz" do
-    expect(page).to have_content 'Patient Mood Ratings and PHQ9 Assessment Scores'
+    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
+    within 'viz-container' do
+      expect(page).to have_content 'Mood'
+      expect(page).to have_content 'Positive and Negative Emotions'
+      today = Date.today
+      one_week_ago = today - 6
+      one_month_ago = today - 27
+      expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
+      find(:xpath, '//*[@id="tool-layout"]/div[2]/div[1]/div/label[2]').click
+      expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
+      find(:xpath, '//*[@id="tool-layout"]/div[2]/div[1]/div/label[1]').click
+      click_on 'Previous Period'
+      one_week_ago_1 = today - 7
+      two_weeks_ago = today - 13
+      expect(page).to have_content two_weeks_ago.strftime('%B %e, %Y') + ' / ' + one_week_ago_1.strftime('%B %e, %Y')
+    end
   end
 
   #Testing managing PHQ9 in patient report

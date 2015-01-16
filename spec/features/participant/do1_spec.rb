@@ -189,10 +189,22 @@ describe "Do", :type => :feature, :sauce => false do
     click_on 'Continue'
     expect(page).to have_content "Let's do this..."
     click_on 'Continue'
-    page.has_text?('You said you were going to')
     find(:xpath, "(/html/body/div[1]/div[1]/div/div[2]/form[1]/div[2]/label[1])").click
     select '7', :from => 'activity[actual_pleasure_intensity]'
     select '5', :from => 'activity[actual_accomplishment_intensity]'
+    click_on 'Continue'
+    page.accept_alert "Are you sure that you would like to make this activity public?"
+    expect(page).to have_content 'Activity saved'
+    expect(page).to have_content 'New planned activity'
+    find(:xpath, "(/html/body/div[1]/div[1]/div/div[2]/form[2]/div[2]/label[2])").click
+    fill_in 'activity[noncompliance_reason]', :with => "I didn't have time"
+    click_on 'Continue'
+    page.accept_alert "Are you sure that you would like to make this activity public?"
+    expect(page).to have_content 'Activity saved'
+    expect(page).to have_content 'Another planned activity'
+    find(:xpath, "(/html/body/div[1]/div[1]/div/div[2]/form[3]/div[2]/label[1])").click
+    select '2', :from => 'activity[actual_pleasure_intensity]'
+    select '8', :from => 'activity[actual_accomplishment_intensity]'
     click_on 'Continue'
     page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Activity saved'

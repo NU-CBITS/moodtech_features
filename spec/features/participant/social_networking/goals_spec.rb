@@ -39,8 +39,6 @@ describe "Goals", :type => :feature, :sauce => false do
   it "- create a goal" do
     click_on '+ add a goal'
     expect(page).to have_content 'What is your goal?'
-    click_on 'Need some help writing a goal?'
-    expect(page).to have_content 'This is where example goals and tips for write a goal will appear'
     fill_in 'new-goal-description', :with => 'eat a whole pizza'
     choose '8 weeks (end of study)'
     click_on 'Save'

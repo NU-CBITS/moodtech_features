@@ -55,7 +55,19 @@ describe "Feel", :type => :feature, :sauce => false do
     find(:xpath, 'html/body/div[1]/div[1]/div/div[2]/div[3]/div/form/div[5]/div/select/option[4]').click
     click_on 'Continue'
     expect(page).to have_content 'Emotional Rating saved'
-    expect(page).to have_content 'Your Recent Emotions'
+    expect(page).to have_content 'Mood'
+    expect(page).to have_content 'Positive and Negative Emotions'
+    today = Date.today
+    one_week_ago = today - 6
+    one_month_ago = today - 27
+    expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
+    find(:xpath, '//*[@id="tool-layout"]/div[2]/div[1]/div/label[2]').click
+    expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
+    find(:xpath, '//*[@id="tool-layout"]/div[2]/div[1]/div/label[1]').click
+    click_on 'Previous Period'
+    one_week_ago_1 = today - 7
+    two_weeks_ago = today - 13
+    expect(page).to have_content two_weeks_ago.strftime('%B %e, %Y') + ' / ' + one_week_ago_1.strftime('%B %e, %Y')
     click_on 'Continue'
     expect(page).to have_content 'Tracking Your Mood & Emotions'
   end
@@ -64,6 +76,7 @@ describe "Feel", :type => :feature, :sauce => false do
   it "- view your recent emotions" do
     click_on 'Your Recent Moods & Emotions'
     expect(page).to have_content 'Mood'
+    expect(page).to have_content 'Positive and Negative Emotions'
     click_on 'Continue'
     expect(page).to have_content 'Tracking Your Mood & Emotions'
   end
@@ -73,7 +86,8 @@ describe "Feel", :type => :feature, :sauce => false do
     visit ENV['Base_URL'] + '/navigator/modules/86966983'
     click_on 'FEEL'
     click_on 'Your Recent Moods & Emotions'
-    expect(page).to have_content 'Your Recent Emotions'
+    expect(page).to have_content 'Mood'
+    expect(page).to have_content 'Positive and Negative Emotions'
     click_on 'FEEL'
     click_on 'Tracking Your Mood & Emotions'
     expect(page).to have_content 'Rate your Mood'

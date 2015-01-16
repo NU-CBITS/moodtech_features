@@ -62,7 +62,8 @@ describe "Social Networking landing page", :type => :feature, :sauce => false do
 
   it '- select link in TODO list' do
     click_on 'FEEL: Your Recent Moods & Emotions'
-    expect(page).to have_content 'Your Recent Emotions'
+    expect(page).to have_content 'Mood'
+    expect(page).to have_content 'Positive and Negative Emotions'
   end
 
   it '- view another participants profile' do
