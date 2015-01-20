@@ -52,7 +52,7 @@ require_relative '../../../spec/configure_cloud'
     #Testing reading a new message in inbox
     it "- read new" do
       click_on 'Sent'
-      expect(page).to have_content 'To: Coach'
+      expect(page).to have_content 'To: Moderator'
       click_on 'I like this app'
       expect(page).to have_content 'From You'
       expect(page).to have_content 'This app is really helpful!'
