@@ -189,20 +189,20 @@ describe "Do", :type => :feature, :sauce => false do
     click_on 'Continue'
     expect(page).to have_content "Let's do this..."
     click_on 'Continue'
-    find(:xpath, "(/html/body/div[1]/div[1]/div/div[2]/form[1]/div[2]/label[1])").click
+    find(:xpath, "(/html/body/div[1]/div[1]/div/div[3]/form[1]/div[2]/label[1])").click
     select '7', :from => 'activity[actual_pleasure_intensity]'
     select '5', :from => 'activity[actual_accomplishment_intensity]'
     click_on 'Continue'
     page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Activity saved'
     expect(page).to have_content 'New planned activity'
-    find(:xpath, "(/html/body/div[1]/div[1]/div/div[2]/form[2]/div[2]/label[2])").click
+    find(:xpath, "(/html/body/div[1]/div[1]/div/div[3]/form[2]/div[2]/label[2])").click
     fill_in 'activity[noncompliance_reason]', :with => "I didn't have time"
     click_on 'Continue'
     page.accept_alert "Are you sure that you would like to make this activity public?"
     expect(page).to have_content 'Activity saved'
     expect(page).to have_content 'Another planned activity'
-    find(:xpath, "(/html/body/div[1]/div[1]/div/div[2]/form[3]/div[2]/label[1])").click
+    find(:xpath, "(/html/body/div[1]/div[1]/div/div[3]/form[3]/div[2]/label[1])").click
     select '2', :from => 'activity[actual_pleasure_intensity]'
     select '8', :from => 'activity[actual_accomplishment_intensity]'
     click_on 'Continue'
@@ -234,12 +234,24 @@ describe "Do", :type => :feature, :sauce => false do
   #Testing Your Activities portion of the DO tool
   it "- your activities" do
     click_on 'Your Activities'
-    expect(page).to have_content 'Activities Overview'
-    expect(page).to have_content 'Over the past week'
-    page.find("#nav_main li:nth-child(2) a").click
-    expect(page).to have_content '3 day view'
-    page.find("#nav_main li:nth-child(3) a").click
-    expect(page).to have_content 'Completion score'
+    expect(page).to have_content 'Choose Day'
+    today=Date.today
+    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
+    click_on 'Daily Summaries'
+    expect(page).to have_content 'Average Accomplishment Discrepancy'
+    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[5]/div[2]/div[3]/div[1]/h4/a').click
+    expect(page).to have_content 'Predicted'
+    click_on 'Edit'
+    expect(page).to have_css('#activity_actual_accomplishment_intensity')
+    click_on 'Previous Day'
+    yesterday=today-1
+    expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %e, %Y')
+    click_on 'Next Day'
+    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
+    click_on '3-Day'
+    expect(page).to have_content today.strftime('%A, %m/%e')
+    click_on 'Choose Day'
+    expect(page).to have_css('#datepicker')
   end
 
   #Testing the navbar functionality specifically surrounding the DO tool
@@ -265,7 +277,7 @@ describe "Do", :type => :feature, :sauce => false do
 
     click_on 'DO'
     click_on 'Your Activities'
-    expect(page).to have_content 'Activities Overview'
+    expect(page).to have_content 'Choose Day'
 
     click_on 'DO'
     click_on 'DO Home'
