@@ -51,8 +51,8 @@ describe "Feel", :type => :feature, :sauce => false do
     select '4', :from => 'emotional_rating[rating]'
     click_on 'Add Emotion'
     fill_in 'emotional_rating_name', :with => 'crazy'
-    find(:xpath, 'html/body/div[1]/div[1]/div/div[2]/div[3]/div/form/div[4]/select/option[1]').click
-    find(:xpath, 'html/body/div[1]/div[1]/div/div[2]/div[3]/div/form/div[5]/div/select/option[4]').click
+    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[3]/div/form/div[4]/select/option[1]').click
+    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[3]/div/form/div[5]/div/select/option[4]').click
     click_on 'Continue'
     expect(page).to have_content 'Emotional Rating saved'
     expect(page).to have_content 'Mood'
@@ -61,9 +61,9 @@ describe "Feel", :type => :feature, :sauce => false do
     one_week_ago = today - 6
     one_month_ago = today - 27
     expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
-    find(:xpath, '//*[@id="tool-layout"]/div[2]/div[1]/div/label[2]').click
+    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[2]/div[1]/div[1]/div/label[2]').click
     expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
-    find(:xpath, '//*[@id="tool-layout"]/div[2]/div[1]/div/label[1]').click
+    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[2]/div[1]/div[1]/div/label[1]').click
     click_on 'Previous Period'
     one_week_ago_1 = today - 7
     two_weeks_ago = today - 13
