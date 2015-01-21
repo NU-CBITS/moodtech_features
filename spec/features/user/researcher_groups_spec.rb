@@ -9,7 +9,7 @@ require_relative '../../../spec/configure_cloud'
 # describe "Researcher, Groups", :type => :feature, :sauce => true do
 
 #to run on Sauce Labs comment this block out
-describe "Research, Groups", :type => :feature, :sauce => false do
+describe "Researcher, Groups", :type => :feature, :sauce => false do
 
   before(:each) do
     Capybara.default_driver = :selenium

@@ -46,7 +46,7 @@ describe "Goals", :type => :feature, :sauce => false do
     expect(page).to have_content 'eat a whole pizza'
     visit ENV['Base_URL']
     expect(page).to have_content 'created a Goal: eat a whole pizza'
-    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335067"]/div[2]/button[5]').click
+    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335069"]/div[2]/button[5]').click
     today =  Date.today
     end_of_study = today + 4
     expect(page).to have_content 'due ' + end_of_study.strftime('%b. %e, %Y') + ' at 12:00AM'
