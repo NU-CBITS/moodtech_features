@@ -38,7 +38,7 @@ describe "Feel", :type => :feature, :sauce => false do
 #tests
 
 #Testing Tracking Your Mood and Emotions in the FEEL to
-  it "- tracking your mood and emotions" do
+  it "- tracking your mood" do
     click_on 'Tracking Your Mood'
     expect(page).to have_content 'Rate your Mood'
     select '6', :from => 'mood[rating]'
