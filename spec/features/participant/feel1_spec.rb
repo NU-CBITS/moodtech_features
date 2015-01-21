@@ -44,7 +44,8 @@ describe "Feel", :type => :feature, :sauce => false do
     select '6', :from => 'mood[rating]'
     click_on 'Continue'
     expect(page).to have_content 'Mood saved'
+    expect(page).to have_content 'Positive and Negative Emotions'
     click_on 'Continue'
-    expect(page).to have_content 'Tracking Your Mood'
+    expect(page).to have_content 'Feeling Tracker Landing'
   end
 end

@@ -69,7 +69,7 @@ describe "Feel", :type => :feature, :sauce => false do
     two_weeks_ago = today - 13
     expect(page).to have_content two_weeks_ago.strftime('%B %e, %Y') + ' / ' + one_week_ago_1.strftime('%B %e, %Y')
     click_on 'Continue'
-    expect(page).to have_content 'Tracking Your Mood & Emotions'
+    expect(page).to have_content 'Feeling Tracker Landing'
   end
 
   #Testing the View Your Recent Emotions portion of the FEEL to
@@ -78,7 +78,7 @@ describe "Feel", :type => :feature, :sauce => false do
     expect(page).to have_content 'Mood'
     expect(page).to have_content 'Positive and Negative Emotions'
     click_on 'Continue'
-    expect(page).to have_content 'Tracking Your Mood & Emotions'
+    expect(page).to have_content 'Feeling Tracker Landing'
   end
 
   #Testing navbar functionality specifically surrounding the FEEL to
@@ -93,6 +93,6 @@ describe "Feel", :type => :feature, :sauce => false do
     expect(page).to have_content 'Rate your Mood'
     click_on 'FEEL'
     click_on 'FEEL Home'
-    expect(page).to have_content 'Tracking Your Mood & Emotions'
+    expect(page).to have_content 'Feeling Tracker Landing'
   end
 end
