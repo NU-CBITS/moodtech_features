@@ -73,7 +73,6 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
       click_on 'Test content module'
       click_on 'Destroy'
       page.accept_alert 'Are you sure?'
-      expect(page).to have_content 'Content module along with any associated tasks were successfully destroyed.'
       expect(page).to_not have_content 'Test content module'
     end
   end
