@@ -234,7 +234,7 @@ describe "Do", :type => :feature, :sauce => false do
   #Testing Your Activities portion of the DO tool
   it "- your activities" do
     click_on 'Your Activities'
-    expect(page).to have_content 'Choose Day'
+    expect(page).to have_content 'Today'
     today=Date.today
     expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
     click_on 'Daily Summaries'
@@ -248,9 +248,10 @@ describe "Do", :type => :feature, :sauce => false do
     expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %e, %Y')
     click_on 'Next Day'
     expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
-    click_on '3-Day'
+    click_on 'Visualize'
+    click_on 'Last 3 Days'
     expect(page).to have_content today.strftime('%A, %m/%e')
-    click_on 'Choose Day'
+    click_on 'Day'
     expect(page).to have_css('#datepicker')
   end
 
@@ -277,7 +278,7 @@ describe "Do", :type => :feature, :sauce => false do
 
     click_on 'DO'
     click_on 'Your Activities'
-    expect(page).to have_content 'Choose Day'
+    expect(page).to have_content 'Today'
 
     click_on 'DO'
     click_on 'DO Home'

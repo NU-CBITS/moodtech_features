@@ -40,7 +40,7 @@ require_relative '../../../spec/configure_cloud'
     #Testing Compose a new message
     it "- compose new" do
       click_on 'Compose'
-      expect(page).to have_content 'To Your Moderator'
+      expect(page).to have_content 'To Coach'
       within ("#new_message") do
         fill_in 'message_subject', :with => 'New message'
         fill_in 'message_body', :with => 'This is a test message to my moderator. Hello, Moderator! How are you??'
@@ -52,7 +52,7 @@ require_relative '../../../spec/configure_cloud'
     #Testing reading a new message in inbox
     it "- read new" do
       click_on 'Sent'
-      expect(page).to have_content 'To: Moderator'
+      expect(page).to have_content 'To: Coach'
       click_on 'I like this app'
       expect(page).to have_content 'From You'
       expect(page).to have_content 'This app is really helpful!'
@@ -76,13 +76,13 @@ require_relative '../../../spec/configure_cloud'
       click_on 'Try out the LEARN tool'
       expect(page).to have_content 'I think you will find it helpful.'
       click_on 'Compose'
-      expect(page).to have_content 'To Your Moderator'
+      expect(page).to have_content 'To Coach'
     end
 
     #Testing the cancel button in compose
     it "- cancel button" do
       click_on 'Compose'
-      expect(page).to have_content 'To Your Moderator'
+      expect(page).to have_content 'To Coach'
       click_on 'Cancel'
       expect(page).to have_content 'Inbox'
     end
@@ -90,7 +90,7 @@ require_relative '../../../spec/configure_cloud'
     #Testing the return button in compose
     it "- return button" do
       click_on 'Compose'
-      expect(page).to have_content 'To Your Moderator'
+      expect(page).to have_content 'To Coach'
       click_on 'Return'
       expect(page).to have_content 'Inbox'
     end
