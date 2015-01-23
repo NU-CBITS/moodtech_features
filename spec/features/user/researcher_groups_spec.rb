@@ -93,7 +93,7 @@ describe "Researcher, Groups", :type => :feature, :sauce => false do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[23]/td[6]/a').click
     page.accept_alert 'Are you sure?'
     within '#tasks' do
-      expect(page).to_not have_content 'DO: #1 Awareness'
+      expect(page).to_not have_content 'LEARN: Do - Planning Slideshow 3 of 4'
     end
   end
 end

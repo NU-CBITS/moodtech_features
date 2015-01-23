@@ -42,19 +42,19 @@ describe "Coach, Patients", :type => :feature, :sauce => false do
     expect(page).to have_content 'General Patient Info'
   end
 
-  #Testing viewing Mood and PHQ9 scores viz
-  it "- views Mood/Emotions and PHQ9 viz" do
+  #Testing viewing Mood viz
+  it "- views Mood/Emotions viz" do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
-    within 'viz-container' do
+    within('#viz-container.panel.panel-default') do
       expect(page).to have_content 'Mood'
       expect(page).to have_content 'Positive and Negative Emotions'
       today = Date.today
       one_week_ago = today - 6
       one_month_ago = today - 27
       expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
-      find(:xpath, '//*[@id="tool-layout"]/div[2]/div[1]/div/label[2]').click
+      find(:xpath, '//*[@id="viz-container"]/div[1]/div[1]/div/label[2]').click
       expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
-      find(:xpath, '//*[@id="tool-layout"]/div[2]/div[1]/div/label[1]').click
+      find(:xpath, '//*[@id="viz-container"]/div[1]/div[1]/div/label[1]').click
       click_on 'Previous Period'
       one_week_ago_1 = today - 7
       two_weeks_ago = today - 13
@@ -62,46 +62,30 @@ describe "Coach, Patients", :type => :feature, :sauce => false do
     end
   end
 
-  #Testing managing PHQ9 in patient report
-  it "- managing PHQ9" do
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
-    expect(page).to have_content 'General Patient Info'
-    click_on 'Manage'
-    expect(page).to have_content 'PHQ assessments for '
-    click_on 'New Phq assessment'
-    expect(page).to have_content 'New PHQ assessment for '
-    fill_in 'phq_assessment_q1', :with => '2'
-    fill_in 'phq_assessment_q2', :with => '2'
-    fill_in 'phq_assessment_q3', :with => '2'
-    fill_in 'phq_assessment_q4', :with => '2'
-    fill_in 'phq_assessment_q5', :with => '2'
-    fill_in 'phq_assessment_q6', :with => '2'
-    fill_in 'phq_assessment_q7', :with => '2'
-    fill_in 'phq_assessment_q8', :with => '2'
-    fill_in 'phq_assessment_q9', :with => '2'
-    click_on 'Create Phq assessment'
-    expect(page).to have_content 'Phq assessment was successfully created.'
-    click_on 'Delete'
-    page.accept_alert 'Are you sure?'
-    expect(page).to have_content 'Phq assessment was successfully destroyed.'
-    click_on 'Patient dashboard'
-    expect(page).to have_content 'General Patient Info'
-  end
-
   #Testing viewing activities viz in patient report
   it "- view activities viz" do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
     expect(page).to have_content 'General Patient Info'
     click_on 'Activities visualization'
-    expect(page).to have_content 'Activities Overview'
-    page.find("#nav_main li:nth-child(2) a").click
-    expect(page).to have_content '3 day view'
-    page.find("#nav_main li:nth-child(3) a").click
-    expect(page).to have_content 'Average Pleasure Discrepency:'
-    page.find("#nav_main li:nth-child(1) a").click
-    within '#summary' do
-      expect(page).to have_content 'Most Recent Activities'
-    end
+    expect(page).to have_content 'Today'
+    today=Date.today
+    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
+    click_on 'Daily Summaries'
+    expect(page).to have_content 'Average Accomplishment Discrepancy'
+    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[5]/div[2]/div[3]/div[1]/h4/a').click
+    expect(page).to have_content 'Predicted'
+    click_on 'Edit'
+    expect(page).to have_css('#activity_actual_accomplishment_intensity')
+    click_on 'Previous Day'
+    yesterday=today-1
+    expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %e, %Y')
+    click_on 'Next Day'
+    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
+    click_on 'Visualize'
+    click_on 'Last 3 Days'
+    expect(page).to have_content today.strftime('%A, %m/%e')
+    click_on 'Day'
+    expect(page).to have_css('#datepicker')
   end
 
   #Testing viewing thoughts viz in patient report
