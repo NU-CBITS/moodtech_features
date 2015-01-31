@@ -72,7 +72,7 @@ describe "Coach, Patients", :type => :feature, :sauce => false do
     expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
-    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[5]/div[2]/div[3]/div[1]/h4/a').click
+    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[4]/div[2]/div[2]/div[1]/h4/a').click
     expect(page).to have_content 'Predicted'
     click_on 'Edit'
     expect(page).to have_css('#activity_actual_accomplishment_intensity')
