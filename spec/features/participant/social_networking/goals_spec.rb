@@ -1,15 +1,15 @@
-#filename: goals_spec.rb
+# filename: goals_spec.rb
 
-#this file is to test the messaging functionality
+# this file is to test the messaging functionality
 
 require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
-#to run locally comment this block out
-# describe "Goals", :type => :feature, :sauce => true do
+# to run locally comment this block out
+# describe 'Goals', type: :feature, sauce: true do
 #   before(:each) do
 #     visit ENV['Base_URL']+ '/participants/sign_in'
-#     within("#new_participant") do
+#     within('#new_participant') do
 #       fill_in 'participant_email', :with => ENV['Participant_Email']
 #       fill_in 'participant_password', :with => ENV['Participant_Password']
 #     end
@@ -19,15 +19,14 @@ require_relative '../../../../spec/configure_cloud'
 #     expect(page).to have_content 'add a goal'
 #   end
 
-#to run on Sauce Labs comment this block out
-describe "Goals", :type => :feature, :sauce => false do
-
+# to run on Sauce Labs comment this block out
+describe 'Goals', type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
+    visit ENV['Base_URL'] + '/participants/sign_in'
+    within('#new_participant') do
+      fill_in 'participant_email', with: ENV['Participant_Email']
+      fill_in 'participant_password', with: ENV['Participant_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -35,11 +34,11 @@ describe "Goals", :type => :feature, :sauce => false do
     expect(page).to have_content 'add a goal'
   end
 
-#tests
-  it "- create a goal" do
+  # tests
+  it '- create a goal' do
     click_on '+ add a goal'
     expect(page).to have_content 'What is your goal?'
-    fill_in 'new-goal-description', :with => 'eat a whole pizza'
+    fill_in 'new-goal-description', with: 'eat a whole pizza'
     choose '8 weeks (end of study)'
     click_on 'Save'
     expect(page).to have_content '+ add a goal'
@@ -47,12 +46,13 @@ describe "Goals", :type => :feature, :sauce => false do
     visit ENV['Base_URL']
     expect(page).to have_content 'created a Goal: eat a whole pizza'
     find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335069"]/div[2]/button[5]').click
-    today =  Date.today
+    today = Date.today
     end_of_study = today + 4
-    expect(page).to have_content 'due ' + end_of_study.strftime('%b. %e, %Y') + ' at 12:00AM'
+    expect(page).to have_content 'due '
+    + end_of_study.strftime('%b. %e, %Y') + ' at 12:00AM'
   end
 
-  it "- complete a goal" do
+  it '- complete a goal' do
     find(:xpath, '//*[@id="goal-809335042"]/div/button[1]/span/i').click
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
@@ -61,7 +61,7 @@ describe "Goals", :type => :feature, :sauce => false do
     expect(page).to have_content 'completed a Goal: p1 alpha'
   end
 
-  it "- delete a goal" do
+  it '- delete a goal' do
     find(:xpath, '//*[@id="goal-614371357"]/div/button[3]/i').click
     expect(page).to_not have_content 'p1 gamma'
     click_on 'Deleted'
@@ -69,7 +69,7 @@ describe "Goals", :type => :feature, :sauce => false do
     expect(page).to have_content 'p1 gamma'
   end
 
-  it "- reinstate a previously deleted goal" do
+  it '- reinstate a previously deleted goal' do
     click_on 'Deleted'
     expect(page).to have_content 'p1 delta'
     find(:xpath, '//*[@id="goal-916373174"]/div/button/i').click

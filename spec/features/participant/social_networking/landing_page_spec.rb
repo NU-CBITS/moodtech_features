@@ -1,11 +1,11 @@
-#filename: landing_page_spec.rb
+# filename: landing_page_spec.rb
 
-#this file is to test the messaging functionality
+# this file is to test the messaging functionality
 
 require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
-#to run locally comment this block out
+# to run locally comment this block out
 # describe "Social Networking landing page", :type => :feature, :sauce => true do
 #   before(:each) do
 #     visit ENV['Base_URL']+ '/participants/sign_in'
@@ -18,9 +18,8 @@ require_relative '../../../../spec/configure_cloud'
 #     expect(page).to have_content "What's on your mind?"
 #   end
 
-#to run on Sauce Labs comment this block out
+# to run on Sauce Labs comment this block out
 describe "Social Networking landing page", :type => :feature, :sauce => false do
-
   before(:each) do
     Capybara.default_driver = :selenium
     visit ENV['Base_URL']+ '/participants/sign_in'
