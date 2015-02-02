@@ -1,5 +1,5 @@
-#Gemfile
-source "https://rubygems.org"
+# Gemfile
+source 'https://rubygems.org'
 
 # gems
 gem 'capybara', '2.4.4'
