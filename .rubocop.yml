@@ -1,0 +1,46 @@
+#filename: .rubocop.yml
+
+AllCops:
+  Exclude:
+    - Rakefile
+
+AbcSize:
+  Enabled: false
+
+ClassLength:
+  Enabled: false
+
+Documentation:
+  Exclude:
+    - spec/**/*
+
+DotPosition:
+  Enabled: false
+
+HandleExceptions:
+  Enabled: false
+
+IfUnlessModifier:
+  Enabled: false
+
+LineLength:
+  Exclude:
+    - spec/**/*
+
+MethodLength:
+  Max: 25
+
+PredicateName:
+  Enabled: false
+
+RegexpLiteral:
+  Enabled: false
+
+StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/GuardClause:
+  Enabled: false
+
+WordArray:
+  Enabled: false
