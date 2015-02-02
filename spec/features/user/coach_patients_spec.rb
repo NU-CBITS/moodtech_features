@@ -52,9 +52,9 @@ describe "Coach, Patients", :type => :feature, :sauce => false do
       one_week_ago = today - 6
       one_month_ago = today - 27
       expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
-      find(:xpath, '//*[@id="viz-container"]/div[2]/div[1]/div/label[2]').click
+      find(:xpath, '//*[@id="viz-container"]/div[1]/div[1]/div/label[2]').click
       expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
-      find(:xpath, '//*[@id="viz-container"]/div[2]/div[1]/div/label[1]').click
+      find(:xpath, '//*[@id="viz-container"]/div[1]/div[1]/div/label[1]').click
       click_on 'Previous Period'
       one_week_ago_1 = today - 7
       two_weeks_ago = today - 13
