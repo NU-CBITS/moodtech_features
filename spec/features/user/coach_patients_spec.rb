@@ -1,17 +1,10 @@
-#filename: coach_patients_spec.rb
-
-#this is to test the users functionality on the researcher dashboard.
+# filename: coach_patients_spec.rb
 
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-#to run locally comment this line out
-# describe "Coach, Patients", type: :feature, sauce: true do
-
-#to run on Sauce Labs comment this block out
-describe "Coach, Patients", type: :feature, sauce: false do
+describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
   before(:each) do
-    Capybara.default_driver = :selenium
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Clinician_Email']
@@ -19,6 +12,7 @@ describe "Coach, Patients", type: :feature, sauce: false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     click_on 'Arms'
     expect(page).to have_content 'Listing Arms'
     click_on 'Arm 1'
@@ -29,20 +23,20 @@ describe "Coach, Patients", type: :feature, sauce: false do
     expect(page).to have_content 'Patient Dashboard'
   end
 
-#tests
-  #Testing view patient dashboard
-  it "- view patients dashboard" do
-    page.find("#patients")[:class].include?("table table hover")
+  # tests
+  # Testing view patient dashboard
+  it '- view patients dashboard' do
+    page.find('#patients')[:class].include?('table table hover')
   end
 
-  #Testing specific patient report
-  it "- view patient report" do
+  # Testing specific patient report
+  it '- view patient report' do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
     expect(page).to have_content 'General Patient Info'
   end
 
-  #Testing viewing Mood viz
-  it "- views Mood/Emotions viz" do
+  # Testing viewing Mood viz
+  it '- views Mood/Emotions viz' do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
     within('#viz-container.panel.panel-default') do
       expect(page).to have_content 'Mood'
@@ -61,8 +55,8 @@ describe "Coach, Patients", type: :feature, sauce: false do
     end
   end
 
-  #Testing viewing activities viz in patient report
-  it "- view activities viz" do
+  # Testing viewing activities viz in patient report
+  it '- view activities viz' do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
     expect(page).to have_content 'General Patient Info'
     click_on 'Activities visualization'
@@ -76,7 +70,7 @@ describe "Coach, Patients", type: :feature, sauce: false do
     click_on 'Edit'
     expect(page).to have_css('#activity_actual_accomplishment_intensity')
     click_on 'Previous Day'
-    yesterday=today-1
+    yesterday = today - 1
     expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %e, %Y')
     click_on 'Next Day'
     expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
@@ -87,11 +81,11 @@ describe "Coach, Patients", type: :feature, sauce: false do
     expect(page).to have_css('#datepicker')
   end
 
-  #Testing viewing thoughts viz in patient report
-  it "- view thoughts viz" do
+  # Testing viewing thoughts viz in patient report
+  it '- view thoughts viz' do
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
     expect(page).to have_content 'General Patient Info'
     click_on 'Thoughts visualization'
-    page.find("#ThoughtVizContainer")
+    page.find('#ThoughtVizContainer')
   end
 end

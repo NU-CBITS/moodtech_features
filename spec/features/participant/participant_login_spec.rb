@@ -1,21 +1,10 @@
 # filename: participant_login_spec.rb
 
-# this is to test the login functionality.
-
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-# to run locally comment this line out
-# describe 'Login', type: :feature, sauce: true do
-
-# to run on Sauce Labs comment this block out
-describe 'Login', type: :feature, sauce: false do
-  before(:each) do
-    Capybara.default_driver = :selenium
-  end
-
+describe 'Login', type: :feature, sauce: sauce_labs do
   # tests
-
   # Testing a successful login
   it '- success' do
     visit ENV['Base_URL'] + '/participants/sign_in'

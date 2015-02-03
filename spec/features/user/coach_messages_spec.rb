@@ -1,17 +1,10 @@
 # filename: coach_messages_spec.rb
 
-# this is to test the users functionality on the researcher dashboard.
-
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-# to run locally comment this line out
-# describe 'Coach, Messages', type: :feature, sauce: true do
-
-# to run on Sauce Labs comment this block out
-describe 'Coach, Messages', type: :feature, sauce: false do
+describe 'Coach, Messages', type: :feature, sauce: sauce_labs do
   before(:each) do
-    Capybara.default_driver = :selenium
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Clinician_Email']
@@ -19,6 +12,7 @@ describe 'Coach, Messages', type: :feature, sauce: false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     click_on 'Arms'
     expect(page).to have_content 'Listing Arms'
     click_on 'Arm 1'
@@ -104,8 +98,8 @@ describe 'Coach, Messages', type: :feature, sauce: false do
     expect(page).to have_content 'Testing compose functionality'
   end
 
-  #Testing search functionality
-  it "- search" do
+  # Testing search functionality
+  it '- search' do
     select 'TFD-1111', from: 'search'
     click_on 'Search'
     expect(page).to have_content 'I like this app'

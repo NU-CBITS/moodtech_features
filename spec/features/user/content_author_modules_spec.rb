@@ -1,17 +1,12 @@
-#filename: content_author_modules_spec.rb
+# filename: content_author_modules_spec.rb
 
-#this is to test the users Arm 1ctionality on the researcher dashboard.
+# this is to test the users Arm 1ctionality on the researcher dashboard.
 
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-#to run locally comment this line out
-# describe "Content Author, Modules", type: :feature, sauce: true do
-
-#to run on Sauce Labs comment this block out
-describe "Content Author, Modules", type: :feature, sauce: false do
+describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
   before(:each) do
-    Capybara.default_driver = :selenium
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Content_Author_Email']
@@ -19,6 +14,7 @@ describe "Content Author, Modules", type: :feature, sauce: false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     click_on 'Arms'
     expect(page).to have_content 'Listing Arms'
     click_on 'Arm 1'
@@ -32,6 +28,7 @@ describe "Content Author, Modules", type: :feature, sauce: false do
 
   #Testing creating a module
   it "- new module" do
+    puts 'setting sauce_labs = false in test' + sauce_labs
     click_on 'New'
     expect(page).to have_content 'New Content Module'
     fill_in 'content_module_title', with: 'Test content module'
