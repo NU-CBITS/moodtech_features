@@ -1,7 +1,5 @@
 # filename: content_author_modules_spec.rb
 
-# this is to test the users Arm 1ctionality on the researcher dashboard.
-
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
@@ -24,11 +22,9 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Listing Content Modules'
   end
 
-#tests
-
-  #Testing creating a module
-  it "- new module" do
-    puts 'setting sauce_labs = false in test' + sauce_labs
+  # tests
+  # Testing creating a module
+  it '- new module' do
     click_on 'New'
     expect(page).to have_content 'New Content Module'
     fill_in 'content_module_title', with: 'Test content module'
@@ -39,8 +35,8 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Position: 8 / 8'
   end
 
-  #Testing updating a module
-  it "- edit module" do
+  # Testing updating a module
+  it '- edit module' do
     click_on '#1 Awareness'
     click_on 'Edit'
     select 'THINK', from: 'content_module_bit_core_tool_id'
@@ -48,6 +44,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     click_on 'Update'
     expect(page).to have_content 'Content module was successfully updated.'
     expect(page).to have_content 'Tool: THINK'
+
     click_on 'Edit'
     select 'DO', from: 'content_module_bit_core_tool_id'
     fill_in 'content_module_position', with: '2'
@@ -56,9 +53,9 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Tool: DO'
   end
 
-  #Testing destroying a module
-  it "- destroy module" do
-    if page.has_text?("Test content module")
+  # Testing destroying a module
+  it '- destroy module' do
+    if page.has_text?('Test content module')
       click_on 'Test content module'
       click_on 'Destroy'
       page.accept_alert 'Are you sure?'
@@ -73,8 +70,8 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     end
   end
 
-  #Testing creating a provider
-  it "- create a provider" do
+  # Testing creating a provider
+  it '- create a provider' do
     click_on 'New Provider'
     expect(page).to have_content 'New Content Provider'
     select 'LEARN: Home Introduction', from: 'content_provider_bit_core_content_module_id'
@@ -93,8 +90,8 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Slideshow: Home Intro'
   end
 
-  #Testing updating a provider
-  it "- updating a provider" do
+  # Testing updating a provider
+  it '- updating a provider' do
     click_on 'Home Introduction'
     expect(page).to have_content 'New Provider'
     click_on '1 slideshow provider'
@@ -114,8 +111,8 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Position: 1 / 4'
   end
 
-  #Testing destroying a provider
-  it "- destroying a provider" do
+  # Testing destroying a provider
+  it '- destroying a provider' do
     click_on 'Home Introduction'
     expect(page).to have_content 'Edit'
     click_on '4 slideshow provider'
