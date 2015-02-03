@@ -1,13 +1,13 @@
-#filename: learn_spec.rb
+# filename: learn_spec.rb
 
-#this file is to test the functionality of logging in, selecting the "LEARN" section,
+# this file is to test the functionality of logging in, selecting the "LEARN" section,
 # and reading through the first lesson "Think, Feel, Do Your Way Out of Depression"
 
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-#to run locally comment this block out
-# describe "Learn", type: :feature, sauce: true do
+# to run locally comment this block out
+# describe 'Learn', type: :feature, sauce: true do
 #   before(:each) do
 #     visit ENV['Base_URL'] + '/participants/sign_in'
 #     within('#new_participant') do
@@ -16,12 +16,13 @@ require_relative '../../../spec/configure_cloud'
 #     end
 #     click_on 'Sign in'
 #     expect(page).to have_content 'Signed in successfully'
+#
 #     visit ENV['Base_URL'] + '/navigator/contexts/LEARN'
 #     expect(page).to have_content 'You have read'
 #   end
 
-#to run on Sauce Labs comment this block out
-describe "Learn", type: :feature, sauce: false do
+# to run on Sauce Labs comment this block out
+describe 'Learn', type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
     visit ENV['Base_URL'] + '/participants/sign_in'
@@ -31,12 +32,13 @@ describe "Learn", type: :feature, sauce: false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     visit ENV['Base_URL'] + '/navigator/contexts/LEARN'
     expect(page).to have_content 'Lessons'
   end
 
-#tests
-  it "- read Lesson 1" do
+  # tests
+  it '- read Lesson 1' do
     expect(page).to have_content 'Week 1'
     click_on 'Do - Awareness Introduction'
     expect(page).to have_content 'This is just the beginning...'
@@ -44,17 +46,19 @@ describe "Learn", type: :feature, sauce: false do
     today = Date.today
     expect(page).to have_content 'Read on ' + today.strftime('%b %e')
     expect(page).to have_content 'Printable'
+
     visit ENV['Base_URL']
     expect(page).to have_content 'read a Lesson: Do - Awareness Introduction'
   end
 
-  it "- print a read lesson" do
+  it '- print a read lesson' do
     expect(page).to have_content 'Week 1'
     today = Date.today
     expect(page).to have_content 'Read on ' + today.strftime('%b %e')
     click_on 'Printable'
     expect(page).to have_content 'Print'
     expect(page).to have_content 'Return to Lessons'
+
     click_on 'Return to Lessons'
     expect(page).to have_content 'Week 1'
   end

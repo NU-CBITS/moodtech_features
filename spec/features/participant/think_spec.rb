@@ -15,6 +15,7 @@ require_relative '../../../spec/configure_cloud'
 #     end
 #     click_on 'Sign in'
 #     expect(page).to have_content 'Signed in successfully'
+#
 #     visit ENV['Base_URL'] + '/navigator/contexts/THINK'
 #     expect(page).to have_content 'Add a New Thought'
 #   end
@@ -30,6 +31,7 @@ describe 'Think', type: :feature, sauce: false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     visit ENV['Base_URL'] + '/navigator/contexts/THINK'
     expect(page).to have_content 'Add a New Thought'
   end
@@ -48,22 +50,24 @@ describe 'Think', type: :feature, sauce: false do
 
     click_on 'Continue'
     expect(page).to have_content 'Now, your turn...'
-    fill_in 'thought_content', with: 'Testing helpful thought'
 
+    fill_in 'thought_content', with: 'Testing helpful thought'
     click_on 'Continue'
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'Now list another harmful thought...'
-    fill_in 'thought_content', with: 'Testing negative thought'
 
+    fill_in 'thought_content', with: 'Testing negative thought'
     click_on 'Continue'
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'Just one more'
+
     fill_in 'thought_content', with: 'Forced negative thought'
     click_on 'Continue'
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Good work'
+
     click_on 'Continue'
     expect(page).to have_content 'Add a New Thought'
   end
@@ -96,6 +100,7 @@ describe 'Think', type: :feature, sauce: false do
     select 'Personalization', from: 'thought_pattern_id'
     click_on 'Continue'
     expect(page).to have_content 'Thought saved'
+
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
     click_on 'Continue'
     expect(page).to have_content 'Testing helpful thought'
@@ -117,6 +122,7 @@ describe 'Think', type: :feature, sauce: false do
     select 'Personalization', from: 'thought_pattern_id'
     click_on 'Continue'
     expect(page).to have_content 'Thought saved'
+
     if page.has_text? 'Good work'
       expect(page).to have_content 'We know this can be challenging...'
       click_on 'Continue'
@@ -142,35 +148,43 @@ describe 'Think', type: :feature, sauce: false do
     click_on 'Continue'
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'Because what you THINK, FEEL, Do'
+
     click_on 'Continue'
     expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
     fill_in 'thought_act_as_if', with: 'Example act-as-if'
     click_on 'Continue'
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'You said that you thought...'
+
     click_on 'Continue'
     expect(page).to have_content 'Come up with a challenging'
     fill_in 'thought[challenging_thought]', with: 'Example challenge'
     click_on 'Continue'
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'Because what you THINK, FEEL, Do'
+
     click_on 'Continue'
     expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
     fill_in 'thought_act_as_if', with: 'Example act-as-if'
     click_on 'Continue'
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'You said that you thought...'
+
     click_on 'Continue'
     expect(page).to have_content 'Come up with a challenging'
     fill_in 'thought[challenging_thought]', with: 'Example challenge'
     click_on 'Continue'
     expect(page).to have_content 'Thought saved'
     expect(page).to have_content 'Because what you THINK, FEEL, Do'
+
     click_on 'Continue'
     expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
     fill_in 'thought_act_as_if', with: 'Example act-as-if'
     click_on 'Continue'
     expect(page).to have_content 'Thought saved'
+    expect(page).to have_content 'Good work'
+
+    click_on 'Continue'
     expect(page).to have_content 'Add a New Thought'
   end
 
@@ -185,6 +199,7 @@ describe 'Think', type: :feature, sauce: false do
     click_on 'Continue'
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Thought saved'
+
     click_on 'Continue'
     expect(page).to have_content 'Add a New Thought'
   end
@@ -210,11 +225,13 @@ describe 'Think', type: :feature, sauce: false do
     expect(page).to have_content 'You are what you think...'
     click_on 'Skip'
     expect(page).to have_content 'Now, your turn...'
+
     click_on 'THINK'
     click_on '#2 Patterns'
     expect(page).to have_content 'Like we said, you are what you think... '
     click_on 'Skip'
     expect(page).to have_content 'All-or-Nothing'
+
     click_on 'THINK'
     click_on '#3 Reshape'
     expect(page).to have_content 'Challenging Harmful Thoughts'
@@ -232,15 +249,19 @@ describe 'Think', type: :feature, sauce: false do
     click_on 'THINK'
     click_on '#2 Patterns'
     expect(page).to have_content 'Like we said, you are what you think...'
+
     click_on 'THINK'
     click_on '#1 Identifying'
     expect(page).to have_content 'You are what you think...'
+
     click_on 'THINK'
     click_on '#3 Reshape'
     expect(page).to have_content 'Challenging Harmful Thoughts'
+
     click_on 'THINK'
     click_on 'Add a New Thought'
     expect(page).to have_content 'Add a New Harmful Thought'
+
     click_on 'THINK'
     click_on 'Thoughts'
     expect(page).to have_content 'Harmful Thoughts'
@@ -253,6 +274,7 @@ describe 'Think', type: :feature, sauce: false do
     find('.thoughtviz_text.viz-clickable', text: 'Magnification or Catastro...').click
     expect(page).to have_content "Some Thoughts You've Entered"
     expect(page).to have_content 'Testing add a new thought'
+
     click_on 'Close'
     expect(page).to have_content 'Click a bubble for more info'
   end

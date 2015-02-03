@@ -1,12 +1,12 @@
-#filename: participant_bugs_spec.rb
+# filename: participant_bugs_spec.rb
 
-#this file is to test bug fixes
+# this file is to test bug fixes
 
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-#to run locally comment this block out
-# describe "Participant Bugs", type: :feature, sauce: true do
+# to run locally comment this block out
+# describe 'Participant Bugs', type: :feature, sauce: true do
 #   before(:each) do
 #     visit ENV['Base_URL'] + '/participants/sign_in'
 #     within('#new_participant') do
@@ -17,8 +17,8 @@ require_relative '../../../spec/configure_cloud'
 #     expect(page).to have_content 'Signed in successfully'
 #   end
 
-#to run on Sauce Labs comment this block out
-describe "Participant Bugs", type: :feature, sauce: false do
+# to run on Sauce Labs comment this block out
+describe 'Participant Bugs', type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
     visit ENV['Base_URL'] + '/participants/sign_in'
@@ -30,6 +30,5 @@ describe "Participant Bugs", type: :feature, sauce: false do
     expect(page).to have_content 'Signed in successfully'
   end
 
-#tests
-
+  # tests
 end
