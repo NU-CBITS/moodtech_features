@@ -6,12 +6,12 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this block out
-# describe "Feel", :type => :feature, :sauce => true do
+# describe "Feel", type: :feature, sauce: true do
 #   before(:each) do
-#     visit ENV['Base_URL']+ '/participants/sign_in'
-#     within("#new_participant") do
-#       fill_in 'participant_email', :with => ENV['Alt_Participant_Email']
-#       fill_in 'participant_password', :with => ENV['Alt_Participant_Password']
+#     visit ENV['Base_URL'] + '/participants/sign_in'
+#     within('#new_participant') do
+#       fill_in 'participant_email', with: ENV['Alt_Participant_Email']
+#       fill_in 'participant_password', with: ENV['Alt_Participant_Password']
 #     end
 #     click_on 'Sign in'
 #     expect(page).to have_content 'Signed in successfully'
@@ -20,14 +20,13 @@ require_relative '../../../spec/configure_cloud'
 #   end
 
 #to run on Sauce Labs comment this block out
-describe "Feel", :type => :feature, :sauce => false do
-
+describe "Feel", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Alt_Participant_Email']
-      fill_in 'participant_password', :with => ENV['Alt_Participant_Password']
+    visit ENV['Base_URL'] + '/participants/sign_in'
+    within('#new_participant') do
+      fill_in 'participant_email', with: ENV['Alt_Participant_Email']
+      fill_in 'participant_password', with: ENV['Alt_Participant_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -41,16 +40,16 @@ describe "Feel", :type => :feature, :sauce => false do
   it "- tracking your mood and emotions" do
     click_on 'Tracking Your Mood & Emotions'
     expect(page).to have_content 'Rate your Mood'
-    select '6', :from => 'mood[rating]'
+    select '6', from: 'mood[rating]'
     click_on 'Continue'
     expect(page).to have_content 'Mood saved'
     expect(page).to have_content 'You just rated your mood as a 6 (Good)'
     expect(page).to have_content 'Rate your Emotions'
-    select 'anxious', :from => 'emotional_rating_emotion_id'
-    select 'negative', :from => 'emotional_rating_is_positive'
-    select '4', :from => 'emotional_rating[rating]'
+    select 'anxious', from: 'emotional_rating_emotion_id'
+    select 'negative', from: 'emotional_rating_is_positive'
+    select '4', from: 'emotional_rating[rating]'
     click_on 'Add Emotion'
-    fill_in 'emotional_rating_name', :with => 'crazy'
+    fill_in 'emotional_rating_name', with: 'crazy'
     find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[3]/div/form/div[4]/select/option[1]').click
     find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[3]/div/form/div[5]/div/select/option[4]').click
     click_on 'Continue'

@@ -6,17 +6,16 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this line out
-# describe "Researcher, Users", :type => :feature, :sauce => true do
+# describe "Researcher, Users", type: :feature, sauce: true do
 
 #to run on Sauce Labs comment this block out
-describe "Research, Users", :type => :feature, :sauce => false do
-
+describe "Research, Users", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Researcher_Email']
-      fill_in 'user_password', :with => ENV['Researcher_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Researcher_Email']
+      fill_in 'user_password', with: ENV['Researcher_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -31,7 +30,7 @@ describe "Research, Users", :type => :feature, :sauce => false do
   #Testing creating a Researcher
   it "- create a researcher" do
     click_on 'New'
-    fill_in 'user_email', :with => 'researcher@test.com'
+    fill_in 'user_email', with: 'researcher@test.com'
     check 'user_user_roles_researcher'
     click_on 'Create'
     expect(page).to have_content 'User was successfully created.'
@@ -81,7 +80,7 @@ describe "Research, Users", :type => :feature, :sauce => false do
   #Testing creating a clinician
   it "- create a clincian" do
     click_on 'New'
-    fill_in 'user_email', :with => 'clinician@test.com'
+    fill_in 'user_email', with: 'clinician@test.com'
     check 'user_user_roles_clinician'
     click_on 'Create'
     expect(page).to have_content 'User was successfully created.'
@@ -131,7 +130,7 @@ describe "Research, Users", :type => :feature, :sauce => false do
   #Testing creating a content author
   it "- create a content author" do
     click_on 'New'
-    fill_in 'user_email', :with => 'contentauthor@test.com'
+    fill_in 'user_email', with: 'contentauthor@test.com'
     check 'user_user_roles_content_author'
     click_on 'Create'
     expect(page).to have_content 'User was successfully created.'

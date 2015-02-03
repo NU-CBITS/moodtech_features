@@ -6,17 +6,16 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this line out
-# describe "Content Author, Slides", :type => :feature, :sauce => true do
+# describe "Content Author, Slides", type: :feature, sauce: true do
 
 #to run on Sauce Labs comment this block out
-describe "Content Author, Slides", :type => :feature, :sauce => false do
-
+describe "Content Author, Slides", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Content_Author_Email']
-      fill_in 'user_password', :with => ENV['Content_Author_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Content_Author_Email']
+      fill_in 'user_password', with: ENV['Content_Author_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -37,7 +36,7 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
     click_on 'Add Slide'
     expect(page).to have_content 'New Slide for Lesson'
     expect(page).to have_content 'Testing adding/updating slides/lessons'
-    fill_in 'slide_title', :with => 'Test slide 2'
+    fill_in 'slide_title', with: 'Test slide 2'
     uncheck 'slide_is_title_visible'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/form/div[4]/div/textarea').set 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae viverra leo, at tincidunt enim. Nulla vitae enim nulla. Suspendisse.'
     click_on 'Create'
@@ -95,8 +94,8 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
     click_on 'Add Video Slide'
     expect(page).to have_content 'New Slide for Lesson'
     expect(page).to have_content 'Testing adding/updating slides/lessons'
-    fill_in 'slide_title', :with => 'Test video slide 2'
-    fill_in 'slide_options_vimeo_id', :with => '111087687'
+    fill_in 'slide_title', with: 'Test video slide 2'
+    fill_in 'slide_options_vimeo_id', with: '111087687'
     uncheck 'slide_is_title_visible'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/form/div[5]/div/textarea').set 'This is a video slide'
     click_on 'Create'
@@ -152,7 +151,7 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
     expect(page).to have_content 'Slide 2'
     click_on 'Add Slide'
     expect(page).to have_content 'New Slide'
-    fill_in 'slide_title', :with => 'Test slide 2'
+    fill_in 'slide_title', with: 'Test slide 2'
     uncheck 'slide_is_title_visible'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/form/div[4]/div/textarea').set  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae viverra leo, at tincidunt enim. Nulla vitae enim nulla. Suspendisse.'
     click_on 'Create'
@@ -213,8 +212,8 @@ describe "Content Author, Slides", :type => :feature, :sauce => false do
     expect(page).to have_content 'Slide 2'
     click_on 'Add Video Slide'
     expect(page).to have_content 'New Slide'
-    fill_in 'slide_title', :with => 'Test video slide 2'
-    fill_in 'slide_options_vimeo_id', :with => '107231188'
+    fill_in 'slide_title', with: 'Test video slide 2'
+    fill_in 'slide_options_vimeo_id', with: '107231188'
     uncheck 'slide_is_title_visible'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/form/div[5]/div/textarea').set 'This is a video slide'
     click_on 'Create'

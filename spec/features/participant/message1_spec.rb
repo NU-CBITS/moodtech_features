@@ -6,12 +6,12 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this block out
-# describe "Messages", :type => :feature, :sauce => true do
+# describe "Messages", type: :feature, sauce: true do
 #   before(:each) do
-#     visit ENV['Base_URL']+ '/participants/sign_in'
-#     within("#new_participant") do
-#       fill_in 'participant_email', :with => ENV['Participant_Email']
-#       fill_in 'participant_password', :with => ENV['Participant_Password']
+#     visit ENV['Base_URL'] + '/participants/sign_in'
+#     within('#new_participant') do
+#       fill_in 'participant_email', with: ENV['Participant_Email']
+#       fill_in 'participant_password', with: ENV['Participant_Password']
 #     end
 #     click_on 'Sign in'
 #     expect(page).to have_content 'Signed in successfully'
@@ -20,14 +20,13 @@ require_relative '../../../spec/configure_cloud'
 #   end
 
 #to run on Sauce Labs comment this block out
-  describe "Messages", :type => :feature, :sauce => false do
-
+  describe "Messages", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/participants/sign_in'
-    within("#new_participant") do
-      fill_in 'participant_email', :with => ENV['Participant_Email']
-      fill_in 'participant_password', :with => ENV['Participant_Password']
+    visit ENV['Base_URL'] + '/participants/sign_in'
+    within('#new_participant') do
+      fill_in 'participant_email', with: ENV['Participant_Email']
+      fill_in 'participant_password', with: ENV['Participant_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -42,8 +41,8 @@ require_relative '../../../spec/configure_cloud'
       click_on 'Compose'
       expect(page).to have_content 'To Coach'
       within ("#new_message") do
-        fill_in 'message_subject', :with => 'New message'
-        fill_in 'message_body', :with => 'This is a test message to my moderator. Hello, Moderator! How are you??'
+        fill_in 'message_subject', with: 'New message'
+        fill_in 'message_body', with: 'This is a test message to my moderator. Hello, Moderator! How are you??'
       end
       click_on 'Send'
       expect(page).to have_content 'Message saved'
@@ -65,7 +64,7 @@ require_relative '../../../spec/configure_cloud'
       click_on 'Reply'
       expect(page).to have_content 'To Coach'
       within ("#new_message") do
-        fill_in 'message_body', :with => 'Got it. Thanks!'
+        fill_in 'message_body', with: 'Got it. Thanks!'
       end
       click_on 'Send'
       expect(page).to have_content 'Message saved'

@@ -6,11 +6,10 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this line out
-# describe "Login", :type => :feature, :sauce => true do
+# describe "Login", type: :feature, sauce: true do
 
 #to run on Sauce Labs comment this block out
-describe "Login", :type => :feature, :sauce => false do
-
+describe "Login", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
   end
@@ -19,10 +18,10 @@ describe "Login", :type => :feature, :sauce => false do
 
   #Testing a successful login
   it "- success" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['User_Email']
+      fill_in 'user_password', with: ENV['User_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -30,10 +29,10 @@ describe "Login", :type => :feature, :sauce => false do
 
   #Testing a failed login
   it "- failure" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => 'asdf@test.com'
-      fill_in 'user_password', :with => 'asdf'
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: 'asdf@test.com'
+      fill_in 'user_password', with: 'asdf'
     end
     click_on 'Sign in'
     expect(page).to have_content 'Invalid email address or password'
@@ -41,13 +40,13 @@ describe "Login", :type => :feature, :sauce => false do
 
   #Testing redirect to login screen
   it "- not logged in, redirect" do
-    visit ENV['Base_URL']+ '/think_feel_do_dashboard'
+    visit ENV['Base_URL'] + '/think_feel_do_dashboard'
     expect(page).to have_content 'You need to sign in or sign up before continuing'
   end
 
   #Testing the Introduction Slideshow if a person hits it who isn't logged in
   it "- not logged in, intro slideshow" do
-    visit ENV['Base_URL']+ '/users/sign_in'
+    visit ENV['Base_URL'] + '/users/sign_in'
     click_on 'Introduction to ThinkFeelDo'
     expect(page).to have_content 'Welcome to ThiFeDo'
     click_on 'Done'
@@ -56,11 +55,11 @@ describe "Login", :type => :feature, :sauce => false do
 
   #Testing Forgot Your Password? functionality
   it "- forgot password" do
-    visit ENV['Base_URL']+ '/users/sign_in'
+    visit ENV['Base_URL'] + '/users/sign_in'
     click_on 'Forgot your password?'
     expect(page).to have_content 'Forgot your password?'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['User_Email']
     end
     click_on 'Send me reset password instructions'
     expect(page).to have_content 'You will receive an email with instructions on how to reset your password in a few minutes.'
@@ -68,10 +67,10 @@ describe "Login", :type => :feature, :sauce => false do
 
   #Testing authorization - Clinician
   it "- clinician authorization" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Clinician_Email']
-      fill_in 'user_password', :with => ENV['Clinician_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Clinician_Email']
+      fill_in 'user_password', with: ENV['Clinician_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -90,10 +89,10 @@ describe "Login", :type => :feature, :sauce => false do
 
   #Testing authorization - Researcher
   it "- researcher authorization" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Researcher_Email']
-      fill_in 'user_password', :with => ENV['Researcher_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Researcher_Email']
+      fill_in 'user_password', with: ENV['Researcher_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -115,10 +114,10 @@ describe "Login", :type => :feature, :sauce => false do
 
   #Testing authorization - Content Author
   it "- content author authorization" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Content_Author_Email']
-      fill_in 'user_password', :with => ENV['Content_Author_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Content_Author_Email']
+      fill_in 'user_password', with: ENV['Content_Author_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -131,10 +130,10 @@ describe "Login", :type => :feature, :sauce => false do
 
   #Testing authorization - Super User
   it "- super user authorization" do
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['User_Email']
-      fill_in 'user_password', :with => ENV['User_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['User_Email']
+      fill_in 'user_password', with: ENV['User_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'

@@ -6,17 +6,16 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this line out
-# describe "Coach, Site Messages", :type => :feature, :sauce => true do
+# describe "Coach, Site Messages", type: :feature, sauce: true do
 
 #to run on Sauce Labs comment this block out
-describe "Coach, Site Messages", :type => :feature, :sauce => false do
-
+describe "Coach, Site Messages", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Clinician_Email']
-      fill_in 'user_password', :with => ENV['Clinician_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Clinician_Email']
+      fill_in 'user_password', with: ENV['Clinician_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -38,9 +37,9 @@ describe "Coach, Site Messages", :type => :feature, :sauce => false do
     click_on 'New'
     expect(page).to have_content 'New site message'
     expect(page).to have_content 'stepped_care-no-reply@northwestern.edu'
-    select 'TFD-1111', :from => 'site_message_participant_id'
-    fill_in 'site_message_subject', :with => 'Testing site messaging'
-    fill_in 'site_message_body', :with => 'This message is intended to test the functionality of site messaging.'
+    select 'TFD-1111', from: 'site_message_participant_id'
+    fill_in 'site_message_subject', with: 'Testing site messaging'
+    fill_in 'site_message_body', with: 'This message is intended to test the functionality of site messaging.'
     click_on 'Send'
     expect(page).to have_content 'Site message was successfully created.'
     expect(page).to have_content 'Participant: TFD-1111'

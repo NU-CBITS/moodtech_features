@@ -6,17 +6,16 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this line out
-# describe "Content Author, Slideshows", :type => :feature, :sauce => true do
+# describe "Content Author, Slideshows", type: :feature, sauce: true do
 
 #to run on Sauce Labs comment this block out
-describe "Content Author, Slideshows", :type => :feature, :sauce => false do
-
+describe "Content Author, Slideshows", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Content_Author_Email']
-      fill_in 'user_password', :with => ENV['Content_Author_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Content_Author_Email']
+      fill_in 'user_password', with: ENV['Content_Author_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -36,7 +35,7 @@ describe "Content Author, Slideshows", :type => :feature, :sauce => false do
   it "- new slideshow" do
     click_on 'New'
     expect(page).to have_content 'New Slideshow'
-    fill_in 'slideshow_title', :with => 'Test slideshow'
+    fill_in 'slideshow_title', with: 'Test slideshow'
     click_on 'Create'
     expect(page).to have_content 'Successfully created slideshow'
     expect(page).to have_content 'Test slideshow'
@@ -50,7 +49,7 @@ describe "Content Author, Slideshows", :type => :feature, :sauce => false do
     expect(page).to have_content 'Anchors'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[1]/a[4]').click
     expect(page).to have_content 'Edit Slideshow'
-    fill_in 'slideshow_title', :with => 'Testing adding/updating slides/lessons 123'
+    fill_in 'slideshow_title', with: 'Testing adding/updating slides/lessons 123'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated slideshow'
     click_on 'Testing adding/updating slides/lessons 123'
@@ -59,7 +58,7 @@ describe "Content Author, Slideshows", :type => :feature, :sauce => false do
     expect(page).to have_content 'Anchors'
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[1]/a[4]').click
     expect(page).to have_content 'Edit Slideshow'
-    fill_in 'slideshow_title', :with => 'Testing adding/updating slides/lessons'
+    fill_in 'slideshow_title', with: 'Testing adding/updating slides/lessons'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated slideshow'
   end

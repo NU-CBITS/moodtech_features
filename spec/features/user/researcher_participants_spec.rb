@@ -6,17 +6,16 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this line out
-# describe "Researcher, Participants", :type => :feature, :sauce => true do
+# describe "Researcher, Participants", type: :feature, sauce: true do
 
 #to run on Sauce Labs comment this block out
-describe "Research, Participants", :type => :feature, :sauce => false do
-
+describe "Research, Participants", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Researcher_Email']
-      fill_in 'user_password', :with => ENV['Researcher_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Researcher_Email']
+      fill_in 'user_password', with: ENV['Researcher_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -31,10 +30,10 @@ describe "Research, Participants", :type => :feature, :sauce => false do
   it "- create a participant" do
     click_on 'New'
     expect(page).to have_content 'New Participant'
-    fill_in 'participant_study_id', :with => 'Tests'
-    fill_in 'participant_email', :with => 'test@test.com'
-    fill_in 'participant_phone_number', :with => ENV['Participant_Phone_Number']
-    select 'Email', :from => 'participant_contact_preference'
+    fill_in 'participant_study_id', with: 'Tests'
+    fill_in 'participant_email', with: 'test@test.com'
+    fill_in 'participant_phone_number', with: ENV['Participant_Phone_Number']
+    select 'Email', from: 'participant_contact_preference'
     click_on 'Create'
     expect(page).to have_content 'Participant was successfully created.'
     expect(page).to have_content 'Study Id: Tests'
@@ -49,9 +48,9 @@ describe "Research, Participants", :type => :feature, :sauce => false do
     expect(page).to have_content 'Study Id: TFD-1111'
     click_on 'Edit'
     expect(page).to have_content 'Editing Participant'
-    fill_in 'participant_study_id', :with => 'Updated TFD-1111'
-    fill_in 'participant_email', :with => 'updatedfake@test.com'
-    fill_in 'participant_phone_number', :with => ENV['Participant_Phone_Number']
+    fill_in 'participant_study_id', with: 'Updated TFD-1111'
+    fill_in 'participant_email', with: 'updatedfake@test.com'
+    fill_in 'participant_phone_number', with: ENV['Participant_Phone_Number']
     click_on 'Update'
     expect(page).to have_content 'Participant was successfully updated.'
     expect(page).to have_content 'Study Id: Updated TFD-1111'
@@ -60,9 +59,9 @@ describe "Research, Participants", :type => :feature, :sauce => false do
     expect(page).to have_content 'Contact Preference: Email'
     click_on 'Edit'
     expect(page).to have_content 'Editing Participant'
-    fill_in 'participant_study_id', :with => 'TFD-1111'
-    fill_in 'participant_email', :with => ENV['Participant_Email']
-    fill_in 'participant_phone_number', :with => ENV['Participant_Phone_Number']
+    fill_in 'participant_study_id', with: 'TFD-1111'
+    fill_in 'participant_email', with: ENV['Participant_Email']
+    fill_in 'participant_phone_number', with: ENV['Participant_Phone_Number']
     click_on 'Update'
     expect(page).to have_content 'Participant was successfully updated.'
     expect(page).to have_content 'Study Id: TFD-1111'
@@ -77,7 +76,7 @@ describe "Research, Participants", :type => :feature, :sauce => false do
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Assign Coach'
     expect(page).to have_content 'Assigning Coach to Participant'
-    select ENV['User_Email'], :from => 'coach_assignment_coach_id'
+    select ENV['User_Email'], from: 'coach_assignment_coach_id'
     click_on 'Assign'
     expect(page).to have_content 'Coach was successfully assigned.'
     expect(page).to have_content 'Study Id: Tests'
@@ -90,12 +89,12 @@ describe "Research, Participants", :type => :feature, :sauce => false do
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Assign New Group'
     expect(page).to have_content 'Assigning New Group to Participant'
-    select 'Group 1', :from => 'membership_group_id'
+    select 'Group 1', from: 'membership_group_id'
     yesterday=Date.today.prev_day
-    fill_in 'membership_start_date', :with => yesterday.strftime('%Y-%m-%d')
-    today=Date.today
+    fill_in 'membership_start_date', with: yesterday.strftime('%Y-%m-%d')
+    today = Date.today
     next_year = today + 365
-    fill_in 'membership_end_date', :with => next_year.strftime('%Y-%m-%d')
+    fill_in 'membership_end_date', with: next_year.strftime('%Y-%m-%d')
     click_on 'Assign'
     expect(page).to have_content 'Group was successfully assigned'
     expect(page).to have_content 'Study Id: Tests'

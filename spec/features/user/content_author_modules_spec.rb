@@ -6,17 +6,16 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this line out
-# describe "Content Author, Modules", :type => :feature, :sauce => true do
+# describe "Content Author, Modules", type: :feature, sauce: true do
 
 #to run on Sauce Labs comment this block out
-describe "Content Author, Modules", :type => :feature, :sauce => false do
-
+describe "Content Author, Modules", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Content_Author_Email']
-      fill_in 'user_password', :with => ENV['Content_Author_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Content_Author_Email']
+      fill_in 'user_password', with: ENV['Content_Author_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -35,9 +34,9 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
   it "- new module" do
     click_on 'New'
     expect(page).to have_content 'New Content Module'
-    fill_in 'content_module_title', :with => 'Test content module'
-    select 'THINK', :from => 'content_module_bit_core_tool_id'
-    fill_in 'content_module_position', :with => '8'
+    fill_in 'content_module_title', with: 'Test content module'
+    select 'THINK', from: 'content_module_bit_core_tool_id'
+    fill_in 'content_module_position', with: '8'
     click_on 'Create'
     expect(page).to have_content 'Content module was successfully created.'
     expect(page).to have_content 'Position: 8 / 8'
@@ -47,14 +46,14 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
   it "- edit module" do
     click_on '#1 Awareness'
     click_on 'Edit'
-    select 'THINK', :from => 'content_module_bit_core_tool_id'
-    fill_in 'content_module_position', :with => '9'
+    select 'THINK', from: 'content_module_bit_core_tool_id'
+    fill_in 'content_module_position', with: '9'
     click_on 'Update'
     expect(page).to have_content 'Content module was successfully updated.'
     expect(page).to have_content 'Tool: THINK'
     click_on 'Edit'
-    select 'DO', :from => 'content_module_bit_core_tool_id'
-    fill_in 'content_module_position', :with => '2'
+    select 'DO', from: 'content_module_bit_core_tool_id'
+    fill_in 'content_module_position', with: '2'
     click_on 'Update'
     expect(page).to have_content 'Content module was successfully updated.'
     expect(page).to have_content 'Tool: DO'
@@ -81,11 +80,11 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
   it "- create a provider" do
     click_on 'New Provider'
     expect(page).to have_content 'New Content Provider'
-    select 'LEARN: Home Introduction', :from => 'content_provider_bit_core_content_module_id'
-    select 'slideshow provider', :from => 'content_provider_type'
-    select 'BitCore::Slideshow', :from => 'content_provider_source_content_type'
-    select 'Home Intro', :from => 'content_provider_source_content_id'
-    fill_in 'content_provider_position', :with => '4'
+    select 'LEARN: Home Introduction', from: 'content_provider_bit_core_content_module_id'
+    select 'slideshow provider', from: 'content_provider_type'
+    select 'BitCore::Slideshow', from: 'content_provider_source_content_type'
+    select 'Home Intro', from: 'content_provider_source_content_id'
+    fill_in 'content_provider_position', with: '4'
     check 'content_provider_show_next_nav'
     check 'content_provider_is_skippable_after_first_viewing'
     click_on 'Create'
@@ -106,13 +105,13 @@ describe "Content Author, Modules", :type => :feature, :sauce => false do
     expect(page).to have_content 'Slideshow: Testing adding/updating slides/lessons'
     click_on 'Edit'
     expect(page).to have_content 'Editing'
-    fill_in 'content_provider_position', :with => '10'
+    fill_in 'content_provider_position', with: '10'
     click_on 'Update'
     expect(page).to have_content 'ContentProvider was successfully updated.'
     expect(page).to have_content 'Position: 10 / 10'
     click_on 'Edit'
     expect(page).to have_content 'Editing'
-    fill_in 'content_provider_position', :with => '1'
+    fill_in 'content_provider_position', with: '1'
     click_on 'Update'
     expect(page).to have_content 'ContentProvider was successfully updated.'
     expect(page).to have_content 'Position: 1 / 4'

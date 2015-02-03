@@ -6,17 +6,16 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 #to run locally comment this line out
-# describe "Coach, Patients", :type => :feature, :sauce => true do
+# describe "Coach, Patients", type: :feature, sauce: true do
 
 #to run on Sauce Labs comment this block out
-describe "Coach, Patients", :type => :feature, :sauce => false do
-
+describe "Coach, Patients", type: :feature, sauce: false do
   before(:each) do
     Capybara.default_driver = :selenium
-    visit ENV['Base_URL']+ '/users/sign_in'
-    within("#new_user") do
-      fill_in 'user_email', :with => ENV['Clinician_Email']
-      fill_in 'user_password', :with => ENV['Clinician_Password']
+    visit ENV['Base_URL'] + '/users/sign_in'
+    within('#new_user') do
+      fill_in 'user_email', with: ENV['Clinician_Email']
+      fill_in 'user_password', with: ENV['Clinician_Password']
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
@@ -68,7 +67,7 @@ describe "Coach, Patients", :type => :feature, :sauce => false do
     expect(page).to have_content 'General Patient Info'
     click_on 'Activities visualization'
     expect(page).to have_content 'Today'
-    today=Date.today
+    today = Date.today
     expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
