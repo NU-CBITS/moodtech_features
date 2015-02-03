@@ -82,4 +82,3 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Test lesson'
   end
 end
-

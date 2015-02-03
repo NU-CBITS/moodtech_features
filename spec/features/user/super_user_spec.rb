@@ -1,17 +1,10 @@
-#filename: super_user_spec.rb
-
-#this is to test the arm functionality on the researcher dashboard.
+# filename: super_user_spec.rb
 
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-#to run locally comment this line out
-# describe "Super User, Arms", type: :feature, sauce: true do
-
-#to run on Sauce Labs comment this block out
-describe "Super User, Arms", type: :feature, sauce: false do
+describe 'Super User, Arms', type: :feature, sauce: sauce_labs do
   before(:each) do
-    Capybara.default_driver = :selenium
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['User_Email']
@@ -22,10 +15,9 @@ describe "Super User, Arms", type: :feature, sauce: false do
     expect(page).to have_content 'CSV Reports'
   end
 
-#tests
-
-  #Testing creating an arm
-  it "- create an arm" do
+  # tests
+  # Testing creating an arm
+  it '- create an arm' do
     click_on 'Arms'
     expect(page).to have_content 'Listing Arms'
     click_on 'New'
@@ -35,8 +27,8 @@ describe "Super User, Arms", type: :feature, sauce: false do
     expect(page).to have_content 'Arm was successfully created.'
   end
 
-  #Testing updating an arm
-  it "- update an arm" do
+  # Testing updating an arm
+  it '- update an arm' do
     click_on 'Arms'
     expect(page).to have_content 'Listing Arms'
     click_on 'Arm 1'
@@ -47,6 +39,7 @@ describe "Super User, Arms", type: :feature, sauce: false do
     click_on 'Update'
     expect(page).to have_content 'Arm was successfully updated.'
     expect(page).to have_content 'Title: Updated Arm 1'
+
     click_on 'Edit'
     expect(page).to have_content 'Editing Arm'
     fill_in 'arm_title', with: 'Arm 1'
@@ -55,8 +48,8 @@ describe "Super User, Arms", type: :feature, sauce: false do
     expect(page).to have_content 'Title: Arm 1'
   end
 
-  #Testing destroying an arm
-  it "- destroys an arm" do
+  # Testing destroying an arm
+  it '- destroys an arm' do
     click_on 'Arms'
     expect(page).to have_content 'Listing Arms'
     click_on 'Test Arm'
@@ -67,8 +60,8 @@ describe "Super User, Arms", type: :feature, sauce: false do
     expect(page).to_not have_content 'Test Arm'
   end
 
-  #Testing creating a super user
-  it "- create a super user" do
+  # Testing creating a super user
+  it '- create a super user' do
     click_on 'Users'
     expect(page).to have_content 'Listing Users'
     click_on 'New'
@@ -80,8 +73,8 @@ describe "Super User, Arms", type: :feature, sauce: false do
     expect(page).to have_content 'Email: superuser@test.com'
   end
 
-  #Testing updating a super user
-  it "- update a super user" do
+  # Testing updating a super user
+  it '- update a super user' do
     click_on 'Users'
     expect(page).to have_content 'Listing Users'
     click_on 'superuser@test.com'
@@ -94,6 +87,7 @@ describe "Super User, Arms", type: :feature, sauce: false do
     expect(page).to have_content 'Super User: Yes'
     expect(page).to have_content 'Email: superuser@test.com'
     expect(page).to have_content 'Roles: Clinician'
+
     click_on 'Edit'
     expect(page).to have_content 'Editing User'
     uncheck 'user_user_roles_clinician'
@@ -104,8 +98,8 @@ describe "Super User, Arms", type: :feature, sauce: false do
     expect(page).to_not have_content 'Roles: Clinician'
   end
 
-  #Testing detroying a super user
-  it "- destroy a super user" do
+  # Testing detroying a super user
+  it '- destroy a super user' do
     click_on 'Users'
     expect(page).to have_content 'Listing Users'
     click_on 'superuser@test.com'

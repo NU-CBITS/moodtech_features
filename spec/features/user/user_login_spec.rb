@@ -1,23 +1,12 @@
-#filename: user_login_spec.rb
-
-#this is to test the login functionality.
+# filename: user_login_spec.rb
 
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-#to run locally comment this line out
-# describe "Login", type: :feature, sauce: true do
-
-#to run on Sauce Labs comment this block out
-describe "Login", type: :feature, sauce: false do
-  before(:each) do
-    Capybara.default_driver = :selenium
-  end
-
-#tests
-
-  #Testing a successful login
-  it "- success" do
+describe 'Login', type: :feature, sauce: sauce_labs do
+  # tests
+  # Testing a successful login
+  it '- success' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['User_Email']
@@ -27,8 +16,8 @@ describe "Login", type: :feature, sauce: false do
     expect(page).to have_content 'Signed in successfully'
   end
 
-  #Testing a failed login
-  it "- failure" do
+  # Testing a failed login
+  it '- failure' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: 'asdf@test.com'
@@ -38,14 +27,14 @@ describe "Login", type: :feature, sauce: false do
     expect(page).to have_content 'Invalid email address or password'
   end
 
-  #Testing redirect to login screen
-  it "- not logged in, redirect" do
+  # Testing redirect to login screen
+  it '- not logged in, redirect' do
     visit ENV['Base_URL'] + '/think_feel_do_dashboard'
     expect(page).to have_content 'You need to sign in or sign up before continuing'
   end
 
-  #Testing the Introduction Slideshow if a person hits it who isn't logged in
-  it "- not logged in, intro slideshow" do
+  # Testing the Introduction Slideshow if a person hits it who isn't logged in
+  it '- not logged in, intro slideshow' do
     visit ENV['Base_URL'] + '/users/sign_in'
     click_on 'Introduction to ThinkFeelDo'
     expect(page).to have_content 'Welcome to ThiFeDo'
@@ -53,8 +42,8 @@ describe "Login", type: :feature, sauce: false do
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
-  #Testing Forgot Your Password? functionality
-  it "- forgot password" do
+  # Testing Forgot Your Password? functionality
+  it '- forgot password' do
     visit ENV['Base_URL'] + '/users/sign_in'
     click_on 'Forgot your password?'
     expect(page).to have_content 'Forgot your password?'
@@ -65,8 +54,8 @@ describe "Login", type: :feature, sauce: false do
     expect(page).to have_content 'You will receive an email with instructions on how to reset your password in a few minutes.'
   end
 
-  #Testing authorization - Clinician
-  it "- clinician authorization" do
+  # Testing authorization - Clinician
+  it '- clinician authorization' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Clinician_Email']
@@ -87,8 +76,8 @@ describe "Login", type: :feature, sauce: false do
     expect(page).to_not have_content 'Manage Tasks'
   end
 
-  #Testing authorization - Researcher
-  it "- researcher authorization" do
+  # Testing authorization - Researcher
+  it '- researcher authorization' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Researcher_Email']
@@ -112,8 +101,8 @@ describe "Login", type: :feature, sauce: false do
     expect(page).to have_content 'Manage Tasks'
   end
 
-  #Testing authorization - Content Author
-  it "- content author authorization" do
+  # Testing authorization - Content Author
+  it '- content author authorization' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Content_Author_Email']
@@ -128,8 +117,8 @@ describe "Login", type: :feature, sauce: false do
     expect(page).to_not have_content 'Group 1'
   end
 
-  #Testing authorization - Super User
-  it "- super user authorization" do
+  # Testing authorization - Super User
+  it '- super user authorization' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['User_Email']

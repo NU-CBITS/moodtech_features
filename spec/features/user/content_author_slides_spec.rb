@@ -240,7 +240,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
     uncheck 'slide_is_title_visible'
     click_on 'Update'
     expect(page).to have_content 'Add Slide'
-    
+
     find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[4]/span[3]/a[1]').click
     expect(page).to have_content 'Edit Slide'
     check 'slide_is_title_visible'

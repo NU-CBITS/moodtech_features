@@ -1,17 +1,10 @@
-#filename: researcher_participants_spec.rb
-
-#this is to test the participants functionality on the researcher dashboard.
+# filename: researcher_participants_spec.rb
 
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-#to run locally comment this line out
-# describe "Researcher, Participants", type: :feature, sauce: true do
-
-#to run on Sauce Labs comment this block out
-describe "Research, Participants", type: :feature, sauce: false do
+describe 'Research, Participants', type: :feature, sauce: sauce_labs do
   before(:each) do
-    Capybara.default_driver = :selenium
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Researcher_Email']
@@ -19,15 +12,15 @@ describe "Research, Participants", type: :feature, sauce: false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     expect(page).to have_content 'CSV Reports'
     click_on 'Participants'
     expect(page).to have_content 'Listing Participants'
   end
 
-#tests
-
-#Testing creating a participant
-  it "- create a participant" do
+  # tests
+  # Testing creating a participant
+  it '- create a participant' do
     click_on 'New'
     expect(page).to have_content 'New Participant'
     fill_in 'participant_study_id', with: 'Tests'
@@ -42,8 +35,8 @@ describe "Research, Participants", type: :feature, sauce: false do
     expect(page).to have_content 'Contact Preference: Email'
   end
 
-  #Testing updating a participant
-  it "- updating a participant" do
+  # Testing updating a participant
+  it '- updating a participant' do
     click_on 'TFD-1111'
     expect(page).to have_content 'Study Id: TFD-1111'
     click_on 'Edit'
@@ -57,6 +50,7 @@ describe "Research, Participants", type: :feature, sauce: false do
     expect(page).to have_content 'Email: updatedfake@test.com'
     expect(page).to have_content 'Phone Number: ' + ENV['Participant_Phone_Number_1']
     expect(page).to have_content 'Contact Preference: Email'
+
     click_on 'Edit'
     expect(page).to have_content 'Editing Participant'
     fill_in 'participant_study_id', with: 'TFD-1111'
@@ -70,8 +64,8 @@ describe "Research, Participants", type: :feature, sauce: false do
     expect(page).to have_content 'Contact Preference: Email'
   end
 
-  #Testing assigning a coach
-  it "- assign a coach" do
+  # Testing assigning a coach
+  it '- assign a coach' do
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Assign Coach'
@@ -83,14 +77,14 @@ describe "Research, Participants", type: :feature, sauce: false do
     expect(page).to have_content 'Coach: ' + ENV['User_Email']
   end
 
-  #Testing creating a group membership
-  it "- create a group membership" do
+  # Testing creating a group membership
+  it '- create a group membership' do
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Assign New Group'
     expect(page).to have_content 'Assigning New Group to Participant'
     select 'Group 1', from: 'membership_group_id'
-    yesterday=Date.today.prev_day
+    yesterday = Date.today.prev_day
     fill_in 'membership_start_date', with: yesterday.strftime('%Y-%m-%d')
     today = Date.today
     next_year = today + 365
@@ -102,8 +96,8 @@ describe "Research, Participants", type: :feature, sauce: false do
     expect(page).to have_content 'Membership Status: Active'
   end
 
-  #Testing destroying a participant
-  it "- destroy a participant" do
+  # Testing destroying a participant
+  it '- destroy a participant' do
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Destroy'

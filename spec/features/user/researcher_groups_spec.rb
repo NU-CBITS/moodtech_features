@@ -1,17 +1,10 @@
-#filename: researcher_groups_spec.rb
-
-#this is to test the groups functionality on the researcher dashboard.
+# filename: researcher_groups_spec.rb
 
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-#to run locally comment this line out
-# describe "Researcher, Groups", type: :feature, sauce: true do
-
-#to run on Sauce Labs comment this block out
-describe "Researcher, Groups", type: :feature, sauce: false do
+describe 'Researcher, Groups', type: :feature, sauce: sauce_labs do
   before(:each) do
-    Capybara.default_driver = :selenium
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Researcher_Email']
@@ -19,15 +12,15 @@ describe "Researcher, Groups", type: :feature, sauce: false do
     end
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     expect(page).to have_content 'CSV Reports'
     click_on 'Groups'
     expect(page).to have_content 'Listing Groups'
   end
 
-#tests
-
-#Testing creating a group
-  it "- create a group" do
+  # tests
+  # Testing creating a group
+  it '- create a group' do
     click_on 'New'
     expect(page).to have_content 'New Group'
     fill_in 'group_title', with: 'Testing Group'
@@ -37,8 +30,8 @@ describe "Researcher, Groups", type: :feature, sauce: false do
     expect(page).to have_content 'Group was successfully created.'
   end
 
-  #Testing updating a group
-  it "- update a group" do
+  # Testing updating a group
+  it '- update a group' do
     click_on 'Group 1'
     expect(page).to have_content 'Title: Group 1'
     click_on 'Edit'
@@ -47,6 +40,7 @@ describe "Researcher, Groups", type: :feature, sauce: false do
     click_on 'Update'
     expect(page).to have_content 'Group was successfully updated.'
     expect(page).to have_content 'Title: Updated Group 1'
+
     click_on 'Edit'
     expect(page).to have_content 'Editing Group'
     fill_in 'group_title', with: 'Group 1'
@@ -55,22 +49,23 @@ describe "Researcher, Groups", type: :feature, sauce: false do
     expect(page).to have_content 'Title: Group 1'
   end
 
-  #Testing adding/removing a moderator from a group
-  it "- update moderator" do
+  # Testing adding/removing a moderator from a group
+  it '- update moderator' do
     click_on 'Group 1'
     expect(page).to have_content 'Title: Group 1'
     click_on 'Edit'
     select ENV['Clinician_Email'], from: 'group_moderator_id'
     click_on 'Update'
     expect(page).to have_content 'Group was successfully updated.'
+
     click_on 'Edit'
     select ENV['User_Email'], from: 'group_moderator_id'
     click_on 'Update'
     expect(page).to have_content 'Group was successfully updated.'
   end
 
-  #Testing destroying a group
-  it "- destroy a group" do
+  # Testing destroying a group
+  it '- destroy a group' do
     click_on 'Testing Group'
     expect(page).to have_content 'Title: Testing Group'
     click_on 'Destroy'
@@ -79,8 +74,8 @@ describe "Researcher, Groups", type: :feature, sauce: false do
     expect(page).to_not have_content 'Testing Group'
   end
 
-  #Testing managing tasks
-  it "- manage tasks within a group" do
+  # Testing managing tasks
+  it '- manage tasks within a group' do
     click_on 'Group 1'
     expect(page).to have_content 'Title: Group 1'
     click_on 'Manage Tasks'
@@ -89,6 +84,7 @@ describe "Researcher, Groups", type: :feature, sauce: false do
     fill_in 'task_release_day', with: '1'
     click_on 'Assign'
     expect(page).to have_content 'Task assigned.'
+
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[23]/td[6]/a').click
     page.accept_alert 'Are you sure?'
     within '#tasks' do
