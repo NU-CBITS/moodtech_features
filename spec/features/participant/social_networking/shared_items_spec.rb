@@ -11,8 +11,10 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
     end
+
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     expect(page).to have_content "What's on your mind?"
   end
 
@@ -26,26 +28,34 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
   it '- shared identifying' do
     visit ENV['Base_URL'] + '/navigator/contexts/THINK'
     expect(page).to have_content 'Add a New Thought'
+
     click_on '#1 Identifying'
     expect(page).to have_content 'You are what you think...'
+
     click_on 'Continue'
     expect(page).to have_content 'Helpful thoughts are...'
+
     click_on 'Continue'
     expect(page).to have_content 'Harmful thoughts are:'
+
     click_on 'Continue'
     expect(page).to have_content 'Some quick examples...'
+
     click_on 'Continue'
     expect(page).to have_content 'Now, your turn...'
+
     fill_in 'thought_content', with: 'Public thought 1'
     click_on 'Continue'
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Thought saved'
+
     expect(page).to have_content 'Now list another harmful thought...'
 
     fill_in 'thought_content', with: 'Private thought 1'
     choose 'No'
     click_on 'Continue'
     expect(page).to have_content 'Thought saved'
+
     expect(page).to have_content 'Just one more'
 
     fill_in 'thought_content', with: 'Public thought 2'
@@ -58,7 +68,9 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
 
     visit ENV['Base_URL']
     expect(page).to_not have_content 'Private thought'
+
     expect(page).to have_content 'Public thought 1'
+
     expect(page).to have_content 'Public thought 2'
   end
 
@@ -66,8 +78,10 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
   it '- public add a new thought' do
     visit ENV['Base_URL'] + '/navigator/contexts/THINK'
     expect(page).to have_content 'Add a New Thought'
+
     click_on 'Add a New Thought'
     expect(page).to have_content 'Add a New Harmful Thought'
+
     fill_in 'thought_content', with: 'Public thought 3'
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
     fill_in 'thought_challenging_thought', with: 'Testing challenge thought'
@@ -86,8 +100,10 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
   it '- private add a new thought' do
     visit ENV['Base_URL'] + '/navigator/contexts/THINK'
     expect(page).to have_content 'Add a New Thought'
+
     click_on 'Add a New Thought'
     expect(page).to have_content 'Add a New Harmful Thought'
+
     fill_in 'thought_content', with: 'Private thought 2'
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
     fill_in 'thought_challenging_thought', with: 'Testing challenge thought'
@@ -107,15 +123,19 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
   it '- shared awareness items' do
     visit ENV['Base_URL'] + '/navigator/contexts/DO'
     expect(page).to have_content 'Add a New Activity'
+
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
+
     click_on 'Continue'
     expect(page).to have_content "OK, let's talk about yesterday."
+
     today = Date.today
     select today.strftime('%a') + ' 4 AM', from: 'awake_period_start_time'
     select today.strftime('%a') + ' 7 AM', from: 'awake_period_end_time'
     click_on 'Create'
     expect(page).to have_content 'Awake Period saved'
+
     expect(page).to have_content 'Review Your Day'
 
     fill_in 'activity_type_0', with: 'public sleep 1'
@@ -131,18 +151,23 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
     click_on 'Continue'
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Activity saved'
+
     expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
 
     click_on 'Continue'
     expect(page).to have_content 'Things you found fun.'
+
     click_on 'Continue'
     expect(page).to have_content "Things that make you feel like you've accomplished something."
+
     click_on 'Continue'
     expect(page).to have_content 'Your Activities'
 
     visit ENV['Base_URL']
     expect(page).to_not have_content 'private sleep'
+
     expect(page).to have_content 'public sleep 1'
+
     expect(page).to have_content 'public sleep 2'
   end
 
@@ -150,10 +175,13 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
   it '- shared planning' do
     visit ENV['Base_URL'] + '/navigator/contexts/DO'
     expect(page).to have_content 'Add a New Activity'
+
     click_on '#2 Planning'
     expect(page).to have_content 'The last few times you were here...'
+
     click_on 'Continue'
     expect(page).to have_content 'We want you to plan one fun thing'
+
     fill_in 'activity_activity_type_new_title', with: 'New public activity'
     today = Date.today
     tomorrow = today + 1
@@ -163,6 +191,7 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
     click_on 'Continue'
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Activity saved'
+
     expect(page).to have_content 'Now, plan something that gives you a sense of accomplishment.'
 
     fill_in 'activity_activity_type_new_title', with: 'New private activity'
@@ -174,15 +203,18 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
     choose 'No'
     click_on 'Continue'
     expect(page).to have_content 'Activity saved'
+
     expect(page).to have_content 'OK... the most important thing is to do more that is pleasureable and gives you a sense of accomplishment'
 
     click_on 'Continue'
     expect(page).to have_content 'Your Planned Activities'
+
     click_on 'Continue'
     expect(page).to have_content 'Upcoming Activities'
 
     visit ENV['Base_URL']
     expect(page).to_not have_content 'New private activity'
+
     expect(page).to have_content 'New public activity'
   end
 
@@ -190,8 +222,10 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
   it '- public plan a new activity' do
     visit ENV['Base_URL'] + '/navigator/contexts/DO'
     expect(page).to have_content 'Add a New Activity'
+
     click_on 'Add a New Activity'
     expect(page).to have_content "But you don't have to start from scratch,"
+
     fill_in 'activity_activity_type_new_title', with: 'New public activity 2'
     today = Date.today
     tomorrow = today + 1
@@ -201,6 +235,7 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
     click_on 'Continue'
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Activity saved'
+
     expect(page).to have_content 'Add a New Activity'
 
     visit ENV['Base_URL']
@@ -210,8 +245,10 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
   it '- private plan a new activity' do
     visit ENV['Base_URL'] + '/navigator/contexts/DO'
     expect(page).to have_content 'Add a New Activity'
+
     click_on 'Add a New Activity'
     expect(page).to have_content "But you don't have to start from scratch,"
+
     fill_in 'activity_activity_type_new_title', with: 'New private activity 2'
     today = Date.today
     tomorrow = today + 1
@@ -221,6 +258,7 @@ describe 'Shared Items', type: :feature, sauce: sauce_labs do
     choose 'No'
     click_on 'Continue'
     expect(page).to have_content 'Activity saved'
+
     expect(page).to have_content 'Add a New Activity'
 
     visit ENV['Base_URL']

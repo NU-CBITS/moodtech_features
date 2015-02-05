@@ -10,8 +10,10 @@ describe 'Social Networking landing page', type: :feature, sauce: sauce_labs do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
     end
+
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     expect(page).to have_content "What's on your mind?"
   end
 
@@ -20,8 +22,10 @@ describe 'Social Networking landing page', type: :feature, sauce: sauce_labs do
     click_on 'Create a Profile'
     within('.modal-content') do
       expect(page).to have_content 'Start creating'
+
       find(:xpath, '//*[@id="profile-icon-selection"]/div[2]/div/div[2]/div[1]/div[3]').click
     end
+
     fill_in 'new-answer-description-781294868', with: 'Running'
     find(:xpath, '//*[@id="question-781294868"]/form/div[2]/button').click
     fill_in 'new-answer-description-932760744', with: 'Blue'
@@ -46,25 +50,30 @@ describe 'Social Networking landing page', type: :feature, sauce: sauce_labs do
   it '- select link in TODO list' do
     click_on 'FEEL: Your Recent Moods & Emotions'
     expect(page).to have_content 'Mood'
+
     expect(page).to have_content 'Positive and Negative Emotions'
   end
 
   it '- view another participants profile' do
     find(:xpath, '//*[@id="main"]/div[2]/div/div/div/div[2]/div/div[1]/a/div').click
     expect(page).to have_content 'What is your favorite color?'
+
     expect(page).to have_content 'green'
   end
 
   it '- like a whats on your mind post written by another participant' do
     expect(page).to have_content "said it's always sunny in Philadelphia"
+
     find(:xpath, "//*[@id='SocialNetworking::OnTheMindStatement-576803333']/div[2]/button[1]").click
     expect(page).to have_css '.fa.fa-thumbs-up.fa-2x'
   end
 
   it '- comment on a nudge post' do
     expect(page).to have_content 'nudged participant1'
+
     find(:xpath, "//*[@id='SocialNetworking::Nudge-316146702']/div[2]/button[2]").click
     expect(page).to have_content 'What do you think?'
+
     fill_in 'comment-text', with: 'Sweet Dude!'
     click_on 'Save'
     find(:xpath, ".//*[@id='SocialNetworking::Nudge-316146702']/div[2]/button[3]").click
@@ -73,6 +82,7 @@ describe 'Social Networking landing page', type: :feature, sauce: sauce_labs do
 
   it '- check for due date of a goal post' do
     expect(page).to have_content 'a Goal: p1 alpha'
+
     find(:xpath, "//*[@id='SocialNetworking::SharedItem-809335042']/div[2]/button[5]").click
     expect(page).to have_content 'due ' + Date.today.strftime('%b. %e, %Y') + ' at 12:00AM'
   end

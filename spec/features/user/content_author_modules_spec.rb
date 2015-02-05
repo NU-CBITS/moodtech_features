@@ -10,13 +10,16 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
       fill_in 'user_email', with: ENV['Content_Author_Email']
       fill_in 'user_password', with: ENV['Content_Author_Password']
     end
+
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
     click_on 'Arms'
     expect(page).to have_content 'Listing Arms'
+
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
+
     click_on 'Manage Content'
     click_on 'Content Modules'
     expect(page).to have_content 'Listing Content Modules'
@@ -27,11 +30,13 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
   it '- new module' do
     click_on 'New'
     expect(page).to have_content 'New Content Module'
+
     fill_in 'content_module_title', with: 'Test content module'
     select 'THINK', from: 'content_module_bit_core_tool_id'
     fill_in 'content_module_position', with: '8'
     click_on 'Create'
     expect(page).to have_content 'Content module was successfully created.'
+
     expect(page).to have_content 'Position: 8 / 8'
   end
 
@@ -43,6 +48,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     fill_in 'content_module_position', with: '9'
     click_on 'Update'
     expect(page).to have_content 'Content module was successfully updated.'
+
     expect(page).to have_content 'Tool: THINK'
 
     click_on 'Edit'
@@ -50,6 +56,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     fill_in 'content_module_position', with: '2'
     click_on 'Update'
     expect(page).to have_content 'Content module was successfully updated.'
+
     expect(page).to have_content 'Tool: DO'
   end
 
@@ -60,6 +67,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
       click_on 'Destroy'
       page.accept_alert 'Are you sure?'
       expect(page).to have_content 'Content module along with any associated tasks were successfully destroyed.'
+
       expect(page).to_not have_content 'Test content module'
     else
       find(:xpath, '//*[@id="DataTables_Table_0_wrapper"]/div[2]/div[2]/div/ul/li[3]/a').click
@@ -74,6 +82,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
   it '- create a provider' do
     click_on 'New Provider'
     expect(page).to have_content 'New Content Provider'
+
     select 'LEARN: Home Introduction', from: 'content_provider_bit_core_content_module_id'
     select 'slideshow provider', from: 'content_provider_type'
     select 'BitCore::Slideshow', from: 'content_provider_source_content_type'
@@ -83,10 +92,15 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     check 'content_provider_is_skippable_after_first_viewing'
     click_on 'Create'
     expect(page).to have_content 'ContentProvider was successfully created.'
+
     expect(page).to have_content 'Tool: LEARN'
+
     expect(page).to have_content 'Module: Home Introduction'
+
     expect(page).to have_content 'Position: 4 / 4'
+
     expect(page).to have_content 'Is skippable after first viewing: true'
+
     expect(page).to have_content 'Slideshow: Home Intro'
   end
 
@@ -94,20 +108,28 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
   it '- updating a provider' do
     click_on 'Home Introduction'
     expect(page).to have_content 'New Provider'
+
     click_on '1 slideshow provider'
     expect(page).to have_content 'Content Provider'
+
     expect(page).to have_content 'Slideshow: Testing adding/updating slides/lessons'
+
     click_on 'Edit'
     expect(page).to have_content 'Editing'
+
     fill_in 'content_provider_position', with: '10'
     click_on 'Update'
     expect(page).to have_content 'ContentProvider was successfully updated.'
+
     expect(page).to have_content 'Position: 10 / 10'
+
     click_on 'Edit'
     expect(page).to have_content 'Editing'
+
     fill_in 'content_provider_position', with: '1'
     click_on 'Update'
     expect(page).to have_content 'ContentProvider was successfully updated.'
+
     expect(page).to have_content 'Position: 1 / 4'
   end
 
@@ -115,8 +137,10 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
   it '- destroying a provider' do
     click_on 'Home Introduction'
     expect(page).to have_content 'Edit'
+
     click_on '4 slideshow provider'
     expect(page).to have_content 'Slideshow: Home Intro'
+
     click_on 'Destroy'
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Content Providers'

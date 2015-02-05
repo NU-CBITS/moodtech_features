@@ -11,8 +11,10 @@ describe 'Nudges', type: :feature, sauce: sauce_labs do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
     end
+
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
+
     expect(page).to have_content "What's on your mind?"
   end
 
@@ -31,12 +33,16 @@ describe 'Nudges', type: :feature, sauce: sauce_labs do
     if page.has_css?('.modal-content')
       within('.modal-content') do
         expect(page).to have_content 'Start creating'
+
         find(:xpath, '//*[@id="profile-icon-selection"]/div[2]/div/div[2]/div[1]/div[3]').click
       end
+
       expect(page).to have_css '.alert.alert-info'
+
       expect(page).to have_content 'clinician1@example.com nudged you!'
     else
       expect(page).to have_css '.alert.alert-info'
+
       expect(page).to have_content 'clinician1@example.com nudged you!'
     end
   end

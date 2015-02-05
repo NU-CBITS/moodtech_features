@@ -10,13 +10,16 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
       fill_in 'user_email', with: ENV['Content_Author_Email']
       fill_in 'user_password', with: ENV['Content_Author_Password']
     end
+
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
     click_on 'Arms'
     expect(page).to have_content 'Listing Arms'
+
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
+
     click_on 'Manage Content'
     click_on 'Lesson Modules'
     expect(page).to have_content 'Listing Lesson Modules'
@@ -30,7 +33,9 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
     fill_in 'lesson_position', with: '19'
     click_on 'Create'
     expect(page).to have_content 'Successfully created lesson'
+
     expect(page).to have_content 'Test lesson'
+
     expect(page).to have_content 'Add Video Slide'
   end
 
@@ -38,18 +43,23 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
   it '- updating lesson' do
     click_on 'Do - Awareness Introduction'
     expect(page).to have_content 'This is just the beginning...'
+
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[1]/a[2]').click
     fill_in 'lesson_title', with: 'Do - Awareness Introduction 123'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated lesson'
+
     expect(page).to have_content 'Do - Awareness Introduction 123'
+
     expect(page).to have_content 'Add Video Slide'
 
     find(:xpath, 'html/body/div[1]/div/div/div[2]/div[1]/a[2]').click
     fill_in 'lesson_title', with: 'Do - Awareness Introduction'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated lesson'
+
     expect(page).to have_content 'Do - Awareness Introduction'
+
     expect(page).to have_content 'Add Video Slide'
   end
 
@@ -61,15 +71,18 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
     within('tr:nth-child(9)') do
       find('#lesson-452672653>td>a>p')
     end
+
     within('tr:nth-child(10)') do
       find('#lesson-439722576>td>a>p')
     end
+
     source = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[9]/td[1]/span/i')
     target = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[12]/td[1]/span/i')
     source.drag_to(target)
     within('tr:nth-child(9)') do
       find('#lesson-439722576>td>a>p')
     end
+
     within('tr:nth-child(11)') do
       find('#lesson-452672653>td>a>p')
     end
