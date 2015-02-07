@@ -55,7 +55,7 @@ describe 'Social Networking landing page', type: :feature, sauce: sauce_labs do
   end
 
   it '- view another participants profile' do
-    find(:xpath, '//*[@id="main"]/div[2]/div/div/div/div[2]/div/div[1]/a/div').click
+    find(:xpath, '//*[@id="tool-layout"]/div[2]/div/div/div[3]/div/div[1]/a/div').click
     expect(page).to have_content 'What is your favorite color?'
 
     expect(page).to have_content 'green'

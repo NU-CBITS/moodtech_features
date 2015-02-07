@@ -25,7 +25,7 @@ describe 'Learn', type: :feature, sauce: sauce_labs do
     click_on 'Do - Awareness Introduction'
     expect(page).to have_content 'This is just the beginning...'
 
-    click_on 'Continue'
+    click_on 'Finish'
     today = Date.today
     expect(page).to have_content 'Read on ' + today.strftime('%b %e')
 

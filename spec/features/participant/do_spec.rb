@@ -29,7 +29,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content "OK, let's talk about yesterday."
 
     yesterday = Date.today.prev_day
@@ -67,19 +67,19 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     fill_in 'activity_type_14', with: 'Get ready for bed'
     choose_rating('pleasure_14', 2)
     choose_rating('accomplishment_14', 3)
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Things you found fun.'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content "Things that make you feel like you've accomplished something."
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Add a New Activity'
   end
 
@@ -88,7 +88,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content "OK, let's talk about yesterday."
 
     yesterday = Date.today.prev_day
@@ -102,7 +102,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content "OK, let's talk about yesterday."
 
     today = Date.today
@@ -114,19 +114,19 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     fill_in 'activity_type_0', with: 'Sleep'
     choose_rating('pleasure_0', 6)
     choose_rating('accomplishment_0', 1)
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Things you found fun.'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content "Things that make you feel like you've accomplished something."
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Add a New Activity'
   end
 
@@ -137,7 +137,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     click_on '#2 Planning'
     expect(page).to have_content 'The last few times you were here...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'We want you to plan one fun thing'
 
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
@@ -146,26 +146,28 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
     choose_rating('pleasure_0', 6)
     choose_rating('accomplishment_0', 3)
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
+
     expect(page).to have_content 'Now, plan something that gives you a sense of accomplishment.'
+
     fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
     today = Date.today
     tomorrow = today + 1
     fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 8)
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'OK... the most important thing is to do more that is pleasureable and gives you a sense of accomplishment'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Your Planned Activities'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Upcoming Activities'
   end
 
@@ -174,23 +176,23 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     click_on '#3 Doing'
     expect(page).to have_content 'Welcome back!'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content "Let's do this..."
 
-    click_on 'Continue'
+    click_on 'Next'
     find(:xpath, '(/html/body/div[1]/div[1]/div/div[3]/form[1]/div[2]/label[1])').click
     select '7', from: 'activity[actual_pleasure_intensity]'
     select '5', from: 'activity[actual_accomplishment_intensity]'
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'New planned activity'
 
     find(:xpath, '(/html/body/div[1]/div[1]/div/div[3]/form[2]/div[2]/label[2])').click
     fill_in 'activity[noncompliance_reason]', with: "I didn't have time"
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'Another planned activity'
@@ -198,8 +200,8 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     find(:xpath, '(/html/body/div[1]/div[1]/div/div[3]/form[3]/div[2]/label[1])').click
     select '2', from: 'activity[actual_pleasure_intensity]'
     select '8', from: 'activity[actual_accomplishment_intensity]'
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'Add a New Activity'
@@ -222,8 +224,8 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 3)
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'Add a New Activity'
@@ -235,7 +237,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Today'
 
     today = Date.today
-    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
+    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %d, %Y')
 
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
@@ -248,10 +250,10 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
 
     click_on 'Previous Day'
     yesterday = today - 1
-    expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %e, %Y')
+    expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %d, %Y')
 
     click_on 'Next Day'
-    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
+    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %d, %Y')
 
     click_on 'Visualize'
     click_on 'Last 3 Days'
@@ -352,7 +354,7 @@ describe 'Do - Participant 3', type: :feature, sauce: sauce_labs do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content "OK, let's talk about yesterday."
 
     expect(page).to have_content 'Last Recorded Awake Period:'
@@ -369,19 +371,19 @@ describe 'Do - Participant 3', type: :feature, sauce: sauce_labs do
     fill_in 'activity_type_2', with: 'Work'
     choose_rating('pleasure_2', 8)
     choose_rating('accomplishment_2', 9)
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Things you found fun.'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content "Things that make you feel like you've accomplished something."
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Your Activities'
   end
 

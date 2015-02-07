@@ -1,16 +1,15 @@
-# filename: spec_helper.rb
+# configurations for this test suite
 
 require 'capybara'
-require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'sauce'
 require 'sauce/capybara'
 require 'sauce_whisk'
 
-Capybara.default_wait_time = 10
+Capybara.default_wait_time = 30
 
 def sauce_labs
-  false
+  ENV['Sauce'] || false
 end
 
 def test_driver

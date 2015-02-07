@@ -14,7 +14,7 @@ describe 'Goals', type: :feature, sauce: sauce_labs do
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/social_networking/goal_tool'
+    visit ENV['Base_URL'] + '/navigator/contexts/ACHIEVE'
     expect(page).to have_content 'add a goal'
   end
 
@@ -40,7 +40,7 @@ describe 'Goals', type: :feature, sauce: sauce_labs do
   end
 
   it '- complete a goal' do
-    find(:xpath, '//*[@id="goal-809335042"]/div/button[1]/span/i').click
+    find(:xpath, '//*[@id="goal-809335044"]/div/button[1]/span/i').click
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
 

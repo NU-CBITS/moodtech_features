@@ -25,12 +25,12 @@ describe 'Feel - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Rate your Mood'
 
     select '6', from: 'mood[rating]'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Mood saved'
 
     expect(page).to have_content 'Positive and Negative Emotions'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Feeling Tracker Landing'
   end
 end
@@ -57,7 +57,7 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Rate your Mood'
 
     select '6', from: 'mood[rating]'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Mood saved'
 
     expect(page).to have_content 'You just rated your mood as a 6 (Good)'
@@ -71,7 +71,7 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
     fill_in 'emotional_rating_name', with: 'crazy'
     find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[3]/div/form/div[4]/select/option[1]').click
     find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[3]/div/form/div[5]/div/select/option[4]').click
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Emotional Rating saved'
 
     expect(page).to have_content 'Mood'
@@ -92,7 +92,7 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
     two_weeks_ago = today - 13
     expect(page).to have_content two_weeks_ago.strftime('%B %e, %Y') + ' / ' + one_week_ago_1.strftime('%B %e, %Y')
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Feeling Tracker Landing'
   end
 
@@ -103,7 +103,7 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'Positive and Negative Emotions'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Feeling Tracker Landing'
   end
 

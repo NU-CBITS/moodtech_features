@@ -24,38 +24,38 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     click_on '#1 Identifying'
     expect(page).to have_content 'You are what you think...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Helpful thoughts are...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Harmful thoughts are:'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Some quick examples...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Now, your turn...'
 
     fill_in 'thought_content', with: 'Testing helpful thought'
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Now list another harmful thought...'
 
     fill_in 'thought_content', with: 'Testing negative thought'
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Just one more'
 
     fill_in 'thought_content', with: 'Forced negative thought'
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Good work'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Add a New Thought'
   end
 
@@ -64,73 +64,73 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     click_on '#2 Patterns'
     expect(page).to have_content 'Like we said, you are what you think...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'All-or-Nothing'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Overgeneralization'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Mental Filter'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Fortune Telling'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Magnification or Catastrophizing'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content '\"Should\" Statements'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Labeling and Mislabeling'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Personalization'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Helpful Thoughts'
 
     expect(page).to have_content 'Last time you were here...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content "Let's start by"
     select 'Personalization', from: 'thought_pattern_id'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Thought saved'
 
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Testing helpful thought'
 
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Public thought 2'
 
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Private thought 1'
 
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Public thought 1'
 
     select 'Personalization', from: 'thought_pattern_id'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'I am insignificant'
 
     select 'Personalization', from: 'thought_pattern_id'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'ARG!'
 
     select 'Personalization', from: 'thought_pattern_id'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Thought saved'
 
     if page.has_text? 'Good work'
       expect(page).to have_content 'We know this can be challenging...'
 
-      click_on 'Continue'
+      click_on 'Next'
       expect(page).to have_content 'Add a New Thought'
 
     else
@@ -143,67 +143,67 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     click_on '#3 Reshape'
     expect(page).to have_content 'Challenging Harmful Thoughts'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'You said you had the following unhelpful thoughts:'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Challenging a thought means'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'You said that you thought...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Come up with a challenging'
 
     fill_in 'thought[challenging_thought]', with: 'Example challenge'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Because what you THINK, FEEL, Do'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
     fill_in 'thought_act_as_if', with: 'Example act-as-if'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'You said that you thought...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Come up with a challenging'
     fill_in 'thought[challenging_thought]', with: 'Example challenge'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Because what you THINK, FEEL, Do'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
     fill_in 'thought_act_as_if', with: 'Example act-as-if'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'You said that you thought...'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Come up with a challenging'
 
     fill_in 'thought[challenging_thought]', with: 'Example challenge'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Because what you THINK, FEEL, Do'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
 
     fill_in 'thought_act_as_if', with: 'Example act-as-if'
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Good work'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Add a New Thought'
   end
 
@@ -216,11 +216,11 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
     fill_in 'thought_challenging_thought', with: 'Testing challenge thought'
     fill_in 'thought_act_as_if', with: 'Testing act-as-if action'
-    click_on 'Continue'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Thought saved'
 
-    click_on 'Continue'
+    click_on 'Next'
     expect(page).to have_content 'Add a New Thought'
   end
 
