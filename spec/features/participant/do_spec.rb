@@ -131,8 +131,6 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
   end
 
   # Testing the #2-Planning of the DO tool
-  # this test passes because I do not select a time in the "future_time_picker_0" - this is likely going to be updated
-  # I will update this test when that is completed
   it '- planning' do
     click_on '#2 Planning'
     expect(page).to have_content 'The last few times you were here...'
@@ -184,7 +182,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     select '7', from: 'activity[actual_pleasure_intensity]'
     select '5', from: 'activity[actual_accomplishment_intensity]'
     click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'New planned activity'
@@ -192,7 +190,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     find(:xpath, '(/html/body/div[1]/div[1]/div/div[3]/form[2]/div[2]/label[2])').click
     fill_in 'activity[noncompliance_reason]', with: "I didn't have time"
     click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'Another planned activity'
@@ -201,7 +199,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     select '2', from: 'activity[actual_pleasure_intensity]'
     select '8', from: 'activity[actual_accomplishment_intensity]'
     click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Activity saved'
 
     expect(page).to have_content 'Add a New Activity'
@@ -257,7 +255,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
 
     click_on 'Visualize'
     click_on 'Last 3 Days'
-    expect(page).to have_content today.strftime('%A, %m/%e')
+    expect(page).to have_content today.strftime('%A, %m/%d')
 
     click_on 'Day'
     expect(page).to have_css('#datepicker')
