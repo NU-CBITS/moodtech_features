@@ -69,8 +69,8 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
     select '4', from: 'emotional_rating[rating]'
     click_on 'Add Emotion'
     fill_in 'emotional_rating_name', with: 'crazy'
-    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[3]/div/form/div[4]/select/option[1]').click
-    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[3]/div/form/div[5]/div/select/option[4]').click
+    find(:xpath, 'html/body/div/div[1]/div/div[3]/div[3]/div/form/div[4]/select/option[3]').click
+    find(:xpath, 'html/body/div/div[1]/div/div[3]/div[3]/div/form/div[5]/div/select/option[7]').click
     click_on 'Next'
     expect(page).to have_content 'Emotional Rating saved'
 

@@ -1,6 +1,7 @@
 # configurations for this test suite
 
 require 'capybara'
+require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'sauce'
 require 'sauce/capybara'
