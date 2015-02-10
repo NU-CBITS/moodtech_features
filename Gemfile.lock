@@ -12,6 +12,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (1.0.5)
+      capybara (>= 1.0, < 3)
+      colored
+      launchy
     childprocess (0.5.5)
       ffi (~> 1.0, >= 1.0.11)
     cmdparse (2.0.6)
@@ -25,12 +29,15 @@ GEM
       redis-namespace
       sinatra
       slop (~> 3.4)
+    colored (1.2)
     diff-lcs (1.2.5)
     ffi (1.9.6)
     haml (4.0.6)
       tilt
     highline (1.6.21)
     json (1.8.1)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     mime-types (2.4.3)
     mini_portile (0.6.1)
     multi_json (1.10.1)
@@ -114,6 +121,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara (= 2.4.4)
+  capybara-screenshot
   cobweb
   redis
   rspec (= 3.1.0)

@@ -178,7 +178,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content "Let's do this..."
 
     click_on 'Next'
-    find(:xpath, '(/html/body/div[1]/div[1]/div/div[3]/form[1]/div[2]/label[1])').click
+    find('.btn.btn-success').click
     select '7', from: 'activity[actual_pleasure_intensity]'
     select '5', from: 'activity[actual_accomplishment_intensity]'
     click_on 'Next'
@@ -188,10 +188,14 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Activity'
 
     visit ENV['Base_URL']
-    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335061"]/div[2]/button[5]/i').click
-    expect(page).to have_content 'actual accomplishment: 5'
+    within('.list-group-item.ng-scope', text: 'monitored an Activity: Loving') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      expect(page).to have_content 'actual accomplishment: 5'
 
-    expect(page).to have_content 'actual pleasure: 7'
+      expect(page).to have_content 'actual pleasure: 7'
+    end
   end
 
   # Testing Plan a New Activity portion of the DO tool
@@ -223,11 +227,17 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
 
-    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[5]/div[2]/div[3]/div[1]/h4/a').click
-    expect(page).to have_content 'Predicted'
+    endtime = Time.now
+    starttime = Time.now - 3600
+    within('.panel.panel-default', text: starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving') do
+      click_on starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving'
+      within('.panel-collapse.collapse.in') do
+        expect(page).to have_content 'Predicted'
 
-    click_on 'Edit'
-    expect(page).to have_css('#activity_actual_accomplishment_intensity')
+        click_on 'Edit'
+        expect(page).to have_css('#activity_actual_accomplishment_intensity')
+      end
+    end
 
     click_on 'Previous Day'
     yesterday = today - 1

@@ -33,14 +33,18 @@ describe 'Goals', type: :feature, sauce: sauce_labs do
     visit ENV['Base_URL']
     expect(page).to have_content 'created a Goal: eat a whole pizza'
 
-    find(:xpath, '//*[@id="SocialNetworking::SharedItem-809335069"]/div[2]/button[5]').click
-    today = Date.today
-    end_of_study = today + 4
-    expect(page).to have_content 'due ' + end_of_study.strftime('%b. %e, %Y') + ' at 12:00AM'
+    within('.list-group-item.ng-scope', text: 'created a Goal: eat a whole pizza') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      today = Date.today
+      end_of_study = today + 4
+      expect(page).to have_content 'due ' + end_of_study.strftime('%b. %e, %Y') + ' at 12:00AM'
+    end
   end
 
   it '- complete a goal' do
-    find(:xpath, '//*[@id="goal-809335044"]/div/button[1]/span/i').click
+    page.find('.list-group-item.ng-scope', text: 'p1 alpha').find('.btn.btn-link.complete.ng-scope').click
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
 
@@ -51,7 +55,7 @@ describe 'Goals', type: :feature, sauce: sauce_labs do
   end
 
   it '- delete a goal' do
-    find(:xpath, '//*[@id="goal-614371357"]/div/button[3]/i').click
+    page.find('.list-group-item.ng-scope', text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
     expect(page).to_not have_content 'p1 gamma'
 
     click_on 'Deleted'
