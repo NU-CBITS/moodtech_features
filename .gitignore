@@ -38,5 +38,6 @@ build/
 .idea
 .DS_Store
 spec/configure_cloud.rb
+screenshots/
 
 

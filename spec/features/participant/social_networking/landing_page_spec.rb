@@ -26,14 +26,23 @@ describe 'Social Networking landing page', type: :feature, sauce: sauce_labs do
       find(:xpath, '//*[@id="profile-icon-selection"]/div[2]/div/div[2]/div[1]/div[3]').click
     end
 
-    fill_in 'new-answer-description-781294868', with: 'Running'
-    find(:xpath, '//*[@id="question-781294868"]/form/div[2]/button').click
-    fill_in 'new-answer-description-932760744', with: 'Blue'
-    find(:xpath, '//*[@id="question-932760744"]/form/div[2]/button').click
-    fill_in 'new-answer-description-10484799', with: 'Mineral'
-    find(:xpath, '//*[@id="question-10484799"]/form/div[2]/button').click
-    fill_in 'new-answer-description-933797305', with: 'Group 1'
-    find(:xpath, '//*[@id="question-933797305"]/form/div[2]/button').click
+    within('.list-group-item.ng-scope', text: 'What are your hobbies?') do
+      fill_in 'new-answer-description-781294868', with: 'Running'
+      click_on 'Save'
+    end
+    within('.list-group-item.ng-scope', text: 'What is your favorite color?') do
+      fill_in 'new-answer-description-932760744', with: 'Blue'
+      click_on 'Save'
+    end
+    within('.list-group-item.ng-scope', text: 'Animal, vegetable or mineral?') do
+      fill_in 'new-answer-description-10484799', with: 'Mineral'
+      click_on 'Save'
+    end
+    within('.list-group-item.ng-scope', text: 'Group 1 profile question') do
+      fill_in 'new-answer-description-933797305', with: 'Group 1'
+      click_on 'Save'
+    end
+
     expect(page).to have_css '.fa.fa-pencil'
 
     visit ENV['Base_URL']
@@ -55,35 +64,43 @@ describe 'Social Networking landing page', type: :feature, sauce: sauce_labs do
   end
 
   it '- view another participants profile' do
-    find(:xpath, '//*[@id="tool-layout"]/div[2]/div/div/div[3]/div/div[1]/a/div').click
-    expect(page).to have_content 'What is your favorite color?'
+    within('.profile-border.profile-icon-top', text: 'profile question participant') do
+      click_on 'profile question participant'
+    end
 
-    expect(page).to have_content 'green'
+    expect(page).to have_content 'What is your favorite color?'
   end
 
   it '- like a whats on your mind post written by another participant' do
-    expect(page).to have_content "said it's always sunny in Philadelphia"
-
-    find(:xpath, "//*[@id='SocialNetworking::OnTheMindStatement-576803333']/div[2]/button[1]").click
-    expect(page).to have_css '.fa.fa-thumbs-up.fa-2x'
+    within('.list-group-item.ng-scope', text: "said it's always sunny in Philadelphia") do
+      find('.btn.btn-link.like.ng-scope').click
+      expect(page).to have_css '.fa.fa-thumbs-up.fa-2x'
+    end
   end
 
   it '- comment on a nudge post' do
-    expect(page).to have_content 'nudged participant1'
+    within first('.list-group-item.ng-scope', text: 'nudged participant1') do
+      find('.btn.btn-link.comment').click
+    end
 
-    find(:xpath, "//*[@id='SocialNetworking::Nudge-316146702']/div[2]/button[2]").click
     expect(page).to have_content 'What do you think?'
 
     fill_in 'comment-text', with: 'Sweet Dude!'
     click_on 'Save'
-    find(:xpath, ".//*[@id='SocialNetworking::Nudge-316146702']/div[2]/button[3]").click
-    expect(page).to have_content ': Sweet Dude!'
+    expect(page).to have_content "said it's always sunny in Philadelphia"
+
+    within first('.list-group-item.ng-scope', text: 'nudged participant1') do
+      find('.fa.fa-comments.fa-2x').click
+      expect(page).to have_content ': Sweet Dude!'
+    end
   end
 
   it '- check for due date of a goal post' do
-    expect(page).to have_content 'a Goal: p1 alpha'
-
-    find(:xpath, "//*[@id='SocialNetworking::SharedItem-809335042']/div[2]/button[5]").click
-    expect(page).to have_content 'due ' + Date.today.strftime('%b. %e, %Y') + ' at 12:00AM'
+    within first('.list-group-item.ng-scope', text: 'a Goal: p1 alpha') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      expect(page).to have_content 'due ' + Date.today.strftime('%b. %e, %Y') + ' at 12:00AM'
+    end
   end
 end

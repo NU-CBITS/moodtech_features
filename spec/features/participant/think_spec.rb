@@ -201,9 +201,10 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     click_on 'Next'
     expect(page).to have_content 'Thought saved'
 
-    expect(page).to have_content 'Good work'
+    if page.has_text? 'Good work'
+      click_on 'Next'
+    end
 
-    click_on 'Next'
     expect(page).to have_content 'Add a New Thought'
   end
 

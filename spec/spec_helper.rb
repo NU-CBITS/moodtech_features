@@ -2,6 +2,7 @@
 
 require 'capybara'
 require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 require 'selenium-webdriver'
 require 'sauce'
 require 'sauce/capybara'
@@ -23,6 +24,12 @@ def test_driver
 end
 
 Capybara.default_driver = test_driver
+
+Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
+  "screenshot_#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
+end
+
+Capybara.save_and_open_page_path = '/Users/Chris/Work/moodtech_features/screenshots/'
 
 Sauce.config do |config|
   config[:start_tunnel] = false
