@@ -30,22 +30,62 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
   # tests
   # Testing view patient dashboard
   it '- view patients dashboard' do
-    page.find('#patients')[:class].include?('table table hover')
+    page.find('#patients')[:class].include?('table table-hover')
   end
 
   # Testing viewing Inactive Patients page
-  it '- view inactive patients list'
+  it '- view inactive patients list' do
     page.find('.btn.btn-default', text: 'Inactive Patients').click
-    expect(page).to have_content ''
-  end  
+    expect(page).to have_content 'Inactive Status'
+  end
 
   # Testing Discontinue
+  it '- selects Discontinue to end active status of participant' do
+    within('.table.table-hover') do
+      within('tr', text: 'TFD-Discontinue') do
+        find('.btn.btn-primary.btn-default', text: 'Discontinue').click
+      end
+    end
+
+    page.accept_alert 'Are you sure you would like to end this study? You will not be able to undo this.'
+    expect(page).to_not have_content 'TFD-Discontinue'
+
+    click_on 'Inactive Patients'
+    expect(page).to have_content 'TFD-Discontinue'
+    within('.table.table-hover') do
+      within('tr', text: 'TFD-Discontinue') do
+        today = Date.today
+        expect(page).to have_content 'Discontinued ' + today.strftime('%Y-%m-%d')
+      end
+    end
+  end
 
   # Testing Terminate Access
+  it '- selects Withdraw to end active status of participant' do
+    within('.table.table-hover') do
+      within('tr', text: 'TFD-Withdraw') do
+        find('.btn.btn-primary.btn-default', text: 'Terminate Access').click
+      end
+    end
+
+    page.accept_alert 'Are you sure you would like to terminate access to this membership? ' \
+                        'This option should also be used before changing membership of the patient' \
+                        ' to a different group or to completely revoke access to this membership. You will not be able to undo this.'
+    expect(page).to_not have_content 'TFD-Withdraw'
+
+    click_on 'Inactive Patients'
+    expect(page).to have_content 'TFD-Withdraw'
+    within('.table.table-hover') do
+      within('tr', text: 'TFD-Withdraw') do
+        today = Date.today
+        expect(page).to have_content 'Withdrawn ' + today.strftime('%Y-%m-%d')
+      end
+    end
+  end
 
   # Testing specific patient report
   it '- view patient report' do
-    within('.table.table.hover') do
+    within('.table.table-hover') do
       click_on 'TFD-1111'
     end
     expect(page).to have_content 'General Patient Info'
