@@ -23,7 +23,7 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     click_on 'Group 1'
     expect(page).to have_content 'Title: Group 1'
 
-    click_on 'Patients'
+    click_on 'Patient Dashboard'
     expect(page).to have_content 'Patient Dashboard'
   end
 
@@ -33,9 +33,21 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     page.find('#patients')[:class].include?('table table hover')
   end
 
+  # Testing viewing Inactive Patients page
+  it '- view inactive patients list'
+    page.find('.btn.btn-default', text: 'Inactive Patients').click
+    expect(page).to have_content ''
+  end  
+
+  # Testing Discontinue
+
+  # Testing Terminate Access
+
   # Testing specific patient report
   it '- view patient report' do
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
+    within('.table.table.hover') do
+      click_on 'TFD-1111'
+    end
     expect(page).to have_content 'General Patient Info'
   end
 
