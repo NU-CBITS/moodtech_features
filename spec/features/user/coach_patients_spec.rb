@@ -93,7 +93,12 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
   # Testing viewing Mood viz
   it '- views Mood/Emotions viz' do
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
+    within('.table.table-hover') do
+      click_on 'TFD-1111'
+    end
+
+    expect(page).to have_content 'General Patient Info'
+
     within('#viz-container.panel.panel-default') do
       expect(page).to have_content 'Mood'
 
@@ -104,10 +109,10 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
       one_month_ago = today - 27
       expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
 
-      find(:xpath, '//*[@id="viz-container"]/div[2]/div[1]/div/label[2]').click
+      click_on '28 day'
       expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
 
-      find(:xpath, '//*[@id="viz-container"]/div[2]/div[1]/div/label[1]').click
+      click_on '7 day'
       click_on 'Previous Period'
       one_week_ago_1 = today - 7
       two_weeks_ago = today - 13
@@ -117,7 +122,10 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
   # Testing viewing activities viz in patient report
   it '- view activities viz' do
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
+    within('.table.table-hover') do
+      click_on 'TFD-1111'
+    end
+
     expect(page).to have_content 'General Patient Info'
 
     click_on 'Activities visualization'
@@ -127,11 +135,16 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
-    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[5]/div[2]/div[3]/div[1]/h4/a').click
-    expect(page).to have_content 'Predicted'
 
-    click_on 'Edit'
-    expect(page).to have_css('#activity_actual_accomplishment_intensity')
+    within('.panel.panel-default', text: starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving') do
+      click_on starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving'
+      within('.panel-collapse.collapse.in') do
+        expect(page).to have_content 'Predicted'
+
+        click_on 'Edit'
+        expect(page).to have_css('#activity_actual_accomplishment_intensity')
+      end
+    end
 
     click_on 'Previous Day'
     yesterday = today - 1
@@ -150,7 +163,10 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
   # Testing viewing thoughts viz in patient report
   it '- view thoughts viz' do
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a').click
+    within('.table.table-hover') do
+      click_on 'TFD-1111'
+    end
+
     expect(page).to have_content 'General Patient Info'
 
     click_on 'Thoughts visualization'
