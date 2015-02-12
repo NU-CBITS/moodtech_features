@@ -41,9 +41,9 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
   # Testing Discontinue
   it '- selects Discontinue to end active status of participant' do
-    within('.table.table-hover') do
-      within('tr', text: 'TFD-Discontinue') do
-        find('.btn.btn-primary.btn-default', text: 'Discontinue').click
+    within('#patients', text: 'TFD-1111') do
+      within('table#patients tr', text: 'TFD-Discontinue') do
+        click_on 'Discontinue'
       end
     end
 
@@ -52,19 +52,20 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
     click_on 'Inactive Patients'
     expect(page).to have_content 'TFD-Discontinue'
-    within('.table.table-hover') do
-      within('tr', text: 'TFD-Discontinue') do
+    within('#patients', text: 'TFD-Discontinue') do
+      within('table#patients tr', text: 'TFD-Discontinue') do
         today = Date.today
-        expect(page).to have_content 'Discontinued ' + today.strftime('%Y-%m-%d')
+        yesterday = today - 1
+        expect(page).to have_content 'Discontinued ' + yesterday.strftime('%Y-%m-%d')
       end
     end
   end
 
   # Testing Terminate Access
   it '- selects Withdraw to end active status of participant' do
-    within('.table.table-hover') do
-      within('tr', text: 'TFD-Withdraw') do
-        find('.btn.btn-primary.btn-default', text: 'Terminate Access').click
+    within('#patients', text: 'TFD-1111') do
+      within('table#patients tr', text: 'TFD-Withdraw') do
+        click_on 'Terminate Access'
       end
     end
 
@@ -75,25 +76,27 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
     click_on 'Inactive Patients'
     expect(page).to have_content 'TFD-Withdraw'
-    within('.table.table-hover') do
-      within('tr', text: 'TFD-Withdraw') do
+    within('#patients', text: 'TFD-Withdraw') do
+      within('table#patients tr', text: 'TFD-Withdraw') do
         today = Date.today
-        expect(page).to have_content 'Withdrawn ' + today.strftime('%Y-%m-%d')
+        yesterday = today - 1
+        expect(page).to have_content 'Withdrawn ' + yesterday.strftime('%Y-%m-%d')
       end
     end
   end
 
   # Testing specific patient report
   it '- view patient report' do
-    within('.table.table-hover') do
+    within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
+
     expect(page).to have_content 'General Patient Info'
   end
 
   # Testing viewing Mood viz
   it '- views Mood/Emotions viz' do
-    within('.table.table-hover') do
+    within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
 
@@ -109,10 +112,16 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
       one_month_ago = today - 27
       expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
 
-      click_on '28 day'
+      within('.btn-group') do
+        find('.btn.btn-default', text: '28 day').click
+      end
+
       expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
 
-      click_on '7 day'
+      within('.btn-group') do
+        find('.btn.btn-default', text: '7 Day').click
+      end
+
       click_on 'Previous Period'
       one_week_ago_1 = today - 7
       two_weeks_ago = today - 13
@@ -122,13 +131,13 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
   # Testing viewing activities viz in patient report
   it '- view activities viz' do
-    within('.table.table-hover') do
+    within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
 
     expect(page).to have_content 'General Patient Info'
 
-    click_on 'Activities visualization'
+    page.all(:link, 'Activities visualization')[1].click
     expect(page).to have_content 'Today'
     today = Date.today
     expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
@@ -136,6 +145,8 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
 
+    starttime = Time.now - 3600
+    endtime = Time.now
     within('.panel.panel-default', text: starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving') do
       click_on starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving'
       within('.panel-collapse.collapse.in') do
@@ -163,13 +174,13 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
   # Testing viewing thoughts viz in patient report
   it '- view thoughts viz' do
-    within('.table.table-hover') do
+    within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
 
     expect(page).to have_content 'General Patient Info'
 
-    click_on 'Thoughts visualization'
+    page.all(:link, 'Thought visualization')[1].click
     page.find('#ThoughtVizContainer')
   end
 end

@@ -30,14 +30,17 @@ describe 'Social Networking landing page', type: :feature, sauce: sauce_labs do
       fill_in 'new-answer-description-781294868', with: 'Running'
       click_on 'Save'
     end
+
     within('.list-group-item.ng-scope', text: 'What is your favorite color?') do
       fill_in 'new-answer-description-932760744', with: 'Blue'
       click_on 'Save'
     end
+
     within('.list-group-item.ng-scope', text: 'Animal, vegetable or mineral?') do
       fill_in 'new-answer-description-10484799', with: 'Mineral'
       click_on 'Save'
     end
+    
     within('.list-group-item.ng-scope', text: 'Group 1 profile question') do
       fill_in 'new-answer-description-933797305', with: 'Group 1'
       click_on 'Save'
