@@ -2,7 +2,7 @@ require 'capybara'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 require_relative 'configure_cloud'
-require '/Users/Chris/.rvm/gems/ruby-2.2.0/gems/cobweb-1.0.25/lib/cobweb.rb'
+require 'cobweb'
 require 'redis'
 
 describe 'cobweb', type: :feature do

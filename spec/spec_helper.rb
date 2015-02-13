@@ -29,7 +29,7 @@ Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
   "screenshot_#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
 end
 
-Capybara.save_and_open_page_path = '/Users/Chris/Work/moodtech_features/screenshots/'
+Capybara.save_and_open_page_path = '../screenshots/'
 
 Sauce.config do |config|
   config[:start_tunnel] = false
