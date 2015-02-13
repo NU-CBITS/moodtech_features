@@ -71,7 +71,8 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
     page.accept_alert 'Are you sure you would like to terminate access to this membership? ' \
                         'This option should also be used before changing membership of the patient' \
-                        ' to a different group or to completely revoke access to this membership. You will not be able to undo this.'
+                        ' to a different group or to completely revoke access to this membership. ' \
+                        'You will not be able to undo this.'
     expect(page).to_not have_content 'TFD-Withdraw'
 
     click_on 'Inactive Patients'
