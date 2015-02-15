@@ -26,10 +26,10 @@ end
 Capybara.default_driver = test_driver
 
 Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
-  "screenshot_#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
+  "#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
 end
 
-Capybara.save_and_open_page_path = '../screenshots/'
+Capybara.save_and_open_page_path = 'screenshots/'
 
 Sauce.config do |config|
   config[:start_tunnel] = false
