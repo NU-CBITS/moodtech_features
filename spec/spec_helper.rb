@@ -7,6 +7,7 @@ require 'selenium-webdriver'
 require 'sauce'
 require 'sauce/capybara'
 require 'sauce_whisk'
+require 'byebug'
 
 Capybara.default_wait_time = 30
 
@@ -50,7 +51,7 @@ Sauce.config do |config|
     ['OS X 10.10', 'Chrome', '37']
   ]
 
-  config.after(:each) do |example|
+  config.after do |example|
     if example.exception.nil?
       SauceWhisk::Jobs.pass_job @driver.session_id
     else

@@ -15,7 +15,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Signed in successfully'
 
     click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
+    find('h1', text: 'Arms')
 
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
@@ -106,13 +106,24 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
 
   # Testing updating a provider
   it '- updating a provider' do
-    click_on 'Home Introduction'
+    if page.has_text? 'Home Introduction'
+      click_on 'Home Introduction'
+    else
+      within('.pagination') do
+        click_on '2'
+      end
+
+      expect(page).to have_content 'Home Introduction'
+
+      click_on 'Home Introduction'
+    end
+
     expect(page).to have_content 'New Provider'
 
     click_on '1 slideshow provider'
     expect(page).to have_content 'Content Provider'
 
-    expect(page).to have_content 'Slideshow: Testing adding/updating slides/lessons'
+    expect(page).to have_content "It's simple."
 
     click_on 'Edit'
     expect(page).to have_content 'Editing'
@@ -135,7 +146,18 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
 
   # Testing destroying a provider
   it '- destroying a provider' do
-    click_on 'Home Introduction'
+    if page.has_text? 'Home Introduction'
+      click_on 'Home Introduction'
+    else
+      within('.pagination') do
+        click_on '2'
+      end
+
+      expect(page).to have_content 'Home Introduction'
+
+      click_on 'Home Introduction'
+    end
+
     expect(page).to have_content 'Edit'
 
     click_on '4 slideshow provider'

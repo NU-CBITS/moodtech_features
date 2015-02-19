@@ -15,7 +15,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Signed in successfully'
 
     click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
+    find('h1', text: 'Arms')
 
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
@@ -39,7 +39,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
 
     fill_in 'slide_title', with: 'Test slide 2'
     uncheck 'slide_is_title_visible'
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/form/div[4]/div/textarea').set 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae viverra leo, at tincidunt enim. Nulla vitae enim nulla. Suspendisse.'
+    find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae viverra leo, at tincidunt enim. Nulla vitae enim nulla. Suspendisse.'
     click_on 'Create'
     expect(page).to have_content 'Successfully created slide for lesson'
 
@@ -54,14 +54,14 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
     click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[1]/span[3]/a[1]').click
+    page.all('a', text: 'Edit')[1].click
     expect(page).to have_content 'Edit Slide'
 
     uncheck 'slide_is_title_visible'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated slide for lesson'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[1]/span[3]/a[1]').click
+    page.all('a', text: 'Edit')[1].click
     expect(page).to have_content 'Edit Slide'
 
     check 'slide_is_title_visible'
@@ -92,7 +92,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
     click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content "It's simple"
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[2]').click
+    page.all('.btn.btn-danger', text: 'Remove')[4].click
     page.accept_alert 'Are you sure?'
     expect(page).to_not have_content 'Test slide 2'
   end
@@ -113,7 +113,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
     fill_in 'slide_title', with: 'Test video slide 2'
     fill_in 'slide_options_vimeo_id', with: '111087687'
     uncheck 'slide_is_title_visible'
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/form/div[5]/div/textarea').set 'This is a video slide'
+    find('.md-input').set 'This is a video slide'
     click_on 'Create'
     expect(page).to have_content 'Successfully created slide for lesson'
   end
@@ -126,7 +126,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
     click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content 'Test video slide 2'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[1]').click
+    page.all('a', text: 'Edit')[5].click
     expect(page).to have_content 'Edit Slide'
 
     expect(page).to have_content 'Test video slide 2'
@@ -135,7 +135,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
     click_on 'Update'
     expect(page).to have_content 'Successfully updated slide for lesson'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[1]').click
+    page.all('a', text: 'Edit')[5].click
     expect(page).to have_content 'Edit Slide'
 
     check 'slide_is_title_visible'
@@ -163,10 +163,25 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
     click_on 'Testing adding/updating slides/lessons'
     expect(page).to have_content 'Test video slide 2'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[2]').click
+    page.all('.btn.btn-danger', text: 'Remove')[4].click
     page.accept_alert 'Are you sure?'
     expect(page).to_not have_content 'Test video slide 2'
   end
+
+  # testing adding an audio slide in a lesson
+  it '- adding an audio slide to a less'
+
+  # testing updating an audio slide in a lesson
+  it '- updating an audio slide in a lesson'
+
+  # testing deleting an audio slide in a lesson
+  it '- deleting an audio slide from a lesson'
+
+  # testing adding TOC to a lesson
+  it '- adding TOC to a lesson'
+
+  # testing removing TOC from a lesson
+  it '- removing TOC from a lesson'
 
   # testing adding a slide to a slideshow
   it '- adding a slide to a slideshow' do
@@ -183,7 +198,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
 
     fill_in 'slide_title', with: 'Test slide 2'
     uncheck 'slide_is_title_visible'
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/form/div[4]/div/textarea').set 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae viverra leo, at tincidunt enim. Nulla vitae enim nulla. Suspendisse.'
+    find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae viverra leo, at tincidunt enim. Nulla vitae enim nulla. Suspendisse.'
     click_on 'Create'
     expect(page).to have_content 'Test slide 2'
   end
@@ -198,14 +213,14 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'Slide 2'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[2]/span[3]/a[1]').click
+    page.all('a', text: 'Edit')[1].click
     expect(page).to have_content 'Edit Slide'
 
     uncheck 'slide_is_title_visible'
     click_on 'Update'
     expect(page).to have_content 'Add Video Slide'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[2]/span[3]/a[1]').click
+    page.all('a', text: 'Edit')[1].click
     expect(page).to have_content 'Edit Slide'
 
     check 'slide_is_title_visible'
@@ -242,7 +257,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'Slide 2'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[2]').click
+    page.all('.btn.btn-danger', text: 'Remove')[4].click
     page.accept_alert 'Are you sure?'
     expect(page).to_not have_content 'Test slide 2'
   end
@@ -263,7 +278,7 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
     fill_in 'slide_title', with: 'Test video slide 2'
     fill_in 'slide_options_vimeo_id', with: '107231188'
     uncheck 'slide_is_title_visible'
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/form/div[5]/div/textarea').set 'This is a video slide'
+    find('.md-input').set 'This is a video slide'
     click_on 'Create'
     expect(page).to have_content 'Test video slide 2'
   end
@@ -278,14 +293,14 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'Slide 2'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[4]/span[3]/a[1]').click
+    page.all('a', text: 'Edit')[4].click
     expect(page).to have_content 'Edit Slide'
 
     uncheck 'slide_is_title_visible'
     click_on 'Update'
     expect(page).to have_content 'Add Slide'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[4]/span[3]/a[1]').click
+    page.all('a', text: 'Edit')[4].click
     expect(page).to have_content 'Edit Slide'
 
     check 'slide_is_title_visible'
@@ -317,8 +332,27 @@ describe 'Content Author, Slides', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'Slide 2'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/ol/li[5]/span[3]/a[2]').click
+    page.all('.btn.btn-danger', text: 'Remove')[4].click
     page.accept_alert 'Are you sure?'
     expect(page).to_not have_content 'Test video slide 2'
   end
+
+  # testing adding an audio slide in a slideshow
+  it '- adding an audio slide to a slideshow'
+
+  # testing updating an audio slide in a slideshow
+  it '- updating an audio slide in a slideshow'
+
+  # testing deleting an audio slide in a slideshow
+  it '- deleting an audio slide from a slideshow'
+
+  # testing adding TOC to a slideshow
+  it '- adding TOC to a slideshow'
+
+  # testing removing TOC from a slideshow
+  it '- removing TOC from a slideshow'
+
+  # testing markdown preview within slide editing
+  it '- uses markdown editor'
+
 end

@@ -15,7 +15,7 @@ describe 'Coach, Site Messages', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Signed in successfully'
 
     click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
+    find('h1', text: 'Arms')
 
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'

@@ -21,7 +21,7 @@ describe 'Super User, Arms', type: :feature, sauce: sauce_labs do
   # Testing creating an arm
   it '- create an arm' do
     click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
+    find('h1', text: 'Arms')
 
     click_on 'New'
     expect(page).to have_content 'New Arm'
@@ -34,7 +34,7 @@ describe 'Super User, Arms', type: :feature, sauce: sauce_labs do
   # Testing updating an arm
   it '- update an arm' do
     click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
+    find('h1', text: 'Arms')
 
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
@@ -61,7 +61,7 @@ describe 'Super User, Arms', type: :feature, sauce: sauce_labs do
   # Testing destroying an arm
   it '- destroys an arm' do
     click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
+    find('h1', text: 'Arms')
 
     click_on 'Test Arm'
     expect(page).to have_content 'Title: Test Arm'

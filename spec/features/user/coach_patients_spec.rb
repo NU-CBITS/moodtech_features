@@ -15,7 +15,7 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Signed in successfully'
 
     click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
+    find('h1', text: 'Arms')
 
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
@@ -146,8 +146,8 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
 
-    starttime = Time.now - 3600
-    endtime = Time.now
+    starttime = Time.now - 7200
+    endtime = Time.now - 3600
     within('.panel.panel-default', text: starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving') do
       click_on starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving'
       within('.panel-collapse.collapse.in') do
@@ -167,7 +167,12 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
     click_on 'Visualize'
     click_on 'Last 3 Days'
-    expect(page).to have_content today.strftime('%A, %m/%e')
+    if page.has_text? 'Notice! No activities were completed during this 3-day period.'
+      expect(page).to_not have_content today.strftime('%A, %m/%e')
+
+    else
+      expect(page).to have_content today.strftime('%A, %m/%e')
+    end
 
     click_on 'Day'
     expect(page).to have_css('#datepicker')
@@ -181,7 +186,10 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'General Patient Info'
 
-    page.all(:link, 'Thought visualization')[1].click
+    within('.list-group') do
+      find(:link, 'Thoughts visualization').click
+    end
+
     page.find('#ThoughtVizContainer')
   end
 end

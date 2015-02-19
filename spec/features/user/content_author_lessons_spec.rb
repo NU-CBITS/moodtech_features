@@ -15,7 +15,7 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Signed in successfully'
 
     click_on 'Arms'
-    expect(page).to have_content 'Listing Arms'
+    find('h1', text: 'Arms')
 
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
@@ -39,12 +39,12 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add Video Slide'
   end
 
-  # Testing updating a lesson
-  it '- updating lesson' do
+  # Testing updating title of a lesson
+  it '- updating title of a lesson' do
     click_on 'Do - Awareness Introduction'
     expect(page).to have_content 'This is just the beginning...'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[1]/a[2]').click
+    page.all(:link, 'Edit')[0].click
     fill_in 'lesson_title', with: 'Do - Awareness Introduction 123'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated lesson'
@@ -53,7 +53,7 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'Add Video Slide'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[1]/a[2]').click
+    page.all(:link, 'Edit')[0].click
     fill_in 'lesson_title', with: 'Do - Awareness Introduction'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated lesson'
@@ -90,7 +90,10 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
 
   # Testing destroying  a lesson
   it '- destroy lesson' do
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[18]/td[4]/a[2]').click
+    within('tr:nth-child(17)') do
+      find('.btn.btn-danger').click
+    end
+
     page.accept_alert 'Are you sure?'
     expect(page).to_not have_content 'Test lesson'
   end
