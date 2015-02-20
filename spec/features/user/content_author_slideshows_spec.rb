@@ -40,30 +40,31 @@ describe 'Content Author, Slideshows', type: :feature, sauce: sauce_labs do
 
   # Testing updating a slideshow
   it '- update slideshow' do
-    click_on 'Testing adding/updating slides/lessons'
+    click_on 'Home Intro'
     expect(page).to have_content 'Slideshow'
 
-    expect(page).to have_content 'Testing adding/updating slides/lessons'
+    expect(page).to have_content 'Home Intro'
 
     expect(page).to have_content 'Anchors'
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[1]/a[4]').click
+
+    page.all('a', text: 'Edit')[0].click
     expect(page).to have_content 'Edit Slideshow'
 
-    fill_in 'slideshow_title', with: 'Testing adding/updating slides/lessons 123'
+    fill_in 'slideshow_title', with: 'Home Introduction 123'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated slideshow'
 
-    click_on 'Testing adding/updating slides/lessons 123'
+    click_on 'Home Introduction 123'
     expect(page).to have_content 'Slideshow'
 
-    expect(page).to have_content 'Testing adding/updating slides/lessons 123'
+    expect(page).to have_content 'Home Introduction 123'
 
     expect(page).to have_content 'Anchors'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[1]/a[4]').click
+    page.all('a', text: 'Edit')[0].click
     expect(page).to have_content 'Edit Slideshow'
 
-    fill_in 'slideshow_title', with: 'Testing adding/updating slides/lessons'
+    fill_in 'slideshow_title', with: 'Home Intro'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated slideshow'
   end

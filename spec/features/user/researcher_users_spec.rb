@@ -15,7 +15,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'CSV Reports'
     click_on 'Users'
-    expect(page).to have_content 'Listing Users'
+    expect(page).to have_content 'Users'
   end
 
   # tests

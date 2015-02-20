@@ -98,7 +98,7 @@ describe 'Researcher, Groups', type: :feature, sauce: sauce_labs do
     click_on 'Assign'
     expect(page).to have_content 'Task assigned.'
 
-    find(:xpath, 'html/body/div[1]/div/div/div[2]/div[2]/table/tbody/tr[23]/td[6]/a').click
+    page.all('.btn.btn-danger', text: 'Unassign')[22].click
     page.accept_alert 'Are you sure?'
     within '#tasks' do
       expect(page).to_not have_content 'LEARN: Do - Planning Slideshow 3 of 4'

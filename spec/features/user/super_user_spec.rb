@@ -3,7 +3,7 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Super User, Arms', type: :feature, sauce: sauce_labs do
+describe 'Super User', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -76,7 +76,7 @@ describe 'Super User, Arms', type: :feature, sauce: sauce_labs do
   # Testing creating a super user
   it '- create a super user' do
     click_on 'Users'
-    expect(page).to have_content 'Listing Users'
+    expect(page).to have_content 'Users'
 
     click_on 'New'
     fill_in 'user_email', with: 'superuser@test.com'
@@ -92,7 +92,7 @@ describe 'Super User, Arms', type: :feature, sauce: sauce_labs do
   # Testing updating a super user
   it '- update a super user' do
     click_on 'Users'
-    expect(page).to have_content 'Listing Users'
+    expect(page).to have_content 'Users'
 
     click_on 'superuser@test.com'
     expect(page).to have_content 'Email: superuser@test.com'
@@ -127,7 +127,7 @@ describe 'Super User, Arms', type: :feature, sauce: sauce_labs do
   # Testing detroying a super user
   it '- destroy a super user' do
     click_on 'Users'
-    expect(page).to have_content 'Listing Users'
+    expect(page).to have_content 'Users'
 
     click_on 'superuser@test.com'
     expect(page).to have_content 'Email: superuser@test.com'

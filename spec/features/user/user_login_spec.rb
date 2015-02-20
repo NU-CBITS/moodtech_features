@@ -83,7 +83,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     click_on 'Group 1'
     expect(page).to have_content 'Title: Group 1'
 
-    expect(page).to have_content 'Patients'
+    expect(page).to have_content 'Patient Dashboard'
 
     expect(page).to have_content 'Messaging'
 
