@@ -3,7 +3,7 @@
 require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
-describe 'Goals', type: :feature, sauce: sauce_labs do
+describe 'Active participant in social arm is signed in,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -19,7 +19,7 @@ describe 'Goals', type: :feature, sauce: sauce_labs do
   end
 
   # tests
-  it '- create a goal' do
+  it 'creates a goal' do
     click_on '+ add a goal'
     expect(page).to have_content 'What is your goal?'
 
@@ -43,7 +43,7 @@ describe 'Goals', type: :feature, sauce: sauce_labs do
     end
   end
 
-  it '- complete a goal' do
+  it 'completes a goal' do
     page.find('.list-group-item.ng-scope', text: 'p1 alpha').find('.btn.btn-link.complete.ng-scope').click
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
@@ -54,7 +54,7 @@ describe 'Goals', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'completed a Goal: p1 alpha'
   end
 
-  it '- delete a goal' do
+  it 'deletes a goal' do
     page.find('.list-group-item.ng-scope', text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
     expect(page).to_not have_content 'p1 gamma'
 
@@ -64,7 +64,7 @@ describe 'Goals', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'p1 gamma'
   end
 
-  it '- reinstate a previously deleted goal' do
+  it 'reinstates a previously deleted goal' do
     click_on 'Deleted'
     expect(page).to have_content 'p1 delta'
 

@@ -4,7 +4,7 @@ require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
 # to run on Sauce Labs comment this block out
-describe 'Nudges', type: :feature, sauce: sauce_labs do
+describe 'Active participant in a social arm is signed in,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -19,7 +19,7 @@ describe 'Nudges', type: :feature, sauce: sauce_labs do
   end
 
   # tests
-  it '- nudge another participant' do
+  it 'nudges another participant' do
     visit ENV['Base_URL'] + '/social_networking/profile_page/596136196'
     click_on 'Nudge'
     expect(page).to have_content 'Nudge sent!'
@@ -28,7 +28,7 @@ describe 'Nudges', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'nudged profile question participant'
   end
 
-  it '- receive a nudge alert on profile page' do
+  it 'receives a nudge alert on profile page' do
     visit ENV['Base_URL'] + '/social_networking/profile_page'
     if page.has_css?('.modal-content')
       within('.modal-content') do
@@ -47,7 +47,7 @@ describe 'Nudges', type: :feature, sauce: sauce_labs do
     end
   end
 
-  it '- expect to see nudge on landing page' do
+  it 'expects to see nudge on landing page' do
     expect(page).to have_content 'nudged participant1'
   end
 end

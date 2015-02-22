@@ -1,5 +1,6 @@
 # configurations for this test suite
 
+require 'rspec'
 require 'capybara'
 require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
@@ -8,6 +9,10 @@ require 'sauce'
 require 'sauce/capybara'
 require 'sauce_whisk'
 require 'byebug'
+
+RSpec.configure do |config|
+  config.full_backtrace = false
+end
 
 Capybara.default_wait_time = 30
 
