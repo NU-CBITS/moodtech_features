@@ -3,11 +3,13 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Login', type: :feature, sauce: sauce_labs do
-  # tests
-  # Testing a successful login
-  it '- success' do
+# tests
+describe 'A visitor to the site', type: :feature, sauce: sauce_labs do
+  before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
+  end
+
+  it 'is an active participant and signs in' do
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -17,9 +19,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Signed in successfully'
   end
 
-  # Testing Brand Link functionality
-  it '- brand link redirect' do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+  it 'is an active participant, signs in, visits another page, and uses brand link to get to home page' do
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -35,9 +35,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content "What's on your mind?"
   end
 
-  # Testing the Sign Out functionality
-  it '- sign out' do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+  it 'is an activie participant, signs in and signs out' do
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -54,9 +52,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
-  # Testing a failed login
-  it '- failure' do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+  it 'is not able to log in' do
     within('#new_participant') do
       fill_in 'participant_email', with: 'asdf@test.com'
       fill_in 'participant_password', with: 'asdf'
@@ -66,9 +62,21 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Invalid email address or password'
   end
 
-  # Testing a login for a participant who's end date has passed
-  it '- after end date' do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+  it 'was an active participant who has completed' do
+    within('#new_participant') do
+      fill_in 'participant_email', with: ENV['Completed_Pt_Email']
+      fill_in 'participant_password', with: ENV['Completed_Pt_Password']
+    end
+
+    click_on 'Sign in'
+    expect(page).to have_content 'HOME'
+  end
+
+  it 'was an active participant in a social arm who has completed'
+
+  it 'was an active participant in a non-social arm who has completed'
+
+  it 'was an active participant who has withdrawn' do
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Old_Participant_Email']
       fill_in 'participant_password', with: ENV['Old_Participant_Password']
@@ -78,15 +86,12 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content "We're sorry, but you can't sign in yet because you are not assigned to a group"
   end
 
-  # Testing redirect to login screen
-  it '- not logged in, redirect' do
+  it 'tries to visit a specific page and is redirected to log in page' do
     visit ENV['Base_URL'] + '/navigator/contexts/THINK'
     expect(page).to have_content 'You need to sign in or sign up before continuing'
   end
 
-  # Testing the Introduction Slideshow if a person hits it who isn't logged in
-  it '- not logged in, intro slideshow' do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+  it 'views the intro slideshow' do
     click_on 'Introduction to ThinkFeelDo'
     expect(page).to have_content 'Welcome to ThiFeDo'
 
@@ -94,9 +99,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
-  # Testing Forgot Your Password? functionality
-  it '- forgot password' do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+  it 'is an active participant and uses the forgot password functionality' do
     click_on 'Forgot your password?'
     expect(page).to have_content 'Forgot your password?'
 

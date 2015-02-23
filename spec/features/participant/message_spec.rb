@@ -3,7 +3,7 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Messages - Participant 1', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 1 is signed in and navigates to MESSAGES,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -18,9 +18,7 @@ describe 'Messages - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Inbox'
   end
 
-  # tests
-  # Testing Compose a new message
-  it '- compose new' do
+  it 'composes a new message' do
     click_on 'Compose'
     expect(page).to have_content 'To Coach'
 
@@ -33,8 +31,7 @@ describe 'Messages - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Message saved'
   end
 
-  # Testing reading a new message in inbox
-  it '- read new' do
+  it 'reads a sent message' do
     click_on 'Sent'
     expect(page).to have_content 'To: Coach'
 
@@ -44,8 +41,7 @@ describe 'Messages - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'This app is really helpful!'
   end
 
-  # Testing the reply functionality
-  it '- reply' do
+  it 'reads and replies to a received message' do
     click_on 'Try out the LEARN tool'
     expect(page).to have_content 'I think you will find it helpful.'
 
@@ -60,8 +56,7 @@ describe 'Messages - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Message saved'
   end
 
-  # Testing composing a message from reading a message
-  it '- compose while reading a message' do
+  it 'composes a message from reading a message' do
     click_on 'Try out the LEARN tool'
     expect(page).to have_content 'I think you will find it helpful.'
 
@@ -69,8 +64,7 @@ describe 'Messages - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'To Coach'
   end
 
-  # Testing the cancel button in compose
-  it '- cancel button' do
+  it 'uses the cancel button within compose message' do
     click_on 'Compose'
     expect(page).to have_content 'To Coach'
 
@@ -78,8 +72,7 @@ describe 'Messages - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Inbox'
   end
 
-  # Testing the return button in compose
-  it '- return button' do
+  it 'uses return button within compose message' do
     click_on 'Compose'
     expect(page).to have_content 'To Coach'
 
@@ -88,7 +81,7 @@ describe 'Messages - Participant 1', type: :feature, sauce: sauce_labs do
   end
 end
 
-describe 'Messages - Participant 3', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 3 signs in and navigates to MESSAGES', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -103,9 +96,7 @@ describe 'Messages - Participant 3', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Inbox'
   end
 
-  # tests
-  # Testing the links provided by a Coach in the messages
-  it '- accessing ALL links from a message in inbox' do
+  it 'accesses a link from a message in inbox' do
     click_on 'Check out the Introduction slideshow'
     expect(page).to have_content "Here's a link to the introduction slideshow:"
 
@@ -113,6 +104,6 @@ describe 'Messages - Participant 3', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Welcome to ThiFeDo'
 
     click_on 'Done'
-    expect(page).to have_content "What's on your mind?"
+    expect(page).to have_content 'HOME'
   end
 end

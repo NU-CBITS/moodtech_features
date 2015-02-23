@@ -3,7 +3,7 @@
 require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
-# to run on Sauce Labs comment this block out
+# tests
 describe 'Active participant in a social arm is signed in,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
@@ -18,7 +18,6 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to have_content "What's on your mind?"
   end
 
-  # tests
   it 'nudges another participant' do
     visit ENV['Base_URL'] + '/social_networking/profile_page/596136196'
     click_on 'Nudge'

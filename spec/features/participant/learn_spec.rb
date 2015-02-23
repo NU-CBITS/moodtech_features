@@ -3,6 +3,7 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
+# tests
 describe 'Active participant in group 1 is signed in and navigates to LEARN,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
@@ -18,7 +19,6 @@ describe 'Active participant in group 1 is signed in and navigates to LEARN,', t
     expect(page).to have_content 'Lessons'
   end
 
-  # tests
   it 'sees list opened to this week and is able to collapse list' do
     expect(page).to have_content 'Week 1'
 
