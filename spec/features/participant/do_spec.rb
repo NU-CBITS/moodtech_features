@@ -3,7 +3,13 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
+# define methods for this spec file
+def choose_rating(element_id, value)
+  find("##{ element_id } select").find(:xpath, "option[#{(value + 1)}]").select_option
+end
+
+# tests
+describe 'Active participant in group 1 is signed in,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -18,14 +24,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Activity'
   end
 
-  # define methods for this spec file
-  def choose_rating(element_id, value)
-    find("##{ element_id } select").find(:xpath, "option[#{(value + 1)}]").select_option
-  end
-
-  # tests
-  # Testing the #1 Awareness portion of the DO tool
-  it '- awareness' do
+  it 'completes DO > Awareness' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -83,8 +82,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Activity'
   end
 
-  # Testing that previously entered and completed wake period is not available
-  it '- awareness, already entered wake period' do
+  it 'is not able to complete DO > Awareness for a time period that has already been used' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -97,23 +95,24 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect { select yesterday.strftime('%a') + ' 10 PM', from: 'awake_period_end_time' }.to raise_error
   end
 
-  # Testing the #1 Awareness portion of the DO tool
-  it '- awareness second time around' do
+  it 'completes DO > Awareness for a different time period on the same day and overlaps two days' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
     click_on 'Next'
     expect(page).to have_content "OK, let's talk about yesterday."
 
+    yesterday = Date.today.prev_day
+    select yesterday.strftime('%a') + ' 11 PM', from: 'awake_period_start_time'
     today = Date.today
-    select today.strftime('%a') + ' 2 AM', from: 'awake_period_start_time'
-    select today.strftime('%a') + ' 3 AM', from: 'awake_period_end_time'
+    select today.strftime('%a') + ' 1 AM', from: 'awake_period_end_time'
     click_on 'Create'
     expect(page).to have_content 'Awake Period saved'
 
     fill_in 'activity_type_0', with: 'Sleep'
     choose_rating('pleasure_0', 6)
     choose_rating('accomplishment_0', 1)
+    click_on 'copy_1'
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
@@ -130,8 +129,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Activity'
   end
 
-  # Testing the #2-Planning of the DO tool
-  it '- planning' do
+  it 'completes DO > Planning' do
     click_on '#2 Planning'
     expect(page).to have_content 'The last few times you were here...'
 
@@ -169,8 +167,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Upcoming Activities'
   end
 
-  # Testing the #3-Reviewing section of the DO tool
-  it '- reviewing' do
+  it 'completes DO > Reviewing' do
     click_on '#3 Doing'
     expect(page).to have_content 'Welcome back!'
 
@@ -181,6 +178,19 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     find('.btn.btn-success').click
     select '7', from: 'activity[actual_pleasure_intensity]'
     select '5', from: 'activity[actual_accomplishment_intensity]'
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    expect(page).to have_content 'Activity saved'
+
+    find('.btn.btn-danger').click
+    fill_in 'activity[noncompliance_reason]', with: "I didn't have time"
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make this activity public?'
+    expect(page).to have_content 'Activity saved'
+
+    find('.btn.btn-success').click
+    select '3', from: 'activity[actual_pleasure_intensity]'
+    select '1', from: 'activity[actual_accomplishment_intensity]'
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Activity saved'
@@ -198,8 +208,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     end
   end
 
-  # Testing Plan a New Activity portion of the DO tool
-  it '- plan a new activity' do
+  it 'completes DO > Plan a New Activity' do
     click_on 'Add a New Activity'
     expect(page).to have_content "But you don't have to start from scratch,"
 
@@ -216,8 +225,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Activity'
   end
 
-  # Testing Your Activities portion of the DO tool
-  it '- your activities' do
+  it 'uses DO > Your Activities viz' do
     click_on 'Your Activities'
     expect(page).to have_content 'Today'
 
@@ -254,8 +262,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_css('#datepicker')
   end
 
-  # Testing the navbar functionality specifically surrounding the DO tool
-  it '- navbar functionality' do
+  it 'uses navbar functionality for all of DO' do
     visit ENV['Base_URL'] + '/navigator/modules/339588004'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -284,8 +291,7 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Activity'
   end
 
-  # Testing the skip functionality in the slideshow portions of the first three parts of the DO tool
-  it '- skip functionality' do
+  it 'uses skip functionality in all of DO slideshows' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -313,13 +319,17 @@ describe 'Do - Participant 1', type: :feature, sauce: sauce_labs do
     end
   end
 
-  # Testing the DO tool visualization
-  it '- visualization' do
+  it 'sees Upcoming Activities on DO > Landing' do
     expect(page).to have_content 'Activities in your near future'
+  end
+
+  it 'visits View Planned Activities' do
+    click_on 'View Planned Activities'
+    expect(page).to have_content 'Speech'
   end
 end
 
-describe 'Do - Participant 3', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 3 is signed in,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -334,14 +344,7 @@ describe 'Do - Participant 3', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Your Activities'
   end
 
-  # define methods for this spec file
-  def choose_rating(element_id, value)
-    find("##{ element_id } select").find(:xpath, "option[#{(value + 1)}]").select_option
-  end
-
-  # tests
-  # Testing the #1 Awareness portion of the DO tool
-  it '- awareness with already entered but not completed awake period' do
+  it 'completes DO > Awareness with already entered but not completed awake period' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -378,7 +381,7 @@ describe 'Do - Participant 3', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Your Activities'
   end
 
-  it '- visualization' do
+  it 'visits DO > Reviewing from viz at bottom of DO > Landing' do
     expect(page).to have_content 'Recent Past Activities'
 
     click_on 'Edit'

@@ -8,6 +8,7 @@ def choose_rating(element_id, value)
   find("##{ element_id } select").find(:xpath, "option[#{(value + 1)}]").select_option
 end
 
+# tests
 describe 'Active participant in a social arm is signed in,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
@@ -22,8 +23,7 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to have_content "What's on your mind?"
   end
 
-  # Testing shared items created from the #1-Identifying portion of the THINK tool
-  it 'shares THINK - Identifying responses' do
+  it 'shares THINK > Identifying responses' do
     visit ENV['Base_URL'] + '/navigator/contexts/THINK'
     expect(page).to have_content 'Add a New Thought'
 
@@ -72,7 +72,6 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to have_content 'Public thought 2'
   end
 
-  # Testing shared items from the Add a New Thought portion of the THINK tool
   it 'shares Add a New Thought responses' do
     visit ENV['Base_URL'] + '/navigator/contexts/THINK'
     expect(page).to have_content 'Add a New Thought'
@@ -117,7 +116,6 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to_not have_content 'Private thought 2'
   end
 
-  # Testing shared items from the #1 Awareness portion of the DO tool
   it 'shares DO > Awareness responses' do
     visit ENV['Base_URL'] + '/navigator/contexts/DO'
     expect(page).to have_content 'Add a New Activity'
@@ -129,8 +127,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to have_content "OK, let's talk about yesterday."
 
     today = Date.today
-    select today.strftime('%a') + ' 4 AM', from: 'awake_period_start_time'
-    select today.strftime('%a') + ' 7 AM', from: 'awake_period_end_time'
+    select today.strftime('%a') + ' 2 AM', from: 'awake_period_start_time'
+    select today.strftime('%a') + ' 4 AM', from: 'awake_period_end_time'
     click_on 'Create'
     expect(page).to have_content 'Awake Period saved'
 
@@ -143,9 +141,6 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     choose_rating('pleasure_1', 2)
     choose_rating('accomplishment_1', 3)
     find(:xpath, '//*[@id="past_activities_container"]/form[2]/span/div/label[3]').click
-    fill_in 'activity_type_2', with: 'public sleep 2'
-    choose_rating('pleasure_2', 8)
-    choose_rating('accomplishment_2', 9)
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
@@ -165,11 +160,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to_not have_content 'private sleep'
 
     expect(page).to have_content 'public sleep 1'
-
-    expect(page).to have_content 'public sleep 2'
   end
 
-  # Testing shared items from the #2-Planning of the DO tool
   it 'shares DO > Planning responses' do
     visit ENV['Base_URL'] + '/navigator/contexts/DO'
     expect(page).to have_content 'Add a New Activity'
@@ -216,7 +208,6 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to have_content 'New public activity'
   end
 
-  # Testing shared items from Plan a New Activity portion of the DO tool
   it 'shares Add a New Activity responses' do
     visit ENV['Base_URL'] + '/navigator/contexts/DO'
     expect(page).to have_content 'Add a New Activity'

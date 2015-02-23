@@ -79,4 +79,61 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'Add a New Activity'
   end
+
+  # Testing bug where expection is thrown when clicking on Previous Day in Your Activities
+  it 'visits your activities and selects Previous Day' do
+    click_on '#1 Awareness'
+    expect(page).to have_content 'This is just the beginning...'
+
+    click_on 'Next'
+    expect(page).to have_content "OK, let's talk about yesterday."
+
+    within('awake_period[start_time]') do
+      today = Date.today
+      yesterday = Date.today.prev_day
+      if page.has_text?(yesterday.strftime('%a') + ' 4 AM')
+        select yesterday yesterday.strftime('%a') + ' 4 AM', from: 'awake_period_start_time'
+      else
+        select today.strftime('%a') + ' 12 AM', from: 'awake_period_start_time'
+      end
+    end
+
+    within('awake_period[end_time]') do
+      today = Date.today
+      yesterday = Date.today.prev_day
+      if page.has_text?(yesterday.strftime('%a') + ' 5 AM')
+        select yesterday yesterday.strftime('%a') + ' 5 AM', from: 'awake_period_end_time'
+      else
+        select today.strftime('%a') + ' 1 AM', from: 'awake_period_end_time'
+      end
+    end
+
+    click_on 'Create'
+    expect(page).to have_content 'Awake Period saved'
+
+    fill_in 'activity_type_0', with: 'Sleep'
+    choose_rating('pleasure_9', 6)
+    choose_rating('accomplishment_3', 1)
+    click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
+    expect(page).to have_content 'Activity saved'
+
+    expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
+
+    click_on 'Next'
+    expect(page).to have_content 'Things you found fun.'
+
+    click_on 'Next'
+    expect(page).to have_content "Things that make you feel like you've accomplished something."
+
+    click_on 'Next'
+    expect(page).to have_content 'Add a New Activity'
+
+    click_on 'Your Activities'
+    expect(page).to have_content 'Today'
+
+    click_on 'Previous Day'
+    yesterday = today - 1
+    expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %d, %Y')
+  end
 end
