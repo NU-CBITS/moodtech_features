@@ -9,7 +9,7 @@ def choose_rating(element_id, value)
 end
 
 # tests
-describe 'Active participant in group 1 is signed in,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 1 is signed in and navigates to DO tool,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -24,7 +24,7 @@ describe 'Active participant in group 1 is signed in,', type: :feature, sauce: s
     expect(page).to have_content 'Add a New Activity'
   end
 
-  it 'completes DO > Awareness' do
+  it 'completes Awareness' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -82,7 +82,7 @@ describe 'Active participant in group 1 is signed in,', type: :feature, sauce: s
     expect(page).to have_content 'Add a New Activity'
   end
 
-  it 'is not able to complete DO > Awareness for a time period that has already been used' do
+  it 'is not able to complete Awareness for a time period that has already been used' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -95,7 +95,7 @@ describe 'Active participant in group 1 is signed in,', type: :feature, sauce: s
     expect { select yesterday.strftime('%a') + ' 10 PM', from: 'awake_period_end_time' }.to raise_error
   end
 
-  it 'completes DO > Awareness for a different time period on the same day and overlaps two days' do
+  it 'completes Awareness for a different time period on the same day and overlaps two days' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -129,7 +129,7 @@ describe 'Active participant in group 1 is signed in,', type: :feature, sauce: s
     expect(page).to have_content 'Add a New Activity'
   end
 
-  it 'completes DO > Planning' do
+  it 'completes Planning' do
     click_on '#2 Planning'
     expect(page).to have_content 'The last few times you were here...'
 
@@ -167,7 +167,7 @@ describe 'Active participant in group 1 is signed in,', type: :feature, sauce: s
     expect(page).to have_content 'Upcoming Activities'
   end
 
-  it 'completes DO > Reviewing' do
+  it 'completes Reviewing' do
     click_on '#3 Doing'
     expect(page).to have_content 'Welcome back!'
 
@@ -208,7 +208,7 @@ describe 'Active participant in group 1 is signed in,', type: :feature, sauce: s
     end
   end
 
-  it 'completes DO > Plan a New Activity' do
+  it 'completes Plan a New Activity' do
     click_on 'Add a New Activity'
     expect(page).to have_content "But you don't have to start from scratch,"
 
@@ -225,7 +225,7 @@ describe 'Active participant in group 1 is signed in,', type: :feature, sauce: s
     expect(page).to have_content 'Add a New Activity'
   end
 
-  it 'uses DO > Your Activities viz' do
+  it 'uses Your Activities viz' do
     click_on 'Your Activities'
     expect(page).to have_content 'Today'
 
@@ -329,7 +329,7 @@ describe 'Active participant in group 1 is signed in,', type: :feature, sauce: s
   end
 end
 
-describe 'Active participant in group 3 is signed in,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 3 is signed in and navigates to DO tool,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -344,7 +344,7 @@ describe 'Active participant in group 3 is signed in,', type: :feature, sauce: s
     expect(page).to have_content 'Your Activities'
   end
 
-  it 'completes DO > Awareness with already entered but not completed awake period' do
+  it 'completes Awareness with already entered but not completed awake period' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -381,7 +381,7 @@ describe 'Active participant in group 3 is signed in,', type: :feature, sauce: s
     expect(page).to have_content 'Your Activities'
   end
 
-  it 'visits DO > Reviewing from viz at bottom of DO > Landing' do
+  it 'visits Reviewing from viz at bottom of DO > Landing' do
     expect(page).to have_content 'Recent Past Activities'
 
     click_on 'Edit'

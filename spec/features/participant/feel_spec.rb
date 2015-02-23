@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Feel - Participant 1', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Active participant in group 1 is signed in and navigates to FEEL tool,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -18,9 +19,7 @@ describe 'Feel - Participant 1', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Tracking Your Mood'
   end
 
-  # tests
-  # Testing Tracking Your Mood and Emotions in the FEEL to
-  it '- tracking your mood' do
+  it 'completes Tracking Your Mood' do
     click_on 'Tracking Your Mood'
     expect(page).to have_content 'Rate your Mood'
 
@@ -35,7 +34,7 @@ describe 'Feel - Participant 1', type: :feature, sauce: sauce_labs do
   end
 end
 
-describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 3 is signed in and navigates to FEEL tool,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -50,9 +49,7 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Tracking Your Mood & Emotions'
   end
 
-  # tests
-  # Testing Tracking Your Mood and Emotions in the FEEL to
-  it '- tracking your mood and emotions' do
+  it 'completes Tracking Your Mood & Emotions' do
     click_on 'Tracking Your Mood & Emotions'
     expect(page).to have_content 'Rate your Mood'
 
@@ -68,9 +65,12 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
     select 'negative', from: 'emotional_rating_is_positive'
     select '4', from: 'emotional_rating[rating]'
     click_on 'Add Emotion'
-    fill_in 'emotional_rating_name', with: 'crazy'
-    find(:xpath, 'html/body/div/div[1]/div/div[3]/div[3]/div/form/div[4]/select/option[3]').click
-    find(:xpath, 'html/body/div/div[1]/div/div[3]/div[3]/div/form/div[5]/div/select/option[7]').click
+    within '#subcontainer-1' do
+      fill_in 'emotional_rating_name', with: 'crazy'
+      select 'negative', from: 'emotional_rating_is_positive'
+      select '8', from: 'emotional_rating[rating]'
+    end
+
     click_on 'Next'
     expect(page).to have_content 'Emotional Rating saved'
 
@@ -83,10 +83,10 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
     one_month_ago = today - 27
     expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
 
-    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[2]/div[1]/div[1]/div/label[2]').click
+    find('.btn.btn-default', text: '28 day').click
     expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
 
-    find(:xpath, 'html/body/div[1]/div[1]/div/div[3]/div[2]/div[1]/div[1]/div/label[1]').click
+    find('.btn.btn-default', text: '7 Day').click
     click_on 'Previous Period'
     one_week_ago_1 = today - 7
     two_weeks_ago = today - 13
@@ -96,8 +96,7 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Feeling Tracker Landing'
   end
 
-  # Testing the View Your Recent Emotions portion of the FEEL to
-  it '- view your recent emotions' do
+  it 'views recent ratings in Your Recent Mood & Emtions' do
     click_on 'Your Recent Moods & Emotions'
     expect(page).to have_content 'Mood'
 
@@ -107,8 +106,7 @@ describe 'Feel - Participant 3', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Feeling Tracker Landing'
   end
 
-  # Testing navbar functionality specifically surrounding the FEEL to
-  it '- navbar functionality' do
+  it 'uses navbar functionality in all of FEEL' do
     visit ENV['Base_URL'] + '/navigator/modules/86966983'
     click_on 'FEEL'
     click_on 'Your Recent Moods & Emotions'

@@ -3,7 +3,7 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Learn', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 1 is signed in and navigates to LEARN,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -19,7 +19,17 @@ describe 'Learn', type: :feature, sauce: sauce_labs do
   end
 
   # tests
-  it '- read Lesson 1' do
+  it 'sees list opened to this week and is able to collapse list' do
+    expect(page).to have_content 'Week 1'
+
+    expect(page).to have_content 'Do - Awareness Introduction'
+
+    today = Date.today
+    click_on "Week 1 · #{today.strftime('%b %e')}"
+    expect(page).to_not have_content 'Do - Awareness Introduction'
+  end
+
+  it 'reads Lesson 1' do
     expect(page).to have_content 'Week 1'
 
     click_on 'Do - Awareness Introduction'
@@ -35,7 +45,7 @@ describe 'Learn', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'read a Lesson: Do - Awareness Introduction'
   end
 
-  it '- print a read lesson' do
+  it 'prints a read lesson' do
     expect(page).to have_content 'Week 1'
 
     today = Date.today

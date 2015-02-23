@@ -3,7 +3,8 @@
 require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
-describe 'Active participant in social arm is signed in,', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Active participant in social arm is signed in and navigates to ACHIEVE tool,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -18,7 +19,6 @@ describe 'Active participant in social arm is signed in,', type: :feature, sauce
     expect(page).to have_content 'add a goal'
   end
 
-  # tests
   it 'creates a goal' do
     click_on '+ add a goal'
     expect(page).to have_content 'What is your goal?'

@@ -9,7 +9,7 @@ def choose_rating(element_id, value)
 end
 
 # tests
-describe 'Active participant is signed in,', type: :feature, sauce: sauce_labs do
+describe 'Active participant is signed in and navigates to the DO tool', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -23,7 +23,7 @@ describe 'Active participant is signed in,', type: :feature, sauce: sauce_labs d
     expect(page).to have_content 'Add a New Activity'
   end
 
-  it 'completes DO > Planning without receiving multiple alerts' do
+  it 'completes Planning without receiving multiple alerts' do
     click_on '#2 Planning'
     expect(page).to have_content 'The last few times you were here...'
 
@@ -61,7 +61,7 @@ describe 'Active participant is signed in,', type: :feature, sauce: sauce_labs d
     expect(page).to have_content 'Upcoming Activities'
   end
 
-  it 'completes DO > Plan a New Activity without multiple alerts' do
+  it 'completes Plan a New Activity without multiple alerts' do
     click_on 'Add a New Activity'
     expect(page).to have_content "But you don't have to start from scratch,"
 
@@ -78,7 +78,7 @@ describe 'Active participant is signed in,', type: :feature, sauce: sauce_labs d
     expect(page).to have_content 'Add a New Activity'
   end
 
-  it 'visits your activities and selects Previous Day without receiving exception' do
+  it 'visits Your Activities and selects Previous Day without receiving exception' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -128,7 +128,7 @@ describe 'Active participant is signed in,', type: :feature, sauce: sauce_labs d
     expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %d, %Y')
   end
 
-  it 'completes DO > Awareness and finds the activity properly displayed on feed' do
+  it 'completes Awareness and finds the activity properly displayed on feed' do
     click_on '#1 Awareness'
     expect(page).to have_content 'This is just the beginning...'
 
