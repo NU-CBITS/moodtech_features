@@ -1,23 +1,41 @@
 MoodTech Features
 ===========
 
-This repo is for the test suite aimed at moodtech-staging and will be used to test the app via Selenium and SauceLabs
+This repo is for the test suite aimed at moodtech-staging and will be used to 
+test the app via Selenium and SauceLabs
 
 ##To run this test suite:
 
-You will need to set the following environment variables. You will need to set user roles appropriate to Super User
-(User in this test suite), Clinician, Researcher, and Content Author.
+You will need to set up the following participants and users in the app:
+
+  * Participant - an active participant in a social arm with access to most 
+  tools (see tests for granular detail)
+  * Old_Participant - an inactive participant 
+  * Alt_Participant - an active participant in a social arm with access to 
+  many tools (see tests for granular detail)
+  * NS_Participant - an active participant in a non-social arm with access to 
+  many tools (see tests for granular detail)
+  * Completed_Pt - a participant who's flagged as completed
+  * User - user given a super user role
+  * Clinician - user with a clinician role
+  * Researcher - user with a researcher role
+  * Content_Author - user with a content author role
+
+You will need to set the following environment variables that correspond to 
+the participants and users above.
 
     Base_URL; Participant_Email; Participant_Password; Old_Participant_Email;
-    Old_Participant_Password; Alt_Participant_Email; Alt_Participant_Password; User_Email;
-    User_Password; Clinician_Email; Clinician_Password; Researcher_Email; Researcher_Password;
+    Old_Participant_Password; Alt_Participant_Email; Alt_Participant_Password; 
+    NS_Participant_Email; NS_Participant_Password; Completed_Pt_Email; 
+    Completed_Pt_Password;User_Email; User_Password; Clinician_Email; 
+    Clinician_Password; Researcher_Email; Researcher_Password; 
     Content_Author_Email; Content_Author_Password
 
-To run on Sauce Labs you will need to set the following environment variables, otherwise you can run it locally on your
-machine:
+To run on Sauce Labs you will need to set the following environment variables, 
+otherwise you can run it locally on your machine:
 
     SAUCE_USERNAME; SAUCE_ACCESS_KEY
 
-To run the test suite against the staging server simply run:
+To run the suite simply run:
 
-    $ rspec
+    $ rpsec
