@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -24,23 +25,21 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Title: Group 1'
 
     click_on 'Patient Dashboard'
-    expect(page).to have_content 'Patient Dashboard'
+    expect(page).to have_css('h1', text: 'Group 1 Patient Dashboard')
   end
 
-  # tests
-  # Testing view patient dashboard
-  it '- view patients dashboard' do
+  it 'views a list of active participants assigned to the coach' do
     page.find('#patients')[:class].include?('table table-hover')
+    expect(page).to have_content 'TFD-1111'
   end
 
-  # Testing viewing Inactive Patients page
-  it '- view inactive patients list' do
+  it 'views a list of inactive participants assigned to the coach' do
     page.find('.btn.btn-default', text: 'Inactive Patients').click
     expect(page).to have_content 'Inactive Status'
+    expect(page).to have_content 'Completer'
   end
 
-  # Testing Discontinue
-  it '- selects Discontinue to end active status of participant' do
+  it 'selects Discontinue to end active status of participant' do
     within('#patients', text: 'TFD-1111') do
       within('table#patients tr', text: 'TFD-Discontinue') do
         click_on 'Discontinue'
@@ -61,8 +60,7 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     end
   end
 
-  # Testing Terminate Access
-  it '- selects Withdraw to end active status of participant' do
+  it 'selects Withdraw to end active status of participant' do
     within('#patients', text: 'TFD-1111') do
       within('table#patients tr', text: 'TFD-Withdraw') do
         click_on 'Terminate Access'
@@ -86,17 +84,62 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     end
   end
 
-  # Testing specific patient report
-  it '- view patient report' do
+  it 'views patient report' do
     within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
 
     expect(page).to have_content 'General Patient Info'
+
+    expect(page).to have_content 'Started on: ' + Date.today.strftime('%b %-d')
+
+    weeks_later = Date.today + 56
+    expect(page).to have_content '8 weeks from the start date is: ' + weeks_later.strftime('%b %-d')
+
+    expect(page).to have_content 'Status: Active · Currently in week 1'
   end
 
-  # Testing viewing Mood viz
-  it '- views Mood/Emotions viz' do
+  it 'uses the table of contents in the patient report' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    expect(page).to have_content 'General Patient Info'
+
+    within('.list-group') do
+      find('a', text: 'Mood and Emotions Visualizations').click
+      page.all('a', text: 'Mood')[1].click
+      find('a', text: 'Feelings').click
+      find('a', text: 'Logins').click
+      find('a', text: 'Lessons').click
+      find('a', text: 'Audio Access').click
+      find('a', text: 'Activities - Future').click
+      find('a', text: 'Activities - Past').click
+      page.all('a', text: 'Thoughts')[1].click
+      find('a', text: 'Messages').click
+      find('a', text: 'Tasks').click
+    end
+
+    within('.list-group') do
+      find('a', text: 'Activities visualization').click
+    end
+
+    expect(page).to have_content 'Daily Averages'
+
+    click_on 'Patient Dashboard'
+    expect(page).to have_content 'General Patient Info'
+
+    within('.list-group') do
+      find('a', text: 'Thoughts visualization').click
+    end
+
+    expect(page).to have_css('#ThoughtVizContainer')
+
+    click_on 'Patient Dashboard'
+    expect(page).to have_content 'General Patient Info'
+  end
+
+  it 'views Mood/Emotions viz' do
     within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
@@ -130,8 +173,7 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     end
   end
 
-  # Testing viewing activities viz in patient report
-  it '- view activities viz' do
+  it 'views Activities viz' do
     within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
@@ -146,8 +188,8 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
 
-    starttime = Time.now - 7200
-    endtime = Time.now - 3600
+    starttime = Time.now - 3600
+    endtime = Time.now
     within('.panel.panel-default', text: starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving') do
       click_on starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving'
       within('.panel-collapse.collapse.in') do
@@ -178,8 +220,7 @@ describe 'Coach, Patients', type: :feature, sauce: sauce_labs do
     expect(page).to have_css('#datepicker')
   end
 
-  # Testing viewing thoughts viz in patient report
-  it '- view thoughts viz' do
+  it 'views Thoughts viz' do
     within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end

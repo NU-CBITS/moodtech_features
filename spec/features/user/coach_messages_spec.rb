@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Coach, Messages', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Coach signs in and navigates to messages tool for Group 1', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -32,17 +33,14 @@ describe 'Coach, Messages', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Compose'
   end
 
-  # tests
-  # Testing inbox
-  it '- inbox' do
+  it 'reads a received message' do
     click_on 'I like this app'
     expect(page).to have_content 'From TFD-1111'
 
     expect(page).to have_content 'This app is really helpful!'
   end
 
-  # Testing reply
-  it '- reply' do
+  it 'replies to a message' do
     click_on 'I like this app'
     expect(page).to have_content 'This app is really helpful!'
 
@@ -52,10 +50,6 @@ describe 'Coach, Messages', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Message saved'
 
     expect(page).to have_content 'Inbox'
-
-    expect(page).to have_content 'Sent'
-
-    expect(page).to have_content 'Compose'
 
     expect(page).to have_content 'I like this app'
 
@@ -72,41 +66,26 @@ describe 'Coach, Messages', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Reply: I like this app'
   end
 
-  # Testing sent box
-  it '- sent box' do
+  it 'reads a sent message' do
     click_on 'Sent'
     expect(page).to have_content 'Try out the LEARN tool'
 
     click_on 'Try out the LEARN tool'
     expect(page).to have_content 'I think you will find it helpful.'
-
-    click_on 'Messages'
-    expect(page).to have_content 'Inbox'
-
-    expect(page).to have_content 'Sent'
-
-    expect(page).to have_content 'Compose'
-
-    expect(page).to have_content 'I like this app'
   end
 
-  # Testing compose
-  it '- compose' do
+  it 'composes a message' do
     click_on 'Compose'
     expect(page).to have_content 'Compose Message'
 
     select 'TFD-1111', from: 'message_recipient_id'
     fill_in 'message_subject', with: 'Testing compose functionality'
-    select 'Introduction to ThinkFeelDo', from: 'coach-message-link-selection'
+    select 'Intro', from: 'coach-message-link-selection'
     fill_in 'message_body', with: 'This message is to test the compose functionality.'
     click_on 'Send'
     expect(page).to have_content 'Message saved'
 
     expect(page).to have_content 'Inbox'
-
-    expect(page).to have_content 'Sent'
-
-    expect(page).to have_content 'Compose'
 
     expect(page).to have_content 'I like this app'
 
@@ -123,10 +102,14 @@ describe 'Coach, Messages', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Testing compose functionality'
   end
 
-  # Testing search functionality
-  it '- search' do
+  it 'searches for a specific participants messages' do
     select 'TFD-1111', from: 'search'
     click_on 'Search'
     expect(page).to have_content 'I like this app'
+
+    click_on 'Sent'
+    expect(page).to have_content 'Try out the LEARN tool'
+
+    expect(page).to_not have_content 'Check out the Introduction slideshow'
   end
 end
