@@ -3,7 +3,19 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Think', type: :feature, sauce: sauce_labs do
+# define methods for tests
+def compare_thought(thought)
+  click_on 'Next'
+  expect(page).to have_content 'Thought saved'
+  within('.panel-body.adjusted-list-group-item') do
+    expect(page).to_not have_content thought
+  end
+
+  page.find('.panel-body.adjusted-list-group-item').text
+end
+
+# tests
+describe 'Active participant signs in and navigates to THINK tool,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -18,9 +30,7 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Thought'
   end
 
-  # tests
-  # Testing the #1-Identifying portion of the THINK tool
-  it '- identifying' do
+  it 'completes Identifying module' do
     click_on '#1 Identifying'
     expect(page).to have_content 'You are what you think...'
 
@@ -59,8 +69,7 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Thought'
   end
 
-  # Testing the #2-Patterns portion of the THINK tool
-  it '- patterns' do
+  it 'completes Patterns module' do
     click_on '#2 Patterns'
     expect(page).to have_content 'Like we said, you are what you think...'
 
@@ -95,33 +104,36 @@ describe 'Think', type: :feature, sauce: sauce_labs do
 
     click_on 'Next'
     expect(page).to have_content "Let's start by"
-    select 'Personalization', from: 'thought_pattern_id'
-    click_on 'Next'
-    expect(page).to have_content 'Thought saved'
 
-    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    click_on 'Next'
-    expect(page).to have_content 'Testing helpful thought'
-
-    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    click_on 'Next'
-    expect(page).to have_content 'Public thought 2'
-
-    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    click_on 'Next'
-    expect(page).to have_content 'Private thought 1'
-
-    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    click_on 'Next'
-    expect(page).to have_content 'Public thought 1'
+    thought_value = page.find('.panel-body.adjusted-list-group-item').text
 
     select 'Personalization', from: 'thought_pattern_id'
-    click_on 'Next'
-    expect(page).to have_content 'I am insignificant'
+
+    thought_value = compare_thought(thought_value)
+
+    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
+
+    thought_value = compare_thought(thought_value)
+
+    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
+
+    thought_value = compare_thought(thought_value)
+
+    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
+
+    thought_value = compare_thought(thought_value)
+
+    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
+
+    thought_value = compare_thought(thought_value)
 
     select 'Personalization', from: 'thought_pattern_id'
-    click_on 'Next'
-    expect(page).to have_content 'ARG!'
+
+    thought_value = compare_thought(thought_value)
+
+    select 'Personalization', from: 'thought_pattern_id'
+
+    compare_thought(thought_value)
 
     select 'Personalization', from: 'thought_pattern_id'
     click_on 'Next'
@@ -138,8 +150,7 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     end
   end
 
-  # Testing the #3-Reshape portion of the THINK tool
-  it '- reshape' do
+  it 'completes Reshape module' do
     click_on '#3 Reshape'
     expect(page).to have_content 'Challenging Harmful Thoughts'
 
@@ -208,8 +219,7 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Thought'
   end
 
-  # Testing the Add a New Thought portion of the THINK tool
-  it '- add a new thought' do
+  it 'completes Add a New Thought module' do
     click_on 'Add a New Thought'
     expect(page).to have_content 'Add a New Harmful Thought'
 
@@ -225,8 +235,7 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add a New Thought'
   end
 
-  # Testing the Cancel button in Add a New Thought
-  it '- add a new thought, cancel' do
+  it 'cancels Add a New Thought' do
     click_on 'Add a New Thought'
     expect(page).to have_content 'Add a New Thought'
 
@@ -234,16 +243,14 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     expect(page).to have_content '#1 Identifying'
   end
 
-  # Testing the Thoughts portion of the THINK tool
-  it '- check thoughts' do
+  it 'visits Thoughts' do
     click_on 'Thoughts'
     expect(page).to have_content 'Harmful Thoughts'
 
     expect(page).to have_content 'I am insignificant'
   end
 
-  # Testing the skip functionality in the first slideshows of the first three portions of the THINK tool
-  it '- skip functionality' do
+  it 'uses the skip functionality in all the slideshows in THINK' do
     click_on '#1 Identifying'
     expect(page).to have_content 'You are what you think...'
 
@@ -270,8 +277,7 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     end
   end
 
-  # Testing navbar functionality specifically surrounding the THINK tool
-  it '- navbar functionality' do
+  it 'uses navbar functionality for all of THINK' do
     visit ENV['Base_URL'] + '/navigator/modules/954850709'
     click_on 'THINK'
     click_on '#2 Patterns'
@@ -294,8 +300,7 @@ describe 'Think', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Harmful Thoughts'
   end
 
-  # Testing the THINK tool visualization
-  it '- visualization' do
+  it 'uses the visualization' do
     find('.thoughtviz_text.viz-clickable', text: 'Magnification or Catastro...').click
     expect(page).to have_content 'Click a bubble for more info'
 
