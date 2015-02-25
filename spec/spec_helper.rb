@@ -12,6 +12,9 @@ require 'byebug'
 
 RSpec.configure do |config|
   config.full_backtrace = false
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
 end
 
 Capybara.default_wait_time = 30
