@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Content Author signs in and navigates to Lesson Modules tool', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -25,9 +26,7 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Listing Lesson Modules'
   end
 
-  # tests
-  # Testing creating a lesson
-  it '- new lesson' do
+  it 'creates a new lesson' do
     click_on 'New'
     fill_in 'lesson_title', with: 'Test lesson'
     fill_in 'lesson_position', with: '19'
@@ -39,8 +38,7 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add Video Slide'
   end
 
-  # Testing updating title of a lesson
-  it '- updating title of a lesson' do
+  it 'updates title of a lesson' do
     click_on 'Do - Awareness Introduction'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -63,34 +61,26 @@ describe 'Content Author, Lesson Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Add Video Slide'
   end
 
-  # Testing drag and drop lesson sorting
-  it '- drag and drop sorting' do
-    source = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[11]/td[1]/span/i')
-    target = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[9]/td[1]/span/i')
+  it 'updates position of lessons by using drag and drop sorting' do
+    source = within('tr', text: 'Think - Reshape Introduction') { page.find('.fa.fa-sort.fa-lg') }
+    target = page.find('tr:nth-child(9)')
     source.drag_to(target)
-    within('tr:nth-child(9)') do
-      find('#lesson-452672653>td>a>p')
+
+    within('tr:nth-child(7)') do
+      expect(page).to have_content 'Think - Reshape Introduction'
     end
 
-    within('tr:nth-child(10)') do
-      find('#lesson-439722576>td>a>p')
-    end
-
-    source = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[9]/td[1]/span/i')
-    target = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[12]/td[1]/span/i')
+    source = within('tr', text: 'Think - Reshape Introduction') { page.find('.fa.fa-sort.fa-lg') }
+    target = page.find('tr:nth-child(12)')
     source.drag_to(target)
-    within('tr:nth-child(9)') do
-      find('#lesson-439722576>td>a>p')
-    end
 
     within('tr:nth-child(11)') do
-      find('#lesson-452672653>td>a>p')
+      expect(page).to have_content 'Think - Reshape Introduction'
     end
   end
 
-  # Testing destroying  a lesson
-  it '- destroy lesson' do
-    within('tr:nth-child(17)') do
+  it 'destroys lesson' do
+    within('tr', text: 'Test lesson') do
       find('.btn.btn-danger').click
     end
 

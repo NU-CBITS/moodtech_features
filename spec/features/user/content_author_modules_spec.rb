@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Content Author signs in and visits Conten Modules tool', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -25,9 +26,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Listing Content Modules'
   end
 
-  # tests
-  # Testing creating a module
-  it '- new module' do
+  it 'creates a new module' do
     click_on 'New'
     expect(page).to have_content 'New Content Module'
 
@@ -40,8 +39,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Position: 8 / 8'
   end
 
-  # Testing updating a module
-  it '- edit module' do
+  it 'edits a module' do
     click_on '#1 Awareness'
     click_on 'Edit'
     select 'THINK', from: 'content_module_bit_core_tool_id'
@@ -60,30 +58,44 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Tool: DO'
   end
 
-  # Testing destroying a module
-  it '- destroy module' do
+  it 'destroys a module' do
     if page.has_text?('Test content module')
       click_on 'Test content module'
-      click_on 'Destroy'
-      page.accept_alert 'Are you sure?'
-      expect(page).to have_content 'Content module along with any associated tasks were successfully destroyed.'
-
-      expect(page).to_not have_content 'Test content module'
     else
-      find(:xpath, '//*[@id="DataTables_Table_0_wrapper"]/div[2]/div[2]/div/ul/li[3]/a').click
+      within('.pagination') do
+        click_on '2'
+      end
+
       click_on 'Test content module'
-      click_on 'Destroy'
-      page.accept_alert 'Are you sure?'
-      expect(page).to_not have_content 'Test content module'
     end
+
+    click_on 'Destroy'
+    page.accept_alert 'Are you sure?'
+    expect(page).to have_content 'Content module along with any associated tasks were successfully destroyed.'
+
+    expect(page).to_not have_content 'Test content module'
   end
 
-  # Testing creating a provider
-  it '- create a provider' do
+  it 'creates a provider' do
+    if page.has_text? 'Home Introduction'
+      click_on 'Home Introduction'
+    else
+      within('.pagination') do
+        click_on '2'
+      end
+
+      expect(page).to have_content 'Home Introduction'
+
+      click_on 'Home Introduction'
+    end
+
     click_on 'New Provider'
     expect(page).to have_content 'New Content Provider'
 
-    select 'LEARN: Home Introduction', from: 'content_provider_bit_core_content_module_id'
+    within '#content_provider_bit_core_content_module_id' do
+      expect(page).to have_content 'LEARN: Home Introduction'
+    end
+
     select 'slideshow provider', from: 'content_provider_type'
     select 'BitCore::Slideshow', from: 'content_provider_source_content_type'
     select 'Home Intro', from: 'content_provider_source_content_id'
@@ -104,8 +116,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Slideshow: Home Intro'
   end
 
-  # Testing updating a provider
-  it '- updating a provider' do
+  it 'updates a provider' do
     if page.has_text? 'Home Introduction'
       click_on 'Home Introduction'
     else
@@ -144,8 +155,7 @@ describe 'Content Author, Modules', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Position: 1 / 4'
   end
 
-  # Testing destroying a provider
-  it '- destroying a provider' do
+  it 'destroys a provider' do
     if page.has_text? 'Home Introduction'
       click_on 'Home Introduction'
     else

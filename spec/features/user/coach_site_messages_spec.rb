@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Coach, Site Messages', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Coach signs in and navigates to Site Messages tool', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -28,9 +29,7 @@ describe 'Coach, Site Messages', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Listing Site Messages'
   end
 
-  # tests
-  # Testing new site messages
-  it '- new site message' do
+  it 'creates and sends a new site message' do
     click_on 'New'
     expect(page).to have_content 'New site message'
 
@@ -50,7 +49,7 @@ describe 'Coach, Site Messages', type: :feature, sauce: sauce_labs do
   end
 
   # Testing site messages show
-  it '- show site message' do
+  it 'reviews a previously sent site message' do
     first(:link, 'Show').click
     expect(page).to have_content 'Participant: TFD-1111'
 
