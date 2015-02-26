@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Research, Participants', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Research signs in and navigates to Participants', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -20,9 +21,7 @@ describe 'Research, Participants', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Participants'
   end
 
-  # tests
-  # Testing creating a participant
-  it '- create a participant' do
+  it 'creates a participant' do
     click_on 'New'
     expect(page).to have_content 'New Participant'
 
@@ -42,8 +41,7 @@ describe 'Research, Participants', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Contact Preference: Email'
   end
 
-  # Testing updating a participant
-  it '- updating a participant' do
+  it 'updates a participant' do
     click_on 'TFD-1111'
     expect(page).to have_content 'Study Id: TFD-1111'
 
@@ -82,21 +80,18 @@ describe 'Research, Participants', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Contact Preference: Email'
   end
 
-  # Testing assigning a coach
-  it '- assign a coach' do
+  it 'cannot assign a coach without a group membership' do
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
-    click_on 'Assign Coach'
-    expect(page).to have_content 'Assigning Coach to Participant'
-    select ENV['User_Email'], from: 'coach_assignment_coach_id'
-    click_on 'Assign'
-    expect(page).to have_content 'Coach was successfully assigned.'
-    expect(page).to have_content 'Study Id: Tests'
-    expect(page).to have_content 'Coach: ' + ENV['User_Email']
+
+    expect(page).to have_content 'Current Coach/Moderator: None'
+
+    expect { click_on 'Assign Coach/Moderator' }.to raise_error
+
+    expect(page).to have_content '* Please assign Group first'
   end
 
-  # Testing creating a group membership
-  it '- create a group membership' do
+  it 'assigns a group membership' do
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
 
@@ -109,6 +104,9 @@ describe 'Research, Participants', type: :feature, sauce: sauce_labs do
     today = Date.today
     next_year = today + 365
     fill_in 'membership_end_date', with: next_year.strftime('%Y-%m-%d')
+    weeks_later = today + 56
+    expect(page).to have_content 'Standard number of weeks: 8, Projected End Date from today: ' + weeks_later.strftime('%-m/%-d/%Y')
+
     click_on 'Assign'
     expect(page).to have_content 'Group was successfully assigned'
 
@@ -119,11 +117,19 @@ describe 'Research, Participants', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Membership Status: Active'
   end
 
-  # Testing destroying a participant
-  it '- destroy a participant' do
+  it 'assigns a coach' do
     click_on 'Tests'
-    expect(page).to have_content 'Study Id: Tests
-    '
+    expect(page).to have_content 'Study Id: Tests'
+    click_on 'Assign Coach/Moderator'
+    expect(page).to have_content 'Coach was successfully assigned.'
+    expect(page).to have_content 'Study Id: Tests'
+    expect(page).to have_content 'Current Coach/Moderator: ' + ENV['User_Email']
+  end
+
+  it 'destroys a participant' do
+    click_on 'Tests'
+    expect(page).to have_content 'Study Id: Tests'
+
     click_on 'Destroy'
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Participant was successfully destroyed.'

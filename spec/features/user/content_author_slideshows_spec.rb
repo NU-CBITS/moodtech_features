@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Content Author, Slideshows', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Content Author signs in and navigate to Slideshows tool', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -25,9 +26,7 @@ describe 'Content Author, Slideshows', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Listing Slideshows'
   end
 
-  # tests
-  # Testing creating a slideshow
-  it '- new slideshow' do
+  it 'creates a slideshow' do
     click_on 'New'
     expect(page).to have_content 'New Slideshow'
 
@@ -38,8 +37,7 @@ describe 'Content Author, Slideshows', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Test slideshow'
   end
 
-  # Testing updating a slideshow
-  it '- update slideshow' do
+  it 'updates slideshow' do
     click_on 'Home Intro'
     expect(page).to have_content 'Slideshow'
 
@@ -69,8 +67,7 @@ describe 'Content Author, Slideshows', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Successfully updated slideshow'
   end
 
-  # Testing destroying a slideshow
-  it '- destroy slideshow' do
+  it 'destroys slideshow' do
     click_on 'Test slideshow'
     click_on 'Delete'
     page.accept_alert 'Are you sure?'

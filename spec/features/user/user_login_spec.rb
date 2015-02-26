@@ -3,10 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Login', type: :feature, sauce: sauce_labs do
-  # tests
-  # Testing a successful login
-  it '- success' do
+describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
+  it 'is an authorized user and signs in' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['User_Email']
@@ -17,8 +15,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Signed in successfully'
   end
 
-  # Testing a failed login
-  it '- failure' do
+  it 'is not an authorized user and fails to sign in' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: 'asdf@test.com'
@@ -29,14 +26,12 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Invalid email address or password'
   end
 
-  # Testing redirect to login screen
-  it '- not logged in, redirect' do
+  it 'is not signed and visits a specific page' do
     visit ENV['Base_URL'] + '/think_feel_do_dashboard'
     expect(page).to have_content 'You need to sign in or sign up before continuing'
   end
 
-  # Testing the Introduction Slideshow if a person hits it who isn't logged in
-  it '- not logged in, intro slideshow' do
+  it 'is not signed in and views the intro slideshow' do
     visit ENV['Base_URL'] + '/users/sign_in'
     click_on 'Introduction to ThinkFeelDo'
     expect(page).to have_content 'Welcome to ThiFeDo'
@@ -45,8 +40,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
-  # Testing Forgot Your Password? functionality
-  it '- forgot password' do
+  it 'uses the forgot password functionality' do
     visit ENV['Base_URL'] + '/users/sign_in'
     click_on 'Forgot your password?'
     expect(page).to have_content 'Forgot your password?'
@@ -59,8 +53,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'You will receive an email with instructions on how to reset your password in a few minutes.'
   end
 
-  # Testing authorization - Clinician
-  it '- clinician authorization' do
+  it 'is an authorized clinician, only seeing what they are authorized to see' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Clinician_Email']
@@ -90,8 +83,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Manage Tasks'
   end
 
-  # Testing authorization - Researcher
-  it '- researcher authorization' do
+  it 'is an authorized researcher, only seeing what they are authorized to see' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Researcher_Email']
@@ -127,8 +119,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Manage Tasks'
   end
 
-  # Testing authorization - Content Author
-  it '- content author authorization' do
+  it 'is an authorized content author, only seeing what they are authorized to see' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Content_Author_Email']
@@ -147,8 +138,7 @@ describe 'Login', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Group 1'
   end
 
-  # Testing authorization - Super User
-  it '- super user authorization' do
+  it 'is an authorized super user' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['User_Email']

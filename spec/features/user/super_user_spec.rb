@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Super User', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Super User signs in,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -17,9 +18,7 @@ describe 'Super User', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'CSV Reports'
   end
 
-  # tests
-  # Testing creating an arm
-  it '- create an arm' do
+  it 'creates an arm' do
     click_on 'Arms'
     find('h1', text: 'Arms')
 
@@ -31,8 +30,7 @@ describe 'Super User', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Arm was successfully created.'
   end
 
-  # Testing updating an arm
-  it '- update an arm' do
+  it 'updates an arm' do
     click_on 'Arms'
     find('h1', text: 'Arms')
 
@@ -58,8 +56,7 @@ describe 'Super User', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Title: Arm 1'
   end
 
-  # Testing destroying an arm
-  it '- destroys an arm' do
+  it 'destroys an arm' do
     click_on 'Arms'
     find('h1', text: 'Arms')
 
@@ -73,8 +70,7 @@ describe 'Super User', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Test Arm'
   end
 
-  # Testing creating a super user
-  it '- create a super user' do
+  it 'creates a super user' do
     click_on 'Users'
     expect(page).to have_content 'Users'
 
@@ -89,8 +85,7 @@ describe 'Super User', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Email: superuser@test.com'
   end
 
-  # Testing updating a super user
-  it '- update a super user' do
+  it 'updates a super user' do
     click_on 'Users'
     expect(page).to have_content 'Users'
 
@@ -124,8 +119,7 @@ describe 'Super User', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Roles: Clinician'
   end
 
-  # Testing detroying a super user
-  it '- destroy a super user' do
+  it 'destroys a super user' do
     click_on 'Users'
     expect(page).to have_content 'Users'
 

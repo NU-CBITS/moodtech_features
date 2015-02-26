@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Researcher, Groups', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Researcher signs in and navigates to Groups', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -20,9 +21,7 @@ describe 'Researcher, Groups', type: :feature, sauce: sauce_labs do
     find('h1', text: 'Groups')
   end
 
-  # tests
-  # Testing creating a group
-  it '- create a group' do
+  it 'creates a group' do
     click_on 'New'
     expect(page).to have_content 'New Group'
 
@@ -33,8 +32,7 @@ describe 'Researcher, Groups', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Group was successfully created.'
   end
 
-  # Testing updating a group
-  it '- update a group' do
+  it 'updates a group' do
     click_on 'Group 1'
     expect(page).to have_content 'Title: Group 1'
 
@@ -57,8 +55,7 @@ describe 'Researcher, Groups', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Title: Group 1'
   end
 
-  # Testing adding/removing a moderator from a group
-  it '- update moderator' do
+  it 'updates moderator for Group 1' do
     click_on 'Group 1'
     expect(page).to have_content 'Title: Group 1'
 
@@ -73,8 +70,7 @@ describe 'Researcher, Groups', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Group was successfully updated.'
   end
 
-  # Testing destroying a group
-  it '- destroy a group' do
+  it 'destroys a group' do
     click_on 'Testing Group'
     expect(page).to have_content 'Title: Testing Group'
 
@@ -85,8 +81,7 @@ describe 'Researcher, Groups', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Testing Group'
   end
 
-  # Testing managing tasks
-  it '- manage tasks within a group' do
+  it 'manages tasks within a group' do
     click_on 'Group 1'
     expect(page).to have_content 'Title: Group 1'
 
@@ -98,7 +93,7 @@ describe 'Researcher, Groups', type: :feature, sauce: sauce_labs do
     click_on 'Assign'
     expect(page).to have_content 'Task assigned.'
 
-    page.all('.btn.btn-danger', text: 'Unassign')[22].click
+    page.all('.btn.btn-danger', text: 'Unassign')[23].click
     page.accept_alert 'Are you sure?'
     within '#tasks' do
       expect(page).to_not have_content 'LEARN: Do - Planning Slideshow 3 of 4'

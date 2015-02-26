@@ -2,7 +2,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Research, Users', type: :feature, sauce: sauce_labs do
+# tests
+describe 'Research signs in and navigates to Users', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -18,10 +19,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Users'
   end
 
-  # tests
-  # Researchers
-  # Testing creating a Researcher
-  it '- create a researcher' do
+  it 'creates a researcher' do
     click_on 'New'
     fill_in 'user_email', with: 'researcher@test.com'
     check 'user_user_roles_researcher'
@@ -35,8 +33,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Roles: Researcher'
   end
 
-  # Testing updating a researcher
-  it '- update a researcher' do
+  it 'updates a researcher' do
     click_on 'researcher@test.com'
     expect(page).to have_content 'Email: researcher@test.com'
 
@@ -73,8 +70,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Roles: Clinician and Researcher'
   end
 
-  # Testing detroying a researcher
-  it '- destroy a researcher' do
+  it 'destroys a researcher' do
     click_on 'researcher@test.com'
     expect(page).to have_content 'Email: researcher@test.com'
 
@@ -85,9 +81,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'researcher@test.com'
   end
 
-  # Clinicians
-  # Testing creating a clinician
-  it '- create a clincian' do
+  it 'creates a clinician' do
     click_on 'New'
     fill_in 'user_email', with: 'clinician@test.com'
     check 'user_user_roles_clinician'
@@ -101,8 +95,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Roles: Clinician'
   end
 
-  # Testing updating a clinician
-  it '- update a clinician' do
+  it 'updates a clinician' do
     click_on ENV['Clinician_Email']
     expect(page).to have_content 'Email: ' + ENV['Clinician_Email']
     click_on 'Edit'
@@ -138,8 +131,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Roles: Content Author and Clinician'
   end
 
-  # Testing detroying a clinician
-  it '- destroy a clinician' do
+  it 'destroys a clinician' do
     click_on 'clinician@test.com'
     expect(page).to have_content 'Email: clinician@test.com'
 
@@ -150,9 +142,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'clinician@test.com'
   end
 
-  # Content Authors
-  # Testing creating a content author
-  it '- create a content author' do
+  it 'creates a content author' do
     click_on 'New'
     fill_in 'user_email', with: 'contentauthor@test.com'
     check 'user_user_roles_content_author'
@@ -166,8 +156,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Roles: Content Author'
   end
 
-  # Testing updating a content author
-  it '- update a content author' do
+  it 'updates a content author' do
     click_on ENV['Content_Author_Email']
     expect(page).to have_content 'Email: ' + ENV['Content_Author_Email']
 
@@ -205,8 +194,7 @@ describe 'Research, Users', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Roles: Clinician and Content Author'
   end
 
-  # Testing detroying a content author
-  it '- destroy a content author' do
+  it 'destroys a content author' do
     click_on 'contentauthor@test.com'
     expect(page).to have_content 'Email: contentauthor@test.com'
 
