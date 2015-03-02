@@ -16,7 +16,7 @@ describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
   end
 
   # tests
-  it 'Researcher signs in, creates a participant, assigns a group membership and sees corret calculation of end date' do
+  it 'Researcher signs in, creates a participant, assigns a group membership and sees correct calculation of end date' do
     click_on 'Participants'
     expect(page).to have_content 'Participants'
     click_on 'New'

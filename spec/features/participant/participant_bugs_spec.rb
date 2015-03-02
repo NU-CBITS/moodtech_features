@@ -86,19 +86,8 @@ describe 'Active participant is signed in and navigates to the DO tool', type: :
     expect(page).to have_content "OK, let's talk about yesterday."
 
     today = Date.today
-    yesterday = Date.today.prev_day
-    if page.has_text?(yesterday.strftime('%a') + ' 4 AM')
-      select yesterday.strftime('%a') + ' 4 AM', from: 'awake_period_start_time'
-    else
-      select today.strftime('%a') + ' 5 AM', from: 'awake_period_start_time'
-    end
-
-    if page.has_text?(yesterday.strftime('%a') + ' 5 AM')
-      select yesterday.strftime('%a') + ' 5 AM', from: 'awake_period_end_time'
-    else
-      select today.strftime('%a') + ' 6 AM', from: 'awake_period_end_time'
-    end
-
+    select today.strftime('%a') + ' 2 AM', from: 'awake_period_start_time'
+    select today.strftime('%a') + ' 3 AM', from: 'awake_period_end_time'
     click_on 'Create'
     expect(page).to have_content 'Awake Period saved'
 
@@ -136,8 +125,8 @@ describe 'Active participant is signed in and navigates to the DO tool', type: :
     expect(page).to have_content "OK, let's talk about yesterday."
 
     today = Date.today
-    select today.strftime('%a') + ' 6 AM', from: 'awake_period_start_time'
-    select today.strftime('%a') + ' 7 AM', from: 'awake_period_end_time'
+    select today.strftime('%a') + ' 4 AM', from: 'awake_period_start_time'
+    select today.strftime('%a') + ' 5 AM', from: 'awake_period_end_time'
     click_on 'Create'
     expect(page).to have_content 'Awake Period saved'
 

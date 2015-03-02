@@ -112,4 +112,6 @@ describe 'Coach signs in and navigates to messages tool for Group 1', type: :fea
 
     expect(page).to_not have_content 'Check out the Introduction slideshow'
   end
+
+  it 'uses breadcrumbs to return to home'
 end

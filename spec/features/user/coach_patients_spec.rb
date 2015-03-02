@@ -183,7 +183,7 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     page.all(:link, 'Activities visualization')[1].click
     expect(page).to have_content 'Today'
     today = Date.today
-    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
+    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %d, %Y')
 
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'

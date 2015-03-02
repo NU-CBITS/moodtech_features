@@ -127,8 +127,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to have_content "OK, let's talk about yesterday."
 
     today = Date.today
-    select today.strftime('%a') + ' 2 AM', from: 'awake_period_start_time'
-    select today.strftime('%a') + ' 4 AM', from: 'awake_period_end_time'
+    select today.strftime('%a') + ' 6 AM', from: 'awake_period_start_time'
+    select today.strftime('%a') + ' 8 AM', from: 'awake_period_end_time'
     click_on 'Create'
     expect(page).to have_content 'Awake Period saved'
 

@@ -166,4 +166,6 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'Edit'
   end
+
+  it 'is an authorized super user that uses the brand link to return to the home page'
 end

@@ -24,8 +24,7 @@ describe 'Active participant in group 1 is signed in and navigates to LEARN,', t
 
     expect(page).to have_content 'Do - Awareness Introduction'
 
-    today = Date.today
-    click_on "Week 1 · #{today.strftime('%b %e')}"
+    find('.panel-title').click
     expect(page).to_not have_content 'Do - Awareness Introduction'
   end
 

@@ -182,29 +182,59 @@ describe 'Active participant in group 1 is signed in and navigates to DO tool,',
     page.accept_alert 'Are you sure that you would like to make this activity public?'
     expect(page).to have_content 'Activity saved'
 
-    find('.btn.btn-danger').click
-    fill_in 'activity[noncompliance_reason]', with: "I didn't have time"
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
-    expect(page).to have_content 'Activity saved'
+    if page.has_text?('Do Landing')
+      expect(page).to have_content 'Add a New Activity'
 
-    find('.btn.btn-success').click
-    select '3', from: 'activity[actual_pleasure_intensity]'
-    select '1', from: 'activity[actual_accomplishment_intensity]'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make this activity public?'
-    expect(page).to have_content 'Activity saved'
+      visit ENV['Base_URL']
+      within('.list-group-item.ng-scope', text: 'monitored an Activity: Loving') do
+        within('.actions') do
+          find('.fa.fa-folder-open.fa-2x.ng-scope').click
+        end
+        expect(page).to have_content 'actual accomplishment: 5'
 
-    expect(page).to have_content 'Add a New Activity'
-
-    visit ENV['Base_URL']
-    within('.list-group-item.ng-scope', text: 'monitored an Activity: Loving') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+        expect(page).to have_content 'actual pleasure: 7'
       end
-      expect(page).to have_content 'actual accomplishment: 5'
 
-      expect(page).to have_content 'actual pleasure: 7'
+    else
+      find('.btn.btn-danger').click
+      fill_in 'activity[noncompliance_reason]', with: "I didn't have time"
+      click_on 'Next'
+      page.accept_alert 'Are you sure that you would like to make this activity public?'
+      expect(page).to have_content 'Activity saved'
+    end
+
+    if page.has_text?('Do Landing')
+      expect(page).to have_content 'Add a New Activity'
+
+      visit ENV['Base_URL']
+      within('.list-group-item.ng-scope', text: 'monitored an Activity: Loving') do
+        within('.actions') do
+          find('.fa.fa-folder-open.fa-2x.ng-scope').click
+        end
+        expect(page).to have_content 'actual accomplishment: 5'
+
+        expect(page).to have_content 'actual pleasure: 7'
+      end
+
+    else
+      find('.btn.btn-success').click
+      select '3', from: 'activity[actual_pleasure_intensity]'
+      select '1', from: 'activity[actual_accomplishment_intensity]'
+      click_on 'Next'
+      page.accept_alert 'Are you sure that you would like to make this activity public?'
+      expect(page).to have_content 'Activity saved'
+
+      expect(page).to have_content 'Add a New Activity'
+
+      visit ENV['Base_URL']
+      within('.list-group-item.ng-scope', text: 'monitored an Activity: Loving') do
+        within('.actions') do
+          find('.fa.fa-folder-open.fa-2x.ng-scope').click
+        end
+        expect(page).to have_content 'actual accomplishment: 5'
+
+        expect(page).to have_content 'actual pleasure: 7'
+      end
     end
   end
 
@@ -262,6 +292,12 @@ describe 'Active participant in group 1 is signed in and navigates to DO tool,',
     expect(page).to have_css('#datepicker')
   end
 
+  it 'visits View Planned Activities' do
+    click_on 'View Planned Activities'
+    find('.text-capitalize', text: 'View Planned Activities')
+    expect(page).to have_content 'Speech'
+  end
+
   it 'uses navbar functionality for all of DO' do
     visit ENV['Base_URL'] + '/navigator/modules/339588004'
     expect(page).to have_content 'This is just the beginning...'
@@ -285,6 +321,10 @@ describe 'Active participant in group 1 is signed in and navigates to DO tool,',
     click_on 'DO'
     click_on 'Your Activities'
     expect(page).to have_content 'Today'
+
+    click_on 'DO'
+    click_on 'View Planned Activities'
+    expect(page).to have_content 'Speech'
 
     click_on 'DO'
     click_on 'DO Home'
@@ -321,11 +361,6 @@ describe 'Active participant in group 1 is signed in and navigates to DO tool,',
 
   it 'sees Upcoming Activities on DO > Landing' do
     expect(page).to have_content 'Activities in your near future'
-  end
-
-  it 'visits View Planned Activities' do
-    click_on 'View Planned Activities'
-    expect(page).to have_content 'Speech'
   end
 end
 
