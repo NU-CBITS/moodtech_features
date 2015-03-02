@@ -3,8 +3,6 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-# define methods used in this test
-
 # tests
 describe 'Content Author signs in and navigates to Lesson Modules tool', type: :feature, sauce: sauce_labs do
   before(:each) do
