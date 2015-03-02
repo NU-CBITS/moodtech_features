@@ -48,7 +48,6 @@ describe 'Coach signs in and navigates to Site Messages tool', type: :feature, s
     expect(page).to have_content 'Body: This message is intended to test the functionality of site messaging.'
   end
 
-  # Testing site messages show
   it 'reviews a previously sent site message' do
     first(:link, 'Show').click
     expect(page).to have_content 'Participant: TFD-1111'
@@ -56,5 +55,14 @@ describe 'Coach signs in and navigates to Site Messages tool', type: :feature, s
     expect(page).to have_content 'Subject: message subject'
 
     expect(page).to have_content 'Body: message body'
+  end
+
+  it 'uses breadcrumbs to return to home' do
+    click_on 'Group'
+    within('.breadcrumb') do
+      click_on 'Home'
+    end
+
+    expect(page).to have_content 'Arms'
   end
 end

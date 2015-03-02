@@ -3,6 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
+# define methods used in this test
+
 # tests
 describe 'Content Author signs in and navigates to Lesson Modules tool', type: :feature, sauce: sauce_labs do
   before(:each) do
@@ -62,20 +64,12 @@ describe 'Content Author signs in and navigates to Lesson Modules tool', type: :
   end
 
   it 'updates position of lessons by using drag and drop sorting' do
-    source = within('tr', text: 'Think - Reshape Introduction') { page.find('.fa.fa-sort.fa-lg') }
-    target = page.find('tr:nth-child(9)')
+    lesson_value = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[11]/td[2]/a/p').text
+    source = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[11]/td[1]/span/i')
+    target = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[9]/td[1]/span/i')
     source.drag_to(target)
-
-    within('tr:nth-child(7)') do
-      expect(page).to have_content 'Think - Reshape Introduction'
-    end
-
-    source = within('tr', text: 'Think - Reshape Introduction') { page.find('.fa.fa-sort.fa-lg') }
-    target = page.find('tr:nth-child(12)')
-    source.drag_to(target)
-
-    within('tr:nth-child(11)') do
-      expect(page).to have_content 'Think - Reshape Introduction'
+    within('tr:nth-child(9)') do
+      expect(page).to have_content lesson_value
     end
   end
 
@@ -86,5 +80,20 @@ describe 'Content Author signs in and navigates to Lesson Modules tool', type: :
 
     page.accept_alert 'Are you sure?'
     expect(page).to_not have_content 'Test lesson'
+  end
+
+  it 'uses breadcrumbs to return home' do
+    click_on 'Arm'
+    within('.breadcrumb') do
+      click_on 'Arms'
+    end
+
+    expect(page).top have_content 'Arm 3'
+
+    within('.breadcrumb') do
+      click_on 'Home'
+    end
+
+    expect(page).to have_content 'Arms'
   end
 end

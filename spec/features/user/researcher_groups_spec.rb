@@ -99,4 +99,12 @@ describe 'Researcher signs in and navigates to Groups', type: :feature, sauce: s
       expect(page).to_not have_content 'LEARN: Do - Planning Slideshow 3 of 4'
     end
   end
+
+  it 'uses breadcrumbs to return to home' do
+    within('.breadcrumb') do
+      click_on 'Home'
+    end
+
+    expect(page).to have_content 'Arms'
+  end
 end

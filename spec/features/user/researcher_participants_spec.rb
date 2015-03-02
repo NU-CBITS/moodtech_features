@@ -136,4 +136,39 @@ describe 'Researcher signs in and navigates to Participants', type: :feature, sa
 
     expect(page).to_not have_content 'Tests'
   end
+
+  it 'uses breadcrumbs to return to home through Participants' do
+    click_on 'TFD-1111'
+    expect(page).to have_content 'Contact Preference'
+
+    within('.breadcrumb') do
+      click_on 'Participants'
+    end
+
+    expect(page).to have_content 'New'
+
+    within('.breadcrumbs') do
+      click_on 'Home'
+    end
+
+    expect(page).to have_content 'Arms'
+  end
+
+  it 'uses breadcrumbs to return to home through Groups' do
+    click_on 'TFD-1111'
+    expect(page).to have_content 'Contact Preference'
+
+    click_on 'Group'
+    within('.breadcrumb') do
+      click_on 'Groups'
+    end
+
+    expect(page).to have_content 'New'
+
+    within('.breadcrumb') do
+      click_on 'Home'
+    end
+
+    expect(page).to have_content 'Arms'
+  end
 end

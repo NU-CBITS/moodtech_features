@@ -167,5 +167,21 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Edit'
   end
 
-  it 'is an authorized super user that uses the brand link to return to the home page'
+  it 'is an authorized super user that uses the brand link to return to the home page' do
+    click_on 'Arms'
+    expect(page).to have_content 'New'
+
+    click_on 'Arm 1'
+    expect(page).to have_content 'Manage Content'
+
+    click_on 'Manage Content'
+    click_on 'Lesson Modules'
+    expect(page).to have_content 'Listing Lesson Modules'
+
+    within('.collapse.navbar-collapse') do
+      click_on 'ThinkFeelDo'
+    end
+
+    expect(page).to have_content 'Arms'
+  end
 end

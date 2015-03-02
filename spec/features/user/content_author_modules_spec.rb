@@ -4,7 +4,7 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Content Author signs in and visits Conten Modules tool', type: :feature, sauce: sauce_labs do
+describe 'Content Author signs in and visits Content Modules tool', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -176,5 +176,20 @@ describe 'Content Author signs in and visits Conten Modules tool', type: :featur
     click_on 'Destroy'
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Content Providers'
+  end
+
+  it 'uses breadcrumbs to return home' do
+    click_on 'Arm'
+    within('.breadcrumb') do
+      click_on 'Arms'
+    end
+
+    expect(page).top have_content 'Arm 3'
+
+    within('.breadcrumb') do
+      click_on 'Home'
+    end
+
+    expect(page).to have_content 'Arms'
   end
 end

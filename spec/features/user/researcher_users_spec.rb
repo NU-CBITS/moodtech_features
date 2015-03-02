@@ -204,4 +204,22 @@ describe 'Research signs in and navigates to Users', type: :feature, sauce: sauc
 
     expect(page).to_not have_content 'contentauthor@test.com'
   end
+
+  it 'uses breadcrumbs to return to home' do
+    click_on ENV['Content_Author_Email']
+    expect(page).to have_content 'Super User:'
+
+    click_on 'Users'
+    within('.breadcrumb') do
+      click_on 'Users'
+    end
+
+    expect(page).to have_content 'New'
+
+    within('.breadcrumb') do
+      click_on 'Home'
+    end
+
+    expect(page).to have_content 'Arms'
+  end
 end

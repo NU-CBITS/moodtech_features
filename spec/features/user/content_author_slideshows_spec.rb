@@ -73,4 +73,19 @@ describe 'Content Author signs in and navigate to Slideshows tool', type: :featu
     page.accept_alert 'Are you sure?'
     expect(page).to_not have_content 'Test slideshow'
   end
+
+  it 'uses breadcrumbs to return home' do
+    click_on 'Arm'
+    within('.breadcrumb') do
+      click_on 'Arms'
+    end
+
+    expect(page).top have_content 'Arm 3'
+
+    within('.breadcrumb') do
+      click_on 'Home'
+    end
+
+    expect(page).to have_content 'Arms'
+  end
 end

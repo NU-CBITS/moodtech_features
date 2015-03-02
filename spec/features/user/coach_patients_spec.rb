@@ -233,4 +233,13 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
 
     page.find('#ThoughtVizContainer')
   end
+
+  it 'uses breadcrumbs to return to home' do
+    click_on 'Group'
+    within('.breadcrumb') do
+      click_on 'Home'
+    end
+
+    expect(page).to have_content 'Arms'
+  end
 end
