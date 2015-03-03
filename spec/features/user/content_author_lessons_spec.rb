@@ -86,7 +86,7 @@ describe 'Content Author signs in and navigates to Lesson Modules tool', type: :
       click_on 'Arms'
     end
 
-    expect(page).top have_content 'Arm 3'
+    expect(page).top have_content 'Arm 2'
 
     within('.breadcrumb') do
       click_on 'Home'

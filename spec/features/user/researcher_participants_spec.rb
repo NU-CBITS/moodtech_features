@@ -147,7 +147,7 @@ describe 'Researcher signs in and navigates to Participants', type: :feature, sa
 
     expect(page).to have_content 'New'
 
-    within('.breadcrumbs') do
+    within('.breadcrumb') do
       click_on 'Home'
     end
 

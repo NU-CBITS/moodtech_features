@@ -86,7 +86,7 @@ describe 'Researcher signs in and navigates to Groups', type: :feature, sauce: s
     expect(page).to have_content 'Title: Group 1'
 
     click_on 'Manage Tasks'
-    expect(page).to have_content 'Recurring termination day (if applicable)'
+    expect(page).to have_content 'Termination day (if applicable)'
 
     select 'LEARN: Do - Planning Slideshow 3 of 4', from: 'task_bit_core_content_module_id'
     fill_in 'task_release_day', with: '1'

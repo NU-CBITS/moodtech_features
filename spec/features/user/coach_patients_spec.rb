@@ -202,18 +202,18 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
 
     click_on 'Previous Day'
     yesterday = today - 1
-    expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %e, %Y')
+    expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %d, %Y')
 
     click_on 'Next Day'
-    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %e, %Y')
+    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %d, %Y')
 
     click_on 'Visualize'
     click_on 'Last 3 Days'
     if page.has_text? 'Notice! No activities were completed during this 3-day period.'
-      expect(page).to_not have_content today.strftime('%A, %m/%e')
+      expect(page).to_not have_content today.strftime('%A, %m/%d')
 
     else
-      expect(page).to have_content today.strftime('%A, %m/%e')
+      expect(page).to have_content today.strftime('%A, %m/%d')
     end
 
     click_on 'Day'

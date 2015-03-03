@@ -286,10 +286,14 @@ describe 'Active participant in group 1 is signed in and navigates to DO tool,',
 
     click_on 'Visualize'
     click_on 'Last 3 Days'
-    expect(page).to have_content today.strftime('%A, %m/%d')
+    if page.has_text?('Notice! No activities were completed during this 3-day period.')
+      expect(page).to_not have_content today.strftime('%A, %m/%d')
+    else
+      expect(page).to have_content today.strftime('%A, %m/%d')
 
-    click_on 'Day'
-    expect(page).to have_css('#datepicker')
+      click_on 'Day'
+      expect(page).to have_css('#datepicker')
+    end
   end
 
   it 'visits View Planned Activities' do
