@@ -184,7 +184,7 @@ describe 'Content Author signs in and visits Content Modules tool', type: :featu
       click_on 'Arms'
     end
 
-    expect(page).top have_content 'Arm 2'
+    expect(page).to have_content 'Arm 2'
 
     within('.breadcrumb') do
       click_on 'Home'

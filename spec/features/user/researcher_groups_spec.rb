@@ -93,7 +93,7 @@ describe 'Researcher signs in and navigates to Groups', type: :feature, sauce: s
     click_on 'Assign'
     expect(page).to have_content 'Task assigned.'
 
-    page.all('.btn.btn-danger', text: 'Unassign')[23].click
+    page.all('.btn.btn-danger', text: 'Unassign')[24].click
     page.accept_alert 'Are you sure?'
     within '#tasks' do
       expect(page).to_not have_content 'LEARN: Do - Planning Slideshow 3 of 4'
