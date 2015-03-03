@@ -4,7 +4,7 @@ require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
 # tests
-describe 'Active participnat in a social arm is signed in,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in a social arm is signed in,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
