@@ -13,12 +13,30 @@ task :load_tfdso_local do
 end
 
 
-# load development version of think_feel_do_so on staging
+# load development version of think_feel_do_so on staging, keeping selenium
+# as driver
 
-desc 'Setting test database for testing on staging'
+desc 'Set test database for testing on staging and keep driver'
 
-task :load_tfdso_test do
-  system( 'export Base_URL=https://moodtech-staging.cbits.northwestern.edu' )
+task :load_tfdso_selenium do
+  system('export Base_URL=https://moodtech-staging.cbits.northwestern.edu')
+  Dir.chdir('User/Chris/Work/think_feel_do_so') do
+    system('cap staging deploy:use_test_db')
+    system('cap staging deploy:clean_db')
+    system('cap staging deploy:migrate_db')
+    system('cap staging deploy:seed_db')
+  end
+end
+
+
+# load development version of think_feel_do_so on staging and switch driver 
+# to sauce
+
+desc 'Set test database for testing on staging and switch driver'
+
+task :load_tfdso_sauce do
+  system('export Base_URL=https://moodtech-staging.cbits.northwestern.edu')
+  system('export Sauce=true')
   Dir.chdir('User/Chris/Work/think_feel_do_so') do
     system('cap staging deploy:use_test_db')
     system('cap staging deploy:clean_db')
