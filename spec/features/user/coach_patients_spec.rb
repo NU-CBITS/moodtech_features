@@ -84,19 +84,23 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     end
   end
 
-  it 'views patient report' do
+  it 'views General Patient Info' do
     within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
 
-    expect(page).to have_content 'General Patient Info'
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
-    expect(page).to have_content 'Started on: ' + Date.today.strftime('%b %-d')
+    within('.panel.panel-default', text: 'General Patient Info') do
+      expect(page).to have_content 'Started on: ' + Date.today.strftime('%b %-d')
 
-    weeks_later = Date.today + 56
-    expect(page).to have_content '8 weeks from the start date is: ' + weeks_later.strftime('%b %-d')
+      weeks_later = Date.today + 56
+      expect(page).to have_content '8 weeks from the start date is: ' + weeks_later.strftime('%b %-d')
 
-    expect(page).to have_content 'Status: Active · Currently in week 1'
+      expect(page).to have_content 'Status: Active · Currently in week 1'
+
+      expect(page).to have_content 'Last Logged In: ' + Time.now.strftime('%-l%P on %b %-d')
+    end
   end
 
   it 'uses the table of contents in the patient report' do
@@ -104,7 +108,7 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       click_on 'TFD-1111'
     end
 
-    expect(page).to have_content 'General Patient Info'
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
     within('.list-group') do
       find('a', text: 'Mood and Emotions Visualizations').click
@@ -144,7 +148,7 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       click_on 'TFD-1111'
     end
 
-    expect(page).to have_content 'General Patient Info'
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
     within('#viz-container.panel.panel-default') do
       expect(page).to have_content 'Mood'
@@ -172,6 +176,50 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       expect(page).to have_content two_weeks_ago.strftime('%B %e, %Y') + ' / ' + one_week_ago_1.strftime('%B %e, %Y')
     end
   end
+
+  it 'views Mood' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
+
+    mood_panel = page.all('.panel.panel-default', text: 'Mood')
+    within mood_panel[1] do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        expect(page).to have_content '9'
+
+        four_weeks_ago = Date.today - 28
+        expect(page).to have_content four_weeks_ago.strftime('%b. %-d')
+      end
+    end
+  end
+
+  it 'views Feelings' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
+
+    within('.panel.panel-default', text: 'Feelings') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        expect(page).to have_content 'longing'
+
+        expect(page).to have_content '2'
+
+        expect(page).to have_content Date.today.strftime('%b. %-d')
+      end
+    end
+  end
+
+  it 'views Logins'
+
+  it 'views Lessons'
+
+  it 'views Audio Access'
 
   it 'views Activities viz' do
     within('#patients', text: 'TFD-1111') do
@@ -220,6 +268,10 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     expect(page).to have_css('#datepicker')
   end
 
+  it 'views Activities - Future'
+
+  it 'views Activities - Past'
+
   it 'views Thoughts viz' do
     within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
@@ -233,6 +285,12 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
 
     page.find('#ThoughtVizContainer')
   end
+
+  it 'views Thoughts'
+
+  it 'views Messages'
+
+  it 'views Tasks'
 
   it 'uses breadcrumbs to return to home' do
     click_on 'Group'
