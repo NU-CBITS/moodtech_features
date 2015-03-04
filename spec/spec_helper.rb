@@ -1,4 +1,4 @@
-# configurations for this test suite
+# filename: spec_helper.rb
 
 require 'rspec'
 require 'capybara'
@@ -41,6 +41,7 @@ end
 Capybara.save_and_open_page_path = 'screenshots/'
 
 Sauce.config do |config|
+  config[:job_name] = "MoodTech-Staging #{ Time.now.strftime('%-m/%-d/%Y') }"
   config[:start_tunnel] = false
   config[:browsers] = [
     ['Windows XP', 'Firefox', '32'],
@@ -57,7 +58,7 @@ Sauce.config do |config|
     ['OS X 10.9', 'Safari', '7'],
     ['OS X 10.10', 'Firefox', '32'],
     ['OS X 10.10', 'Chrome', '37']
-  ]
+  ].shuffle[0..2]
 
   config.after do |example|
     if example.exception.nil?
