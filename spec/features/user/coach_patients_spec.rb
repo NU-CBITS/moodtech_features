@@ -99,7 +99,11 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
 
       expect(page).to have_content 'Status: Active · Currently in week 1'
 
-      expect(page).to have_content 'Last Logged In: ' + Time.now.strftime('%-l%P on %b %-d')
+      if page.has_text?('Never Logged In')
+        expect(page).to have_content 'Last Logged In: Never Logged In'
+      else
+        expect(page).to have_content 'Last Logged In: ' + Time.now.strftime('%-l%P on %b %-d')
+      end
     end
   end
 
@@ -215,18 +219,75 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     end
   end
 
-  it 'views Logins'
+  it 'views Logins' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
 
-  it 'views Lessons'
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
-  it 'views Audio Access'
+    within('.panel.panel-default', text: 'Logins') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        if !page.has_text?('No data available in table')
+          expect(page).to have_content Date.today.strftime('%d %b')
+        end
+      end
+    end
+  end
+
+  it 'views Lessons' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
+
+    within('.panel.panel-default', text: 'Lessons') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        if !page.has_text?('No data available in table')
+          expect(page).to have_content 'Do - Awareness Introduction'
+
+          expect(page).to have_content Date.today.strftime('%-d %b')
+
+          expect(page).to have_content Date.today.strftime('%b. %-d')
+
+          expect(page).to have_content 'less than a minute'
+        end
+      end
+    end
+  end
+
+  it 'views Audio Access' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
+
+    within('.panel.panel-default', text: 'Audio Access') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        if !page.has_text?('No data available in table')
+          expect(page).to have_content 'Audio!'
+
+          expect(page).to have_content Date.today.strftime('%-d %b')
+
+          expect(page).to have_content Date.today.strftime('%b. %-d')
+
+          expect(page).to have_content 'Not Completed'
+        end
+      end
+    end
+  end
 
   it 'views Activities viz' do
     within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
 
-    expect(page).to have_content 'General Patient Info'
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
     page.all(:link, 'Activities visualization')[1].click
     expect(page).to have_content 'Today'
@@ -268,16 +329,42 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     expect(page).to have_css('#datepicker')
   end
 
-  it 'views Activities - Future'
+  it 'views Activities - Future' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
 
-  it 'views Activities - Past'
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
+
+    within('.panel.panel-default', text: 'Activities - Future') do
+      within('tr:nth-child(5)') do
+        expect(page).to have_content 'Speech  8 4 Scheduled for ' + Date.today.strftime('%d %b')
+      end
+    end
+  end
+
+  it 'views Activities - Past' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
+
+    within('.panel.panel-default', text: 'Activities - Past') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        expect(page).to have_content 'Loving  Planned 6 4 Not Rated Not Rated ' \
+                                       'Scheduled for ' + Date.today.strftime('%d %b')
+      end
+    end
+  end
 
   it 'views Thoughts viz' do
     within('#patients', text: 'TFD-1111') do
       click_on 'TFD-1111'
     end
 
-    expect(page).to have_content 'General Patient Info'
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
     within('.list-group') do
       find(:link, 'Thoughts visualization').click
@@ -286,11 +373,53 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     page.find('#ThoughtVizContainer')
   end
 
-  it 'views Thoughts'
+  it 'views Thoughts' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
 
-  it 'views Messages'
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
-  it 'views Tasks'
+    thought_panel = page.all('.panel.panel-default', text: 'Thoughts')
+    within thought_panel[0] do
+      within('tr:nth-child(2)') do
+        expect(page).to have_content 'I am a magnet for birds harmful Labeling and Mislabeling  ' \
+                                       'It was nature Birds have no idea what they are doing  ' \
+                                       + Date.today.strftime('%b. %-d')
+      end
+    end
+  end
+
+  it 'views Messages' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
+
+    within('.panel.panel-default', text: 'Messages') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        expect(page).to have_content 'I like this app ' + Date.today.strftime('%Y-%m-%d')
+      end
+    end
+  end
+
+  it 'views Tasks' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    expect(page).to have_css('h1', text: 'Participant TFD-1111')
+
+    within('.panel.panel-default', text: 'Tasks') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        tomorrow = Date.today + 1
+        expect(page).to have_content 'Do - Planning Introduction  ' + tomorrow.strftime('%-d %b') + ' Incomplete'
+      end
+    end
+  end
 
   it 'uses breadcrumbs to return to home' do
     click_on 'Group'
