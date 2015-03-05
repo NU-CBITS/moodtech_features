@@ -351,10 +351,20 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
     within('.panel.panel-default', text: 'Activities - Past') do
-      table_row = page.all('tr:nth-child(1)')
-      within table_row[1] do
-        expect(page).to have_content 'Loving  Planned 6 4 Not Rated Not Rated ' \
-                                       'Scheduled for ' + Date.today.strftime('%d %b')
+      if page.has_text?('Loving')
+        table_row = page.all('tr:nth-child(1)')
+        within table_row[1] do
+          expect(page).to have_content 'Loving  Planned 6 4 Not Rated Not Rated ' \
+                                         'Scheduled for ' + Date.today.strftime('%d %b')
+        end
+
+      else
+        find('th', text: 'Scheduled Date').double_click
+        table_row = page.all('tr:nth-child(1)')
+        within table_row[1] do
+          expect(page).to have_content 'Loving  Reviewed & Completed  6 4 7 5 ' \
+                                         'Scheduled for ' + Date.today.strftime('%d %b')
+        end
       end
     end
   end
@@ -383,9 +393,16 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     thought_panel = page.all('.panel.panel-default', text: 'Thoughts')
     within thought_panel[0] do
       within('tr:nth-child(2)') do
-        expect(page).to have_content 'I am a magnet for birds harmful Labeling and Mislabeling  ' \
-                                       'It was nature Birds have no idea what they are doing  ' \
-                                       + Date.today.strftime('%b. %-d')
+        if page.has_text?('I am a magnet')
+          expect(page).to have_content 'I am a magnet for birds harmful Labeling and Mislabeling  ' \
+                                         'It was nature Birds have no idea what they are doing  ' \
+                                         + Date.today.strftime('%b. %-d')
+
+        else
+          expect(page).to have_content 'Forced negative thought harmful Personalization ' \
+                                         'Example challenge Example act-as-if ' \
+                                         + Date.today.strftime('%b. %-d')
+        end
       end
     end
   end
