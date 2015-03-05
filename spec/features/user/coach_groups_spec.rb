@@ -28,11 +28,70 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
     expect(page).to have_css('h1', text: 'Group Group 1')
   end
 
-  it 'views Group Summary'
+  it 'views Group Summary' do
+    within('.panel.panel-default', text: 'Group Summary') do
+      within('tr', text: 'logins') do
+        expect(page).to have_content 'logins  60 0 1 0 0 0 0 0'
+      end
 
-  it 'uses the links within Group Summary'
+      within('tr', text: 'thoughts') do
+        expect(page).to have_content 'thoughts  13 0 0 0 0 0 0 0'
+      end
 
-  it 'views Logins by Week'
+      within('tr', text: 'activities past') do
+        expect(page).to have_content 'activities past  22 0 0 0 0 0 0 0'
+      end
+
+      within('tr', text: 'activities future') do
+        expect(page).to have_content 'activities future  15 0 0 0 0 0 0 0'
+      end
+
+      within('tr', text: 'on the mind statements') do
+        expect(page).to have_content 'on the mind statements  3 0 0 0 0 0 0 0'
+      end
+
+      within('tr', text: 'comments') do
+        expect(page).to have_content 'comments  1 0 0 0 0 0 0 0'
+      end
+
+      within('tr', text: 'goals') do
+        expect(page).to have_content 'goals  10 0 0 0 0 0 0 0'
+      end
+
+      within('tr', text: 'likes') do
+        expect(page).to have_content 'likes  1 0 0 0 0 0 0 0'
+      end
+    end
+  end
+
+  it 'uses the links within Group Summary' do
+    within('.panel.panel-default', text: 'Group Summary') do
+      click_on 'logins'
+      click_on 'thoughts'
+      click_on 'activities past'
+      click_on 'activities future'
+      click_on 'on the mind statements'
+      click_on 'comments'
+      click_on 'goals'
+      click_on 'likes'
+    end
+  end
+
+  it 'views Logins by Week' do
+    within('.panel.panel-default', text: 'Logins By Week') do
+      within('tr:nth-child(1)') do
+        expect(page).to have_content 'participant1  59  0 0 0 0 0 0 0'
+      end
+
+      within('tr:nth-child(2)') do
+        expect(page).to have_content 'participant2  1 0 0 0 0 0 0 0'
+      end
+
+      within('tr:nth-child(9)') do
+        expect(page).to have_content 'Completer  0 0 1 0 0 0 0 0'
+      end
+    end
+  end
 
   it 'views Lesson View Summary'
 
@@ -46,7 +105,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
 
   it 'views Comments'
 
-  it 'vies On-My-Mind Statements'
+  it 'views On-My-Mind Statements'
 
   it 'uses breadcrumbs to return to home' do
     click_on 'Group'

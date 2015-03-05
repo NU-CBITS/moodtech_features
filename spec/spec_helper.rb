@@ -10,6 +10,7 @@ require 'sauce/capybara'
 require 'sauce_whisk'
 require 'byebug'
 
+# RSpec configuration options
 RSpec.configure do |config|
   config.full_backtrace = false
   config.expect_with :rspec do |c|
@@ -18,10 +19,9 @@ RSpec.configure do |config|
   config.profile_examples = 10
 end
 
-Capybara.default_wait_time = 30
-
+# define methods for setting the driver
 def sauce_labs
-  ENV['Sauce'] || false
+  ENV['Sauce'] ||= false
 end
 
 def test_driver
@@ -33,14 +33,28 @@ def test_driver
   end
 end
 
-Capybara.default_driver = test_driver
+def screen_shot
+  if sauce_labs == true
+    false
+  else
+    true
+  end
+end
 
+# Capybara configuration options
+Capybara.default_wait_time = 30
+Capybara.default_driver = test_driver
+Capybara::Screenshot.register_driver(:sauce) do |driver, path|
+  driver.render(path)
+end
+Capybara::Screenshot.autosave_on_failure = screen_shot
 Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
   "#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
 end
-
 Capybara.save_and_open_page_path = 'screenshots/'
+Capybara::Screenshot.prune_strategy = :keep_last_run
 
+# Sauce configuration options
 Sauce.config do |config|
   config[:job_name] = "MoodTech-Staging #{ Time.now.strftime('%-m/%-d/%Y') }"
   config[:start_tunnel] = false
@@ -51,15 +65,12 @@ Sauce.config do |config|
     ['Windows 7', 'Chrome', '37'],
     ['OS X 10.6', 'Firefox', '32'],
     ['OS X 10.6', 'Chrome', '37'],
-    ['OS X 10.6', 'Safari', '5'],
     ['OS X 10.6', 'Chrome', '37'],
-    ['OS X 10.8', 'Safari', '6'],
     ['OS X 10.9', 'Firefox', '32'],
     ['OS X 10.9', 'Chrome', '37'],
-    ['OS X 10.9', 'Safari', '7'],
     ['OS X 10.10', 'Firefox', '32'],
     ['OS X 10.10', 'Chrome', '37']
-  ].shuffle[0..2]
+  ].shuffle[0]
 
   config.after do |example|
     if example.exception.nil?
