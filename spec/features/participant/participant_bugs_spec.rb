@@ -9,19 +9,18 @@ def choose_rating(element_id, value)
 end
 
 # tests
-describe 'Active participant signs', type: :feature, sauce: sauce_labs do
-  before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Participant_Email']
-      fill_in 'participant_password', with: ENV['Participant_Password']
-    end
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-  end
-
-  context 'navigates to the DO tool' do
+describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
+  context 'Participant 1 signs in, navigates to the DO tool,' do
     before(:each) do
+      visit ENV['Base_URL'] + '/participants/sign_in'
+      within('#new_participant') do
+        fill_in 'participant_email', with: ENV['Participant_Email']
+        fill_in 'participant_password', with: ENV['Participant_Password']
+      end
+
+      click_on 'Sign in'
+      expect(page).to have_content 'Signed in successfully'
+
       visit ENV['Base_URL'] + '/navigator/contexts/DO'
       expect(page).to have_content 'Add a New Activity'
     end
@@ -163,12 +162,51 @@ describe 'Active participant signs', type: :feature, sauce: sauce_labs do
     end
   end
 
-  context 'navigates to the FEEL tool' do
+  context 'Participant 2 signs in,' do
     before(:each) do
-      visit ENV['Base_URL'] + '/navigator/contexts/FEEL'
-      expect(page).to have_content 'Tracking Your Mood'
+      visit ENV['Base_URL'] + '/participants/sign_in'
+      within('#new_participant') do
+        fill_in 'participant_email', with: ENV['Participant_2_Email']
+        fill_in 'participant_password', with: ENV['Participant_2_Password']
+      end
+
+      click_on 'Sign in'
+      expect(page).to have_content 'Signed in successfully'
     end
 
-    it 'navigates to a module from the dropdown, completes the module, the module appears complete on landing page'
+    it 'navigates to a module from the dropdown, completes the module, the module appears complete on landing page' do
+      within('.dropdown-toggle', text: 'FEEL') do
+        expect(page).to have_content 'New!'
+      end
+
+      find('.dropdown-toggle', text: 'FEEL').click
+      within('.dropdown-menu') do
+        click_on 'Tracking Your Mood & Emotions'
+      end
+
+      expect(page).to have_content 'Rate your Mood'
+
+      select '6', from: 'mood[rating]'
+      click_on 'Next'
+      expect(page).to have_content 'Mood saved'
+
+      expect(page).to have_content 'You just rated your mood as a 6 (Good)'
+
+      expect(page).to have_content 'Rate your Emotions'
+
+      select 'anxious', from: 'emotional_rating_emotion_id'
+      select 'negative', from: 'emotional_rating_is_positive'
+      select '4', from: 'emotional_rating[rating]'
+
+      click_on 'Next'
+      expect(page).to have_content 'Emotional Rating saved'
+
+      click_on 'Next'
+      expect(page).to have_content 'Feeling Tracker Landing'
+
+      within('.dropdown-toggle', text: 'FEEL') do
+        expect(page).to_not have_content 'New!'
+      end
+    end
   end
 end

@@ -46,7 +46,8 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       end
     end
 
-    page.accept_alert 'Are you sure you would like to end this study? You will not be able to undo this.'
+    page.accept_alert 'Are you sure you would like to end this study? ' \
+                      'You will not be able to undo this.'
     expect(page).to_not have_content 'TFD-Discontinue'
 
     click_on 'Inactive Patients'
@@ -68,9 +69,9 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     end
 
     page.accept_alert 'Are you sure you would like to terminate access to this membership? ' \
-                        'This option should also be used before changing membership of the patient' \
-                        ' to a different group or to completely revoke access to this membership. ' \
-                        'You will not be able to undo this.'
+                      'This option should also be used before changing membership of the patient' \
+                      ' to a different group or to completely revoke access to this membership. ' \
+                      'You will not be able to undo this.'
     expect(page).to_not have_content 'TFD-Withdraw'
 
     click_on 'Inactive Patients'
@@ -355,7 +356,7 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           expect(page).to have_content 'Loving  Planned 6 4 Not Rated Not Rated ' \
-                                         'Scheduled for ' + Date.today.strftime('%d %b')
+                                       'Scheduled for ' + Date.today.strftime('%d %b')
         end
 
       else
@@ -363,7 +364,7 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           expect(page).to have_content 'Loving  Reviewed & Completed  6 4 7 5 ' \
-                                         'Scheduled for ' + Date.today.strftime('%d %b')
+                                       'Scheduled for ' + Date.today.strftime('%d %b')
         end
       end
     end
@@ -395,13 +396,13 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       within('tr:nth-child(2)') do
         if page.has_text?('I am a magnet')
           expect(page).to have_content 'I am a magnet for birds harmful Labeling and Mislabeling  ' \
-                                         'It was nature Birds have no idea what they are doing  ' \
-                                         + Date.today.strftime('%b. %-d')
+                                       'It was nature Birds have no idea what they are doing  ' \
+                                       + Date.today.strftime('%b. %-d')
 
         else
           expect(page).to have_content 'Forced negative thought harmful Personalization ' \
-                                         'Example challenge Example act-as-if ' \
-                                         + Date.today.strftime('%b. %-d')
+                                       'Example challenge Example act-as-if ' \
+                                       + Date.today.strftime('%b. %-d')
         end
       end
     end
