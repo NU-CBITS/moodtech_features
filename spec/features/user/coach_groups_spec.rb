@@ -39,11 +39,11 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within('tr', text: 'activities past') do
-        expect(page).to have_content 'activities past  0 0 0 0 0 0 0 0'
+        expect(page).to have_content 'activities past  1 0 1 0 0 0 0 0'
       end
 
       within('tr', text: 'activities future') do
-        expect(page).to have_content 'activities future  0 0 0 0 0 0 0 0'
+        expect(page).to have_content 'activities future  0 0 0 0 2 0 0 0'
       end
 
       within('tr', text: 'on the mind statements') do
@@ -51,7 +51,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within('tr', text: 'comments') do
-        expect(page).to have_content 'comments  1 0 0 0 0 0 0 0'
+        expect(page).to have_content 'comments  1 0 1 0 1 0 0 0'
       end
 
       within('tr', text: 'goals') do
@@ -59,7 +59,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within('tr', text: 'likes') do
-        expect(page).to have_content 'likes  1 0 0 0 0 0 0 0'
+        expect(page).to have_content 'likes  1 0 1 0 1 0 0 0'
       end
     end
   end
@@ -173,26 +173,105 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       within table_row[1] do
         date_1 = Date.today - 34
         expect(page).to have_content 'First I am no good  harmful '  \
-                                     + date_1.strftime('%-d %b') \
-                                     + ' 18:00  1 1 1'
+                                     + date_1.strftime('%d %b')
+
+        expect(page).to have_content '  1 1 1'
       end
 
       within('tr:nth-child(2)') do
         date_2 = Date.today - 20
         expect(page).to have_content 'First This is stupid  harmful ' \
-                                     + date_2.strftime('%-d %b') \
-                                     + ' 18:00  3 0 0'
+                                     + date_2.strftime('%d %b')
+
+        expect(page).to have_content '  3 0 0'
       end
     end
   end
 
-  it 'views Activities Past'
+  it 'views Activities Past' do
+    within('.panel.panel-default', text: 'Activities Past') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        date_1 = Date.today - 33
+        date_2 = Date.today - 34
+        expect(page).to have_content 'First Running reviewed and complete ' \
+                                     + date_1.strftime('%d %b')
 
-  it 'views Activities Future'
+        expect(page).to have_content '6 5 6 8 ' + date_2.strftime('%d %b')
+
+        expect(page).to have_content '1 0 0'
+      end
+
+      within('tr:nth-child(2)') do
+        date_3 = Date.today - 20
+        date_4 = Date.today - 21
+        expect(page).to have_content 'Second Jumping reviewed and complete ' \
+                                     + date_3.strftime('%d %b')
+
+        expect(page).to have_content '6 9 9 3 ' + date_4.strftime('%d %b')
+
+        expect(page).to have_content '3 1 1'
+      end
+    end
+  end
+
+  it 'views Activities Future' do
+    within('.panel.panel-default', text: 'Activities Future') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        date_1 = Date.today + 4
+        date_2 = Date.today - 1
+        expect(page).to have_content 'Third Go to movie ' + date_1.strftime('%d %b')
+
+        expect(page).to have_content '9 7 ' + date_2.strftime('%d %b')
+
+        expect(page).to have_content '5 1 1'
+      end
+
+      within('tr:nth-child(2)') do
+        date_3 = Date.today + 7
+        date_4 = Date.today - 1
+        expect(page).to have_content 'Fourth yelling ' + date_3.strftime('%d %b')
+
+        expect(page).to have_content '0 2 ' + date_4.strftime('%d %b')
+
+        expect(page).to have_content '5 0 0'
+      end
+    end
+  end
 
   it 'views Goals'
 
-  it 'views Comments'
+  it 'views Comments' do
+    panel_comments = page.all('.panel.panel-default', text: 'Comments')
+    within panel_comments[4] do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        date_1 = Date.today - 33
+        expect(page).to have_content 'Second Nice job on identifying the pattern!  ' \
+                                     'Thought: participant61, I am no good ' \
+                                     + date_1.strftime('%d %b')
+
+        expect(page).to have_content '1'
+      end
+
+      within('tr:nth-child(2)') do
+        date_2 = Date.today - 18
+        expect(page).to have_content 'First Great activity! Activity: participant62, ' \
+                                     'Jumping, ' + date_2.strftime('%d %b')
+
+        expect(page).to have_content '3'
+      end
+
+      within('tr:nth-child(3)') do
+        date_3 = Date.today - 1
+        expect(page).to have_content 'Fifth That sounds like fun! Activity: ' \
+                                     'participant63, Go to movie, ' + date_3.strftime('%d %b')
+
+        expect(page).to have_content '5'
+      end
+    end
+  end
 
   it 'views On-My-Mind Statements'
 
