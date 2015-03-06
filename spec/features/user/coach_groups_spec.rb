@@ -47,7 +47,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within('tr', text: 'on the mind statements') do
-        expect(page).to have_content 'on the mind statements  0 0 0 0 0 0 0 0'
+        expect(page).to have_content 'on the mind statements  0 0 0 1 0 0 0 0'
       end
 
       within('tr', text: 'comments') do
@@ -55,11 +55,11 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within('tr', text: 'goals') do
-        expect(page).to have_content 'goals  0 0 0 0 0 0 0 0'
+        expect(page).to have_content 'goals  1 2 0 0 0 0 0 0'
       end
 
       within('tr', text: 'likes') do
-        expect(page).to have_content 'likes  1 0 1 0 1 0 0 0'
+        expect(page).to have_content 'likes  1 2 1 0 1 0 0 0'
       end
     end
   end
@@ -240,7 +240,40 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
     end
   end
 
-  it 'views Goals'
+  it 'views Goals' do
+    within('.panel.panel-default', text: 'Goals') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        date_1 = Date.today - 26
+        date_2 = Date.today - 34
+        expect(page).to have_content 'First do something  false true  ' \
+                                     + date_1.strftime('%-d %b') + ' ' \
+                                     + date_2.strftime('%d %b')
+
+        expect(page).to have_content '1 1 0'
+      end
+
+      within('tr:nth-child(2)') do
+        date_3 = Date.today + 3
+        date_4 = Date.today - 26
+        expect(page).to have_content 'Second Jumping reviewed and complete ' \
+                                     + date_3.strftime('%-d %b') + ' ' \
+                                     + date_4.strftime('%d %b')
+
+        expect(page).to have_content '2 1 0'
+      end
+
+      within('tr:nth-child(3)') do
+        date_5 = Date.today - 14
+        date_6 = Date.today - 24
+        expect(page).to have_content 'Second Jumping reviewed and complete ' \
+                                     + date_5.strftime('%-d %b') + ' ' \
+                                     + date_6.strftime('%d %b')
+
+        expect(page).to have_content '2 1 0'
+      end
+    end
+  end
 
   it 'views Comments' do
     panel_comments = page.all('.panel.panel-default', text: 'Comments')
@@ -273,7 +306,18 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
     end
   end
 
-  it 'views On-My-Mind Statements'
+  it 'views On-My-Mind Statements' do
+    within('.panel.panel-default', text: 'On-My-Mind Statements') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        date_1 = Date.today - 14
+        expect(page).to have_content "First I'm feeling great!  " \
+                                     + date_1.strftime('%d %b')
+
+        expect(page).to have_content '4 0 0'
+      end
+    end
+  end    
 
   it 'uses breadcrumbs to return to home' do
     click_on 'Group'
