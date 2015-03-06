@@ -35,7 +35,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within('tr', text: 'thoughts') do
-        expect(page).to have_content 'thoughts  0 0 0 0 0 0 0 0'
+        expect(page).to have_content 'thoughts  1 0 1 1 1 0 0 0'
       end
 
       within('tr', text: 'activities past') do
@@ -51,7 +51,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within('tr', text: 'comments') do
-        expect(page).to have_content 'comments  0 0 0 0 0 0 0 0'
+        expect(page).to have_content 'comments  1 0 0 0 0 0 0 0'
       end
 
       within('tr', text: 'goals') do
@@ -59,7 +59,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within('tr', text: 'likes') do
-        expect(page).to have_content 'likes  0 0 0 0 0 0 0 0'
+        expect(page).to have_content 'likes  1 0 0 0 0 0 0 0'
       end
     end
   end
@@ -167,7 +167,24 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
     end
   end
 
-  it 'views Thoughts'
+  it 'views Thoughts' do
+    within('.panel.panel-default', text: 'Thoughts') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        date_1 = Date.today - 34
+        expect(page).to have_content 'First I am no good  harmful '  \
+                                     + date_1.strftime('%-d %b') \
+                                     + ' 18:00  1 1 1'
+      end
+
+      within('tr:nth-child(2)') do
+        date_2 = Date.today - 20
+        expect(page).to have_content 'First This is stupid  harmful ' \
+                                     + date_2.strftime('%-d %b') \
+                                     + ' 18:00  3 0 0'
+      end
+    end
+  end
 
   it 'views Activities Past'
 
