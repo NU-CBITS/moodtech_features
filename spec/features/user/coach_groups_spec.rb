@@ -317,7 +317,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
         expect(page).to have_content '4 0 0'
       end
     end
-  end    
+  end
 
   it 'uses breadcrumbs to return to home' do
     click_on 'Group'
