@@ -21,11 +21,11 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
     click_on 'Arm 1'
     expect(page).to have_content 'Title: Arm 1'
 
-    click_on 'Group 1'
-    expect(page).to have_content 'Title: Group 1'
+    click_on 'Group 6'
+    expect(page).to have_content 'Title: Group 6'
 
     click_on 'Group Dashboard'
-    expect(page).to have_css('h1', text: 'Group Group 1')
+    expect(page).to have_css('h1', text: 'Group Group 6')
   end
 
   it 'views Group Summary' do
@@ -80,15 +80,23 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
   it 'views Logins by Week' do
     within('.panel.panel-default', text: 'Logins By Week') do
       within('tr:nth-child(1)') do
-        expect(page).to have_content 'participant1  59  0 0 0 0 0 0 0'
+        expect(page).to have_content 'First 4 3 0 2 2 0 0 0'
       end
 
       within('tr:nth-child(2)') do
-        expect(page).to have_content 'participant2  1 0 0 0 0 0 0 0'
+        expect(page).to have_content 'Second  2 1 1 1 2 0 0 0'
       end
 
-      within('tr:nth-child(9)') do
-        expect(page).to have_content 'Completer  0 0 1 0 0 0 0 0'
+      within('tr:nth-child(3)') do
+        expect(page).to have_content 'Third  1 0 1 0 1 0 0 0'
+      end
+
+      within('tr:nth-child(4)') do
+        expect(page).to have_content 'Fourth  0 7 0 0 0 0 0 0'
+      end
+
+      within('tr:nth-child(5)') do
+        expect(page).to have_content 'Fifth  0 0 1 0 0 0 0 0'
       end
     end
   end
