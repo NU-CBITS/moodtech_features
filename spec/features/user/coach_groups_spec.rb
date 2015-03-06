@@ -31,35 +31,35 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
   it 'views Group Summary' do
     within('.panel.panel-default', text: 'Group Summary') do
       within('tr', text: 'logins') do
-        expect(page).to have_content 'logins  60 0 1 0 0 0 0 0'
+        expect(page).to have_content 'logins  7 10 4 3 5 0 0 0'
       end
 
       within('tr', text: 'thoughts') do
-        expect(page).to have_content 'thoughts  13 0 0 0 0 0 0 0'
+        expect(page).to have_content 'thoughts  0 0 0 0 0 0 0 0'
       end
 
       within('tr', text: 'activities past') do
-        expect(page).to have_content 'activities past  22 0 0 0 0 0 0 0'
+        expect(page).to have_content 'activities past  0 0 0 0 0 0 0 0'
       end
 
       within('tr', text: 'activities future') do
-        expect(page).to have_content 'activities future  15 0 0 0 0 0 0 0'
+        expect(page).to have_content 'activities future  0 0 0 0 0 0 0 0'
       end
 
       within('tr', text: 'on the mind statements') do
-        expect(page).to have_content 'on the mind statements  3 0 0 0 0 0 0 0'
+        expect(page).to have_content 'on the mind statements  0 0 0 0 0 0 0 0'
       end
 
       within('tr', text: 'comments') do
-        expect(page).to have_content 'comments  1 0 0 0 0 0 0 0'
+        expect(page).to have_content 'comments  0 0 0 0 0 0 0 0'
       end
 
       within('tr', text: 'goals') do
-        expect(page).to have_content 'goals  10 0 0 0 0 0 0 0'
+        expect(page).to have_content 'goals  0 0 0 0 0 0 0 0'
       end
 
       within('tr', text: 'likes') do
-        expect(page).to have_content 'likes  1 0 0 0 0 0 0 0'
+        expect(page).to have_content 'likes  0 0 0 0 0 0 0 0'
       end
     end
   end
@@ -73,35 +73,99 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       click_on 'on the mind statements'
       click_on 'comments'
       click_on 'goals'
-      click_on 'likes'
     end
   end
 
   it 'views Logins by Week' do
     within('.panel.panel-default', text: 'Logins By Week') do
-      within('tr:nth-child(1)') do
+      within('tr:nth-child(2)') do
         expect(page).to have_content 'First 4 3 0 2 2 0 0 0'
       end
 
-      within('tr:nth-child(2)') do
+      within('tr:nth-child(3)') do
         expect(page).to have_content 'Second  2 1 1 1 2 0 0 0'
       end
 
-      within('tr:nth-child(3)') do
+      within('tr:nth-child(4)') do
         expect(page).to have_content 'Third  1 0 1 0 1 0 0 0'
       end
 
-      within('tr:nth-child(4)') do
-        expect(page).to have_content 'Fourth  0 7 0 0 0 0 0 0'
+      within('tr:nth-child(5)') do
+        expect(page).to have_content 'Fourth  0 6 1 0 0 0 0 0'
       end
 
-      within('tr:nth-child(5)') do
+      within('tr:nth-child(6)') do
         expect(page).to have_content 'Fifth  0 0 1 0 0 0 0 0'
       end
     end
   end
 
-  it 'views Lesson View Summary'
+  it 'views Lesson View Summary' do
+    within('.panel.panel-default', text: 'Lesson View Summary') do
+      table_row_0 = page.all('tr:nth-child(1)')
+      table_row_1 = page.all('tr:nth-child(2)')
+      table_row_2 = page.all('tr:nth-child(3)')
+      within table_row_0[0] do
+        expect(page).to have_content 'Home Introduction 1 of 5 COMPLETE'
+
+        click_on 'View Complete Participants'
+        within('.well') do
+          expect(page).to have_content 'First'
+        end
+
+        click_on 'View Incomplete Participants'
+        well = page.all('.well')
+        within well[1] do
+          expect(page).to have_content 'Second Third Fourth Fifth'
+        end
+      end
+
+      within table_row_1[0] do
+        expect(page).to have_content 'Do - Awareness Introduction 2 of 5 COMPLETE'
+
+        click_on 'View Complete Participants'
+        within('.well') do
+          expect(page).to have_content 'Second Third'
+        end
+
+        click_on 'View Incomplete Participants'
+        well = page.all('.well')
+        within well[1] do
+          expect(page).to have_content 'First Fourth Fifth'
+        end
+      end
+
+      within table_row_2[0] do
+        expect(page).to have_content 'Do - Planning Introduction 1 of 5 COMPLETE'
+
+        click_on 'View Complete Participants'
+        within('.well') do
+          expect(page).to have_content 'Second'
+        end
+
+        click_on 'View Incomplete Participants'
+        well = page.all('.well')
+        within well[1] do
+          expect(page).to have_content 'First Third Fourth Fifth'
+        end
+      end
+
+      within table_row_0[4] do
+        expect(page).to have_content 'Think - Identifying Conclusion 3 of 5 COMPLETE'
+
+        click_on 'View Complete Participants'
+        within('.well') do
+          expect(page).to have_content 'First Second Third'
+        end
+
+        click_on 'View Incomplete Participants'
+        well = page.all('.well')
+        within well[1] do
+          expect(page).to have_content 'Fourth Fifth'
+        end
+      end
+    end
+  end
 
   it 'views Thoughts'
 

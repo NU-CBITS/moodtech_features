@@ -21,7 +21,7 @@ end
 
 # define methods for setting the driver
 def sauce_labs
-  ENV['Sauce'] ||= false
+  ENV['Sauce'] || false
 end
 
 def test_driver
