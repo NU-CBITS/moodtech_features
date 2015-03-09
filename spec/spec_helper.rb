@@ -34,6 +34,7 @@ def test_driver
 end
 
 def screen_shot
+  puts "Auto screenshots is set to #{sauce_labs}"
   if sauce_labs == true
     false
   else
