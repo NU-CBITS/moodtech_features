@@ -74,35 +74,6 @@ describe 'Active participant signs in and navigates to THINK tool,', type: :feat
     expect(page).to have_content 'Like we said, you are what you think...'
 
     click_on 'Next'
-    expect(page).to have_content 'All-or-Nothing'
-
-    click_on 'Next'
-    expect(page).to have_content 'Overgeneralization'
-
-    click_on 'Next'
-    expect(page).to have_content 'Mental Filter'
-
-    click_on 'Next'
-    expect(page).to have_content 'Fortune Telling'
-
-    click_on 'Next'
-    expect(page).to have_content 'Magnification or Catastrophizing'
-
-    click_on 'Next'
-    expect(page).to have_content '\"Should\" Statements'
-
-    click_on 'Next'
-    expect(page).to have_content 'Labeling and Mislabeling'
-
-    click_on 'Next'
-    expect(page).to have_content 'Personalization'
-
-    click_on 'Next'
-    expect(page).to have_content 'Helpful Thoughts'
-
-    expect(page).to have_content 'Last time you were here...'
-
-    click_on 'Next'
     expect(page).to have_content "Let's start by"
 
     thought_value = page.find('.panel-body.adjusted-list-group-item').text
@@ -262,7 +233,7 @@ describe 'Active participant signs in and navigates to THINK tool,', type: :feat
     expect(page).to have_content 'Like we said, you are what you think... '
 
     click_on 'Skip'
-    expect(page).to have_content 'All-or-Nothing'
+    expect(page).to have_content "Let's start by"
 
     click_on 'THINK'
     click_on '#3 Reshape'

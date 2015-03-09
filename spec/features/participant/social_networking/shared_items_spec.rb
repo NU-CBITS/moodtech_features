@@ -30,16 +30,7 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     click_on '#1 Identifying'
     expect(page).to have_content 'You are what you think...'
 
-    click_on 'Next'
-    expect(page).to have_content 'Helpful thoughts are...'
-
-    click_on 'Next'
-    expect(page).to have_content 'Harmful thoughts are:'
-
-    click_on 'Next'
-    expect(page).to have_content 'Some quick examples...'
-
-    click_on 'Next'
+    click_on 'Skip'
     expect(page).to have_content 'Now, your turn...'
 
     fill_in 'thought_content', with: 'Public thought 1'
@@ -55,14 +46,6 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Just one more'
-
-    fill_in 'thought_content', with: 'Public thought 2'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
-    expect(page).to have_content 'Good work'
-
-    click_on 'Next'
-    expect(page).to have_content 'Add a New Thought'
 
     visit ENV['Base_URL']
     expect(page).to_not have_content 'Private thought'

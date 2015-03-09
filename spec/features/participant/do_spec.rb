@@ -359,7 +359,6 @@ describe 'Active participant in group 1 is signed in and navigates to DO tool,',
     expect(page).to have_content 'Welcome back!'
 
     click_on 'Skip'
-
     if page.has_text?('You said you were going to')
       expect(page).to have_content 'You said you were going to'
 
