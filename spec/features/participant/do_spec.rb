@@ -89,10 +89,15 @@ describe 'Active participant in group 1 is signed in and navigates to DO tool,',
     click_on 'Next'
     expect(page).to have_content "OK, let's talk about yesterday."
 
-    yesterday = Date.today.prev_day
-    expect { select yesterday.strftime('%a') + ' 7 AM', from: 'awake_period_start_time' }.to raise_error
+    within('#awake_period_start_time') do
+      yesterday = Date.today.prev_day
+      expect(page).to_not have_content yesterday.strftime('%a') + ' 7 AM'
+    end
 
-    expect { select yesterday.strftime('%a') + ' 10 PM', from: 'awake_period_end_time' }.to raise_error
+    within('#awake_period_end_time') do
+      yesterday = Date.today.prev_day
+      expect(page).to_not have_content yesterday.strftime('%a') + ' 10 PM'
+    end
   end
 
   it 'completes Awareness for a different time period on the same day and overlaps two days' do

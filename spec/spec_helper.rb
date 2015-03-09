@@ -26,19 +26,11 @@ end
 
 def test_driver
   puts "Sauce Labs is set to #{sauce_labs}"
+  puts "Auto screenshots is set to #{!sauce_labs}"
   if sauce_labs == false
     :selenium
   else
     :sauce
-  end
-end
-
-def screen_shot
-  puts "Auto screenshots is set to #{sauce_labs}"
-  if sauce_labs == true
-    false
-  else
-    true
   end
 end
 
@@ -48,7 +40,7 @@ Capybara.default_driver = test_driver
 Capybara::Screenshot.register_driver(:sauce) do |driver, path|
   driver.render(path)
 end
-Capybara::Screenshot.autosave_on_failure = screen_shot
+Capybara::Screenshot.autosave_on_failure = !sauce_labs
 Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
   "#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
 end
