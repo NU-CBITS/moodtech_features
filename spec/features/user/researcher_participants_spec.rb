@@ -121,7 +121,7 @@ describe 'Researcher signs in and navigates to Participants', type: :feature, sa
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Assign Coach/Moderator'
-    expect(page).to have_content 'Coach was successfully assigned.'
+    expect(page).to have_content 'Coach/Moderator was successfully assigned.'
     expect(page).to have_content 'Study Id: Tests'
     expect(page).to have_content 'Current Coach/Moderator: ' + ENV['User_Email']
   end
