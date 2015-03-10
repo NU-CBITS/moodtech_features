@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Content Author signs in and navigates to Arm 1', type: :feature, sauce: sauce_labs do
+describe 'Content Author signs in and navigates to Arm 1',
+         type: :feature, sauce: sauce_labs do
   context 'navigates to Lesson Modules and selects a lesson' do
     before(:each) do
       visit ENV['Base_URL'] + '/users/sign_in'
@@ -38,7 +39,9 @@ describe 'Content Author signs in and navigates to Arm 1', type: :feature, sauce
 
       fill_in 'slide_title', with: 'Test slide 2'
       uncheck 'slide_is_title_visible'
-      find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae viverra leo, at tincidunt enim. Nulla vitae enim nulla. Suspendisse.'
+      find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur ' \
+                            'adipiscing elit. Vivamus vitae viverra leo, at ' \
+                            'tincidunt enim. Nulla vitae enim. Suspendisse.'
       click_on 'Create'
       expect(page).to have_content 'Successfully created slide for lesson'
 
@@ -189,7 +192,9 @@ describe 'Content Author signs in and navigates to Arm 1', type: :feature, sauce
 
       fill_in 'slide_title', with: 'Test slide 2'
       uncheck 'slide_is_title_visible'
-      find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae viverra leo, at tincidunt enim. Nulla vitae enim nulla. Suspendisse.'
+      find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur ' \
+                            'adipiscing elit. Vivamus vitae viverra leo, at ' \
+                            'tincidunt enim. Nulla vitae enim. Suspendisse.'
       click_on 'Create'
       expect(page).to have_content 'Test slide 2'
     end

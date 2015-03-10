@@ -4,7 +4,8 @@ require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
 # tests
-describe 'Active participant in a social arm is signed in,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in a social arm is signed in,',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -23,7 +24,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     within('.modal-content') do
       expect(page).to have_content 'Start creating'
 
-      find(:xpath, '//*[@id="profile-icon-selection"]/div[2]/div/div[2]/div[1]/div[3]').click
+      find(:xpath, '//*[@id="profile-icon-selection"]/div[2]/div/div[2]/' \
+                   'div[1]/div[3]').click
     end
 
     within('.list-group-item.ng-scope', text: 'What are your hobbies?') do
@@ -36,7 +38,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
       click_on 'Save'
     end
 
-    within('.list-group-item.ng-scope', text: 'Animal, vegetable or mineral?') do
+    within('.list-group-item.ng-scope',
+           text: 'Animal, vegetable or mineral?') do
       fill_in 'new-answer-description-10484799', with: 'Mineral'
       click_on 'Save'
     end
@@ -67,7 +70,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
   end
 
   it 'views another participants profile' do
-    within('.profile-border.profile-icon-top', text: 'profile question participant') do
+    within('.profile-border.profile-icon-top',
+           text: 'profile question participant') do
       click_on 'profile question participant'
     end
 
@@ -75,7 +79,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
   end
 
   it 'likes a whats on your mind post written by another participant' do
-    within('.list-group-item.ng-scope', text: "said it's always sunny in Philadelphia") do
+    within('.list-group-item.ng-scope',
+           text: "said it's always sunny in Philadelphia") do
       find('.btn.btn-link.like.ng-scope').click
       expect(page).to have_css '.fa.fa-thumbs-up.fa-2x'
     end
@@ -103,7 +108,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
-      expect(page).to have_content 'due ' + Date.today.strftime('%b. %e, %Y') + ' at 12:00AM'
+      expect(page).to have_content 'due ' + Date.today.strftime('%b. %e, %Y') \
+                                   + ' at 12:00AM'
     end
   end
 end

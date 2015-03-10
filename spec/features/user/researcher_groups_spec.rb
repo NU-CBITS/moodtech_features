@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Researcher signs in and navigates to Groups', type: :feature, sauce: sauce_labs do
+describe 'Researcher signs in and navigates to Groups',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -88,7 +89,8 @@ describe 'Researcher signs in and navigates to Groups', type: :feature, sauce: s
     click_on 'Manage Tasks'
     expect(page).to have_content 'Termination day (if applicable)'
 
-    select 'LEARN: Do - Planning Slideshow 3 of 4', from: 'task_bit_core_content_module_id'
+    select 'LEARN: Do - Planning Slideshow 3 of 4',
+           from: 'task_bit_core_content_module_id'
     fill_in 'task_release_day', with: '1'
     click_on 'Assign'
     expect(page).to have_content 'Task assigned.'

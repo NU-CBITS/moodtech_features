@@ -5,7 +5,8 @@ require_relative '../../../spec/configure_cloud'
 
 # define methods for this spec file
 def choose_rating(element_id, value)
-  find("##{ element_id } select").find(:xpath, "option[#{(value + 1)}]").select_option
+  find("##{ element_id } select").find(:xpath,
+                                       "option[#{(value + 1)}]").select_option
 end
 
 # tests
@@ -42,9 +43,11 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       page.accept_alert 'Are you sure that you would like to make these public?'
       expect(page).to have_content 'Activity saved'
 
-      expect(page).to have_content 'Now, plan something that gives you a sense of accomplishment.'
+      expect(page).to have_content 'Now, plan something that gives you a ' \
+                                   'sense of accomplishment.'
 
-      fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
+      fill_in 'activity_activity_type_new_title',
+              with: 'Another planned activity'
       today = Date.today
       tomorrow = today + 1
       fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
@@ -54,7 +57,9 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       page.accept_alert 'Are you sure that you would like to make these public?'
       expect(page).to have_content 'Activity saved'
 
-      expect(page).to have_content 'OK... the most important thing is to do more that is pleasureable and gives you a sense of accomplishment'
+      expect(page).to have_content 'OK... the most important thing is to do ' \
+                                   'more that is pleasureable and gives you ' \
+                                   'a sense of accomplishment'
 
       click_on 'Next'
       expect(page).to have_content 'Your Planned Activities'
@@ -80,7 +85,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Add a New Activity'
     end
 
-    it 'visits Your Activities and selects Previous Day without receiving exception' do
+    it 'visits Your Activities, selects Previous Day w/out exception' do
       click_on '#1 Awareness'
       expect(page).to have_content 'This is just the beginning...'
 
@@ -100,13 +105,15 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       page.accept_alert 'Are you sure that you would like to make these public?'
       expect(page).to have_content 'Activity saved'
 
-      expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
+      expect(page).to have_content 'Take a look - does this all seem right? ' \
+                                   'Recently, you...'
 
       click_on 'Next'
       expect(page).to have_content 'Things you found fun.'
 
       click_on 'Next'
-      expect(page).to have_content "Things that make you feel like you've accomplished something."
+      expect(page).to have_content "Things that make you feel like you've " \
+                                   'accomplished something.'
 
       click_on 'Next'
       expect(page).to have_content 'Add a New Activity'
@@ -116,10 +123,11 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
 
       click_on 'Previous Day'
       yesterday = today - 1
-      expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %d, %Y')
+      expect(page).to have_content 'Daily Averages for ' \
+                                   + yesterday.strftime('%b %d, %Y')
     end
 
-    it 'completes Awareness and finds the activity properly displayed on feed' do
+    it 'completes Awareness, finds the activity properly displayed on feed' do
       click_on '#1 Awareness'
       expect(page).to have_content 'This is just the beginning...'
 
@@ -139,19 +147,22 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       page.accept_alert 'Are you sure that you would like to make these public?'
       expect(page).to have_content 'Activity saved'
 
-      expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
+      expect(page).to have_content 'Take a look - does this all seem right? ' \
+                                   'Recently, you...'
 
       click_on 'Next'
       expect(page).to have_content 'Things you found fun.'
 
       click_on 'Next'
-      expect(page).to have_content "Things that make you feel like you've accomplished something."
+      expect(page).to have_content "Things that make you feel like you've " \
+                                   'accomplished something.'
 
       click_on 'Next'
       expect(page).to have_content 'Add a New Activity'
 
       visit ENV['Base_URL']
-      within('.list-group-item.ng-scope', text: 'monitored an Activity: doing whatever thing') do
+      within('.list-group-item.ng-scope',
+             text: 'monitored an Activity: doing whatever thing') do
         within('.actions') do
           find('.fa.fa-folder-open.fa-2x.ng-scope').click
         end
@@ -174,7 +185,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Signed in successfully'
     end
 
-    it 'navigates to a module from the dropdown, completes the module, the module appears complete on landing page' do
+    it 'navigates to a module from the dropdown, completes the module, the ' \
+       'module appears complete on landing page' do
       within('.dropdown-toggle', text: 'FEEL') do
         expect(page).to have_content 'New!'
       end

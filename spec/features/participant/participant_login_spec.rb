@@ -4,7 +4,7 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'A visitor to the site', type: :feature, sauce: sauce_labs do
+describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
   end
@@ -19,7 +19,8 @@ describe 'A visitor to the site', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Signed in successfully'
   end
 
-  it 'is an active participant, signs in, visits another page, and uses brand link to get to home page' do
+  it 'is an active participant, signs in, visits another page, and uses ' \
+     'brand link to get to home page' do
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -49,7 +50,8 @@ describe 'A visitor to the site', type: :feature, sauce: sauce_labs do
       click_on 'Sign Out'
     end
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_content 'You need to sign in or sign up before ' \
+                                 'continuing.'
   end
 
   it 'is not able to log in' do
@@ -83,12 +85,14 @@ describe 'A visitor to the site', type: :feature, sauce: sauce_labs do
     end
 
     click_on 'Sign in'
-    expect(page).to have_content "We're sorry, but you can't sign in yet because you are not assigned to a group"
+    expect(page).to have_content "We're sorry, but you can't sign in yet " \
+                                 'because you are not assigned to a group'
   end
 
   it 'tries to visit a specific page and is redirected to log in page' do
     visit ENV['Base_URL'] + '/navigator/contexts/THINK'
-    expect(page).to have_content 'You need to sign in or sign up before continuing'
+    expect(page).to have_content 'You need to sign in or sign up before ' \
+                                 'continuing'
   end
 
   it 'views the intro slideshow' do
@@ -96,7 +100,8 @@ describe 'A visitor to the site', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Welcome to ThiFeDo'
 
     click_on 'Done'
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_content 'You need to sign in or sign up before ' \
+                                 'continuing.'
   end
 
   it 'is an active participant and uses the forgot password functionality' do
@@ -108,6 +113,8 @@ describe 'A visitor to the site', type: :feature, sauce: sauce_labs do
     end
 
     click_on 'Send me reset password instructions'
-    expect(page).to have_content 'You will receive an email with instructions on how to reset your password in a few minutes.'
+    expect(page).to have_content 'You will receive an email with ' \
+                                 'instructions on how to reset your password ' \
+                                 'in a few minutes.'
   end
 end

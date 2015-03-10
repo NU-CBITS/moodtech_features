@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Content Author signs in and navigate to Slideshows tool', type: :feature, sauce: sauce_labs do
+describe 'Content Author signs in and navigate to Slideshows tool',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do

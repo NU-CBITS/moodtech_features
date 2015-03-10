@@ -5,11 +5,13 @@ require_relative '../../../../spec/configure_cloud'
 
 # define methods for this spec file
 def choose_rating(element_id, value)
-  find("##{ element_id } select").find(:xpath, "option[#{(value + 1)}]").select_option
+  find("##{ element_id } select").find(:xpath,
+                                       "option[#{(value + 1)}]").select_option
 end
 
 # tests
-describe 'Active participant in a social arm is signed in,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in a social arm is signed in,',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -121,18 +123,21 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     fill_in 'activity_type_1', with: 'private sleep'
     choose_rating('pleasure_1', 2)
     choose_rating('accomplishment_1', 3)
-    find(:xpath, '//*[@id="past_activities_container"]/form[2]/span/div/label[3]').click
+    find(:xpath, '//*[@id="past_activities_container"]/form[2]/span/div/' \
+         'label[3]').click
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
-    expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
+    expect(page).to have_content 'Take a look - does this all seem right? ' \
+                                 'Recently, you...'
 
     click_on 'Next'
     expect(page).to have_content 'Things you found fun.'
 
     click_on 'Next'
-    expect(page).to have_content "Things that make you feel like you've accomplished something."
+    expect(page).to have_content "Things that make you feel like you've " \
+                                 'accomplished something.'
 
     click_on 'Next'
     expect(page).to have_content 'Your Activities'
@@ -163,7 +168,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
-    expect(page).to have_content 'Now, plan something that gives you a sense of accomplishment.'
+    expect(page).to have_content 'Now, plan something that gives you a sense ' \
+                                 'of accomplishment.'
 
     fill_in 'activity_activity_type_new_title', with: 'New private activity'
     today = Date.today
@@ -175,7 +181,9 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     click_on 'Next'
     expect(page).to have_content 'Activity saved'
 
-    expect(page).to have_content 'OK... the most important thing is to do more that is pleasureable and gives you a sense of accomplishment'
+    expect(page).to have_content 'OK... the most important thing is to do ' \
+                                 'more that is pleasureable and gives you ' \
+                                 'a sense of accomplishment'
 
     click_on 'Next'
     expect(page).to have_content 'Your Planned Activities'
@@ -236,7 +244,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
   end
 end
 
-describe 'Active participant in a non-social arm is signed in,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in a non-social arm is signed in,',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -330,7 +339,8 @@ describe 'Active participant in a non-social arm is signed in,', type: :feature,
       click_on 'Next'
       expect(page).to have_content 'Activity saved'
 
-      expect(page).to have_content 'Take a look - does this all seem right? Recently, you...'
+      expect(page).to have_content 'Take a look - does this all seem right? ' \
+                                   'Recently, you...'
     end
 
     it 'in DO > Planning' do

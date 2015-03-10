@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :feature, sauce: sauce_labs do
+describe 'Coach signs in and navigates to Group Dashboard of Group 1',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -121,7 +122,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within table_row_1[0] do
-        expect(page).to have_content 'Do - Awareness Introduction 2 of 5 COMPLETE'
+        expect(page).to have_content 'Do - Awareness Introduction 2 of 5 ' \
+                                     'COMPLETE'
 
         click_on 'View Complete Participants'
         within('.well') do
@@ -136,7 +138,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within table_row_2[0] do
-        expect(page).to have_content 'Do - Planning Introduction 1 of 5 COMPLETE'
+        expect(page).to have_content 'Do - Planning Introduction 1 of 5 ' \
+                                     'COMPLETE'
 
         click_on 'View Complete Participants'
         within('.well') do
@@ -151,7 +154,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       end
 
       within table_row_0[4] do
-        expect(page).to have_content 'Think - Identifying Conclusion 3 of 5 COMPLETE'
+        expect(page).to have_content 'Think - Identifying Conclusion 3 of 5 ' \
+                                     'COMPLETE'
 
         click_on 'View Complete Participants'
         within('.well') do
@@ -225,7 +229,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       within table_row[1] do
         date_1 = Date.today + 4
         date_2 = Date.today - 1
-        expect(page).to have_content 'Third Go to movie ' + date_1.strftime('%d %b')
+        expect(page).to have_content 'Third Go to movie ' \
+                                     + date_1.strftime('%d %b')
 
         expect(page).to have_content '9 7 ' + date_2.strftime('%d %b')
 
@@ -235,7 +240,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       within('tr:nth-child(2)') do
         date_3 = Date.today + 7
         date_4 = Date.today - 1
-        expect(page).to have_content 'Fourth Yelling ' + date_3.strftime('%d %b')
+        expect(page).to have_content 'Fourth Yelling ' \
+                                     + date_3.strftime('%d %b')
 
         expect(page).to have_content '0 2 ' + date_4.strftime('%d %b')
 
@@ -285,17 +291,18 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 33
-        expect(page).to have_content 'Second Nice job on identifying the pattern!  ' \
-                                     'Thought: participant61, I am no good ' \
-                                     + date_1.strftime('%d %b')
+        expect(page).to have_content 'Second Nice job on identifying the ' \
+                                     'pattern!  Thought: participant61, ' \
+                                     'I am no good ' + date_1.strftime('%d %b')
 
         expect(page).to have_content '1'
       end
 
       within('tr:nth-child(2)') do
         date_2 = Date.today - 18
-        expect(page).to have_content 'First Great activity! Activity: participant62, ' \
-                                     'Jumping, ' + date_2.strftime('%d %b')
+        expect(page).to have_content 'First Great activity! Activity: ' \
+                                     'participant62, Jumping, ' \
+                                     + date_2.strftime('%d %b')
 
         expect(page).to have_content '3'
       end
@@ -303,7 +310,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       within('tr:nth-child(3)') do
         date_3 = Date.today - 1
         expect(page).to have_content 'Fifth That sounds like fun! Activity: ' \
-                                     'participant63, Go to movie, ' + date_3.strftime('%d %b')
+                                     'participant63, Go to movie, ' \
+                                     + date_3.strftime('%d %b')
 
         expect(page).to have_content '5'
       end

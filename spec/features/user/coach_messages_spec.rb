@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Coach signs in and navigates to messages tool for Group 1', type: :feature, sauce: sauce_labs do
+describe 'Coach signs in and navigates to messages tool for Group 1',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -45,7 +46,8 @@ describe 'Coach signs in and navigates to messages tool for Group 1', type: :fea
     expect(page).to have_content 'This app is really helpful!'
 
     click_on 'Reply'
-    fill_in 'message_body', with: 'This message is to test the reply functionality'
+    fill_in 'message_body',
+            with: 'This message is to test the reply functionality'
     click_on 'Send'
     expect(page).to have_content 'Message saved'
 
@@ -81,7 +83,8 @@ describe 'Coach signs in and navigates to messages tool for Group 1', type: :fea
     select 'TFD-1111', from: 'message_recipient_id'
     fill_in 'message_subject', with: 'Testing compose functionality'
     select 'Intro', from: 'coach-message-link-selection'
-    fill_in 'message_body', with: 'This message is to test the compose functionality.'
+    fill_in 'message_body',
+            with: 'This message is to test the compose functionality.'
     click_on 'Send'
     expect(page).to have_content 'Message saved'
 

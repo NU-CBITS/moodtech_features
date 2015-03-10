@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Content Author signs in and navigates to Lesson Modules tool', type: :feature, sauce: sauce_labs do
+describe 'Content Author signs in and navigates to Lesson Modules tool',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -62,9 +63,12 @@ describe 'Content Author signs in and navigates to Lesson Modules tool', type: :
   end
 
   it 'updates position of lessons by using drag and drop sorting' do
-    lesson_value = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[11]/td[2]/a/p').text
-    source = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[11]/td[1]/span/i')
-    target = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/tr[9]/td[1]/span/i')
+    lesson_value = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/' \
+                                     'tbody/tr[11]/td[2]/a/p').text
+    source = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/' \
+                               'tr[11]/td[1]/span/i')
+    target = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/' \
+                               'tr[9]/td[1]/span/i')
     source.drag_to(target)
 
     within('tr:nth-child(9)') do

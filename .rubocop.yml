@@ -23,9 +23,9 @@ HandleExceptions:
 IfUnlessModifier:
   Enabled: false
 
-LineLength:
-  Exclude:
-    - spec/**/*
+# LineLength:
+#   Exclude:
+#     - spec/**/*
 
 MethodLength:
   Max: 25

@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Researcher signs in and navigates to Participants', type: :feature, sauce: sauce_labs do
+describe 'Researcher signs in and navigates to Participants',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -36,7 +37,8 @@ describe 'Researcher signs in and navigates to Participants', type: :feature, sa
 
     expect(page).to have_content 'Email: test@test.com'
 
-    expect(page).to have_content 'Phone Number: ' + ENV['Participant_Phone_Number_1']
+    expect(page).to have_content 'Phone Number: ' \
+                                 + ENV['Participant_Phone_Number_1']
 
     expect(page).to have_content 'Contact Preference: Email'
   end
@@ -58,7 +60,8 @@ describe 'Researcher signs in and navigates to Participants', type: :feature, sa
 
     expect(page).to have_content 'Email: updatedfake@test.com'
 
-    expect(page).to have_content 'Phone Number: ' + ENV['Participant_Phone_Number_1']
+    expect(page).to have_content 'Phone Number: ' \
+                                 + ENV['Participant_Phone_Number_1']
 
     expect(page).to have_content 'Contact Preference: Email'
 
@@ -75,7 +78,8 @@ describe 'Researcher signs in and navigates to Participants', type: :feature, sa
 
     expect(page).to have_content 'Email: ' + ENV['Participant_Email']
 
-    expect(page).to have_content 'Phone Number: ' + ENV['Participant_Phone_Number_1']
+    expect(page).to have_content 'Phone Number: ' \
+                                 + ENV['Participant_Phone_Number_1']
 
     expect(page).to have_content 'Contact Preference: Email'
   end
@@ -105,7 +109,9 @@ describe 'Researcher signs in and navigates to Participants', type: :feature, sa
     next_year = today + 365
     fill_in 'membership_end_date', with: next_year.strftime('%Y-%m-%d')
     weeks_later = today + 56
-    expect(page).to have_content 'Standard number of weeks: 8, Projected End Date from today: ' + weeks_later.strftime('%-m/%-d/%Y')
+    expect(page).to have_content 'Standard number of weeks: 8, Projected End ' \
+                                 'Date from today: ' \
+                                 + weeks_later.strftime('%-m/%-d/%Y')
 
     click_on 'Assign'
     expect(page).to have_content 'Group was successfully assigned'
@@ -121,8 +127,10 @@ describe 'Researcher signs in and navigates to Participants', type: :feature, sa
     click_on 'Tests'
     expect(page).to have_content 'Study Id: Tests'
     click_on 'Assign Coach/Moderator'
-    expect(page).to have_content 'Coach/Moderator was successfully assigned.'
+    expect(page).to have_content 'Coach/Moderator was successfully assigned'
+
     expect(page).to have_content 'Study Id: Tests'
+
     expect(page).to have_content 'Current Coach/Moderator: ' + ENV['User_Email']
   end
 

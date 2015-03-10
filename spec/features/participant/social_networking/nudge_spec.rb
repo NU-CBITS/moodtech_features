@@ -4,7 +4,8 @@ require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
 # tests
-describe 'Active participant in a social arm is signed in,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in a social arm is signed in,',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -33,7 +34,8 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
       within('.modal-content') do
         expect(page).to have_content 'Start creating'
 
-        find(:xpath, '//*[@id="profile-icon-selection"]/div[2]/div/div[2]/div[1]/div[3]').click
+        find(:xpath, '//*[@id="profile-icon-selection"]/div[2]/div/div[2]/' \
+             'div[1]/div[3]').click
       end
 
       expect(page).to have_css '.alert.alert-info'

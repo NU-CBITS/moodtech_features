@@ -16,7 +16,8 @@ describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
   end
 
   # tests
-  it 'Researcher signs in, creates a participant, assigns a group membership and sees correct calculation of end date' do
+  it 'Researcher signs in, creates a participant, assigns a group membership ' \
+     'and sees correct calculation of end date' do
     click_on 'Participants'
     expect(page).to have_content 'Participants'
     click_on 'New'
@@ -39,7 +40,9 @@ describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
     next_year = today + 365
     fill_in 'membership_end_date', with: next_year.strftime('%Y-%m-%d')
     weeks_later = today + 56
-    expect(page).to have_content 'Standard number of weeks: 8, Projected End Date from today: ' + weeks_later.strftime('%-m/%-d/%Y')
+    expect(page).to have_content 'Standard number of weeks: 8, Projected End ' \
+                                 'Date from today: ' \
+                                 + weeks_later.strftime('%-m/%-d/%Y')
 
     click_on 'Assign'
     expect(page).to have_content 'Group was successfully assigned'

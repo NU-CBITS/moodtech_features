@@ -4,7 +4,8 @@ require_relative '../../../../spec/spec_helper'
 require_relative '../../../../spec/configure_cloud'
 
 # tests
-describe 'Active participant in social arm is signed in and navigates to ACHIEVE tool,', type: :feature, sauce: sauce_labs do
+describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -33,18 +34,22 @@ describe 'Active participant in social arm is signed in and navigates to ACHIEVE
     visit ENV['Base_URL']
     expect(page).to have_content 'created a Goal: eat a whole pizza'
 
-    within('.list-group-item.ng-scope', text: 'created a Goal: eat a whole pizza') do
+    within('.list-group-item.ng-scope',
+           text: 'created a Goal: eat a whole pizza') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
       today = Date.today
       end_of_study = today + 4
-      expect(page).to have_content 'due ' + end_of_study.strftime('%b. %e, %Y') + ' at 12:00AM'
+      expect(page).to have_content 'due ' \
+                                   + end_of_study.strftime('%b. %e, %Y') \
+                                   + ' at 12:00AM'
     end
   end
 
   it 'completes a goal' do
-    page.find('.list-group-item.ng-scope', text: 'p1 alpha').find('.btn.btn-link.complete.ng-scope').click
+    page.find('.list-group-item.ng-scope',
+              text: 'p1 alpha').find('.btn.btn-link.complete.ng-scope').click
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
 
@@ -55,7 +60,8 @@ describe 'Active participant in social arm is signed in and navigates to ACHIEVE
   end
 
   it 'deletes a goal' do
-    page.find('.list-group-item.ng-scope', text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
+    page.find('.list-group-item.ng-scope',
+              text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
     expect(page).to_not have_content 'p1 gamma'
 
     click_on 'Deleted'

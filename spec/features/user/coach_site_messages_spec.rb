@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Coach signs in and navigates to Site Messages tool', type: :feature, sauce: sauce_labs do
+describe 'Coach signs in and navigates to Site Messages tool',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -37,7 +38,9 @@ describe 'Coach signs in and navigates to Site Messages tool', type: :feature, s
 
     select 'TFD-1111', from: 'site_message_participant_id'
     fill_in 'site_message_subject', with: 'Testing site messaging'
-    fill_in 'site_message_body', with: 'This message is intended to test the functionality of site messaging.'
+    fill_in 'site_message_body',
+            with: 'This message is intended to test the functionality of ' \
+            'site messaging.'
     click_on 'Send'
     expect(page).to have_content 'Site message was successfully created.'
 
@@ -45,7 +48,8 @@ describe 'Coach signs in and navigates to Site Messages tool', type: :feature, s
 
     expect(page).to have_content 'Subject: Testing site messaging'
 
-    expect(page).to have_content 'Body: This message is intended to test the functionality of site messaging.'
+    expect(page).to have_content 'Body: This message is intended to test the ' \
+                                 'functionality of site messaging.'
   end
 
   it 'reviews a previously sent site message' do

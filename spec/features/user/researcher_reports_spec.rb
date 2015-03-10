@@ -22,7 +22,8 @@ describe 'Researcher signs in,' do
 
     @driver.get ENV['Base_URL'] + '/users/sign_in'
     @driver.find_element(id: 'user_email').send_keys(ENV['Researcher_Email'])
-    @driver.find_element(id: 'user_password').send_keys(ENV['Researcher_Password'])
+    @driver.find_element(id: 'user_password').send_keys(ENV['Researcher_Passw' \
+                                                        'ord'])
     @driver.find_element(css: '.btn.btn-default').submit
   end
 

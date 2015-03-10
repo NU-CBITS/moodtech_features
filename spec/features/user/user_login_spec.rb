@@ -28,7 +28,8 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
 
   it 'is not signed and visits a specific page' do
     visit ENV['Base_URL'] + '/think_feel_do_dashboard'
-    expect(page).to have_content 'You need to sign in or sign up before continuing'
+    expect(page).to have_content 'You need to sign in or sign up before ' \
+                                 'continuing'
   end
 
   it 'is not signed in and views the intro slideshow' do
@@ -37,7 +38,8 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Welcome to ThiFeDo'
 
     click_on 'Done'
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_content 'You need to sign in or sign up before ' \
+                                 'continuing.'
   end
 
   it 'uses the forgot password functionality' do
@@ -50,10 +52,12 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
     end
 
     click_on 'Send me reset password instructions'
-    expect(page).to have_content 'You will receive an email with instructions on how to reset your password in a few minutes.'
+    expect(page).to have_content 'You will receive an email with ' \
+                                 'instructions on how to reset your ' \
+                                 'password in a few minutes.'
   end
 
-  it 'is an authorized clinician, only seeing what they are authorized to see' do
+  it "is an authorized clinician, only sees what they're authorized to see" do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Clinician_Email']
@@ -83,7 +87,7 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
     expect(page).to_not have_content 'Manage Tasks'
   end
 
-  it 'is an authorized researcher, only seeing what they are authorized to see' do
+  it "is an authorized researcher, only sees what they're authorized to see" do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Researcher_Email']
@@ -119,7 +123,8 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Manage Tasks'
   end
 
-  it 'is an authorized content author, only seeing what they are authorized to see' do
+  it "is an authorized content author, only sees what they're authorized " \
+     'to see' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['Content_Author_Email']
@@ -167,7 +172,7 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Edit'
   end
 
-  it 'is an authorized super user that uses the brand link to return to the home page' do
+  it 'is an authorized super user, uses brand link to return to home page' do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
       fill_in 'user_email', with: ENV['User_Email']

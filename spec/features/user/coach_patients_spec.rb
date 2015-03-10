@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :feature, sauce: sauce_labs do
+describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
     within('#new_user') do
@@ -56,7 +57,8 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       within('table#patients tr', text: 'TFD-Discontinue') do
         today = Date.today
         yesterday = today - 1
-        expect(page).to have_content 'Discontinued ' + yesterday.strftime('%Y-%m-%d')
+        expect(page).to have_content 'Discontinued ' \
+                                     + yesterday.strftime('%Y-%m-%d')
       end
     end
   end
@@ -68,10 +70,11 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       end
     end
 
-    page.accept_alert 'Are you sure you would like to terminate access to this membership? ' \
-                      'This option should also be used before changing membership of the patient' \
-                      ' to a different group or to completely revoke access to this membership. ' \
-                      'You will not be able to undo this.'
+    page.accept_alert 'Are you sure you would like to terminate access to ' \
+                      'this membership? This option should also be used ' \
+                      'before changing membership of the patient to a ' \
+                      'different group or to completely revoke access to this' \
+                      ' membership. You will not be able to undo this.'
     expect(page).to_not have_content 'TFD-Withdraw'
 
     click_on 'Inactive Patients'
@@ -96,10 +99,10 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     within('.panel.panel-default', text: 'General Patient Info') do
       weeks_later = Date.today + 56
       expect(page).to have_content 'Started on: ' \
-                                   + Date.today.strftime('%b %-d') + \
-                                   "\n8 weeks from the start date is: " \
-                                   + weeks_later.strftime('%b %-d') + \
-                                   "\nStatus: Active Currently in week 1"
+                                   + Date.today.strftime('%b %-d') \
+                                   + "\n8 weeks from the start date is: " \
+                                   + weeks_later.strftime('%b %-d') \
+                                   + "\nStatus: Active Currently in week 1"
       if page.has_text? 'week: 0'
         expect(page).to have_content 'Lessons read this week: 0'
       else
@@ -120,9 +123,9 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
                                      "seven days: 0\nTotal Logins: 0"
       else
         expect(page).to have_content 'Last Logged In: ' \
-                                     + Time.now.strftime('%-l%P on %b %-d') + \
-                                     "\nLogins Today: 59\nLogins in the last " \
-                                     "seven days: 59\nTotal Logins: 59"
+                                     + Time.now.strftime('%-l%P on %b %-d') \
+                                     + "\nLogins Today: 59\nLogins in the " \
+                                     "last seven days: 59\nTotal Logins: 59"
       end
     end
   end
@@ -182,13 +185,15 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       today = Date.today
       one_week_ago = today - 6
       one_month_ago = today - 27
-      expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
+      expect(page).to have_content one_week_ago.strftime('%B %e, %Y') \
+                                   + ' / ' + today.strftime('%B %e, %Y')
 
       within('.btn-group') do
         find('.btn.btn-default', text: '28 day').click
       end
 
-      expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
+      expect(page).to have_content one_month_ago.strftime('%B %e, %Y') \
+                                   + ' / ' + today.strftime('%B %e, %Y')
 
       within('.btn-group') do
         find('.btn.btn-default', text: '7 Day').click
@@ -197,7 +202,8 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       click_on 'Previous Period'
       one_week_ago_1 = today - 7
       two_weeks_ago = today - 13
-      expect(page).to have_content two_weeks_ago.strftime('%B %e, %Y') + ' / ' + one_week_ago_1.strftime('%B %e, %Y')
+      expect(page).to have_content two_weeks_ago.strftime('%B %e, %Y') + ' / ' \
+                                   + one_week_ago_1.strftime('%B %e, %Y')
     end
   end
 
@@ -250,7 +256,10 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     within login_panel[1] do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
-        if !page.has_text?('No data available in table')
+        if page.has_text?('No data')
+          expect(page).to have_content 'No data available in table'
+
+        else
           expect(page).to have_content Date.today.strftime('%d %b')
         end
       end
@@ -268,7 +277,10 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     within lesson_panel[1] do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
-        if !page.has_text?('No data available in table')
+        if page.has_text?('No data')
+          expect(page).to have_content 'No data available in table'
+
+        else
           expect(page).to have_content 'Do - Awareness Introduction'
 
           expect(page).to have_content Date.today.strftime('%-d %b')
@@ -291,7 +303,10 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     within('.panel.panel-default', text: 'Audio Access') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
-        if !page.has_text?('No data available in table')
+        if page.has_text?('No data')
+          expect(page).to have_content 'No data available in table'
+
+        else
           expect(page).to have_content 'Audio!'
 
           expect(page).to have_content Date.today.strftime('%-d %b')
@@ -314,15 +329,19 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     page.all(:link, 'Activities visualization')[1].click
     expect(page).to have_content 'Today'
     today = Date.today
-    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %d, %Y')
+    expect(page).to have_content 'Daily Averages for ' \
+                                 + today.strftime('%b %d, %Y')
 
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
 
     starttime = Time.now - 3600
     endtime = Time.now
-    within('.panel.panel-default', text: starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving') do
-      click_on starttime.strftime('%-l %P') + ' - ' + endtime.strftime('%-l %P:') + ' Loving'
+    within('.panel.panel-default',
+           text: starttime.strftime('%-l %P') + ' - ' \
+           + endtime.strftime('%-l %P:') + ' Loving') do
+      click_on starttime.strftime('%-l %P') + ' - ' \
+               + endtime.strftime('%-l %P:') + ' Loving'
       within('.panel-collapse.collapse.in') do
         expect(page).to have_content 'Predicted'
 
@@ -333,14 +352,17 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
 
     click_on 'Previous Day'
     yesterday = today - 1
-    expect(page).to have_content 'Daily Averages for ' + yesterday.strftime('%b %d, %Y')
+    expect(page).to have_content 'Daily Averages for ' \
+                                 + yesterday.strftime('%b %d, %Y')
 
     click_on 'Next Day'
-    expect(page).to have_content 'Daily Averages for ' + today.strftime('%b %d, %Y')
+    expect(page).to have_content 'Daily Averages for ' \
+                                 + today.strftime('%b %d, %Y')
 
     click_on 'Visualize'
     click_on 'Last 3 Days'
-    if page.has_text? 'Notice! No activities were completed during this 3-day period.'
+    if page.has_text? 'Notice! No activities were completed during this ' \
+                      '3-day period.'
       expect(page).to_not have_content today.strftime('%A, %m/%d')
 
     else
@@ -360,7 +382,8 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
 
     within('.panel.panel-default', text: 'Activities - Future') do
       within('tr:nth-child(5)') do
-        expect(page).to have_content 'Speech  8 4 Scheduled for ' + Date.today.strftime('%d %b')
+        expect(page).to have_content 'Speech  8 4 Scheduled for ' \
+                                     + Date.today.strftime('%d %b')
       end
     end
   end
@@ -376,16 +399,18 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       if page.has_text?('Loving')
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
-          expect(page).to have_content 'Loving  Planned 6 4 Not Rated Not Rated ' \
-                                       'Scheduled for ' + Date.today.strftime('%d %b')
+          expect(page).to have_content 'Loving  Planned 6 4 Not Rated Not ' \
+                                       'Rated Scheduled for ' \
+                                       + Date.today.strftime('%d %b')
         end
 
       else
         find('th', text: 'Scheduled Date').double_click
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
-          expect(page).to have_content 'Loving  Reviewed & Completed  6 4 7 5 ' \
-                                       'Scheduled for ' + Date.today.strftime('%d %b')
+          expect(page).to have_content 'Loving  Reviewed & Completed  6 4 7 ' \
+                                       '5 Scheduled for ' \
+                                       + Date.today.strftime('%d %b')
         end
       end
     end
@@ -416,13 +441,15 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     within thought_panel[0] do
       within('tr:nth-child(2)') do
         if page.has_text?('I am a magnet')
-          expect(page).to have_content 'I am a magnet for birds Labeling and Mislabeling  ' \
-                                       'It was nature Birds have no idea what they are doing  ' \
+          expect(page).to have_content 'I am a magnet for birds Labeling and ' \
+                                       'Mislabeling  It was nature Birds ' \
+                                       'have no idea what they are doing  ' \
                                        + Date.today.strftime('%b. %-d')
 
         else
-          expect(page).to have_content 'Forced negative thought Personalization ' \
-                                       'Example challenge Example act-as-if ' \
+          expect(page).to have_content 'Forced negative thought ' \
+                                       'Personalization Example challenge ' \
+                                       'Example act-as-if ' \
                                        + Date.today.strftime('%b. %-d')
         end
       end
@@ -439,7 +466,8 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     within('.panel.panel-default', text: 'Messages') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
-        expect(page).to have_content 'I like this app ' + Date.today.strftime('%Y-%m-%d')
+        expect(page).to have_content 'I like this app ' \
+                                     + Date.today.strftime('%Y-%m-%d')
       end
     end
   end
@@ -455,7 +483,9 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         tomorrow = Date.today + 1
-        expect(page).to have_content 'Do - Planning Introduction  ' + tomorrow.strftime('%-d %b') + ' Incomplete'
+        expect(page).to have_content 'Do - Planning Introduction  ' \
+                                     + tomorrow.strftime('%-d %b') \
+                                     + ' Incomplete'
       end
     end
   end

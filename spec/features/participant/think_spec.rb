@@ -15,7 +15,8 @@ def compare_thought(thought)
 end
 
 # tests
-describe 'Active participant signs in and navigates to THINK tool,', type: :feature, sauce: sauce_labs do
+describe 'Active participant signs in, navigates to THINK tool,',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -122,7 +123,8 @@ describe 'Active participant signs in and navigates to THINK tool,', type: :feat
     expect(page).to have_content 'Challenging Harmful Thoughts'
 
     click_on 'Next'
-    expect(page).to have_content 'You said you had the following unhelpful thoughts:'
+    expect(page).to have_content 'You said you had the following unhelpful ' \
+                                 'thoughts:'
 
     click_on 'Next'
     expect(page).to have_content 'Challenging a thought means'
@@ -140,23 +142,9 @@ describe 'Active participant signs in and navigates to THINK tool,', type: :feat
     expect(page).to have_content 'Because what you THINK, FEEL, Do'
 
     click_on 'Next'
-    expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
-    fill_in 'thought_act_as_if', with: 'Example act-as-if'
-    click_on 'Next'
-    expect(page).to have_content 'Thought saved'
+    expect(page).to have_content 'What could you do to ACT AS IF you believe ' \
+                                 'this?'
 
-    expect(page).to have_content 'You said that you thought...'
-
-    click_on 'Next'
-    expect(page).to have_content 'Come up with a challenging'
-    fill_in 'thought[challenging_thought]', with: 'Example challenge'
-    click_on 'Next'
-    expect(page).to have_content 'Thought saved'
-
-    expect(page).to have_content 'Because what you THINK, FEEL, Do'
-
-    click_on 'Next'
-    expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
     fill_in 'thought_act_as_if', with: 'Example act-as-if'
     click_on 'Next'
     expect(page).to have_content 'Thought saved'
@@ -173,7 +161,27 @@ describe 'Active participant signs in and navigates to THINK tool,', type: :feat
     expect(page).to have_content 'Because what you THINK, FEEL, Do'
 
     click_on 'Next'
-    expect(page).to have_content 'What could you do to ACT AS IF you believe this?'
+    expect(page).to have_content 'What could you do to ACT AS IF you believe ' \
+                                 'this?'
+
+    fill_in 'thought_act_as_if', with: 'Example act-as-if'
+    click_on 'Next'
+    expect(page).to have_content 'Thought saved'
+
+    expect(page).to have_content 'You said that you thought...'
+
+    click_on 'Next'
+    expect(page).to have_content 'Come up with a challenging'
+
+    fill_in 'thought[challenging_thought]', with: 'Example challenge'
+    click_on 'Next'
+    expect(page).to have_content 'Thought saved'
+
+    expect(page).to have_content 'Because what you THINK, FEEL, Do'
+
+    click_on 'Next'
+    expect(page).to have_content 'What could you do to ACT AS IF you believe ' \
+                                 'this?'
 
     fill_in 'thought_act_as_if', with: 'Example act-as-if'
     click_on 'Next'
@@ -268,10 +276,12 @@ describe 'Active participant signs in and navigates to THINK tool,', type: :feat
   end
 
   it 'uses the visualization' do
-    find('.thoughtviz_text.viz-clickable', text: 'Magnification or Catastro...').click
+    find('.thoughtviz_text.viz-clickable',
+         text: 'Magnification or Catastro...').click
     expect(page).to have_content 'Click a bubble for more info'
 
-    find('.thoughtviz_text.viz-clickable', text: 'Magnification or Catastro...').click
+    find('.thoughtviz_text.viz-clickable',
+         text: 'Magnification or Catastro...').click
     expect(page).to have_content "Some Thoughts You've Entered"
 
     expect(page).to have_content 'Testing add a new thought'

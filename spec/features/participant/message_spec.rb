@@ -3,7 +3,8 @@
 require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
-describe 'Active participant in group 1 is signed in and navigates to MESSAGES,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 1 signs in, navigates to MESSAGES,',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -24,7 +25,9 @@ describe 'Active participant in group 1 is signed in and navigates to MESSAGES,'
 
     within('#new_message') do
       fill_in 'message_subject', with: 'New message'
-      fill_in 'message_body', with: 'This is a test message to my moderator. Hello, Moderator! How are you??'
+      fill_in 'message_body',
+              with: 'This is a test message to my moderator. ' \
+              'Hello, Moderator! How are you??'
     end
 
     click_on 'Send'
@@ -81,7 +84,8 @@ describe 'Active participant in group 1 is signed in and navigates to MESSAGES,'
   end
 end
 
-describe 'Active participant in group 3 signs in and navigates to MESSAGES', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 3 signs in, navigates to MESSAGES',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do

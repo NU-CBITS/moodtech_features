@@ -4,7 +4,8 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Active participant in group 1 is signed in and navigates to FEEL tool,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 1 signs in, navigates to FEEL tool,',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -34,7 +35,8 @@ describe 'Active participant in group 1 is signed in and navigates to FEEL tool,
   end
 end
 
-describe 'Active participant in group 3 is signed in and navigates to FEEL tool,', type: :feature, sauce: sauce_labs do
+describe 'Active participant in group 3 signs in, navigates to FEEL tool,',
+         type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/participants/sign_in'
     within('#new_participant') do
@@ -81,16 +83,19 @@ describe 'Active participant in group 3 is signed in and navigates to FEEL tool,
     today = Date.today
     one_week_ago = today - 6
     one_month_ago = today - 27
-    expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
+    expect(page).to have_content one_week_ago.strftime('%B %e, %Y') + ' / ' \
+                                 + today.strftime('%B %e, %Y')
 
     find('.btn.btn-default', text: '28 day').click
-    expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' + today.strftime('%B %e, %Y')
+    expect(page).to have_content one_month_ago.strftime('%B %e, %Y') + ' / ' \
+                                 + today.strftime('%B %e, %Y')
 
     find('.btn.btn-default', text: '7 Day').click
     click_on 'Previous Period'
     one_week_ago_1 = today - 7
     two_weeks_ago = today - 13
-    expect(page).to have_content two_weeks_ago.strftime('%B %e, %Y') + ' / ' + one_week_ago_1.strftime('%B %e, %Y')
+    expect(page).to have_content two_weeks_ago.strftime('%B %e, %Y') + ' / ' \
+                                 + one_week_ago_1.strftime('%B %e, %Y')
 
     click_on 'Next'
     expect(page).to have_content 'Feeling Tracker Landing'
