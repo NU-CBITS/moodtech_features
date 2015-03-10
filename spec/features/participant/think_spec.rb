@@ -100,10 +100,6 @@ describe 'Active participant signs in and navigates to THINK tool,', type: :feat
 
     select 'Personalization', from: 'thought_pattern_id'
 
-    thought_value = compare_thought(thought_value)
-
-    select 'Personalization', from: 'thought_pattern_id'
-
     compare_thought(thought_value)
 
     select 'Personalization', from: 'thought_pattern_id'

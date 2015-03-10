@@ -80,7 +80,8 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
       within('table#patients tr', text: 'TFD-Withdraw') do
         today = Date.today
         yesterday = today - 1
-        expect(page).to have_content 'Withdrawn ' + yesterday.strftime('%Y-%m-%d')
+        expect(page).to have_content 'Withdrawn ' \
+                                     + yesterday.strftime('%Y-%m-%d')
       end
     end
   end
@@ -93,17 +94,35 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
     within('.panel.panel-default', text: 'General Patient Info') do
-      expect(page).to have_content 'Started on: ' + Date.today.strftime('%b %-d')
-
       weeks_later = Date.today + 56
-      expect(page).to have_content '8 weeks from the start date is: ' + weeks_later.strftime('%b %-d')
-
-      expect(page).to have_content 'Status: Active · Currently in week 1'
-
-      if page.has_text?('Never Logged In')
-        expect(page).to have_content 'Last Logged In: Never Logged In'
+      expect(page).to have_content 'Started on: ' \
+                                   + Date.today.strftime('%b %-d') + \
+                                   "\n8 weeks from the start date is: " \
+                                   + weeks_later.strftime('%b %-d') + \
+                                   "\nStatus: Active Currently in week 1"
+      if page.has_text? 'week: 0'
+        expect(page).to have_content 'Lessons read this week: 0'
       else
-        expect(page).to have_content 'Last Logged In: ' + Time.now.strftime('%-l%P on %b %-d')
+        expect(page).to have_content 'Lessons read this week: 1'
+      end
+    end
+  end
+
+  it 'views Login Info' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    within('.panel.panel-default', text: 'Login Info') do
+      if page.has_text?('Never Logged In')
+        expect(page).to have_content "Last Logged In: Never Logged In\n" \
+                                     "Logins Today: 0\nLogins in the last " \
+                                     "seven days: 0\nTotal Logins: 0"
+      else
+        expect(page).to have_content 'Last Logged In: ' \
+                                     + Time.now.strftime('%-l%P on %b %-d') + \
+                                     "\nLogins Today: 59\nLogins in the last " \
+                                     "seven days: 59\nTotal Logins: 59"
       end
     end
   end
@@ -227,7 +246,8 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
 
     expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
-    within('.panel.panel-default', text: 'Logins') do
+    login_panel = page.all('.panel.panel-default', text: 'Logins')
+    within login_panel[1] do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         if !page.has_text?('No data available in table')
@@ -244,7 +264,8 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
 
     expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
-    within('.panel.panel-default', text: 'Lessons') do
+    lesson_panel = page.all('.panel.panel-default', text: 'Lessons')
+    within lesson_panel[1] do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         if !page.has_text?('No data available in table')
@@ -395,12 +416,12 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1', type: :
     within thought_panel[0] do
       within('tr:nth-child(2)') do
         if page.has_text?('I am a magnet')
-          expect(page).to have_content 'I am a magnet for birds harmful Labeling and Mislabeling  ' \
+          expect(page).to have_content 'I am a magnet for birds Labeling and Mislabeling  ' \
                                        'It was nature Birds have no idea what they are doing  ' \
                                        + Date.today.strftime('%b. %-d')
 
         else
-          expect(page).to have_content 'Forced negative thought harmful Personalization ' \
+          expect(page).to have_content 'Forced negative thought Personalization ' \
                                        'Example challenge Example act-as-if ' \
                                        + Date.today.strftime('%b. %-d')
         end

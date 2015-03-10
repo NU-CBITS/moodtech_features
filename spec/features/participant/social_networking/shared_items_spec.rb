@@ -51,8 +51,6 @@ describe 'Active participant in a social arm is signed in,', type: :feature, sau
     expect(page).to_not have_content 'Private thought'
 
     expect(page).to have_content 'Public thought 1'
-
-    expect(page).to have_content 'Public thought 2'
   end
 
   it 'shares Add a New Thought responses' do

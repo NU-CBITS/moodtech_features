@@ -172,7 +172,9 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 34
-        expect(page).to have_content 'First I am no good  harmful '  \
+        expect(page).to have_content 'First I am no good  Labeling and ' \
+                                     'Mislabeling  I did good at work '  \
+                                     'today  I am good  ' \
                                      + date_1.strftime('%d %b')
 
         expect(page).to have_content '  1 1 1'
@@ -180,7 +182,9 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
 
       within('tr:nth-child(2)') do
         date_2 = Date.today - 20
-        expect(page).to have_content 'First This is stupid  harmful ' \
+        expect(page).to have_content 'First This is stupid  Fortune ' \
+                                     'Telling  It could be useful  I ' \
+                                     'should try it out  ' \
                                      + date_2.strftime('%d %b')
 
         expect(page).to have_content '  3 0 0'
@@ -231,7 +235,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       within('tr:nth-child(2)') do
         date_3 = Date.today + 7
         date_4 = Date.today - 1
-        expect(page).to have_content 'Fourth yelling ' + date_3.strftime('%d %b')
+        expect(page).to have_content 'Fourth Yelling ' + date_3.strftime('%d %b')
 
         expect(page).to have_content '0 2 ' + date_4.strftime('%d %b')
 
@@ -250,13 +254,13 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
                                      + date_1.strftime('%-d %b') + ' ' \
                                      + date_2.strftime('%d %b')
 
-        expect(page).to have_content '1 1 0'
+        expect(page).to have_content '1 0 0'
       end
 
       within('tr:nth-child(2)') do
         date_3 = Date.today + 3
         date_4 = Date.today - 26
-        expect(page).to have_content 'Second Jumping reviewed and complete ' \
+        expect(page).to have_content 'Third Get crazy false false ' \
                                      + date_3.strftime('%-d %b') + ' ' \
                                      + date_4.strftime('%d %b')
 
@@ -266,7 +270,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1', type: :fe
       within('tr:nth-child(3)') do
         date_5 = Date.today - 14
         date_6 = Date.today - 24
-        expect(page).to have_content 'Second Jumping reviewed and complete ' \
+        expect(page).to have_content 'Fifth go to work true false ' \
                                      + date_5.strftime('%-d %b') + ' ' \
                                      + date_6.strftime('%d %b')
 

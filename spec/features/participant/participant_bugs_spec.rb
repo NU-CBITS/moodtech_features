@@ -204,6 +204,12 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Next'
       expect(page).to have_content 'Feeling Tracker Landing'
 
+      click_on 'Your Recent Moods & Emotions'
+      expect(page).to have_content 'Positive and Negative Emotions'
+
+      click_on 'Next'
+      expect(page).to have_content 'Feeling Tracker Landing'
+
       within('.dropdown-toggle', text: 'FEEL') do
         expect(page).to_not have_content 'New!'
       end
