@@ -105,6 +105,7 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
                                    + "\nStatus: Active Currently in week 1"
       if page.has_text? 'week: 0'
         expect(page).to have_content 'Lessons read this week: 0'
+
       else
         expect(page).to have_content 'Lessons read this week: 1'
       end
@@ -121,12 +122,117 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
         expect(page).to have_content "Last Logged In: Never Logged In\n" \
                                      "Logins Today: 0\nLogins in the last " \
                                      "seven days: 0\nTotal Logins: 0"
+
       else
         expect(page).to have_content 'Last Logged In: ' \
                                      + Time.now.strftime('%-l%P on %b %-d') \
-                                     + "\nLogins Today: 59\nLogins in the " \
-                                     "last seven days: 59\nTotal Logins: 59"
+                                     + "\nLogins Today: 61\nLogins in the " \
+                                     "last seven days: 61\nTotal Logins: 61"
       end
+    end
+  end
+
+  it 'views Tool Use table' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    within('.table.table-hover', text: 'Tool Use') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[0] do
+        expect(page).to have_content 'Tool Use  Today Last 7 Days Totals'
+      end
+
+      within table_row[1] do
+        expect(page).to have_content 'Lessons Read    1 1 1'
+      end
+
+      within('tr', text: 'Moods') do
+        expect(page).to have_content 'Moods   1 1 3'
+      end
+
+      within('tr', text: 'Thoughts') do
+        expect(page).to have_content 'Thoughts   12 12 12'
+      end
+
+      within('tr', text: 'Activities Planned') do
+        expect(page).to have_content 'Activities Planned   1 11 11'
+      end
+
+      within('tr', text: 'Activities Monitored') do
+        expect(page).to have_content 'Activities Monitored   1 11 11'
+      end
+
+      within('tr', text: 'Activities Reviewed and Completed') do
+        expect(page).to have_content 'Activities Reviewed and Completed  1 1 1'
+      end
+
+      within('tr', text: 'Activities Reviewed and Incomplete') do
+        expect(page).to have_content 'Activities Reviewed and Incomplete 0 0 0'
+      end
+    end
+  end
+
+  it 'uses the links within Tool Use table' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    within('.table.table-hover', text: 'Tool Use') do
+      click_on 'Lessons Read'
+      click_on 'Moods'
+      click_on 'Thoughts'
+      click_on 'Activities Planned'
+      click_on 'Activities Monitored'
+      click_on 'Activities Reviewed and Completed'
+      click_on 'Activities Reviewed and Incomplete'
+    end
+  end
+
+  it 'views Social Activity' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    within('.table.table-hover', text: 'Social Activity') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[0] do
+        expect(page).to have_content 'Social Activity  Today Last 7 Days Totals'
+      end
+
+      within table_row[1] do
+        expect(page).to have_content 'Likes    1 1 1'
+      end
+
+      within('tr', text: 'Nudges') do
+        expect(page).to have_content 'Nudges   2 3 3'
+      end
+
+      within('tr', text: 'Comments') do
+        expect(page).to have_content 'Comments   1 1 1'
+      end
+
+      within('tr', text: 'Goals') do
+        expect(page).to have_content 'Goals   6 6 6'
+      end
+
+      within('tr', text: '"On My Mind" Statements') do
+        expect(page).to have_content '"On My Mind" Statements   2 2 2'
+      end
+    end
+  end
+
+  it 'uses the links within Social Activity table' do
+    within('#patients', text: 'TFD-1111') do
+      click_on 'TFD-1111'
+    end
+
+    within('.table.table-hover', text: 'Social Activity') do
+      click_on 'Likes'
+      click_on 'Nudges'
+      click_on 'Comments'
+      click_on 'Goals'
+      click_on '"On My Mind" Statements'
     end
   end
 
@@ -396,20 +502,15 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
     expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
     within('.panel.panel-default', text: 'Activities - Past') do
-      if page.has_text?('Loving')
-        table_row = page.all('tr:nth-child(1)')
-        within table_row[1] do
-          expect(page).to have_content 'Loving  Planned 6 4 Not Rated Not ' \
-                                       'Rated Scheduled for ' \
+      within('tr', text: 'Loving') do
+        expect(page).to have_content 'Loving  '
+        if page.has_text? 'Planned'
+          expect(page).to have_content 'Planned 6 4 Not Rated Not Rated ' \
+                                       'Scheduled for ' \
                                        + Date.today.strftime('%d %b')
-        end
-
-      else
-        find('th', text: 'Scheduled Date').double_click
-        table_row = page.all('tr:nth-child(1)')
-        within table_row[1] do
-          expect(page).to have_content 'Loving  Reviewed & Completed  6 4 7 ' \
-                                       '5 Scheduled for ' \
+        else
+          expect(page).to have_content 'Reviewed & Completed 6 4 7 5 ' \
+                                       'Scheduled for ' \
                                        + Date.today.strftime('%d %b')
         end
       end
@@ -439,7 +540,7 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
 
     thought_panel = page.all('.panel.panel-default', text: 'Thoughts')
     within thought_panel[0] do
-      within('tr:nth-child(2)') do
+      within('tr:nth-child(3)') do
         if page.has_text?('I am a magnet')
           expect(page).to have_content 'I am a magnet for birds Labeling and ' \
                                        'Mislabeling  It was nature Birds ' \
@@ -466,8 +567,13 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
     within('.panel.panel-default', text: 'Messages') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
-        expect(page).to have_content 'I like this app ' \
-                                     + Date.today.strftime('%Y-%m-%d')
+        if page.has_text? 'I like'
+          expect(page).to have_content 'I like this app ' \
+                                       + Date.today.strftime('%Y-%m-%d')
+        else
+          expect(page).to have_content 'Reply: Try out the LEARN tool ' \
+                                       + Date.today.strftime('%Y-%m-%d')
+        end
       end
     end
   end
@@ -480,8 +586,7 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
     expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
     within('.panel.panel-default', text: 'Tasks') do
-      table_row = page.all('tr:nth-child(1)')
-      within table_row[1] do
+      within 'tr:nth-child(4)' do
         tomorrow = Date.today + 1
         expect(page).to have_content 'Do - Planning Introduction  ' \
                                      + tomorrow.strftime('%-d %b') \

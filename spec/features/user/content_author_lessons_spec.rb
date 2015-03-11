@@ -63,15 +63,11 @@ describe 'Content Author signs in and navigates to Lesson Modules tool',
   end
 
   it 'updates position of lessons by using drag and drop sorting' do
-    lesson_value = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/' \
-                                     'tbody/tr[11]/td[2]/a/p').text
-    source = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/' \
-                               'tr[11]/td[1]/span/i')
-    target = page.find(:xpath, 'html/body/div[1]/div/div/div[2]/table/tbody/' \
-                               'tr[9]/td[1]/span/i')
-    source.drag_to(target)
+    lesson_value = page.find('tr:nth-child(11)').text
+    lesson = page.all('.fa.fa-sort.fa-lg')
+    lesson[11].drag_to(lesson[3])
 
-    within('tr:nth-child(9)') do
+    within('tr:nth-child(3)') do
       expect(page).to have_content lesson_value
     end
   end

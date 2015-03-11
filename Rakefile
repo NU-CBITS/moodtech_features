@@ -2,12 +2,30 @@
 
 # load development version of think_feel_do_so locally
 
-desc 'Setting database and starting think_feel_do_so for testing locally'
+desc 'Set and start think_feel_do_so for full suite testing locally'
 
 task :load_tfdso_local do
   Dir.chdir('/Users/Chris/Work/think_feel_do_so') do
     system('rake db:drop db:create db:migrate')
     system('rake selenium_seed:with_fixtures')
+    system('rails s')
+  end
+end
+
+
+# load database with data from database dump
+
+desc 'Restore database'
+
+task :restore_db do
+  system('/Applications/Postgres.app/Contents/Versions/9.3/bin/dropdb ' \
+         'think_feel_do_so_development')
+  system('/Applications/Postgres.app/Contents/Versions/9.3/bin/createdb ' \
+         'think_feel_do_so_development')
+  system('/Applications/Postgres.app/Contents/Versions/9.3/bin/psql -U ' \
+         'Chris -d think_feel_do_so_development -f ' \
+         '/Users/Chris/Work/dbs/tfdso_db.sql')
+  Dir.chdir('/Users/Chris/Work/think_feel_do_so') do
     system('rails s')
   end
 end

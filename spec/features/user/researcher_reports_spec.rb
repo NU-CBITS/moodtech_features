@@ -82,8 +82,11 @@ describe 'Researcher signs in,' do
     download_link = @driver.find_elements(class: 'list-group-item')[15]
     download_link.click
 
+    download_link = @driver.find_elements(class: 'list-group-item')[16]
+    download_link.click
+
     files = Dir.glob("#{@download_dir}/**")
-    files.count.should be == 16
+    files.count.should be == 17
 
     sorted_files = files.sort_by { |file| File.mtime(file) }
     File.size(sorted_files.last).should be > 0
