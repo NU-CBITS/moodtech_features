@@ -13,6 +13,17 @@ task :load_tfdso_local do
 end
 
 
+# dump database
+
+desc 'Dump database'
+
+task :dump_db do
+  system '/Applications/Postgres.app/Contents/Versions/9.3/bin/pg_dump ' \
+         '-c -C -o -U Chris think_feel_do_so_development -f ' \
+         '/Users/Chris/Work/dbs/tfdso_db.sql'
+end
+
+
 # load database with data from database dump
 
 desc 'Restore database'
