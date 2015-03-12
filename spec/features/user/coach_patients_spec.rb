@@ -156,19 +156,19 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
       end
 
       within('tr', text: 'Activities Planned') do
-        expect(page).to have_content 'Activities Planned   1 11 11'
+        expect(page).to have_content 'Activities Planned   9 9 9'
       end
 
       within('tr', text: 'Activities Monitored') do
-        expect(page).to have_content 'Activities Monitored   1 11 11'
+        expect(page).to have_content 'Activities Monitored   9 9 9'
       end
 
       within('tr', text: 'Activities Reviewed and Completed') do
-        expect(page).to have_content 'Activities Reviewed and Completed  1 1 1'
+        expect(page).to have_content 'Activities Reviewed and Completed  2 2 2'
       end
 
       within('tr', text: 'Activities Reviewed and Incomplete') do
-        expect(page).to have_content 'Activities Reviewed and Incomplete 0 0 0'
+        expect(page).to have_content 'Activities Reviewed and Incomplete 1 1 1'
       end
     end
   end
@@ -548,9 +548,9 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
                                        + Date.today.strftime('%b. %-d')
 
         else
-          expect(page).to have_content 'Forced negative thought ' \
-                                       'Personalization Example challenge ' \
-                                       'Example act-as-if ' \
+          expect(page).to have_content 'Testing negative thought ' \
+                                       'Magnification or Catastrophizing ' \
+                                       'Example challenge Example act-as-if ' \
                                        + Date.today.strftime('%b. %-d')
         end
       end
@@ -586,7 +586,7 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
     expect(page).to have_css('h1', text: 'Participant TFD-1111')
 
     within('.panel.panel-default', text: 'Tasks') do
-      within 'tr:nth-child(4)' do
+      within 'tr:nth-child(3)' do
         tomorrow = Date.today + 1
         expect(page).to have_content 'Do - Planning Introduction  ' \
                                      + tomorrow.strftime('%-d %b') \

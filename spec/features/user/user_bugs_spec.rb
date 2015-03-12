@@ -54,3 +54,49 @@ describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Membership Status: Active'
   end
 end
+
+require 'selenium-webdriver'
+require 'rspec/expectations'
+include RSpec::Matchers
+require 'uuid'
+require 'fileutils'
+
+describe 'Researcher signs in,' do
+  before(:each) do
+    @download_dir = File.join(Dir.pwd, UUID.new.generate)
+    FileUtils.mkdir_p @download_dir
+
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile['browser.download.dir'] = @download_dir
+    profile['browser.download.folderList'] = 2
+    profile['browser.helperApps.neverAsk.saveToDisk'] = 'text/csv'
+    profile['pdfjs.disabled'] = true
+    @driver = Selenium::WebDriver.for :firefox, profile: profile
+
+    @driver.get ENV['Base_URL'] + '/users/sign_in'
+    @driver.find_element(id: 'user_email').send_keys(ENV['Researcher_Email'])
+    @driver.find_element(id: 'user_password').send_keys(ENV['Researcher_Passw' \
+                                                        'ord'])
+    @driver.find_element(css: '.btn.btn-default').submit
+  end
+
+  after(:each) do
+    @driver.quit
+    FileUtils.rm_rf @download_dir
+  end
+
+  it 'navigates to CSV reports, and does not receive exception' do
+    @driver.get ENV['Base_URL'] + '/think_feel_do_dashboard/reports'
+    download_link = @driver.find_elements(class: 'list-group-item')[12]
+    download_link.click
+
+    download_link = @driver.find_elements(class: 'list-group-item')[13]
+    download_link.click
+
+    files = Dir.glob("#{@download_dir}/**")
+    files.count.should be == 2
+
+    sorted_files = files.sort_by { |file| File.mtime(file) }
+    File.size(sorted_files.last).should be > 0
+  end
+end
