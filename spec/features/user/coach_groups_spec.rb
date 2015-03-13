@@ -74,6 +74,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
       click_on 'on the mind statements'
       click_on 'comments'
       click_on 'goals'
+      click_on 'likes'
     end
   end
 
@@ -330,6 +331,10 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
       end
     end
   end
+
+  it 'views Goals'
+
+  it 'views Likes'
 
   it 'uses breadcrumbs to return to home' do
     click_on 'Group'

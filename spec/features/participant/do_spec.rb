@@ -218,42 +218,42 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
       page.accept_alert 'Are you sure that you would like to make this ' \
                         'activity public?'
       expect(page).to have_content 'Activity saved'
-    end
 
-    if page.has_text?('Do Landing')
-      expect(page).to have_content 'Add a New Activity'
+      if page.has_text?('Do Landing')
+        expect(page).to have_content 'Add a New Activity'
 
-      visit ENV['Base_URL']
-      within('.list-group-item.ng-scope',
-             text: 'Reviewed & Completed an Activity: Loving') do
-        within('.actions') do
-          find('.fa.fa-folder-open.fa-2x.ng-scope').click
+        visit ENV['Base_URL']
+        within('.list-group-item.ng-scope',
+               text: 'Reviewed & Completed an Activity: Loving') do
+          within('.actions') do
+            find('.fa.fa-folder-open.fa-2x.ng-scope').click
+          end
+          expect(page).to have_content 'actual accomplishment: 5'
+
+          expect(page).to have_content 'actual pleasure: 7'
         end
-        expect(page).to have_content 'actual accomplishment: 5'
 
-        expect(page).to have_content 'actual pleasure: 7'
-      end
+      else
+        find('.btn.btn-success').click
+        select '3', from: 'activity[actual_pleasure_intensity]'
+        select '1', from: 'activity[actual_accomplishment_intensity]'
+        click_on 'Next'
+        page.accept_alert 'Are you sure that you would like to make this ' \
+                          'activity public?'
+        expect(page).to have_content 'Activity saved'
 
-    else
-      find('.btn.btn-success').click
-      select '3', from: 'activity[actual_pleasure_intensity]'
-      select '1', from: 'activity[actual_accomplishment_intensity]'
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make this ' \
-                        'activity public?'
-      expect(page).to have_content 'Activity saved'
+        expect(page).to have_content 'Add a New Activity'
 
-      expect(page).to have_content 'Add a New Activity'
+        visit ENV['Base_URL']
+        within('.list-group-item.ng-scope',
+               text: 'Reviewed & Completed an Activity: Loving') do
+          within('.actions') do
+            find('.fa.fa-folder-open.fa-2x.ng-scope').click
+          end
+          expect(page).to have_content 'actual accomplishment: 5'
 
-      visit ENV['Base_URL']
-      within('.list-group-item.ng-scope',
-             text: 'Reviewed & Completed an Activity: Loving') do
-        within('.actions') do
-          find('.fa.fa-folder-open.fa-2x.ng-scope').click
+          expect(page).to have_content 'actual pleasure: 7'
         end
-        expect(page).to have_content 'actual accomplishment: 5'
-
-        expect(page).to have_content 'actual pleasure: 7'
       end
     end
   end
