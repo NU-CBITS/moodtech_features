@@ -20,7 +20,7 @@ describe 'Active participant signs in, navigates to RELAX tool,',
     expect(page).to have_content 'RELAX Home'
   end
 
-  it 'uses listens to a relax exercise' do
+  it 'listens to a relax exercise' do
     click_on 'Autogenic Exercises'
     expect(page).to have_content 'Yay'
     within('.jp-controls') do
@@ -31,6 +31,6 @@ describe 'Active participant signs in, navigates to RELAX tool,',
     expect(page).to have_content 'RELAX Home'
 
     visit ENV['Base_URL']
-    expect(page).to have_content 'listened to a Relaxation Exercise: Audio!'
+    expect(page).to have_content 'Listened to a Relaxation Exercise: Audio!'
   end
 end

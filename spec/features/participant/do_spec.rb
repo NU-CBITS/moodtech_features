@@ -202,7 +202,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
       visit ENV['Base_URL']
       within('.list-group-item.ng-scope',
-             text: 'monitored an Activity: Loving') do
+             text: 'Reviewed & Completed an Activity: Loving') do
         within('.actions') do
           find('.fa.fa-folder-open.fa-2x.ng-scope').click
         end
@@ -225,7 +225,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
       visit ENV['Base_URL']
       within('.list-group-item.ng-scope',
-             text: 'monitored an Activity: Loving') do
+             text: 'Reviewed & Completed an Activity: Loving') do
         within('.actions') do
           find('.fa.fa-folder-open.fa-2x.ng-scope').click
         end
@@ -247,7 +247,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
       visit ENV['Base_URL']
       within('.list-group-item.ng-scope',
-             text: 'monitored an Activity: Loving') do
+             text: 'Reviewed & Completed an Activity: Loving') do
         within('.actions') do
           find('.fa.fa-folder-open.fa-2x.ng-scope').click
         end

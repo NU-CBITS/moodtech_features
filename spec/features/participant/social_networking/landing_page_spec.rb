@@ -52,7 +52,7 @@ describe 'Active participant in a social arm is signed in,',
     expect(page).to have_css '.fa.fa-pencil'
 
     visit ENV['Base_URL']
-    expect(page).to have_content 'created a Profile: Welcome, participant1'
+    expect(page).to have_content 'Shared a Profile: Welcome, participant1'
   end
 
   it 'creates a whats on your mind post' do

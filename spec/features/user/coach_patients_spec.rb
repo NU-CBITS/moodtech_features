@@ -4,7 +4,7 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
+describe 'Coach signs in, navigates to Patient Dashboard of active participant',
          type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
@@ -156,19 +156,19 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
       end
 
       within('tr', text: 'Activities Planned') do
-        expect(page).to have_content 'Activities Planned   9 9 9'
+        expect(page).to have_content 'Activities Planned   1 9 9'
       end
 
       within('tr', text: 'Activities Monitored') do
-        expect(page).to have_content 'Activities Monitored   9 9 9'
+        expect(page).to have_content 'Activities Monitored   1 9 9'
       end
 
       within('tr', text: 'Activities Reviewed and Completed') do
-        expect(page).to have_content 'Activities Reviewed and Completed  2 2 2'
+        expect(page).to have_content 'Activities Reviewed and Completed  1 2 2'
       end
 
       within('tr', text: 'Activities Reviewed and Incomplete') do
-        expect(page).to have_content 'Activities Reviewed and Incomplete 1 1 1'
+        expect(page).to have_content 'Activities Reviewed and Incomplete 0 1 1'
       end
     end
   end
@@ -228,7 +228,6 @@ describe 'Coach signs in and navigates to Patient Dashboard of Group 1',
     end
 
     within('.table.table-hover', text: 'Social Activity') do
-      click_on 'Likes'
       click_on 'Nudges'
       click_on 'Comments'
       click_on 'Goals'

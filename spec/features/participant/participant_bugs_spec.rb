@@ -162,7 +162,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
 
       visit ENV['Base_URL']
       within('.list-group-item.ng-scope',
-             text: 'monitored an Activity: doing whatever thing') do
+             text: 'Monitored an Activity: doing whatever thing') do
         within('.actions') do
           find('.fa.fa-folder-open.fa-2x.ng-scope').click
         end

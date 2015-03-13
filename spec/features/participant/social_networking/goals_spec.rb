@@ -35,7 +35,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     expect(page).to have_content 'created a Goal: eat a whole pizza'
 
     within('.list-group-item.ng-scope',
-           text: 'created a Goal: eat a whole pizza') do
+           text: 'Created a Goal: eat a whole pizza') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
@@ -56,7 +56,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     expect(page).to have_content 'p1 alpha'
 
     visit ENV['Base_URL']
-    expect(page).to have_content 'completed a Goal: p1 alpha'
+    expect(page).to have_content 'Completed a Goal: p1 alpha'
   end
 
   it 'deletes a goal' do
