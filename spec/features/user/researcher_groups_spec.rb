@@ -95,7 +95,10 @@ describe 'Researcher signs in and navigates to Groups',
     click_on 'Assign'
     expect(page).to have_content 'Task assigned.'
 
-    page.all('.btn.btn-danger', text: 'Unassign')[24].click
+    within('tr', text: 'LEARN: Do - Planning Slideshow 3 of 4') do
+      click_on 'Unassign'
+    end
+
     page.accept_alert 'Are you sure?'
     within '#tasks' do
       expect(page).to_not have_content 'LEARN: Do - Planning Slideshow 3 of 4'

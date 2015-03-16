@@ -259,7 +259,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_2 = Date.today - 34
         expect(page).to have_content 'First do something  false true  ' \
                                      + date_1.strftime('%-d %b') + ' ' \
-                                     + date_2.strftime('%d %b')
+                                     + date_2.strftime('%-d %b')
 
         expect(page).to have_content '1 0 0'
       end
@@ -269,7 +269,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_4 = Date.today - 26
         expect(page).to have_content 'Third Get crazy false false ' \
                                      + date_3.strftime('%-d %b') + ' ' \
-                                     + date_4.strftime('%d %b')
+                                     + date_4.strftime('%-d %b')
 
         expect(page).to have_content '2 1 0'
       end
@@ -279,7 +279,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_6 = Date.today - 24
         expect(page).to have_content 'Fifth go to work true false ' \
                                      + date_5.strftime('%-d %b') + ' ' \
-                                     + date_6.strftime('%d %b')
+                                     + date_6.strftime('%-d %b')
 
         expect(page).to have_content '2 1 0'
       end
@@ -303,7 +303,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_2 = Date.today - 18
         expect(page).to have_content 'First Great activity! Activity: ' \
                                      'participant62, Jumping, ' \
-                                     + date_2.strftime('%d %b')
+                                     + date_2.strftime('%-d %b')
 
         expect(page).to have_content '3'
       end
@@ -312,7 +312,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_3 = Date.today - 1
         expect(page).to have_content 'Fifth That sounds like fun! Activity: ' \
                                      'participant63, Go to movie, ' \
-                                     + date_3.strftime('%d %b')
+                                     + date_3.strftime('%-d %b')
 
         expect(page).to have_content '5'
       end
@@ -325,7 +325,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
       within table_row[1] do
         date_1 = Date.today - 14
         expect(page).to have_content "First I'm feeling great!  " \
-                                     + date_1.strftime('%d %b')
+                                     + date_1.strftime('%-d %b')
 
         expect(page).to have_content '4 0 0'
       end
