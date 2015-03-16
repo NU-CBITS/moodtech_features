@@ -647,6 +647,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           created_date = Date.today - 24
           expect(page).to have_content 'Goal: participant63, Get crazy ' \
                                        + created_date.strftime('%-d %b')
+
           expect(page).to have_content '2'
         end
       end
@@ -661,19 +662,23 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page).to have_content 'do something  false true ' \
                                        + due_date.strftime('%-d %b') + ' ' \
                                        + created_date.strftime('%-d %b')
+
           expect(page).to have_content ' 1 0 0'
         end
       end
     end
 
     it 'views Comments' do
-      within('.panel.panel-default.cdb_panel', text: 'Comments') do
+      comments_panel = page.all('.panel.panel-default.cdb_panel',
+                                text: 'Comments')
+      within comments_panel[1] do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
-          created_date = Date.today - 33
+          created_date = Date.today - 20
           expect(page).to have_content 'Great activity! Activity: ' \
                                        'participant62, Jumping, ' \
                                        + created_date.strftime('%-d %b')
+
           expect(page).to have_content '3'
         end
       end
@@ -684,6 +689,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           expect(page).to have_content Date.today.strftime('%-d %b')
+
           expect(page).to have_content 'participant62'
         end
       end
@@ -694,6 +700,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           expect(page).to have_content Date.today.strftime('%-d %b')
+
           expect(page).to have_content 'participant65'
         end
       end
@@ -707,6 +714,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           created_date = Date.today - 14
           expect(page).to have_content "I'm feeling great! " \
                                        + created_date.strftime('%-d %b')
+
           expect(page).to have_content '4 0 0'
         end
       end
