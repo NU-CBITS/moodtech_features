@@ -52,7 +52,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
       end
 
       within('tr', text: 'comments') do
-        expect(page).to have_content 'comments  1 0 1 0 1 0 0 0'
+        expect(page).to have_content 'comments  0 0 2 0 1 0 0 0'
       end
 
       within('tr', text: 'goals') do
@@ -291,7 +291,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
     within panel_comments[4] do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
-        date_1 = Date.today - 33
+        date_1 = Date.today - 20
         expect(page).to have_content 'Second Nice job on identifying the ' \
                                      'pattern!  Thought: participant61, ' \
                                      'I am no good ' + date_1.strftime('%d %b')
@@ -332,9 +332,91 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
     end
   end
 
-  it 'views Goals'
+  it 'views Goals' do
+    within('.panel.panel-default.cdb_panel', text: 'Goals') do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        date_1 = Date.today - 26
+        date_2 = Date.today - 34
+        expect(page).to have_content 'First do something  false true ' \
+                                     + date_1.strftime('%-d %b') + ' ' \
+                                     + date_2.strftime('%-d %b')
 
-  it 'views Likes'
+        expect(page).to have_content '1 0 0'
+      end
+
+      within('tr:nth-child(2)') do
+        date_3 = Date.today + 3
+        date_4 = Date.today - 26
+        expect(page).to have_content 'Third Get crazy  false false ' \
+                                     + date_3.strftime('%-d %b') + ' ' \
+                                     + date_4.strftime('%-d %b')
+
+        expect(page).to have_content '2 1 0'
+      end
+
+      within('tr:nth-child(3)') do
+        date_5 = Date.today - 14
+        date_6 = Date.today - 24
+        expect(page).to have_content 'Fifth go to work  true  false ' \
+                                     + date_5.strftime('%-d %b') + ' ' \
+                                     + date_6.strftime('%-d %b')
+
+        expect(page).to have_content '2 1 0'
+      end
+    end
+  end
+
+  it 'views Likes' do
+    likes_panel = page.all('.panel.panel-default.cdb_panel', text: 'Likes')
+    within likes_panel[5] do
+      table_row = page.all('tr:nth-child(1)')
+      within table_row[1] do
+        date_1 = Date.today - 33
+        expect(page).to have_content 'Second  SocialNetworking::SharedItem  ' \
+                                     'Thought: I am no good ' \
+                                     + date_1.strftime('%-d %b')
+
+        expect(page).to have_content '1'
+      end
+
+      within('tr:nth-child(2)') do
+        date_2 = Date.today - 24
+        expect(page).to have_content 'First SocialNetworking::SharedItem  ' \
+                                     'Goal: Get crazy ' \
+                                     + date_2.strftime('%-d %b')
+
+        expect(page).to have_content '2'
+      end
+
+      within('tr:nth-child(3)') do
+        date_3 = Date.today - 24
+        expect(page).to have_content 'Second  SocialNetworking::SharedItem  ' \
+                                     'Goal: go to work ' \
+                                     + date_3.strftime('%-d %b')
+
+        expect(page).to have_content '2'
+      end
+
+      within('tr:nth-child(4)') do
+        date_4 = Date.today - 19
+        expect(page).to have_content 'Third  SocialNetworking::SharedItem  ' \
+                                     'Activity: Jumping ' \
+                                     + date_4.strftime('%-d %b')
+
+        expect(page).to have_content '3'
+      end
+
+      within('tr:nth-child(5)') do
+        date_5 = Date.today - 1
+        expect(page).to have_content 'Fifth  SocialNetworking::SharedItem  ' \
+                                     'Activity: Go to movie ' \
+                                     + date_5.strftime('%-d %b')
+
+        expect(page).to have_content '5'
+      end
+    end
+  end
 
   it 'uses breadcrumbs to return to home' do
     click_on 'Group'
