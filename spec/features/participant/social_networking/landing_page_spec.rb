@@ -24,8 +24,7 @@ describe 'Active participant in a social arm is signed in,',
     within('.modal-content') do
       expect(page).to have_content 'Start creating'
 
-      find(:xpath, '//*[@id="profile-icon-selection"]/div[2]/div/div[2]/' \
-                   'div[1]/div[3]').click
+      page.all('img')[2].click
     end
 
     within('.list-group-item.ng-scope', text: 'What are your hobbies?') do
