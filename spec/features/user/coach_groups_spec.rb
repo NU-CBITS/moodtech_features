@@ -4,7 +4,7 @@ require_relative '../../../spec/spec_helper'
 require_relative '../../../spec/configure_cloud'
 
 # tests
-describe 'Coach signs in and navigates to Group Dashboard of Group 1',
+describe 'Coach signs in and navigates to Group Dashboard of Group 6',
          type: :feature, sauce: sauce_labs do
   before(:each) do
     visit ENV['Base_URL'] + '/users/sign_in'
@@ -251,37 +251,15 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
     end
   end
 
-  it 'views Goals' do
-    within('.panel.panel-default', text: 'Goals') do
+  it 'views On-My-Mind Statements' do
+    within('.panel.panel-default', text: 'On-My-Mind Statements') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
-        date_1 = Date.today - 26
-        date_2 = Date.today - 34
-        expect(page).to have_content 'First do something  false true  ' \
-                                     + date_1.strftime('%-d %b') + ' ' \
-                                     + date_2.strftime('%-d %b')
+        date_1 = Date.today - 14
+        expect(page).to have_content "First I'm feeling great!  " \
+                                     + date_1.strftime('%d %b')
 
-        expect(page).to have_content '1 0 0'
-      end
-
-      within('tr:nth-child(2)') do
-        date_3 = Date.today + 3
-        date_4 = Date.today - 26
-        expect(page).to have_content 'Third Get crazy false false ' \
-                                     + date_3.strftime('%-d %b') + ' ' \
-                                     + date_4.strftime('%-d %b')
-
-        expect(page).to have_content '2 1 0'
-      end
-
-      within('tr:nth-child(3)') do
-        date_5 = Date.today - 14
-        date_6 = Date.today - 24
-        expect(page).to have_content 'Fifth go to work true false ' \
-                                     + date_5.strftime('%-d %b') + ' ' \
-                                     + date_6.strftime('%-d %b')
-
-        expect(page).to have_content '2 1 0'
+        expect(page).to have_content '4 0 0'
       end
     end
   end
@@ -303,7 +281,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_2 = Date.today - 18
         expect(page).to have_content 'First Great activity! Activity: ' \
                                      'participant62, Jumping, ' \
-                                     + date_2.strftime('%-d %b')
+                                     + date_2.strftime('%d %b')
 
         expect(page).to have_content '3'
       end
@@ -312,35 +290,22 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_3 = Date.today - 1
         expect(page).to have_content 'Fifth That sounds like fun! Activity: ' \
                                      'participant63, Go to movie, ' \
-                                     + date_3.strftime('%-d %b')
+                                     + date_3.strftime('%d %b')
 
         expect(page).to have_content '5'
       end
     end
   end
 
-  it 'views On-My-Mind Statements' do
-    within('.panel.panel-default', text: 'On-My-Mind Statements') do
-      table_row = page.all('tr:nth-child(1)')
-      within table_row[1] do
-        date_1 = Date.today - 14
-        expect(page).to have_content "First I'm feeling great!  " \
-                                     + date_1.strftime('%-d %b')
-
-        expect(page).to have_content '4 0 0'
-      end
-    end
-  end
-
   it 'views Goals' do
-    within('.panel.panel-default.cdb_panel', text: 'Goals') do
+    within('.panel.panel-default', text: 'Goals') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 26
         date_2 = Date.today - 34
-        expect(page).to have_content 'First do something  false true ' \
-                                     + date_1.strftime('%-d %b') + ' ' \
-                                     + date_2.strftime('%-d %b')
+        expect(page).to have_content 'First do something  false true  ' \
+                                     + date_1.strftime('%d %b') + ' ' \
+                                     + date_2.strftime('%d %b')
 
         expect(page).to have_content '1 0 0'
       end
@@ -348,9 +313,9 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
       within('tr:nth-child(2)') do
         date_3 = Date.today + 3
         date_4 = Date.today - 26
-        expect(page).to have_content 'Third Get crazy  false false ' \
-                                     + date_3.strftime('%-d %b') + ' ' \
-                                     + date_4.strftime('%-d %b')
+        expect(page).to have_content 'Third Get crazy false false ' \
+                                     + date_3.strftime('%d %b') + ' ' \
+                                     + date_4.strftime('%d %b')
 
         expect(page).to have_content '2 1 0'
       end
@@ -358,9 +323,9 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
       within('tr:nth-child(3)') do
         date_5 = Date.today - 14
         date_6 = Date.today - 24
-        expect(page).to have_content 'Fifth go to work  true  false ' \
-                                     + date_5.strftime('%-d %b') + ' ' \
-                                     + date_6.strftime('%-d %b')
+        expect(page).to have_content 'Fifth go to work true false ' \
+                                     + date_5.strftime('%d %b') + ' ' \
+                                     + date_6.strftime('%d %b')
 
         expect(page).to have_content '2 1 0'
       end
@@ -375,7 +340,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_1 = Date.today - 33
         expect(page).to have_content 'Second  SocialNetworking::SharedItem  ' \
                                      'Thought: I am no good ' \
-                                     + date_1.strftime('%-d %b')
+                                     + date_1.strftime('%d %b')
 
         expect(page).to have_content '1'
       end
@@ -384,7 +349,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_2 = Date.today - 24
         expect(page).to have_content 'First SocialNetworking::SharedItem  ' \
                                      'Goal: Get crazy ' \
-                                     + date_2.strftime('%-d %b')
+                                     + date_2.strftime('%d %b')
 
         expect(page).to have_content '2'
       end
@@ -393,7 +358,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_3 = Date.today - 24
         expect(page).to have_content 'Second  SocialNetworking::SharedItem  ' \
                                      'Goal: go to work ' \
-                                     + date_3.strftime('%-d %b')
+                                     + date_3.strftime('%d %b')
 
         expect(page).to have_content '2'
       end
@@ -402,7 +367,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_4 = Date.today - 19
         expect(page).to have_content 'Third  SocialNetworking::SharedItem  ' \
                                      'Activity: Jumping ' \
-                                     + date_4.strftime('%-d %b')
+                                     + date_4.strftime('%d %b')
 
         expect(page).to have_content '3'
       end
@@ -411,7 +376,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 1',
         date_5 = Date.today - 1
         expect(page).to have_content 'Fifth  SocialNetworking::SharedItem  ' \
                                      'Activity: Go to movie ' \
-                                     + date_5.strftime('%-d %b')
+                                     + date_5.strftime('%d %b')
 
         expect(page).to have_content '5'
       end
