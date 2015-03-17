@@ -32,7 +32,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     expect(page).to have_content 'eat a whole pizza'
 
     visit ENV['Base_URL']
-    expect(page).to have_content 'created a Goal: eat a whole pizza'
+    expect(page).to have_content 'Created a Goal: eat a whole pizza'
 
     within('.list-group-item.ng-scope',
            text: 'Created a Goal: eat a whole pizza') do

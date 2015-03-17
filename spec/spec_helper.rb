@@ -35,7 +35,7 @@ def test_driver
 end
 
 # Capybara configuration options
-Capybara.default_wait_time = 10
+Capybara.default_wait_time = 15
 Capybara.default_driver = test_driver
 Capybara::Screenshot.register_driver(:sauce) do |driver, path|
   driver.render(path)

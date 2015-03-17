@@ -304,8 +304,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_1 = Date.today - 26
         date_2 = Date.today - 34
         expect(page).to have_content 'First do something  false true  ' \
-                                     + date_1.strftime('%d %b') + ' ' \
-                                     + date_2.strftime('%d %b')
+                                     + date_1.strftime('%-d %b') + ' ' \
+                                     + date_2.strftime('%-d %b')
 
         expect(page).to have_content '1 0 0'
       end
@@ -314,8 +314,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_3 = Date.today + 3
         date_4 = Date.today - 26
         expect(page).to have_content 'Third Get crazy false false ' \
-                                     + date_3.strftime('%d %b') + ' ' \
-                                     + date_4.strftime('%d %b')
+                                     + date_3.strftime('%-d %b') + ' ' \
+                                     + date_4.strftime('%-d %b')
 
         expect(page).to have_content '2 1 0'
       end
@@ -324,8 +324,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_5 = Date.today - 14
         date_6 = Date.today - 24
         expect(page).to have_content 'Fifth go to work true false ' \
-                                     + date_5.strftime('%d %b') + ' ' \
-                                     + date_6.strftime('%d %b')
+                                     + date_5.strftime('%-d %b') + ' ' \
+                                     + date_6.strftime('%-d %b')
 
         expect(page).to have_content '2 1 0'
       end
