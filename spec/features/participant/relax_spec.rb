@@ -1,9 +1,5 @@
 # filename: do1_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
-# tests
 describe 'Active participant signs in, navigates to RELAX tool,',
          type: :feature, sauce: sauce_labs do
   before(:each) do

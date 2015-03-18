@@ -1,9 +1,5 @@
 # filename: goals_spec.rb
 
-require_relative '../../../../spec/spec_helper'
-require_relative '../../../../spec/configure_cloud'
-
-# tests
 describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
@@ -68,16 +64,5 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     expect(page).to_not have_content 'p1 alpha'
 
     expect(page).to have_content 'p1 gamma'
-  end
-
-  it 'reinstates a previously deleted goal' do
-    click_on 'Deleted'
-    expect(page).to have_content 'p1 delta'
-
-    find(:xpath, '//*[@id="goal-916373174"]/div/button/i').click
-    expect(page).to_not have_content 'p1 delta'
-
-    click_on 'All'
-    expect(page).to have_content 'p1 delta'
   end
 end

@@ -1,8 +1,5 @@
 # filename: message1_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
 describe 'Active participant in group 1 signs in, navigates to MESSAGES,',
          type: :feature, sauce: sauce_labs do
   before(:each) do

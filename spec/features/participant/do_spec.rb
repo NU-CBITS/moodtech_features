@@ -1,8 +1,5 @@
 # filename: do1_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
 # define methods for this spec file
 def choose_rating(element_id, value)
   find("##{ element_id } select").find(:xpath,

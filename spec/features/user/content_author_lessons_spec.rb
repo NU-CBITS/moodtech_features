@@ -1,9 +1,5 @@
 # filename: content_author_lessons_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
-# tests
 describe 'Content Author signs in and navigates to Lesson Modules tool',
          type: :feature, sauce: sauce_labs do
   before(:each) do

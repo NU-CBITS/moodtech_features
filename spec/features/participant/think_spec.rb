@@ -1,8 +1,5 @@
 # filename: think_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
 # define methods for tests
 def compare_thought(thought)
   click_on 'Next'

@@ -53,7 +53,7 @@ task :load_tfdso_selenium do
     system('cap staging deploy:use_test_db')
     system('cap staging deploy:clean_db')
     system('cap staging deploy:migrate')
-    system('cap staging deploy:seed_db')
+    system('cap staging deploy:seed_selenium_db')
   end
 end
 
@@ -65,12 +65,12 @@ desc 'Set test database for testing on staging and switch driver'
 
 task :load_tfdso_sauce do
   system('export Base_URL=https://moodtech-staging.cbits.northwestern.edu')
-  system('export Sauce=true')
+  system('Sauce=true')
   Dir.chdir('/Users/Chris/Work/think_feel_do_so') do
     system('cap staging deploy:use_test_db')
     system('cap staging deploy:clean_db')
     system('cap staging deploy:migrate_db')
-    system('cap staging deploy:seed_db')
+    system('cap staging deploy:seed_selenium_db')
   end
 end
 

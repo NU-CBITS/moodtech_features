@@ -1,12 +1,7 @@
 # filename: researcher_reports_spec.rb
 
-require 'selenium-webdriver'
-require 'rspec/expectations'
-include RSpec::Matchers
 require 'uuid'
 require 'fileutils'
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
 
 describe 'Researcher signs in,' do
   before(:each) do
@@ -85,8 +80,17 @@ describe 'Researcher signs in,' do
     download_link = @driver.find_elements(class: 'list-group-item')[16]
     download_link.click
 
+    download_link = @driver.find_elements(class: 'list-group-item')[17]
+    download_link.click
+
+    download_link = @driver.find_elements(class: 'list-group-item')[18]
+    download_link.click
+
+    download_link = @driver.find_elements(class: 'list-group-item')[19]
+    download_link.click
+
     files = Dir.glob("#{@download_dir}/**")
-    files.count.should be == 17
+    files.count.should be == 20
 
     sorted_files = files.sort_by { |file| File.mtime(file) }
     File.size(sorted_files.last).should be > 0

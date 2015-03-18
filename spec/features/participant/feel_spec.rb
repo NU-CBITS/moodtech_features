@@ -1,9 +1,5 @@
 # filename: feel1_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
-# tests
 describe 'Active participant in group 1 signs in, navigates to FEEL tool,',
          type: :feature, sauce: sauce_labs do
   before(:each) do

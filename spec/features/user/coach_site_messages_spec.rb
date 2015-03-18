@@ -1,9 +1,5 @@
 # filename: coach_site_messages_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
-# tests
 describe 'Coach signs in and navigates to Site Messages tool',
          type: :feature, sauce: sauce_labs do
   before(:each) do

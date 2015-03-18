@@ -1,9 +1,5 @@
 # filename: researcher_participants_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
-# tests
 describe 'Researcher signs in and navigates to Participants',
          type: :feature, sauce: sauce_labs do
   before(:each) do

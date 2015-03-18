@@ -1,9 +1,5 @@
 # filename: coach_patients_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
-# tests
 describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
   context 'navigate to Patient Dashboard of active patient in Group 1' do
     before(:each) do
@@ -659,7 +655,9 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         within table_row[1] do
           due_date = Date.today - 26
           created_date = Date.today - 34
-          expect(page).to have_content 'do something  false true ' \
+          deleted_date = Date.today - 30
+          expect(page).to have_content 'do something  Incomplete ' \
+                                       + deleted_date.strftime('%d %b') + ' ' \
                                        + due_date.strftime('%d %b') + ' ' \
                                        + created_date.strftime('%d %b')
 

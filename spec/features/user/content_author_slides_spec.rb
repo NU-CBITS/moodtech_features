@@ -1,9 +1,5 @@
 # filename: content_author_slides_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
-# tests
 describe 'Content Author signs in and navigates to Arm 1',
          type: :feature, sauce: sauce_labs do
   context 'navigates to Lesson Modules and selects a lesson' do

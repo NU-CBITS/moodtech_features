@@ -1,9 +1,5 @@
 # filename: coach_groups_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
-# tests
 describe 'Coach signs in and navigates to Group Dashboard of Group 6',
          type: :feature, sauce: sauce_labs do
   before(:each) do
@@ -301,31 +297,36 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
     within('.panel.panel-default', text: 'Goals') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
-        date_1 = Date.today - 26
-        date_2 = Date.today - 34
-        expect(page).to have_content 'First do something  false true  ' \
+        date_1 = Date.today - 30
+        date_2 = Date.today - 26
+        date_3 = Date.today - 34
+        expect(page).to have_content 'First do something  incomplete ' \
                                      + date_1.strftime('%-d %b') + ' ' \
-                                     + date_2.strftime('%-d %b')
+                                     + date_2.strftime('%-d %b') + ' ' \
+                                     + date_3.strftime('%-d %b')
 
         expect(page).to have_content '1 0 0'
       end
 
       within('tr:nth-child(2)') do
-        date_3 = Date.today + 3
-        date_4 = Date.today - 26
-        expect(page).to have_content 'Third Get crazy false false ' \
-                                     + date_3.strftime('%-d %b') + ' ' \
-                                     + date_4.strftime('%-d %b')
+        date_4 = Date.today + 3
+        date_5 = Date.today - 26
+        expect(page).to have_content 'Third Get crazy incomplete not deleted ' \
+                                     + date_4.strftime('%-d %b') + ' ' \
+                                     + date_5.strftime('%-d %b')
 
         expect(page).to have_content '2 1 0'
       end
 
       within('tr:nth-child(3)') do
-        date_5 = Date.today - 14
-        date_6 = Date.today - 24
-        expect(page).to have_content 'Fifth go to work true false ' \
-                                     + date_5.strftime('%-d %b') + ' ' \
-                                     + date_6.strftime('%-d %b')
+        date_6 = Date.today - 12
+        date_7 = Date.today - 14
+        date_8 = Date.today - 24
+        expect(page).to have_content 'Fifth go to work ' \
+                                     + date_6.strftime('%-d %b') \
+                                     + 'not deleted ' \
+                                     + date_7.strftime('%-d %b') + ' ' \
+                                     + date_8.strftime('%-d %b')
 
         expect(page).to have_content '2 1 0'
       end

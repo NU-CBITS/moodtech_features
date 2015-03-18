@@ -1,3 +1,5 @@
+--require spec_helper
+--require configure_cloud
 --format documentation
 --format progress
 --out 'output/rspec <%= Time.now.strftime('%m.%e.%y %H.%M.%S') %>.txt'

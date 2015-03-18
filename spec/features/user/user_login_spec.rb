@@ -1,8 +1,5 @@
 # filename: user_login_spec.rb
 
-require_relative '../../../spec/spec_helper'
-require_relative '../../../spec/configure_cloud'
-
 describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
   it 'is an authorized user and signs in' do
     visit ENV['Base_URL'] + '/users/sign_in'
