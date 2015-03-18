@@ -3,7 +3,7 @@
 describe 'Active participant in group 1 signs in, navigates to MESSAGES,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -12,7 +12,7 @@ describe 'Active participant in group 1 signs in, navigates to MESSAGES,',
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/navigator/contexts/MESSAGES'
+    visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
     expect(page).to have_content 'Inbox'
   end
 
@@ -84,7 +84,7 @@ end
 describe 'Active participant in group 3 signs in, navigates to MESSAGES',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Alt_Participant_Email']
       fill_in 'participant_password', with: ENV['Alt_Participant_Password']
@@ -93,7 +93,7 @@ describe 'Active participant in group 3 signs in, navigates to MESSAGES',
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/navigator/contexts/MESSAGES'
+    visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
     expect(page).to have_content 'Inbox'
   end
 

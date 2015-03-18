@@ -3,7 +3,7 @@
 describe 'Active participant in group 1 signs in, navigates to LEARN,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -12,7 +12,7 @@ describe 'Active participant in group 1 signs in, navigates to LEARN,',
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/navigator/contexts/LEARN'
+    visit "#{ENV['Base_URL']}/navigator/contexts/LEARN"
     expect(page).to have_content 'Lessons'
   end
 
@@ -32,8 +32,7 @@ describe 'Active participant in group 1 signs in, navigates to LEARN,',
     expect(page).to have_content 'This is just the beginning...'
 
     click_on 'Finish'
-    today = Date.today
-    expect(page).to have_content 'Read on ' + today.strftime('%b %e')
+    expect(page).to have_content "Read on #{Date.today.strftime('%b %e')}"
 
     expect(page).to have_content 'Printable'
 
@@ -44,8 +43,7 @@ describe 'Active participant in group 1 signs in, navigates to LEARN,',
   it 'prints a read lesson' do
     expect(page).to have_content 'Week 1'
 
-    today = Date.today
-    expect(page).to have_content 'Read on ' + today.strftime('%b %e')
+    expect(page).to have_content "Read on #{Date.today.strftime('%b %e')}"
 
     click_on 'Printable'
     expect(page).to have_content 'Print'

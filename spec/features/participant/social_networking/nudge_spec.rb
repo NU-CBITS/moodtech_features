@@ -3,7 +3,7 @@
 describe 'Active participant in a social arm is signed in,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -16,7 +16,7 @@ describe 'Active participant in a social arm is signed in,',
   end
 
   it 'nudges another participant' do
-    visit ENV['Base_URL'] + '/social_networking/profile_page/596136196'
+    visit "#{ENV['Base_URL']}/social_networking/profile_page/596136196"
     click_on 'Nudge'
     expect(page).to have_content 'Nudge sent!'
 
@@ -25,7 +25,7 @@ describe 'Active participant in a social arm is signed in,',
   end
 
   it 'receives a nudge alert on profile page' do
-    visit ENV['Base_URL'] + '/social_networking/profile_page'
+    visit "#{ENV['Base_URL']}/social_networking/profile_page"
     if page.has_css?('.modal-content')
       within('.modal-content') do
         expect(page).to have_content 'Start creating'
@@ -36,6 +36,7 @@ describe 'Active participant in a social arm is signed in,',
       expect(page).to have_css '.alert.alert-info'
 
       expect(page).to have_content 'clinician1@example.com nudged you!'
+
     else
       expect(page).to have_css '.alert.alert-info'
 

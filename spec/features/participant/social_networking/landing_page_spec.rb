@@ -1,9 +1,9 @@
 # filename: landing_page_spec.rb
 
-describe 'Active participant in a social arm is signed in,',
+describe 'Active participant in a social arm is signs in,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -103,8 +103,8 @@ describe 'Active participant in a social arm is signed in,',
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
-      expect(page).to have_content 'due ' + Date.today.strftime('%b. %e, %Y') \
-                                   + ' at 12:00AM'
+      expect(page).to have_content "due #{Date.today.strftime('%b. %e, %Y')}" \
+                                   ' at 12:00AM'
     end
   end
 end

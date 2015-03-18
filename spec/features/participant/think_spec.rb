@@ -15,7 +15,7 @@ end
 describe 'Active participant signs in, navigates to THINK tool,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -24,7 +24,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/navigator/contexts/THINK'
+    visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
     expect(page).to have_content 'Add a New Thought'
   end
 

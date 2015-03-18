@@ -51,7 +51,7 @@ describe 'Coach signs in and navigates to messages tool for Group 1',
 
     expect(page).to have_content 'I like this app'
 
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -88,7 +88,7 @@ describe 'Coach signs in and navigates to messages tool for Group 1',
 
     expect(page).to have_content 'I like this app'
 
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']

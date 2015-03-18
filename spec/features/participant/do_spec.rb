@@ -10,7 +10,7 @@ end
 describe 'Active participant in group 1 signs in, navigates to DO tool,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -19,7 +19,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/navigator/contexts/DO'
+    visit "#{ENV['Base_URL']}/navigator/contexts/DO"
     expect(page).to have_content 'Add a New Activity'
   end
 
@@ -30,9 +30,10 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Next'
     expect(page).to have_content "OK, let's talk about yesterday."
 
-    yesterday = Date.today.prev_day
-    select yesterday.strftime('%a') + ' 7 AM', from: 'awake_period_start_time'
-    select yesterday.strftime('%a') + ' 10 PM', from: 'awake_period_end_time'
+    select "#{Date.today.prev_day.strftime('%a')} 7 AM",
+           from: 'awake_period_start_time'
+    select "#{Date.today.prev_day.strftime('%a')} 10 PM",
+           from: 'awake_period_end_time'
     click_on 'Create'
     expect(page).to have_content 'Awake Period saved'
 
@@ -77,7 +78,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
     click_on 'Next'
     expect(page).to have_content "Things that make you feel like you've " \
-                                 ' accomplished something.'
+                                 'accomplished something.'
 
     click_on 'Next'
     expect(page).to have_content 'Add a New Activity'
@@ -91,13 +92,13 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     expect(page).to have_content "OK, let's talk about yesterday."
 
     within('#awake_period_start_time') do
-      yesterday = Date.today.prev_day
-      expect(page).to_not have_content yesterday.strftime('%a') + ' 7 AM'
+      expect(page).to_not have_content "#{Date.today.prev_day.strftime('%a')}" \
+                                       ' 7 AM'
     end
 
     within('#awake_period_end_time') do
-      yesterday = Date.today.prev_day
-      expect(page).to_not have_content yesterday.strftime('%a') + ' 10 PM'
+      expect(page).to_not have_content "#{Date.today.prev_day.strftime('%a')}" \
+                                       ' 10 PM'
     end
   end
 
@@ -108,10 +109,9 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Next'
     expect(page).to have_content "OK, let's talk about yesterday."
 
-    yesterday = Date.today.prev_day
-    select yesterday.strftime('%a') + ' 11 PM', from: 'awake_period_start_time'
-    today = Date.today
-    select today.strftime('%a') + ' 1 AM', from: 'awake_period_end_time'
+    select "#{Date.today.prev_day.strftime('%a')} 11 PM",
+           from: 'awake_period_start_time'
+    select "#{Date.today.strftime('%a')} 1 AM", from: 'awake_period_end_time'
     click_on 'Create'
     expect(page).to have_content 'Awake Period saved'
 
@@ -145,9 +145,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     expect(page).to have_content 'We want you to plan one fun thing'
 
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-    today = Date.today
-    tomorrow = today + 1
-    fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+    fill_in 'future_date_picker_0',
+            with: Date.today.next_day.strftime('%d %b, %Y')
     choose_rating('pleasure_0', 6)
     choose_rating('accomplishment_0', 3)
     click_on 'Next'
@@ -158,9 +157,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
                                  'of accomplishment.'
 
     fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
-    today = Date.today
-    tomorrow = today + 1
-    fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+    fill_in 'future_date_picker_0',
+            with: Date.today.next_day.strftime('%d %b, %Y')
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 8)
     click_on 'Next'
@@ -260,9 +258,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     expect(page).to have_content "But you don't have to start from scratch,"
 
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-    today = Date.today
-    tomorrow = today + 1
-    fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+    fill_in 'future_date_picker_0',
+            with: Date.today.next_day.strftime('%d %b, %Y')
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 3)
     click_on 'Next'
@@ -276,9 +273,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Your Activities'
     expect(page).to have_content 'Today'
 
-    today = Date.today
     expect(page).to have_content 'Daily Averages for ' \
-                                 + today.strftime('%b %d, %Y')
+                                 "#{Date.today.strftime('%b %d, %Y')}"
 
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
@@ -286,10 +282,10 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     endtime = Time.now
     starttime = Time.now - 3600
     within('.panel.panel-default',
-           text: starttime.strftime('%-l %P') + ' - ' \
-           + endtime.strftime('%-l %P:') + ' Loving') do
-      click_on starttime.strftime('%-l %P') + ' - ' \
-               + endtime.strftime('%-l %P:') + ' Loving'
+           text: "#{starttime.strftime('%-l %P')} - " \
+           "#{endtime.strftime('%-l %P:')} Loving") do
+      click_on "#{starttime.strftime('%-l %P')} - " \
+               "#{endtime.strftime('%-l %P:')} Loving"
       within('.panel-collapse.collapse.in') do
         expect(page).to have_content 'Predicted'
 
@@ -299,19 +295,19 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     end
 
     click_on 'Previous Day'
-    yesterday = today - 1
     expect(page).to have_content 'Daily Averages for ' \
-                                 + yesterday.strftime('%b %d, %Y')
+                                 "#{Date.today.prev_day.strftime('%b %d, %Y')}"
 
     click_on 'Next Day'
     expect(page).to have_content 'Daily Averages for ' \
-                                 + today.strftime('%b %d, %Y')
+                                 "#{Date.today.strftime('%b %d, %Y')}"
 
     click_on 'Visualize'
     click_on 'Last 3 Days'
     if page.has_text?('Notice! No activities were completed during this ' \
                       '3-day period.')
       expect(page).to_not have_content today.strftime('%A, %m/%d')
+
     else
       expect(page).to have_content today.strftime('%A, %m/%d')
 
@@ -327,7 +323,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
   end
 
   it 'uses navbar functionality for all of DO' do
-    visit ENV['Base_URL'] + '/navigator/modules/339588004'
+    visit "#{ENV['Base_URL']}/navigator/modules/339588004"
     expect(page).to have_content 'This is just the beginning...'
 
     click_on 'DO'
@@ -395,7 +391,7 @@ end
 describe 'Active participant in group 3 signs in, navigates to DO tool,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Alt_Participant_Email']
       fill_in 'participant_password', with: ENV['Alt_Participant_Password']
@@ -404,7 +400,7 @@ describe 'Active participant in group 3 signs in, navigates to DO tool,',
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/navigator/contexts/DO'
+    visit "#{ENV['Base_URL']}/navigator/contexts/DO"
     expect(page).to have_content 'Your Activities'
   end
 

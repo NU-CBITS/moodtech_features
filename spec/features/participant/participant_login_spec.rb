@@ -2,7 +2,7 @@
 
 describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
   end
 
   it 'is an active participant and signs in' do
@@ -25,7 +25,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/navigator/contexts/LEARN'
+    visit "#{ENV['Base_URL']}/navigator/contexts/LEARN"
     expect(page).to have_content 'Lessons'
 
     find(:css, '.navbar-brand').click
@@ -86,7 +86,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it 'tries to visit a specific page and is redirected to log in page' do
-    visit ENV['Base_URL'] + '/navigator/contexts/THINK'
+    visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
     expect(page).to have_content 'You need to sign in or sign up before ' \
                                  'continuing'
   end

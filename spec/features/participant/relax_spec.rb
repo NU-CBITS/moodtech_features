@@ -3,7 +3,7 @@
 describe 'Active participant signs in, navigates to RELAX tool,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -12,7 +12,7 @@ describe 'Active participant signs in, navigates to RELAX tool,',
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/navigator/contexts/RELAX'
+    visit "#{ENV['Base_URL']}/navigator/contexts/RELAX"
     expect(page).to have_content 'RELAX Home'
   end
 

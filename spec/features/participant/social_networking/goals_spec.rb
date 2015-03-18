@@ -3,7 +3,7 @@
 describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/participants/sign_in'
+    visit "#{ENV['Base_URL']}/participants/sign_in"
     within('#new_participant') do
       fill_in 'participant_email', with: ENV['Participant_Email']
       fill_in 'participant_password', with: ENV['Participant_Password']
@@ -12,7 +12,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
 
-    visit ENV['Base_URL'] + '/navigator/contexts/ACHIEVE'
+    visit "#{ENV['Base_URL']}/navigator/contexts/ACHIEVE"
     expect(page).to have_content 'add a goal'
   end
 
@@ -35,11 +35,11 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
-      today = Date.today
-      end_of_study = today + 4
+
+      end_of_study = Date.today + 4
       expect(page).to have_content 'due ' \
-                                   + end_of_study.strftime('%b. %e, %Y') \
-                                   + ' at 12:00AM'
+                                   "#{end_of_study.strftime('%b. %e, %Y')}" \
+                                   ' at 12:00AM'
     end
   end
 

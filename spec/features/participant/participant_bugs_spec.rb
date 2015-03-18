@@ -10,7 +10,7 @@ end
 describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
   context 'Participant 1 signs in, navigates to the DO tool,' do
     before(:each) do
-      visit ENV['Base_URL'] + '/participants/sign_in'
+      visit "#{ENV['Base_URL']}/participants/sign_in"
       within('#new_participant') do
         fill_in 'participant_email', with: ENV['Participant_Email']
         fill_in 'participant_password', with: ENV['Participant_Password']
@@ -19,7 +19,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Sign in'
       expect(page).to have_content 'Signed in successfully'
 
-      visit ENV['Base_URL'] + '/navigator/contexts/DO'
+      visit "#{ENV['Base_URL']}/navigator/contexts/DO"
       expect(page).to have_content 'Add a New Activity'
     end
 
@@ -31,9 +31,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'We want you to plan one fun thing'
 
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-      today = Date.today
-      tomorrow = today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0',
+              with: Date.today.next_day.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -45,9 +44,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
 
       fill_in 'activity_activity_type_new_title',
               with: 'Another planned activity'
-      today = Date.today
-      tomorrow = today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0',
+              with: Date.today.next_day.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
       click_on 'Next'
@@ -70,9 +68,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content "But you don't have to start from scratch,"
 
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-      today = Date.today
-      tomorrow = today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0',
+              with: Date.today.next_day.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -89,9 +86,9 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Next'
       expect(page).to have_content "OK, let's talk about yesterday."
 
-      today = Date.today
-      select today.strftime('%a') + ' 2 AM', from: 'awake_period_start_time'
-      select today.strftime('%a') + ' 3 AM', from: 'awake_period_end_time'
+      select "#{Date.today.strftime('%a')} 2 AM",
+             from: 'awake_period_start_time'
+      select "#{Date.today.strftime('%a')} 3 AM", from: 'awake_period_end_time'
       click_on 'Create'
       expect(page).to have_content 'Awake Period saved'
 
@@ -119,9 +116,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Today'
 
       click_on 'Previous Day'
-      yesterday = today - 1
       expect(page).to have_content 'Daily Averages for ' \
-                                   + yesterday.strftime('%b %d, %Y')
+                                   "#{Date.today.prev_day.strftime('%b %d, %Y')}"
     end
 
     it 'completes Awareness, finds the activity properly displayed on feed' do
@@ -131,9 +127,9 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Next'
       expect(page).to have_content "OK, let's talk about yesterday."
 
-      today = Date.today
-      select today.strftime('%a') + ' 4 AM', from: 'awake_period_start_time'
-      select today.strftime('%a') + ' 5 AM', from: 'awake_period_end_time'
+      select "#{Date.today.strftime('%a')} 4 AM",
+             from: 'awake_period_start_time'
+      select "#{Date.today.strftime('%a')} 5 AM", from: 'awake_period_end_time'
       click_on 'Create'
       expect(page).to have_content 'Awake Period saved'
 
@@ -172,7 +168,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
 
   context 'Participant 2 signs in,' do
     before(:each) do
-      visit ENV['Base_URL'] + '/participants/sign_in'
+      visit "#{ENV['Base_URL']}/participants/sign_in"
       within('#new_participant') do
         fill_in 'participant_email', with: ENV['Participant_2_Email']
         fill_in 'participant_password', with: ENV['Participant_2_Password']
