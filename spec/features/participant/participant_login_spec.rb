@@ -56,15 +56,15 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it 'views the intro slideshow' do
+    visit ENV['Base_URL']
     click_on 'Introduction to ThinkFeelDo'
-    expect(page).to have_content 'Welcome to ThiFeDo'
-
     click_on 'Done'
     expect(page).to have_content 'You need to sign in or sign up before ' \
                                  'continuing.'
   end
 
   it 'is an active participant and uses the forgot password functionality' do
+    visit ENV['Base_URL']
     click_on 'Forgot your password?'
     expect(page).to have_content 'Forgot your password?'
 

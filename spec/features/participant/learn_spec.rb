@@ -4,9 +4,7 @@ describe 'Active participant in group 1 signs in, navigates to LEARN,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-
     visit "#{ENV['Base_URL']}/navigator/contexts/LEARN"
-    expect(page).to have_content 'Lessons'
   end
 
   it 'sees list opened to this week and is able to collapse list' do
@@ -19,8 +17,6 @@ describe 'Active participant in group 1 signs in, navigates to LEARN,',
   end
 
   it 'reads Lesson 1' do
-    expect(page).to have_content 'Week 1'
-
     click_on 'Do - Awareness Introduction'
     expect(page).to have_content 'This is just the beginning...'
 
@@ -34,10 +30,6 @@ describe 'Active participant in group 1 signs in, navigates to LEARN,',
   end
 
   it 'prints a read lesson' do
-    expect(page).to have_content 'Week 1'
-
-    expect(page).to have_content "Read on #{Date.today.strftime('%b %e')}"
-
     click_on 'Printable'
     expect(page).to have_content 'Print'
 

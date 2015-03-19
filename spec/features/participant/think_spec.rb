@@ -11,8 +11,6 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
   it 'completes Identifying module' do
     click_on '#1 Identifying'
-    expect(page).to have_content 'You are what you think...'
-
     click_on 'Next'
     expect(page).to have_content 'Helpful thoughts are...'
 
@@ -23,8 +21,6 @@ describe 'Active participant signs in, navigates to THINK tool,',
     expect(page).to have_content 'Some quick examples...'
 
     click_on 'Next'
-    expect(page).to have_content 'Now, your turn...'
-
     fill_in 'thought_content', with: 'Testing helpful thought'
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
@@ -50,8 +46,6 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
   it 'completes Patterns module' do
     click_on '#2 Patterns'
-    expect(page).to have_content 'Like we said, you are what you think...'
-
     click_on 'Next'
     expect(page).to have_content "Let's start by"
 
@@ -84,22 +78,10 @@ describe 'Active participant signs in, navigates to THINK tool,',
     select 'Personalization', from: 'thought_pattern_id'
     click_on 'Next'
     expect(page).to have_content 'Thought saved'
-
-    if page.has_text? 'Good work'
-      expect(page).to have_content 'We know this can be challenging...'
-
-      click_on 'Next'
-      expect(page).to have_content 'Add a New Thought'
-
-    else
-      expect(page).to have_content 'Add a New Thought'
-    end
   end
 
   it 'completes Reshape module' do
     click_on '#3 Reshape'
-    expect(page).to have_content 'Challenging Harmful Thoughts'
-
     click_on 'Next'
     expect(page).to have_content 'You said you had the following unhelpful ' \
                                  'thoughts:'
@@ -111,8 +93,6 @@ describe 'Active participant signs in, navigates to THINK tool,',
     expect(page).to have_content 'You said that you thought...'
 
     click_on 'Next'
-    expect(page).to have_content 'Come up with a challenging'
-
     fill_in 'thought[challenging_thought]', with: 'Example challenge'
     click_on 'Next'
     expect(page).to have_content 'Thought saved'
@@ -164,18 +144,10 @@ describe 'Active participant signs in, navigates to THINK tool,',
     fill_in 'thought_act_as_if', with: 'Example act-as-if'
     click_on 'Next'
     expect(page).to have_content 'Thought saved'
-
-    if page.has_text? 'Good work'
-      click_on 'Next'
-    end
-
-    expect(page).to have_content 'Add a New Thought'
   end
 
   it 'completes Add a New Thought module' do
     click_on 'Add a New Thought'
-    expect(page).to have_content 'Add a New Harmful Thought'
-
     fill_in 'thought_content', with: 'Testing add a new thought'
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
     fill_in 'thought_challenging_thought', with: 'Testing challenge thought'
@@ -190,16 +162,12 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
   it 'cancels Add a New Thought' do
     click_on 'Add a New Thought'
-    expect(page).to have_content 'Add a New Thought'
-
     click_on 'Cancel'
     expect(page).to have_content '#1 Identifying'
   end
 
   it 'visits Thoughts' do
     click_on 'Thoughts'
-    expect(page).to have_content 'Harmful Thoughts'
-
     expect(page).to have_content 'I am insignificant'
   end
 
@@ -260,8 +228,6 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     find('.thoughtviz_text.viz-clickable',
          text: 'Magnification or Catastro...').click
-    expect(page).to have_content "Some Thoughts You've Entered"
-
     expect(page).to have_content 'Testing add a new thought'
 
     click_on 'Close'

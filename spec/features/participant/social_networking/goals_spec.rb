@@ -4,24 +4,18 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-
     visit "#{ENV['Base_URL']}/navigator/contexts/ACHIEVE"
-    expect(page).to have_content 'add a goal'
   end
 
   it 'creates a goal' do
     click_on '+ add a goal'
-    expect(page).to have_content 'What is your goal?'
-
     fill_in 'new-goal-description', with: 'eat a whole pizza'
     choose '8 weeks (end of study)'
     click_on 'Save'
-    expect(page).to have_content '+ add a goal'
 
     expect(page).to have_content 'eat a whole pizza'
 
     visit ENV['Base_URL']
-    expect(page).to have_content 'Created a Goal: eat a whole pizza'
 
     within('.list-group-item.ng-scope',
            text: 'Created a Goal: eat a whole pizza') do

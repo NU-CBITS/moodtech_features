@@ -4,18 +4,12 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-
     visit "#{ENV['Base_URL']}/navigator/contexts/DO"
-    expect(page).to have_content 'Add a New Activity'
   end
 
   it 'completes Awareness' do
     click_on '#1 Awareness'
-    expect(page).to have_content 'This is just the beginning...'
-
     click_on 'Next'
-    expect(page).to have_content "OK, let's talk about yesterday."
-
     select "#{Date.today.prev_day.strftime('%a')} 7 AM",
            from: 'awake_period_start_time'
     select "#{Date.today.prev_day.strftime('%a')} 10 PM",
@@ -56,8 +50,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
-    expect(page).to have_content 'Take a look - does this all seem right? ' \
-                                 'Recently, you...'
+    expect(page).to have_content 'Take a look - does this all seem right?'
 
     click_on 'Next'
     expect(page).to have_content 'Things you found fun.'
@@ -72,11 +65,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
   it 'cannot complete Awareness for a time period already completed' do
     click_on '#1 Awareness'
-    expect(page).to have_content 'This is just the beginning...'
-
     click_on 'Next'
-    expect(page).to have_content "OK, let's talk about yesterday."
-
     within('#awake_period_start_time') do
       expect(page).to_not have_content "#{Date.today.prev_day.strftime('%a')}" \
                                        ' 7 AM'
@@ -90,11 +79,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
   it 'completes Awareness for different time on same day and overlaps days' do
     click_on '#1 Awareness'
-    expect(page).to have_content 'This is just the beginning...'
-
     click_on 'Next'
-    expect(page).to have_content "OK, let's talk about yesterday."
-
     select "#{Date.today.prev_day.strftime('%a')} 11 PM",
            from: 'awake_period_start_time'
     select "#{Date.today.strftime('%a')} 1 AM", from: 'awake_period_end_time'
@@ -109,8 +94,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
-    expect(page).to have_content 'Take a look - does this all seem right? ' \
-                                 'Recently, you...'
+    expect(page).to have_content 'Take a look - does this all seem right?'
 
     click_on 'Next'
     expect(page).to have_content 'Things you found fun.'
@@ -125,11 +109,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
   it 'completes Planning' do
     click_on '#2 Planning'
-    expect(page).to have_content 'The last few times you were here...'
-
     click_on 'Next'
-    expect(page).to have_content 'We want you to plan one fun thing'
-
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
     fill_in 'future_date_picker_0',
             with: Date.today.next_day.strftime('%d %b, %Y')
@@ -138,9 +118,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
-
-    expect(page).to have_content 'Now, plan something that gives you a sense ' \
-                                 'of accomplishment.'
 
     fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
     fill_in 'future_date_picker_0',
@@ -151,10 +128,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
-    expect(page).to have_content 'OK... the most important thing is to do ' \
-                                 'more that is pleasureable and gives you ' \
-                                 'a sense of accomplishment'
-
     click_on 'Next'
     expect(page).to have_content 'Your Planned Activities'
 
@@ -164,8 +137,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
   it 'completes Reviewing' do
     click_on '#3 Doing'
-    expect(page).to have_content 'Welcome back!'
-
     click_on 'Next'
     expect(page).to have_content "Let's do this..."
 
@@ -178,21 +149,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
                       'activity public?'
     expect(page).to have_content 'Activity saved'
 
-    if page.has_text?('Do Landing')
-      expect(page).to have_content 'Add a New Activity'
-
-      visit ENV['Base_URL']
-      within('.list-group-item.ng-scope',
-             text: 'Reviewed & Completed an Activity: Loving') do
-        within('.actions') do
-          find('.fa.fa-folder-open.fa-2x.ng-scope').click
-        end
-        expect(page).to have_content 'actual accomplishment: 5'
-
-        expect(page).to have_content 'actual pleasure: 7'
-      end
-
-    else
+    if page.has_text?('You said you were going to')
       find('.btn.btn-danger').click
       fill_in 'activity[noncompliance_reason]', with: "I didn't have time"
       click_on 'Next'
@@ -200,21 +157,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
                         'activity public?'
       expect(page).to have_content 'Activity saved'
 
-      if page.has_text?('Do Landing')
-        expect(page).to have_content 'Add a New Activity'
-
-        visit ENV['Base_URL']
-        within('.list-group-item.ng-scope',
-               text: 'Reviewed & Completed an Activity: Loving') do
-          within('.actions') do
-            find('.fa.fa-folder-open.fa-2x.ng-scope').click
-          end
-          expect(page).to have_content 'actual accomplishment: 5'
-
-          expect(page).to have_content 'actual pleasure: 7'
-        end
-
-      else
+      if page.has_text?('You said you were going to')
         find('.btn.btn-success').click
         select '3', from: 'activity[actual_pleasure_intensity]'
         select '1', from: 'activity[actual_accomplishment_intensity]'
@@ -222,27 +165,22 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
         page.accept_alert 'Are you sure that you would like to make this ' \
                           'activity public?'
         expect(page).to have_content 'Activity saved'
-
-        expect(page).to have_content 'Add a New Activity'
-
-        visit ENV['Base_URL']
-        within('.list-group-item.ng-scope',
-               text: 'Reviewed & Completed an Activity: Loving') do
-          within('.actions') do
-            find('.fa.fa-folder-open.fa-2x.ng-scope').click
-          end
-          expect(page).to have_content 'actual accomplishment: 5'
-
-          expect(page).to have_content 'actual pleasure: 7'
-        end
       end
+    end
+
+    visit ENV['Base_URL']
+    within('.list-group-item.ng-scope',
+           text: 'Reviewed & Completed an Activity: Loving') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      expect(page).to have_content "actual accomplishment: 5\n" \
+                                   'actual pleasure: 7'
     end
   end
 
   it 'completes Plan a New Activity' do
     click_on 'Add a New Activity'
-    expect(page).to have_content "But you don't have to start from scratch,"
-
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
     fill_in 'future_date_picker_0',
             with: Date.today.next_day.strftime('%d %b, %Y')
@@ -251,30 +189,26 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
-
-    expect(page).to have_content 'Add a New Activity'
   end
 
   it 'uses Your Activities viz' do
     click_on 'Your Activities'
-    expect(page).to have_content 'Today'
-
     expect(page).to have_content 'Daily Averages for ' \
                                  "#{Date.today.strftime('%b %d, %Y')}"
 
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
 
-    endtime = Time.now
     starttime = Time.now - 3600
     within('.panel.panel-default',
            text: "#{starttime.strftime('%-l %P')} - " \
-           "#{endtime.strftime('%-l %P:')} Loving") do
+           "#{Time.now.strftime('%-l %P:')} Loving") do
       click_on "#{starttime.strftime('%-l %P')} - " \
-               "#{endtime.strftime('%-l %P:')} Loving"
-      within('.panel-collapse.collapse.in') do
-        expect(page).to have_content 'Predicted'
+               "#{Time.now.strftime('%-l %P:')} Loving"
+      expect(page).to have_content 'Predicted  Average Importance: 4 Kind of ' \
+                                   'fun: 6'
 
+      within('.panel-collapse.collapse.in') do
         click_on 'Edit'
         expect(page).to have_css('#activity_actual_accomplishment_intensity')
       end
@@ -292,10 +226,10 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Last 3 Days'
     if page.has_text?('Notice! No activities were completed during this ' \
                       '3-day period.')
-      expect(page).to_not have_content today.strftime('%A, %m/%d')
+      expect(page).to_not have_content Date.today.strftime('%A, %m/%d')
 
     else
-      expect(page).to have_content today.strftime('%A, %m/%d')
+      expect(page).to have_content Date.today.strftime('%A, %m/%d')
 
       click_on 'Day'
       expect(page).to have_css('#datepicker')
@@ -378,23 +312,13 @@ describe 'Active participant in group 3 signs in, navigates to DO tool,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_pt(ENV['Alt_Participant_Email'], ENV['Alt_Participant_Password'])
-
     visit "#{ENV['Base_URL']}/navigator/contexts/DO"
-    expect(page).to have_content 'Your Activities'
   end
 
   it 'completes Awareness w/ already entered but not completed awake period' do
     click_on '#1 Awareness'
-    expect(page).to have_content 'This is just the beginning...'
-
     click_on 'Next'
-    expect(page).to have_content "OK, let's talk about yesterday."
-
-    expect(page).to have_content 'Last Recorded Awake Period:'
-
     click_on 'Complete'
-    expect(page).to have_content 'Review Your Day'
-
     fill_in 'activity_type_0', with: 'Get ready for work'
     choose_rating('pleasure_0', 6)
     choose_rating('accomplishment_0', 7)
@@ -408,8 +332,7 @@ describe 'Active participant in group 3 signs in, navigates to DO tool,',
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
 
-    expect(page).to have_content 'Take a look - does this all seem right? ' \
-                                 'Recently, you...'
+    expect(page).to have_content 'Take a look - does this all seem right?'
 
     click_on 'Next'
     expect(page).to have_content 'Things you found fun.'

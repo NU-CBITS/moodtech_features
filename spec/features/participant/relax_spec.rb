@@ -11,14 +11,11 @@ describe 'Active participant signs in, navigates to RELAX tool,',
 
   it 'listens to a relax exercise' do
     click_on 'Autogenic Exercises'
-    expect(page).to have_content 'Yay'
     within('.jp-controls') do
       find('.jp-play').click
     end
 
     click_on 'Next'
-    expect(page).to have_content 'RELAX Home'
-
     visit ENV['Base_URL']
     expect(page).to have_content 'Listened to a Relaxation Exercise: Audio!'
   end

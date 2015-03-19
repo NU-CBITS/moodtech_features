@@ -4,8 +4,6 @@ describe 'Active participant in a social arm is signed in,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-
-    expect(page).to have_content "What's on your mind?"
   end
 
   it 'nudges another participant' do
@@ -21,20 +19,11 @@ describe 'Active participant in a social arm is signed in,',
     visit "#{ENV['Base_URL']}/social_networking/profile_page"
     if page.has_css?('.modal-content')
       within('.modal-content') do
-        expect(page).to have_content 'Start creating'
-
         page.all('img')[2].click
       end
-
-      expect(page).to have_css '.alert.alert-info'
-
-      expect(page).to have_content 'clinician1@example.com nudged you!'
-
-    else
-      expect(page).to have_css '.alert.alert-info'
-
-      expect(page).to have_content 'clinician1@example.com nudged you!'
     end
+
+    expect(page).to have_content 'clinician1@example.com nudged you!'
   end
 
   it 'expects to see nudge on landing page' do

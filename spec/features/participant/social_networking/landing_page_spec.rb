@@ -4,15 +4,11 @@ describe 'Active participant in a social arm is signs in,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-
-    expect(page).to have_content "What's on your mind?"
   end
 
   it 'creates a profile' do
     click_on 'Create a Profile'
     within('.modal-content') do
-      expect(page).to have_content 'Start creating'
-
       page.all('img')[2].click
     end
 
@@ -52,8 +48,6 @@ describe 'Active participant in a social arm is signs in,',
 
   it 'selects link in TODO list' do
     click_on 'FEEL: Your Recent Moods & Emotions'
-    expect(page).to have_content 'Mood'
-
     expect(page).to have_content 'Positive and Negative Emotions'
   end
 
@@ -83,8 +77,6 @@ describe 'Active participant in a social arm is signs in,',
 
     fill_in 'comment-text', with: 'Sweet Dude!'
     click_on 'Save'
-    expect(page).to have_content "said it's always sunny in Philadelphia"
-
     within first('.list-group-item.ng-scope', text: 'nudged participant1') do
       find('.fa.fa-comments.fa-2x').click
       expect(page).to have_content ': Sweet Dude!'
@@ -96,6 +88,7 @@ describe 'Active participant in a social arm is signs in,',
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
+
       expect(page).to have_content "due #{Date.today.strftime('%b. %e, %Y')}" \
                                    ' at 12:00AM'
     end

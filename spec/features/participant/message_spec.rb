@@ -4,9 +4,7 @@ describe 'Active participant in group 1 signs in, navigates to MESSAGES,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
-    expect(page).to have_content 'Inbox'
   end
 
   it 'composes a new message' do
@@ -59,16 +57,12 @@ describe 'Active participant in group 1 signs in, navigates to MESSAGES,',
 
   it 'uses the cancel button within compose message' do
     click_on 'Compose'
-    expect(page).to have_content 'To Coach'
-
     click_on 'Cancel'
     expect(page).to have_content 'Inbox'
   end
 
   it 'uses return button within compose message' do
     click_on 'Compose'
-    expect(page).to have_content 'To Coach'
-
     click_on 'Return'
     expect(page).to have_content 'Inbox'
   end
@@ -78,9 +72,7 @@ describe 'Active participant in group 3 signs in, navigates to MESSAGES',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_pt(ENV['Alt_Participant_Email'], ENV['Alt_Participant_Password'])
-
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
-    expect(page).to have_content 'Inbox'
   end
 
   it 'accesses a link from a message in inbox' do
