@@ -2,7 +2,7 @@
 
 describe 'Active participant in a social arm is signed in,',
          type: :feature, sauce: sauce_labs do
-  before(:each) do
+  before do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
     expect(page).to have_content "What's on your mind?"

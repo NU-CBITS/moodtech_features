@@ -2,7 +2,7 @@
 
 describe 'Content Author signs in and navigate to Slideshows tool',
          type: :feature, sauce: sauce_labs do
-  before(:each) do
+  before do
     sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
 
     click_on 'Arms'

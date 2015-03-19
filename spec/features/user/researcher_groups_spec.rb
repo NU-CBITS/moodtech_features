@@ -2,15 +2,8 @@
 
 describe 'Researcher signs in and navigates to Groups',
          type: :feature, sauce: sauce_labs do
-  before(:each) do
-    visit "#{ENV['Base_URL']}/users/sign_in"
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['Researcher_Email']
-      fill_in 'user_password', with: ENV['Researcher_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+  before do
+    sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
 
     expect(page).to have_content 'CSV Reports'
 

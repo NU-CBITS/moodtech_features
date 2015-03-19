@@ -3,7 +3,7 @@
 describe 'Active participant in a social arm is signs in,',
          type: :feature, sauce: sauce_labs do
   context 'visits the THINK tool,' do
-    before(:each) do
+    before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
       expect(page).to have_content "What's on your mind?"
@@ -79,7 +79,7 @@ describe 'Active participant in a social arm is signs in,',
   end
 
   context 'visits the DO tool,' do
-    before(:each) do
+    before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
       expect(page).to have_content "What's on your mind?"
@@ -225,7 +225,7 @@ end
 describe 'Active participant in a non-social arm is signs in,',
          type: :feature, sauce: sauce_labs do
   context 'visits the THINK tool,' do
-    before(:each) do
+    before do
       sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
 
       expect(page).to_not have_content "What's on your mind?"
@@ -277,7 +277,7 @@ describe 'Active participant in a non-social arm is signs in,',
   end
 
   context 'visits the DO tool,' do
-    before(:each) do
+    before do
       sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
 
       expect(page).to_not have_content "What's on your mind?"

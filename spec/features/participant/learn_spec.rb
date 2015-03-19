@@ -2,15 +2,8 @@
 
 describe 'Active participant in group 1 signs in, navigates to LEARN,',
          type: :feature, sauce: sauce_labs do
-  before(:each) do
-    visit "#{ENV['Base_URL']}/participants/sign_in"
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Participant_Email']
-      fill_in 'participant_password', with: ENV['Participant_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+  before do
+    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
     visit "#{ENV['Base_URL']}/navigator/contexts/LEARN"
     expect(page).to have_content 'Lessons'

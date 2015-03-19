@@ -2,7 +2,7 @@
 
 describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
   context 'Participant 1 signs in, navigates to the DO tool,' do
-    before(:each) do
+    before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
@@ -153,7 +153,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
   end
 
   context 'Participant 2 signs in,' do
-    before(:each) do
+    before do
       sign_in_pt(ENV['Participant_2_Email'], ENV['Participant_2_Password'])
     end
 

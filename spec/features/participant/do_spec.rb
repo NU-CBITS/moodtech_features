@@ -2,7 +2,7 @@
 
 describe 'Active participant in group 1 signs in, navigates to DO tool,',
          type: :feature, sauce: sauce_labs do
-  before(:each) do
+  before do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
     visit "#{ENV['Base_URL']}/navigator/contexts/DO"
@@ -376,7 +376,7 @@ end
 
 describe 'Active participant in group 3 signs in, navigates to DO tool,',
          type: :feature, sauce: sauce_labs do
-  before(:each) do
+  before do
     sign_in_pt(ENV['Alt_Participant_Email'], ENV['Alt_Participant_Password'])
 
     visit "#{ENV['Base_URL']}/navigator/contexts/DO"

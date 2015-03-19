@@ -3,7 +3,7 @@
 describe 'Content Author signs in and navigates to Arm 1',
          type: :feature, sauce: sauce_labs do
   context 'navigates to Lesson Modules and selects a lesson' do
-    before(:each) do
+    before do
       sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
 
       click_on 'Arms'
@@ -151,7 +151,7 @@ describe 'Content Author signs in and navigates to Arm 1',
   end
 
   context 'navigates to Slideshows and selects a slideshow' do
-    before(:each) do
+    before do
       sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
 
       click_on 'Arms'
@@ -297,7 +297,7 @@ describe 'Content Author signs in and navigates to Arm 1',
   end
 
   context 'navigates to Slideshows and selects a slideshow' do
-    before(:each) do
+    before do
       sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
 
       click_on 'Arms'

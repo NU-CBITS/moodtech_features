@@ -1,7 +1,7 @@
 # filename: super_user_spec.rb
 
 describe 'Super User signs in,', type: :feature, sauce: sauce_labs do
-  before(:each) do
+  before do
     sign_in_user(ENV['User_Email'], ENV['User_Password'])
     expect(page).to have_content 'CSV Reports'
   end

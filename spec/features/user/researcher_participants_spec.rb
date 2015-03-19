@@ -2,7 +2,7 @@
 
 describe 'Researcher signs in and navigates to Participants',
          type: :feature, sauce: sauce_labs do
-  before(:each) do
+  before do
     sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
 
     expect(page).to have_content 'CSV Reports'

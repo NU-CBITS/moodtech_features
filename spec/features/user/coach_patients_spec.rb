@@ -2,8 +2,8 @@
 
 describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
   context 'navigate to Patient Dashboard of active patient in Group 1' do
-    before(:each) do
-      sign_in_pt(ENV['Clinician_Email'], ENV['Clinician_Password'])
+    before do
+      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
 
       click_on 'Arms'
       find('h1', text: 'Arms')
@@ -590,8 +590,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
   end
 
   context 'navigates to Patient Dashboard of active patient in Group 6' do
-    before(:each) do
-      sign_in_pt(ENV['Clinician_Email'], ENV['Clinician_Password'])
+    before do
+      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
 
       click_on 'Arms'
       find('h1', text: 'Arms')

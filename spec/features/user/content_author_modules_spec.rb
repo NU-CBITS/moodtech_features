@@ -2,8 +2,8 @@
 
 describe 'Content Author signs in and visits Content Modules tool',
          type: :feature, sauce: sauce_labs do
-  before(:each) do
-    sign_in_pt(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
+  before do
+    sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
 
     click_on 'Arms'
     find('h1', text: 'Arms')

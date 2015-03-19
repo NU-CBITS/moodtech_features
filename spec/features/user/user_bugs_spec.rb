@@ -1,7 +1,7 @@
 # filename: user_bugs_spec.rb
 
 describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
-  before(:each) do
+  before do
     sign_in_user(ENV['User_Email'], ENV['User_Password'])
   end
 
@@ -50,7 +50,7 @@ require 'uuid'
 require 'fileutils'
 
 describe 'Researcher signs in,' do
-  before(:each) do
+  before do
     @download_dir = File.join(Dir.pwd, UUID.new.generate)
     FileUtils.mkdir_p @download_dir
 
@@ -68,7 +68,7 @@ describe 'Researcher signs in,' do
     @driver.find_element(css: '.btn.btn-default').submit
   end
 
-  after(:each) do
+  after do
     @driver.quit
     FileUtils.rm_rf @download_dir
   end

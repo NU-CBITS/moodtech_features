@@ -2,8 +2,8 @@
 
 describe 'Coach signs in and navigates to Group Dashboard of Group 6',
          type: :feature, sauce: sauce_labs do
-  before(:each) do
-    sign_in_pt(ENV['Clinician_Email'], ENV['Clinician_Password'])
+  before do
+    sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
 
     click_on 'Arms'
     find('h1', text: 'Arms')
