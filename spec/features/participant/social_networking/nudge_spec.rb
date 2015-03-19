@@ -3,14 +3,7 @@
 describe 'Active participant in a social arm is signed in,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit "#{ENV['Base_URL']}/participants/sign_in"
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Participant_Email']
-      fill_in 'participant_password', with: ENV['Participant_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
     expect(page).to have_content "What's on your mind?"
   end

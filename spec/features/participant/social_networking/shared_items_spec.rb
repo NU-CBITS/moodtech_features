@@ -1,23 +1,10 @@
 # filename: shared_items_spec.rb
 
-def choose_rating(element_id, value)
-  find("##{ element_id } select").find(:xpath,
-                                       "option[#{(value + 1)}]").select_option
-end
-
-# tests
 describe 'Active participant in a social arm is signs in,',
          type: :feature, sauce: sauce_labs do
   context 'visits the THINK tool,' do
     before(:each) do
-      visit "#{ENV['Base_URL']}/participants/sign_in"
-      within('#new_participant') do
-        fill_in 'participant_email', with: ENV['Participant_Email']
-        fill_in 'participant_password', with: ENV['Participant_Password']
-      end
-
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
+      sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
       expect(page).to have_content "What's on your mind?"
 
@@ -93,14 +80,7 @@ describe 'Active participant in a social arm is signs in,',
 
   context 'visits the DO tool,' do
     before(:each) do
-      visit "#{ENV['Base_URL']}/participants/sign_in"
-      within('#new_participant') do
-        fill_in 'participant_email', with: ENV['Participant_Email']
-        fill_in 'participant_password', with: ENV['Participant_Password']
-      end
-
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
+      sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
       expect(page).to have_content "What's on your mind?"
 
@@ -166,8 +146,8 @@ describe 'Active participant in a social arm is signs in,',
       expect(page).to have_content 'We want you to plan one fun thing'
 
       fill_in 'activity_activity_type_new_title', with: 'New public activity'
-      tomorrow = Date.today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0',
+              with: Date.today.next_day.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -178,7 +158,8 @@ describe 'Active participant in a social arm is signs in,',
                                    'sense of accomplishment.'
 
       fill_in 'activity_activity_type_new_title', with: 'New private activity'
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0',
+              with: Date.today.next_day.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
       choose 'No'
@@ -206,8 +187,8 @@ describe 'Active participant in a social arm is signs in,',
       expect(page).to have_content "But you don't have to start from scratch,"
 
       fill_in 'activity_activity_type_new_title', with: 'New public activity 2'
-      tomorrow = Date.today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0',
+              with: Date.today.next_day.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -225,8 +206,8 @@ describe 'Active participant in a social arm is signs in,',
       expect(page).to have_content "But you don't have to start from scratch,"
 
       fill_in 'activity_activity_type_new_title', with: 'New private activity 2'
-      tomorrow = Date.today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0',
+              with: Date.today.next_day.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       choose 'No'
@@ -245,14 +226,7 @@ describe 'Active participant in a non-social arm is signs in,',
          type: :feature, sauce: sauce_labs do
   context 'visits the THINK tool,' do
     before(:each) do
-      visit "#{ENV['Base_URL']}/participants/sign_in"
-      within('#new_participant') do
-        fill_in 'participant_email', with: ENV['NS_Participant_Email']
-        fill_in 'participant_password', with: ENV['NS_Participant_Password']
-      end
-
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
+      sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
 
       expect(page).to_not have_content "What's on your mind?"
 
@@ -304,14 +278,7 @@ describe 'Active participant in a non-social arm is signs in,',
 
   context 'visits the DO tool,' do
     before(:each) do
-      visit "#{ENV['Base_URL']}/participants/sign_in"
-      within('#new_participant') do
-        fill_in 'participant_email', with: ENV['NS_Participant_Email']
-        fill_in 'participant_password', with: ENV['NS_Participant_Password']
-      end
-
-      click_on 'Sign in'
-      expect(page).to have_content 'Signed in successfully'
+      sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
 
       expect(page).to_not have_content "What's on your mind?"
 
@@ -362,8 +329,8 @@ describe 'Active participant in a non-social arm is signs in,',
       expect(page).to_not have_content 'Share the content of this activity?'
 
       fill_in 'activity_activity_type_new_title', with: 'New public activity'
-      tomorrow = Date.today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0',
+              with: Date.today.next_day.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -377,8 +344,8 @@ describe 'Active participant in a non-social arm is signs in,',
       expect(page).to_not have_content 'Share the content of this activity?'
 
       fill_in 'activity_activity_type_new_title', with: 'New public activity 2'
-      tomorrow = Date.today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0',
+              with: Date.today.next_day.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'

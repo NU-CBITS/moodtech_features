@@ -84,14 +84,7 @@ end
 describe 'Active participant in group 3 signs in, navigates to MESSAGES',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit "#{ENV['Base_URL']}/participants/sign_in"
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Alt_Participant_Email']
-      fill_in 'participant_password', with: ENV['Alt_Participant_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_pt(ENV['Alt_Participant_Email'], ENV['Alt_Participant_Password'])
 
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
     expect(page).to have_content 'Inbox'

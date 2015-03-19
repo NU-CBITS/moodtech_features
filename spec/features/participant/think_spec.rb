@@ -1,28 +1,9 @@
 # filename: think_spec.rb
 
-# define methods for tests
-def compare_thought(thought)
-  click_on 'Next'
-  expect(page).to have_content 'Thought saved'
-  within('.panel-body.adjusted-list-group-item') do
-    expect(page).to_not have_content thought
-  end
-
-  page.find('.panel-body.adjusted-list-group-item').text
-end
-
-# tests
 describe 'Active participant signs in, navigates to THINK tool,',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit "#{ENV['Base_URL']}/participants/sign_in"
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Participant_Email']
-      fill_in 'participant_password', with: ENV['Participant_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
     visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
     expect(page).to have_content 'Add a New Thought'
@@ -250,7 +231,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
   end
 
   it 'uses navbar functionality for all of THINK' do
-    visit ENV['Base_URL'] + '/navigator/modules/954850709'
+    visit "#{ENV['Base_URL']}/navigator/modules/954850709"
     click_on 'THINK'
     click_on '#2 Patterns'
     expect(page).to have_content 'Like we said, you are what you think...'

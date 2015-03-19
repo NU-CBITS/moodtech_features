@@ -2,24 +2,11 @@
 
 describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
   it 'is an authorized user and signs in' do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['User_Email']
-      fill_in 'user_password', with: ENV['User_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_user(ENV['User_Email'], ENV['User_Password'])
   end
 
   it 'is not an authorized user and fails to sign in' do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: 'asdf@test.com'
-      fill_in 'user_password', with: 'asdf'
-    end
-
-    click_on 'Sign in'
+    sign_in_user('asdf@test.com', 'asdf')
     expect(page).to have_content 'Invalid email address or password'
   end
 
@@ -30,7 +17,7 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
   end
 
   it 'is not signed in and views the intro slideshow' do
-    visit ENV['Base_URL'] + '/users/sign_in'
+    visit "#{ENV['Base_URL']}/users/sign_in"
     click_on 'Introduction to ThinkFeelDo'
     expect(page).to have_content 'Welcome to ThiFeDo'
 
@@ -40,7 +27,7 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
   end
 
   it 'uses the forgot password functionality' do
-    visit ENV['Base_URL'] + '/users/sign_in'
+    visit "#{ENV['Base_URL']}/users/sign_in"
     click_on 'Forgot your password?'
     expect(page).to have_content 'Forgot your password?'
 
@@ -55,14 +42,7 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
   end
 
   it "is an authorized clinician, only sees what they're authorized to see" do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['Clinician_Email']
-      fill_in 'user_password', with: ENV['Clinician_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
 
     expect(page).to_not have_content 'Users'
 
@@ -85,14 +65,7 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
   end
 
   it "is an authorized researcher, only sees what they're authorized to see" do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['Researcher_Email']
-      fill_in 'user_password', with: ENV['Researcher_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
 
     expect(page).to have_content 'Arms'
 
@@ -122,14 +95,7 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
 
   it "is an authorized content author, only sees what they're authorized " \
      'to see' do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['Content_Author_Email']
-      fill_in 'user_password', with: ENV['Content_Author_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
 
     click_on 'Arms'
     find('h1', text: 'Arms')
@@ -141,14 +107,7 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
   end
 
   it 'is an authorized super user' do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['User_Email']
-      fill_in 'user_password', with: ENV['User_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_user(ENV['User_Email'], ENV['User_Password'])
 
     expect(page).to have_content 'Arms'
 
@@ -170,14 +129,7 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
   end
 
   it 'is an authorized super user, uses brand link to return to home page' do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['User_Email']
-      fill_in 'user_password', with: ENV['User_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_user(ENV['User_Email'], ENV['User_Password'])
 
     click_on 'Arms'
     expect(page).to have_content 'New'

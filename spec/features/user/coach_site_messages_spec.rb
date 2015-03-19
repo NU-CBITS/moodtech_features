@@ -3,14 +3,7 @@
 describe 'Coach signs in and navigates to Site Messages tool',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['Clinician_Email']
-      fill_in 'user_password', with: ENV['Clinician_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_pt(ENV['Clinician_Email'], ENV['Clinician_Password'])
 
     click_on 'Arms'
     find('h1', text: 'Arms')

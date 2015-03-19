@@ -3,7 +3,7 @@
 describe 'Researcher signs in and navigates to Groups',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/users/sign_in'
+    visit "#{ENV['Base_URL']}/users/sign_in"
     within('#new_user') do
       fill_in 'user_email', with: ENV['Researcher_Email']
       fill_in 'user_password', with: ENV['Researcher_Password']

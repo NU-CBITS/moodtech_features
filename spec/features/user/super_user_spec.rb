@@ -2,15 +2,7 @@
 
 describe 'Super User signs in,', type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['User_Email']
-      fill_in 'user_password', with: ENV['User_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
+    sign_in_user(ENV['User_Email'], ENV['User_Password'])
     expect(page).to have_content 'CSV Reports'
   end
 

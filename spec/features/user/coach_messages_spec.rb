@@ -3,14 +3,7 @@
 describe 'Coach signs in and navigates to messages tool for Group 1',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['Clinician_Email']
-      fill_in 'user_password', with: ENV['Clinician_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_pt(ENV['Clinician_Email'], ENV['Clinician_Password'])
 
     click_on 'Arms'
     find('h1', text: 'Arms')
@@ -51,16 +44,9 @@ describe 'Coach signs in and navigates to messages tool for Group 1',
 
     expect(page).to have_content 'I like this app'
 
-    visit "#{ENV['Base_URL']}/participants/sign_in"
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Participant_Email']
-      fill_in 'participant_password', with: ENV['Participant_Password']
-    end
+    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    visit ENV['Base_URL'] + '/navigator/contexts/MESSAGES'
+    visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
     expect(page).to have_content 'Reply: I like this app'
   end
 
@@ -88,16 +74,9 @@ describe 'Coach signs in and navigates to messages tool for Group 1',
 
     expect(page).to have_content 'I like this app'
 
-    visit "#{ENV['Base_URL']}/participants/sign_in"
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Participant_Email']
-      fill_in 'participant_password', with: ENV['Participant_Password']
-    end
+    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
-
-    visit ENV['Base_URL'] + '/navigator/contexts/MESSAGES'
+    visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
     expect(page).to have_content 'Testing compose functionality'
   end
 

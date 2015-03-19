@@ -1,29 +1,14 @@
 # filename: participant_login_spec.rb
 
 describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
-  before(:each) do
-    visit "#{ENV['Base_URL']}/participants/sign_in"
-  end
-
   it 'is an active participant and signs in' do
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Participant_Email']
-      fill_in 'participant_password', with: ENV['Participant_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+    expect(page).to have_content 'Signed in successfully.'
   end
 
   it 'is an active participant, signs in, visits another page, and uses ' \
      'brand link to get to home page' do
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Participant_Email']
-      fill_in 'participant_password', with: ENV['Participant_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
     visit "#{ENV['Base_URL']}/navigator/contexts/LEARN"
     expect(page).to have_content 'Lessons'
@@ -33,13 +18,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it 'is an activie participant, signs in and signs out' do
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Participant_Email']
-      fill_in 'participant_password', with: ENV['Participant_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
     within '.navbar-collapse' do
       click_on 'participant1'
@@ -51,22 +30,12 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it 'is not able to log in' do
-    within('#new_participant') do
-      fill_in 'participant_email', with: 'asdf@test.com'
-      fill_in 'participant_password', with: 'asdf'
-    end
-
-    click_on 'Sign in'
+    sign_in_pt('asdf@test.com', 'asdf')
     expect(page).to have_content 'Invalid email address or password'
   end
 
   it 'was an active participant who has completed' do
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Completed_Pt_Email']
-      fill_in 'participant_password', with: ENV['Completed_Pt_Password']
-    end
-
-    click_on 'Sign in'
+    sign_in_pt(ENV['Completed_Pt_Email'], ENV['Completed_Pt_Password'])
     expect(page).to have_content 'HOME'
   end
 
@@ -75,12 +44,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   it 'was an active participant in a non-social arm who has completed'
 
   it 'was an active participant who has withdrawn' do
-    within('#new_participant') do
-      fill_in 'participant_email', with: ENV['Old_Participant_Email']
-      fill_in 'participant_password', with: ENV['Old_Participant_Password']
-    end
-
-    click_on 'Sign in'
+    sign_in_pt(ENV['Old_Participant_Email'], ENV['Old_Participant_Password'])
     expect(page).to have_content "We're sorry, but you can't sign in yet " \
                                  'because you are not assigned to a group'
   end

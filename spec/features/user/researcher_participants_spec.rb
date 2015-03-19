@@ -3,14 +3,7 @@
 describe 'Researcher signs in and navigates to Participants',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['Researcher_Email']
-      fill_in 'user_password', with: ENV['Researcher_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
 
     expect(page).to have_content 'CSV Reports'
 
@@ -34,7 +27,7 @@ describe 'Researcher signs in and navigates to Participants',
     expect(page).to have_content 'Email: test@test.com'
 
     expect(page).to have_content 'Phone Number: ' \
-                                 + ENV['Participant_Phone_Number_1']
+                                 "#{ENV['Participant_Phone_Number_1']}"
 
     expect(page).to have_content 'Contact Preference: Email'
   end
@@ -57,7 +50,7 @@ describe 'Researcher signs in and navigates to Participants',
     expect(page).to have_content 'Email: updatedfake@test.com'
 
     expect(page).to have_content 'Phone Number: ' \
-                                 + ENV['Participant_Phone_Number_1']
+                                 "#{ENV['Participant_Phone_Number_1']}"
 
     expect(page).to have_content 'Contact Preference: Email'
 
@@ -72,10 +65,10 @@ describe 'Researcher signs in and navigates to Participants',
 
     expect(page).to have_content 'Study Id: TFD-1111'
 
-    expect(page).to have_content 'Email: ' + ENV['Participant_Email']
+    expect(page).to have_content "Email: #{ENV['Participant_Email']}"
 
     expect(page).to have_content 'Phone Number: ' \
-                                 + ENV['Participant_Phone_Number_1']
+                                 "#{ENV['Participant_Phone_Number_1']}"
 
     expect(page).to have_content 'Contact Preference: Email'
   end
@@ -99,15 +92,14 @@ describe 'Researcher signs in and navigates to Participants',
     expect(page).to have_content 'Assigning New Group to Participant'
 
     select 'Group 1', from: 'membership_group_id'
-    yesterday = Date.today.prev_day
-    fill_in 'membership_start_date', with: yesterday.strftime('%Y-%m-%d')
-    today = Date.today
-    next_year = today + 365
+    fill_in 'membership_start_date',
+            with: Date.today.prev_day.strftime('%Y-%m-%d')
+    next_year = Date.today + 365
     fill_in 'membership_end_date', with: next_year.strftime('%Y-%m-%d')
     weeks_later = today + 56
     expect(page).to have_content 'Standard number of weeks: 8, Projected End ' \
                                  'Date from today: ' \
-                                 + weeks_later.strftime('%-m/%-d/%Y')
+                                 "#{weeks_later.strftime('%-m/%-d/%Y')}"
 
     click_on 'Assign'
     expect(page).to have_content 'Group was successfully assigned'
@@ -127,7 +119,7 @@ describe 'Researcher signs in and navigates to Participants',
 
     expect(page).to have_content 'Study Id: Tests'
 
-    expect(page).to have_content 'Current Coach/Moderator: ' + ENV['User_Email']
+    expect(page).to have_content "Current Coach/Moderator: #{ENV['User_Email']}"
   end
 
   it 'destroys a participant' do

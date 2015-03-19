@@ -3,14 +3,7 @@
 describe 'Content Author signs in and navigates to Lesson Modules tool',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['Content_Author_Email']
-      fill_in 'user_password', with: ENV['Content_Author_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_pt(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
 
     click_on 'Arms'
     find('h1', text: 'Arms')

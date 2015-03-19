@@ -15,7 +15,7 @@ describe 'Researcher signs in,' do
     profile['pdfjs.disabled'] = true
     @driver = Selenium::WebDriver.for :firefox, profile: profile
 
-    @driver.get ENV['Base_URL'] + '/users/sign_in'
+    @driver.get "#{ENV['Base_URL']}/users/sign_in"
     @driver.find_element(id: 'user_email').send_keys(ENV['Researcher_Email'])
     @driver.find_element(id: 'user_password').send_keys(ENV['Researcher_Passw' \
                                                         'ord'])
@@ -28,7 +28,7 @@ describe 'Researcher signs in,' do
   end
 
   it 'navigates to CSV reports, and downloads all reports' do
-    @driver.get ENV['Base_URL'] + '/think_feel_do_dashboard/reports'
+    @driver.get "#{ENV['Base_URL']}/think_feel_do_dashboard/reports"
     download_link = @driver.find_elements(class: 'list-group-item')[0]
     download_link.click
 

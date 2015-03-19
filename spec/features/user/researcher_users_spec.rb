@@ -3,14 +3,7 @@
 describe 'Research signs in and navigates to Users',
          type: :feature, sauce: sauce_labs do
   before(:each) do
-    visit ENV['Base_URL'] + '/users/sign_in'
-    within('#new_user') do
-      fill_in 'user_email', with: ENV['Researcher_Email']
-      fill_in 'user_password', with: ENV['Researcher_Password']
-    end
-
-    click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
 
     expect(page).to have_content 'CSV Reports'
     click_on 'Users'
@@ -95,7 +88,7 @@ describe 'Research signs in and navigates to Users',
 
   it 'updates a clinician' do
     click_on ENV['Clinician_Email']
-    expect(page).to have_content 'Email: ' + ENV['Clinician_Email']
+    expect(page).to have_content "Email: #{ENV['Clinician_Email']}"
     click_on 'Edit'
     expect(page).to have_content 'Editing User'
 
@@ -105,10 +98,11 @@ describe 'Research signs in and navigates to Users',
 
     expect(page).to have_content 'Super User: No'
 
-    expect(page).to have_content 'Email: ' + ENV['Clinician_Email']
+    expect(page).to have_content "Email: #{ENV['Clinician_Email']}"
 
     if page.has_text?('Roles: Content Author and Clinician')
       expect(page).to_not have_content 'Roles: Clinician and Content Author'
+
     else
       expect(page).to have_content 'Roles: Clinician and Content Author'
     end
@@ -122,7 +116,7 @@ describe 'Research signs in and navigates to Users',
 
     expect(page).to have_content 'Super User: No'
 
-    expect(page).to have_content 'Email: ' + ENV['Clinician_Email']
+    expect(page).to have_content "Email: #{ENV['Clinician_Email']}"
 
     expect(page).to have_content 'Roles: Clinician'
 
@@ -156,7 +150,7 @@ describe 'Research signs in and navigates to Users',
 
   it 'updates a content author' do
     click_on ENV['Content_Author_Email']
-    expect(page).to have_content 'Email: ' + ENV['Content_Author_Email']
+    expect(page).to have_content "Email: #{ENV['Content_Author_Email']}"
 
     click_on 'Edit'
     expect(page).to have_content 'Editing User'
@@ -167,7 +161,7 @@ describe 'Research signs in and navigates to Users',
 
     expect(page).to have_content 'Super User: No'
 
-    expect(page).to have_content 'Email: ' + ENV['Content_Author_Email']
+    expect(page).to have_content "Email: #{ENV['Content_Author_Email']}"
 
     if page.has_text?('Roles: Content Author and Clinician')
       expect(page).to_not have_content 'Roles: Clinician and Content Author'
@@ -185,7 +179,7 @@ describe 'Research signs in and navigates to Users',
 
     expect(page).to have_content 'Super User: No'
 
-    expect(page).to have_content 'Email: ' + ENV['Content_Author_Email']
+    expect(page).to have_content "Email: #{ENV['Content_Author_Email']}"
 
     expect(page).to have_content 'Roles: Content Author'
 
