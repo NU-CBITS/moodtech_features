@@ -36,8 +36,9 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'TFD-Discontinue'
       within('#patients', text: 'TFD-Discontinue') do
         within('table#patients tr', text: 'TFD-Discontinue') do
-          expect(page).to have_content 'Discontinued ' \
-                                       "#{Date.today.prev_day.strftime('%Y-%m-%d')}"
+          expect(page)
+            .to have_content 'Discontinued ' \
+                             "#{Date.today.prev_day.strftime('%Y-%m-%d')}"
         end
       end
     end
@@ -61,8 +62,9 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
       within('#patients', text: 'TFD-Withdraw') do
         within('table#patients tr', text: 'TFD-Withdraw') do
-          expect(page).to have_content 'Withdrawn ' \
-                                       "#{Date.today.prev_day.strftime('%Y-%m-%d')}"
+          expect(page)
+            .to have_content 'Withdrawn ' \
+                             "#{Date.today.prev_day.strftime('%Y-%m-%d')}"
         end
       end
     end
@@ -95,10 +97,11 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
                                        "seven days: 0\nTotal Logins: 0"
 
         else
-          expect(page).to have_content 'Last Logged In: ' \
-                                       "#{Time.now.strftime('%-l%P on %b %-d')}" \
-                                       "\nLogins Today: 61\nLogins in the " \
-                                       "last seven days: 61\nTotal Logins: 61"
+          expect(page)
+            .to have_content 'Last Logged In: ' \
+                             "#{Time.now.strftime('%-l%P on %b %-d')}" \
+                             "\nLogins Today: 61\nLogins in the " \
+                             "last seven days: 61\nTotal Logins: 61"
         end
       end
     end
@@ -354,8 +357,9 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       end
 
       click_on 'Previous Day'
-      expect(page).to have_content 'Daily Averages for ' \
-                                   "#{Date.today.prev_day.strftime('%b %d, %Y')}"
+      expect(page)
+        .to have_content 'Daily Averages for ' \
+                         "#{Date.today.prev_day.strftime('%b %d, %Y')}"
 
       click_on 'Next Day'
       expect(page).to have_content 'Daily Averages for ' \
@@ -452,9 +456,10 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       select_patient('TFD-1111')
       within('#tasks-container') do
         within 'tr:nth-child(3)' do
-          expect(page).to have_content 'Do - Planning Introduction  ' \
-                                       "#{Date.today.next_day.strftime('%d %b')}" \
-                                       ' Incomplete'
+          expect(page)
+            .to have_content 'Do - Planning Introduction  ' \
+                             "#{Date.today.next_day.strftime('%d %b')}" \
+                             ' Incomplete'
         end
       end
     end

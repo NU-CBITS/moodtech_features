@@ -33,7 +33,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Your Planned Activities'
 
       click_on 'Next'
-      expect(page).to have_content 'Upcoming Activities'
+      expect(page).to have_content 'Do Landing'
     end
 
     it 'completes Plan a New Activity without multiple alerts' do
@@ -81,8 +81,9 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Today'
 
       click_on 'Previous Day'
-      expect(page).to have_content 'Daily Averages for ' \
-                                   "#{Date.today.prev_day.strftime('%b %d, %Y')}"
+      expect(page)
+        .to have_content 'Daily Averages for ' \
+                         "#{Date.today.prev_day.strftime('%b %d, %Y')}"
     end
 
     it 'completes Awareness, finds the activity properly displayed on feed' do
