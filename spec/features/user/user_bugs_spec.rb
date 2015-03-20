@@ -22,7 +22,7 @@ describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
             with: Date.today.prev_day.strftime('%Y-%m-%d')
     next_year = Date.today + 365
     fill_in 'membership_end_date', with: next_year.strftime('%Y-%m-%d')
-    weeks_later = today + 56
+    weeks_later = Date.today + 56
     expect(page).to have_content 'Standard number of weeks: 8, Projected End ' \
                                  'Date from today: ' \
                                  "#{weeks_later.strftime('%-m/%-d/%Y')}"
@@ -30,7 +30,8 @@ describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
     click_on 'Assign'
     expect(page).to have_content 'Group was successfully assigned'
 
-    expect(page).to have_content "Membership Status: Active\nGroup: Group 1"
+    expect(page).to have_content "Membership Status: Active\nCurrent Group: " \
+                                 'Group 1'
   end
 end
 
@@ -64,7 +65,7 @@ describe 'Researcher signs in,' do
     FileUtils.rm_rf @download_dir
   end
 
-  it 'navigates to CSV reports, and does not receive exception' do
+  it 'navigates to CSV reports, downloads CSVs, does not receive exception' do
     @driver.get "#{ENV['Base_URL']}/think_feel_do_dashboard/reports"
     download_link = @driver.find_elements(class: 'list-group-item')[12]
     download_link.click

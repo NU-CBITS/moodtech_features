@@ -141,6 +141,8 @@ describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
     click_on 'Arm 1'
     click_on 'Manage Content'
     click_on 'Lesson Modules'
+    expect(page).to have_content 'Listing'
+
     find('.navbar-brand').click
     expect(page).to have_content 'Arms'
   end

@@ -29,7 +29,7 @@ describe 'Content Author signs in and navigate to Slideshows tool',
 
     click_on 'Home Introduction 123'
     page.all('a', text: 'Edit')[0].click
-    fill_in 'slideshow_title', with: 'Home Intro'
+    fill_in 'slideshow_title', with: 'Home Introduction'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated slideshow'
 

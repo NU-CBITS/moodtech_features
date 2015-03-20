@@ -37,7 +37,10 @@ describe 'Coach signs in and navigates to Site Messages tool',
   end
 
   it 'reviews a previously sent site message' do
-    first(:link, 'Show').click
+    within('tr', text: 'message subject') do
+      click_on 'Show'
+    end
+
     expect(page).to have_content 'Participant: TFD-1111' \
                                  "\nSubject: message subject" \
                                  "\nBody: message body"

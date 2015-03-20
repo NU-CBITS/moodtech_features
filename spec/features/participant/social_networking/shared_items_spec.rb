@@ -237,7 +237,7 @@ describe 'Active participant in a non-social arm signs in,',
 
     it 'is not able to create a shared item in Plan a New Activity' do
       click_on 'Add a New Activity'
-      expect(page).to have_content 'New Activity'
+      expect(page).to have_content "But you don't have to start from scratch,"
 
       expect(page).to_not have_content 'Share the content of this activity?'
     end

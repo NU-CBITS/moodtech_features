@@ -47,7 +47,7 @@ describe 'Researcher signs in and navigates to Groups',
     click_on 'Update'
     expect(page).to have_content 'Group was successfully updated.'
 
-    expect(page).to have_content "Coach/Moderator: #{ENV['User_Email']}"
+    expect(page).to have_content "Coach/Moderator: #{ENV['Clinician_Email']}"
   end
 
   it 'destroys a group' do

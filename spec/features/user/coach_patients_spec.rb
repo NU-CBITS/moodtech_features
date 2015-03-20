@@ -233,7 +233,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Mood/Emotions viz' do
       select_patient('TFD-1111')
-      within('#viz-container.panel.panel-default') do
+      within('#viz-container') do
         expect(page).to have_content 'Mood'
 
         expect(page).to have_content 'Positive and Negative Emotions'
@@ -257,15 +257,14 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         click_on 'Previous Period'
         one_week_ago_1 = today - 7
         two_weeks_ago = today - 13
-        expect(page).to have_content "#{two_weeks_ago.strftime('%B %e, %Y')} /" \
-                                     " #{one_week_ago_1.strftime('%B %e, %Y')}"
+        expect(page).to have_content "#{two_weeks_ago.strftime('%B %e, %Y')} " \
+                                     "/ #{one_week_ago_1.strftime('%B %e, %Y')}"
       end
     end
 
     it 'views Mood' do
       select_patient('TFD-1111')
-      mood_panel = page.all('.panel.panel-default', text: 'Mood')
-      within mood_panel[1] do
+      within('#mood-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           four_weeks_ago = Date.today - 28
@@ -276,7 +275,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Feelings' do
       select_patient('TFD-1111')
-      within('.panel.panel-default', text: 'Feelings') do
+      within('#feelings-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           expect(page).to have_content 'longing 2 ' \
@@ -287,14 +286,10 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Logins' do
       select_patient('TFD-1111')
-      login_panel = page.all('.panel.panel-default', text: 'Logins')
-      within login_panel[1] do
+      within('#logins-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
-          if page.has_text?('No data')
-            expect(page).to have_content 'No data available in table'
-
-          else
+          unless page.has_text?('No data available in table')
             expect(page).to have_content Date.today.strftime('%d %b')
           end
         end
@@ -303,14 +298,10 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Lessons' do
       select_patient('TFD-1111')
-      lesson_panel = page.all('.panel.panel-default', text: 'Lessons')
-      within lesson_panel[1] do
+      within('#lessons-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
-          if page.has_text?('No data')
-            expect(page).to have_content 'No data available in table'
-
-          else
+          unless page.has_text?('No data available in table')
             expect(page).to have_content 'Do - Awareness Introduction' \
                                          " #{Date.today.strftime('%d %b')}" \
                                          " #{Date.today.strftime('%b. %-d')}"
@@ -323,7 +314,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Audio Access' do
       select_patient('TFD-1111')
-      within('.panel.panel-default', text: 'Audio Access') do
+      within('#media-access-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           expect(page).to have_content 'Audio! ' \
@@ -386,7 +377,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Activities - Future' do
       select_patient('TFD-1111')
-      within('.panel.panel-default', text: 'Activities - Future') do
+      within('#activities-future-container') do
         within('tr:nth-child(5)') do
           expect(page).to have_content 'Speech  8 4 Scheduled for ' \
                                        "#{Date.today.strftime('%d %b')}"
@@ -396,7 +387,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Activities - Past' do
       select_patient('TFD-1111')
-      within('.panel.panel-default', text: 'Activities - Past') do
+      within('#activities-past-container') do
         within('tr', text: 'Loving') do
           expect(page).to have_content 'Loving  '
           if page.has_text? 'Planned'
@@ -414,17 +405,14 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Thoughts viz' do
       select_patient('TFD-1111')
-      within('.list-group') do
-        find(:link, 'Thoughts visualization').click
-      end
+      page.all(:link, 'Thoughts visualization')[1].click
 
       page.find('#ThoughtVizContainer')
     end
 
     it 'views Thoughts' do
       select_patient('TFD-1111')
-      thought_panel = page.all('.panel.panel-default', text: 'Thoughts')
-      within thought_panel[0] do
+      within('#thoughts-container') do
         within('tr:nth-child(3)') do
           if page.has_text?('I am a magnet')
             expect(page).to have_content 'I am a magnet for birds Labeling ' \
@@ -446,7 +434,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Messages' do
       select_patient('TFD-1111')
-      within('.panel.panel-default', text: 'Messages') do
+      within('#messages-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           if page.has_text? 'I like'
@@ -462,7 +450,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Tasks' do
       select_patient('TFD-1111')
-      within('.panel.panel-default', text: 'Tasks') do
+      within('#tasks-container') do
         within 'tr:nth-child(3)' do
           expect(page).to have_content 'Do - Planning Introduction  ' \
                                        "#{Date.today.next_day.strftime('%d %b')}" \
@@ -493,8 +481,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Likes' do
-      likes_panel = page.all('.panel.panel-default.cdb_panel', text: 'Likes')
-      within likes_panel[0] do
+      within('#goals-container', text: 'Item Liked') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           created_date = Date.today - 24
@@ -507,7 +494,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Goals' do
-      within('.panel.panel-default.cdb_panel', text: 'Goals') do
+      within('#goals-container', text: 'Goals') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           due_date = Date.today - 26
@@ -524,9 +511,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Comments' do
-      comments_panel = page.all('.panel.panel-default.cdb_panel',
-                                text: 'Comments')
-      within comments_panel[1] do
+      within('#comments-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           created_date = Date.today - 18
@@ -562,8 +547,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views On-My-Mind Statements' do
-      within('.panel.panel-default.cdb_panel',
-             text: 'On-My-Mind Statements') do
+      within('#on-my-mind-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           created_date = Date.today - 14

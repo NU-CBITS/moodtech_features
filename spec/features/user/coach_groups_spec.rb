@@ -155,7 +155,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Thoughts' do
-    within('.panel.panel-default', text: 'Thoughts') do
+    within('#thoughts-container') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 34
@@ -180,7 +180,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Activities Past' do
-    within('.panel.panel-default', text: 'Activities Past') do
+    within('#activities-past-container') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 33
@@ -207,14 +207,15 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Activities Future' do
-    within('.panel.panel-default', text: 'Activities Future') do
+    within('activities-planned-container') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today + 4
         expect(page).to have_content 'Third Go to movie ' \
                                      "#{date_1.strftime('%d %b')}"
 
-        expect(page).to have_content "9 7 #{Date.today.prev_day.strftime('%d %b')}"
+        expect(page).to have_content '9 7 ' \
+                                     "#{Date.today.prev_day.strftime('%d %b')}"
 
         expect(page).to have_content '5 1 1'
       end
@@ -224,7 +225,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         expect(page).to have_content 'Fourth Yelling ' \
                                      "#{date_2.strftime('%d %b')}"
 
-        expect(page).to have_content "0 2 #{Date.today.prev_day.strftime('%d %b')}"
+        expect(page).to have_content '0 2 ' \
+                                     "#{Date.today.prev_day.strftime('%d %b')}"
 
         expect(page).to have_content '5 0 0'
       end
@@ -232,7 +234,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views On-My-Mind Statements' do
-    within('.panel.panel-default', text: 'On-My-Mind Statements') do
+    within('#on-my-mind-container') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 14
@@ -245,9 +247,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Comments' do
-    panel_comments = page.all('.panel.panel-default.cdb_panel',
-                              text: 'Comments')
-    within panel_comments[4] do
+    within('#comments-container') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 20
@@ -279,7 +279,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Goals' do
-    within('.panel.panel-default.cdb_panel', text: 'Goals') do
+    within('#goals-container') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 30
@@ -324,8 +324,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Likes' do
-    likes_panel = page.all('.panel.panel-default.cdb_panel', text: 'Likes')
-    within likes_panel[5] do
+    within('#likes-container') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 33

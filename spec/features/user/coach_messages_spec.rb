@@ -22,7 +22,7 @@ describe 'Coach signs in and navigates to messages tool for Group 1',
   it 'replies to a message' do
     click_on 'I like this app'
     click_on 'Reply'
-    fill_in 'message_body',
+    fill_in 'message[body]',
             with: 'This message is to test the reply functionality'
     click_on 'Send'
     expect(page).to have_content 'Message saved'

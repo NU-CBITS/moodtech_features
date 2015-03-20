@@ -161,7 +161,10 @@ describe 'Content Author signs in and navigates to Arm 1',
     end
 
     it 'destroys a slide' do
-      page.all('.btn.btn-danger', text: 'Remove')[4].click
+      within('li:nth-child(5)') do
+        click_on 'Remove'
+      end
+
       page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test slide 2'
     end
@@ -194,7 +197,10 @@ describe 'Content Author signs in and navigates to Arm 1',
     end
 
     it 'destroys a video slideo' do
-      page.all('.btn.btn-danger', text: 'Remove')[4].click
+      within('li:nth-child(5)') do
+        click_on 'Remove'
+      end
+
       page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test video slide 2'
     end
@@ -221,7 +227,10 @@ describe 'Content Author signs in and navigates to Arm 1',
     end
 
     it 'deletes an audio slide' do
-      page.all('.btn.btn-danger', text: 'Remove')[4].click
+      within('li:nth-child(5)') do
+        click_on 'Remove'
+      end
+
       page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test audio slide'
     end

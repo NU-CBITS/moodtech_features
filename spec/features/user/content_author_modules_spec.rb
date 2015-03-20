@@ -40,16 +40,13 @@ describe 'Content Author signs in and visits Content Modules tool',
   end
 
   it 'destroys a module' do
-    if page.has_text?('Test content module')
-      click_on 'Test content module'
-    else
+    unless page.has_text? 'Test content module'
       within('.pagination') do
         click_on '2'
       end
-
-      click_on 'Test content module'
     end
 
+    click_on 'Test content module'
     click_on 'Destroy'
     page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Content module along with any associated ' \
@@ -59,15 +56,13 @@ describe 'Content Author signs in and visits Content Modules tool',
   end
 
   it 'creates a provider' do
-    if page.has_text? 'Home Introduction'
-      click_on 'Home Introduction'
-    else
+    unless page.has_text? 'Home Introduction'
       within('.pagination') do
         click_on '2'
       end
-
-      click_on 'Home Introduction'
     end
+
+    click_on 'Home Introduction'
 
     click_on 'New Provider'
     within '#content_provider_bit_core_content_module_id' do
@@ -88,43 +83,41 @@ describe 'Content Author signs in and visits Content Modules tool',
   end
 
   it 'updates a provider' do
-    if page.has_text? 'Home Introduction'
-      click_on 'Home Introduction'
-    else
+    unless page.has_text? 'Home Introduction'
       within('.pagination') do
         click_on '2'
       end
-
-      click_on 'Home Introduction'
     end
 
+    click_on 'Home Introduction'
     click_on '1 slideshow provider'
+    expect(page).to have_content 'Content Provider'
+
     click_on 'Edit'
-    fill_in 'content_provider_position', with: '10'
+    fill_in 'content_provider[position]', with: '10'
     click_on 'Update'
     expect(page).to have_content 'ContentProvider was successfully updated.'
 
     expect(page).to have_content 'Position: 10 / 10'
 
     click_on 'Edit'
-    fill_in 'content_provider_position', with: '1'
+    fill_in 'content_provider[position]', with: '1'
     click_on 'Update'
     expect(page).to have_content 'ContentProvider was successfully updated.'
 
-    expect(page).to have_content 'Position: 1 / 4'
+    unless page.has_text? 'Position: 1 / 4'
+      expect(page).to have_content 'Position: 1 / 1'
+    end
   end
 
   it 'destroys a provider' do
-    if page.has_text? 'Home Introduction'
-      click_on 'Home Introduction'
-    else
+    unless page.has_text? 'Home Introduction'
       within('.pagination') do
         click_on '2'
       end
-
-      click_on 'Home Introduction'
     end
 
+    click_on 'Home Introduction'
     click_on '4 slideshow provider'
     expect(page).to have_content 'Slideshow: Home Intro'
 

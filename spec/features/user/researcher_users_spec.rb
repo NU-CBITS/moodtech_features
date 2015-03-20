@@ -27,9 +27,7 @@ describe 'Research signs in and navigates to Users',
 
     expect(page).to have_content "Super User: No\nEmail: researcher@test.com"
 
-    if page.has_text?('Roles: Researcher and Clinician')
-      expect(page).to_not have_content 'Roles: Clinician and Researcher'
-    else
+    unless page.has_text?('Roles: Researcher and Clinician')
       expect(page).to have_content 'Roles: Clinician and Researcher'
     end
 
@@ -71,10 +69,7 @@ describe 'Research signs in and navigates to Users',
     expect(page).to have_content "Super User: No\nEmail: " \
                                  "#{ENV['Clinician_Email']}"
 
-    if page.has_text?('Roles: Content Author and Clinician')
-      expect(page).to_not have_content 'Roles: Clinician and Content Author'
-
-    else
+    unless page.has_text?('Roles: Content Author and Clinician')
       expect(page).to have_content 'Roles: Clinician and Content Author'
     end
 
@@ -119,10 +114,7 @@ describe 'Research signs in and navigates to Users',
     expect(page).to have_content "Super User: No\nEmail: " \
                                  "#{ENV['Content_Author_Email']}"
 
-    if page.has_text?('Roles: Content Author and Clinician')
-      expect(page).to_not have_content 'Roles: Clinician and Content Author'
-
-    else
+    unless page.has_text?('Roles: Content Author and Clinician')
       expect(page).to have_content 'Roles: Clinician and Content Author'
     end
 

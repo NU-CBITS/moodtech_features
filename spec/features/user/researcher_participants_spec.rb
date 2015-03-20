@@ -68,7 +68,7 @@ describe 'Researcher signs in and navigates to Participants',
             with: Date.today.prev_day.strftime('%Y-%m-%d')
     next_year = Date.today + 365
     fill_in 'membership_end_date', with: next_year.strftime('%Y-%m-%d')
-    weeks_later = today + 56
+    weeks_later = Date.today + 56
     expect(page).to have_content 'Standard number of weeks: 8, Projected End ' \
                                  'Date from today: ' \
                                  "#{weeks_later.strftime('%-m/%-d/%Y')}"
@@ -85,7 +85,8 @@ describe 'Researcher signs in and navigates to Participants',
     click_on 'Assign Coach/Moderator'
     expect(page).to have_content 'Coach/Moderator was successfully assigned'
 
-    expect(page).to have_content "Current Coach/Moderator: #{ENV['User_Email']}"
+    expect(page).to have_content 'Current Coach/Moderator: ' \
+                                 "#{ENV['Clinician_Email']}"
   end
 
   it 'destroys a participant' do
