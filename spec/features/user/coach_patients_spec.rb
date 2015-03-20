@@ -4,18 +4,11 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
   context 'navigate to Patient Dashboard of active patient in Group 1' do
     before do
       sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-
       click_on 'Arms'
       find('h1', text: 'Arms')
-
       click_on 'Arm 1'
-      expect(page).to have_content 'Title: Arm 1'
-
       click_on 'Group 1'
-      expect(page).to have_content 'Title: Group 1'
-
       click_on 'Patient Dashboard'
-      expect(page).to have_css('h1', text: 'Group 1 Patient Dashboard')
     end
 
     it 'views a list of active participants assigned to the coach' do
@@ -25,7 +18,6 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views a list of inactive participants assigned to the coach' do
       page.find('.btn.btn-default', text: 'Inactive Patients').click
-      expect(page).to have_content 'Inactive Status'
       expect(page).to have_content 'Completer'
     end
 
@@ -66,6 +58,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
       click_on 'Inactive Patients'
       expect(page).to have_content 'TFD-Withdraw'
+
       within('#patients', text: 'TFD-Withdraw') do
         within('table#patients tr', text: 'TFD-Withdraw') do
           expect(page).to have_content 'Withdrawn ' \
@@ -75,12 +68,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views General Patient Info' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('.panel.panel-default', text: 'General Patient Info') do
         weeks_later = Date.today + 56
         expect(page).to have_content 'Started on: ' \
@@ -99,10 +87,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Login Info' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
+      select_patient('TFD-1111')
       within('.panel.panel-default', text: 'Login Info') do
         if page.has_text?('Never Logged In')
           expect(page).to have_content "Last Logged In: Never Logged In\n" \
@@ -119,10 +104,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Tool Use table' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
+      select_patient('TFD-1111')
       within('.table.table-hover', text: 'Tool Use') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[0] do
@@ -161,10 +143,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'uses the links within Tool Use table' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
+      select_patient('TFD-1111')
       within('.table.table-hover', text: 'Tool Use') do
         click_on 'Lessons Read'
         click_on 'Moods'
@@ -177,10 +156,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Social Activity' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
+      select_patient('TFD-1111')
       within('.table.table-hover', text: 'Social Activity') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[0] do
@@ -211,10 +187,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'uses the links within Social Activity table' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
+      select_patient('TFD-1111')
       within('.table.table-hover', text: 'Social Activity') do
         click_on 'Nudges'
         click_on 'Comments'
@@ -224,12 +197,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'uses the table of contents in the patient report' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('.list-group') do
         find('a', text: 'Mood and Emotions Visualizations').click
         page.all('a', text: 'Mood')[1].click
@@ -264,12 +232,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Mood/Emotions viz' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('#viz-container.panel.panel-default') do
         expect(page).to have_content 'Mood'
 
@@ -294,56 +257,36 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         click_on 'Previous Period'
         one_week_ago_1 = today - 7
         two_weeks_ago = today - 13
-        expect(page).to have_content "#{two_weeks_ago.strftime('%B %e, %Y')} / " \
-                                     "#{one_week_ago_1.strftime('%B %e, %Y')}"
+        expect(page).to have_content "#{two_weeks_ago.strftime('%B %e, %Y')} /" \
+                                     " #{one_week_ago_1.strftime('%B %e, %Y')}"
       end
     end
 
     it 'views Mood' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       mood_panel = page.all('.panel.panel-default', text: 'Mood')
       within mood_panel[1] do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
-          expect(page).to have_content '9'
-
           four_weeks_ago = Date.today - 28
-          expect(page).to have_content four_weeks_ago.strftime('%b. %-d')
+          expect(page).to have_content "9 #{four_weeks_ago.strftime('%b. %-d')}"
         end
       end
     end
 
     it 'views Feelings' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('.panel.panel-default', text: 'Feelings') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
-          expect(page).to have_content 'longing'
-
-          expect(page).to have_content '2'
-
-          expect(page).to have_content Date.today.strftime('%b. %-d')
+          expect(page).to have_content 'longing 2 ' \
+                                       "#{Date.today.strftime('%b. %-d')}"
         end
       end
     end
 
     it 'views Logins' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       login_panel = page.all('.panel.panel-default', text: 'Logins')
       within login_panel[1] do
         table_row = page.all('tr:nth-child(1)')
@@ -359,12 +302,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Lessons' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       lesson_panel = page.all('.panel.panel-default', text: 'Lessons')
       within lesson_panel[1] do
         table_row = page.all('tr:nth-child(1)')
@@ -373,11 +311,9 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
             expect(page).to have_content 'No data available in table'
 
           else
-            expect(page).to have_content 'Do - Awareness Introduction'
-
-            expect(page).to have_content Date.today.strftime('%d %b')
-
-            expect(page).to have_content Date.today.strftime('%b. %-d')
+            expect(page).to have_content 'Do - Awareness Introduction' \
+                                         " #{Date.today.strftime('%d %b')}" \
+                                         " #{Date.today.strftime('%b. %-d')}"
 
             expect(page).to have_content 'less than a minute'
           end
@@ -386,40 +322,26 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Audio Access' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('.panel.panel-default', text: 'Audio Access') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
-          if page.has_text?('No data')
-            expect(page).to have_content 'No data available in table'
+          expect(page).to have_content 'Audio! ' \
+                                       "#{Date.today.strftime('%d %b')}" \
+                                       " #{Date.today.strftime('%b. %-d')}"
+          if page.has_text?('Not completed')
+            expect(page).to have_content 'Not Completed'
 
           else
-            expect(page).to have_content 'Audio!'
-
-            expect(page).to have_content Date.today.strftime('%d %b')
-
-            expect(page).to have_content Date.today.strftime('%b. %-d')
-
-            expect(page).to have_content 'Not Completed'
+            expect(page).to have_content '2 minutes'
           end
         end
       end
     end
 
     it 'views Activities viz' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       page.all(:link, 'Activities visualization')[1].click
-      expect(page).to have_content 'Today'
       expect(page).to have_content 'Daily Averages for ' \
                                    "#{Date.today.strftime('%b %d, %Y')}"
 
@@ -463,12 +385,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Activities - Future' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('.panel.panel-default', text: 'Activities - Future') do
         within('tr:nth-child(5)') do
           expect(page).to have_content 'Speech  8 4 Scheduled for ' \
@@ -478,12 +395,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Activities - Past' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('.panel.panel-default', text: 'Activities - Past') do
         within('tr', text: 'Loving') do
           expect(page).to have_content 'Loving  '
@@ -501,12 +413,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Thoughts viz' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('.list-group') do
         find(:link, 'Thoughts visualization').click
       end
@@ -515,12 +422,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Thoughts' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       thought_panel = page.all('.panel.panel-default', text: 'Thoughts')
       within thought_panel[0] do
         within('tr:nth-child(3)') do
@@ -543,12 +445,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Messages' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('.panel.panel-default', text: 'Messages') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
@@ -564,12 +461,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Tasks' do
-      within('#patients', text: 'TFD-1111') do
-        click_on 'TFD-1111'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant TFD-1111')
-
+      select_patient('TFD-1111')
       within('.panel.panel-default', text: 'Tasks') do
         within 'tr:nth-child(3)' do
           expect(page).to have_content 'Do - Planning Introduction  ' \
@@ -592,24 +484,12 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
   context 'navigates to Patient Dashboard of active patient in Group 6' do
     before do
       sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-
       click_on 'Arms'
       find('h1', text: 'Arms')
-
       click_on 'Arm 1'
-      expect(page).to have_content 'Title: Arm 1'
-
       click_on 'Group 6'
-      expect(page).to have_content 'Title: Group 6'
-
       click_on 'Patient Dashboard'
-      expect(page).to have_css('h1', text: 'Group 6 Patient Dashboard')
-
-      within('#patients', text: 'participant61') do
-        click_on 'participant61'
-      end
-
-      expect(page).to have_css('h1', text: 'Participant participant61')
+      select_patient('participant61')
     end
 
     it 'views Likes' do

@@ -8,10 +8,7 @@ describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
   it 'Researcher signs in, creates a participant, assigns a group membership ' \
      'and sees correct calculation of end date' do
     click_on 'Participants'
-    expect(page).to have_content 'Participants'
     click_on 'New'
-    expect(page).to have_content 'New Participant'
-
     fill_in 'participant_study_id', with: 'Tests'
     fill_in 'participant_email', with: 'test@test.com'
     fill_in 'participant_phone_number', with: ENV['Participant_Phone_Number']
@@ -20,8 +17,6 @@ describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Participant was successfully created.'
 
     click_on 'Assign New Group'
-    expect(page).to have_content 'Assigning New Group to Participant'
-
     select 'Group 1', from: 'membership_group_id'
     fill_in 'membership_start_date',
             with: Date.today.prev_day.strftime('%Y-%m-%d')
@@ -35,11 +30,7 @@ describe 'User Dashboard Bugs', type: :feature, sauce: sauce_labs do
     click_on 'Assign'
     expect(page).to have_content 'Group was successfully assigned'
 
-    expect(page).to have_content 'Study Id: Tests'
-
-    expect(page).to have_content 'Group: Group 1'
-
-    expect(page).to have_content 'Membership Status: Active'
+    expect(page).to have_content "Membership Status: Active\nGroup: Group 1"
   end
 end
 

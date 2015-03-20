@@ -11,7 +11,7 @@ def sign_in_pt(participant, password)
 end
 
 def sign_in_user(user, password)
-  visit "#{ENV['Base_URL']}/participants/sign_in"
+  visit "#{ENV['Base_URL']}/users/sign_in"
   within('#new_user') do
     fill_in 'user_email', with: user
     fill_in 'user_password', with: password
@@ -33,4 +33,10 @@ def compare_thought(thought)
   end
 
   page.find('.panel-body.adjusted-list-group-item').text
+end
+
+def select_patient(patient)
+  within('#patients', text: patient) do
+    click_on patient
+  end
 end

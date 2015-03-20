@@ -4,18 +4,11 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-
     click_on 'Arms'
     find('h1', text: 'Arms')
-
     click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-
     click_on 'Group 6'
-    expect(page).to have_content 'Title: Group 6'
-
     click_on 'Group Dashboard'
-    expect(page).to have_css('h1', text: 'Group Group 6')
   end
 
   it 'views Group Summary' do
@@ -218,22 +211,20 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today + 4
-        date_2 = Date.today - 1
         expect(page).to have_content 'Third Go to movie ' \
                                      "#{date_1.strftime('%d %b')}"
 
-        expect(page).to have_content "9 7 #{date_2.strftime('%d %b')}"
+        expect(page).to have_content "9 7 #{Date.today.prev_day.strftime('%d %b')}"
 
         expect(page).to have_content '5 1 1'
       end
 
       within('tr:nth-child(2)') do
-        date_3 = Date.today + 7
-        date_4 = Date.today - 1
+        date_2 = Date.today + 7
         expect(page).to have_content 'Fourth Yelling ' \
-                                     "#{date_3.strftime('%d %b')}"
+                                     "#{date_2.strftime('%d %b')}"
 
-        expect(page).to have_content "0 2 #{date_4.strftime('%d %b')}"
+        expect(page).to have_content "0 2 #{Date.today.prev_day.strftime('%d %b')}"
 
         expect(page).to have_content '5 0 0'
       end
@@ -254,7 +245,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Comments' do
-    panel_comments = page.all('.panel.panel-default', text: 'Comments')
+    panel_comments = page.all('.panel.panel-default.cdb_panel',
+                              text: 'Comments')
     within panel_comments[4] do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
@@ -287,16 +279,18 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Goals' do
-    within('.panel.panel-default', text: 'Goals') do
+    within('.panel.panel-default.cdb_panel', text: 'Goals') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 30
         date_2 = Date.today - 26
         date_3 = Date.today - 34
         expect(page).to have_content 'First do something  incomplete ' \
-                                     "#{date_1.strftime('%-d %b')} " \
-                                     "#{date_2.strftime('%-d %b')} " \
-                                     "#{date_3.strftime('%-d %b')}"
+                                     "#{date_1.strftime('%d %b')} "
+
+        expect(page).to have_content "#{date_2.strftime('%-d %b')} "
+
+        expect(page).to have_content "#{date_3.strftime('%-d %b')}"
 
         expect(page).to have_content '1 0 0'
       end
@@ -305,8 +299,9 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_4 = Date.today + 3
         date_5 = Date.today - 26
         expect(page).to have_content 'Third Get crazy incomplete not deleted ' \
-                                     "#{date_4.strftime('%-d %b')} " \
-                                     "#{date_5.strftime('%-d %b')}"
+                                     "#{date_4.strftime('%-d %b')} "
+
+        expect(page).to have_content "#{date_5.strftime('%-d %b')}"
 
         expect(page).to have_content '2 1 0'
       end
@@ -316,10 +311,12 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_7 = Date.today - 14
         date_8 = Date.today - 24
         expect(page).to have_content 'Fifth go to work ' \
-                                     "#{date_6.strftime('%-d %b')} "\
-                                     'not deleted ' \
-                                     "#{date_7.strftime('%-d %b')} " \
-                                     "#{date_8.strftime('%-d %b')}"
+                                     "#{date_6.strftime('%d %b')} "
+
+        expect(page).to have_content 'not deleted ' \
+                                     "#{date_7.strftime('%-d %b')} "
+
+        expect(page).to have_content "#{date_8.strftime('%-d %b')}"
 
         expect(page).to have_content '2 1 0'
       end
@@ -367,10 +364,9 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
       end
 
       within('tr:nth-child(5)') do
-        date_5 = Date.today - 1
         expect(page).to have_content 'Fifth  SocialNetworking::SharedItem  ' \
                                      'Activity: Go to movie ' \
-                                     "#{date_5.strftime('%d %b')}"
+                                     "#{Date.today.prev_day.strftime('%d %b')}"
 
         expect(page).to have_content '5'
       end

@@ -1,6 +1,6 @@
 # filename: shared_items_spec.rb
 
-describe 'Active participant in a social arm is signs in,',
+describe 'Active participant in a social arm signs in,',
          type: :feature, sauce: sauce_labs do
   context 'visits the THINK tool,' do
     before do

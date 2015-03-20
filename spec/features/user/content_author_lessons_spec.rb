@@ -4,16 +4,11 @@ describe 'Content Author signs in and navigates to Lesson Modules tool',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
-
     click_on 'Arms'
     find('h1', text: 'Arms')
-
     click_on 'Arm 1'
-    expect(page).to have_content 'Title: Arm 1'
-
     click_on 'Manage Content'
     click_on 'Lesson Modules'
-    expect(page).to have_content 'Listing Lesson Modules'
   end
 
   it 'creates a new lesson' do
@@ -22,10 +17,6 @@ describe 'Content Author signs in and navigates to Lesson Modules tool',
     fill_in 'lesson_position', with: '19'
     click_on 'Create'
     expect(page).to have_content 'Successfully created lesson'
-
-    expect(page).to have_content 'Test lesson'
-
-    expect(page).to have_content 'Add Video Slide'
   end
 
   it 'updates title of a lesson' do
@@ -39,16 +30,12 @@ describe 'Content Author signs in and navigates to Lesson Modules tool',
 
     expect(page).to have_content 'Do - Awareness Introduction 123'
 
-    expect(page).to have_content 'Add Video Slide'
-
     page.all(:link, 'Edit')[0].click
     fill_in 'lesson_title', with: 'Do - Awareness Introduction'
     click_on 'Update'
     expect(page).to have_content 'Successfully updated lesson'
 
     expect(page).to have_content 'Do - Awareness Introduction'
-
-    expect(page).to have_content 'Add Video Slide'
   end
 
   # this example is commented out as it fails most runs

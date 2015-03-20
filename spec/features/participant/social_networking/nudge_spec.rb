@@ -1,6 +1,6 @@
 # filename: nudge_spec.rb
 
-describe 'Active participant in a social arm is signed in,',
+describe 'Active participant in a social arm signs in,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
