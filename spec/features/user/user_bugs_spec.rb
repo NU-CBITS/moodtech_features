@@ -54,7 +54,7 @@ describe 'User Dashboard Bugs, Researcher signs in,',
     fill_in 'membership_end_date', with: next_year.strftime('%Y-%m-%d')
 
     click_on 'Assign'
-    expect(page).to have_content 'Group 1 is part of a social arm. ' \
+    expect(page).to have_content 'Group 6 is part of a social arm. ' \
                                  'Display name is required for social arms.'
 
     within('#membership_group_id') do

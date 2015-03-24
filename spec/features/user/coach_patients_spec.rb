@@ -100,8 +100,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page)
             .to have_content 'Last Logged In: ' \
                              "#{Time.now.strftime('%-l%P on %b %-d')}" \
-                             "\nLogins Today: 61\nLogins in the " \
-                             "last seven days: 61\nTotal Logins: 61"
+                             "\nLogins Today: 60\nLogins in the " \
+                             "last seven days: 60\nTotal Logins: 60"
         end
       end
     end
@@ -258,8 +258,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         end
 
         click_on 'Previous Period'
-        one_week_ago_1 = today - 7
-        two_weeks_ago = today - 13
+        one_week_ago_1 = Date.today - 7
+        two_weeks_ago = Date.today - 13
         expect(page).to have_content "#{two_weeks_ago.strftime('%B %e, %Y')} " \
                                      "/ #{one_week_ago_1.strftime('%B %e, %Y')}"
       end
@@ -385,9 +385,10 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     it 'views Activities - Future' do
       select_patient('TFD-1111')
       within('#activities-future-container') do
-        within('tr:nth-child(5)') do
-          expect(page).to have_content 'Speech  8 4 Scheduled for ' \
-                                       "#{Date.today.strftime('%d %b')}"
+        within('tr:nth-child(4)') do
+          two_days = Date.today + 2
+          expect(page).to have_content 'Going to school  2 6 Scheduled for ' \
+                                       "#{two_days.strftime('%d %b')}"
         end
       end
     end
@@ -410,7 +411,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
-          if table_row[1].has_text? 'New planned activity'
+          if table_row[1].has_text? 'Reviewed and did not complete'
             click_on 'Noncompliance'
             within('.popover.fade.right.in') do
               expect(page).to have_content "Why was this not completed?\nI " \
@@ -480,8 +481,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       select_patient('TFD-1111')
       within('#tasks-container') do
         within('tr', text: 'Do - Planning Introduction') do
-          expect(page)
-            .to have_content "#{Date.today.next_day.strftime('%d %b')}" \
+          tomorrow = Date.today + 1
+          expect(page).to have_content "#{tomorrow.strftime('%d %b')}" \
                              ' Incomplete'
         end
       end

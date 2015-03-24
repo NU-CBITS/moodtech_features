@@ -114,8 +114,8 @@ describe 'Active participant in a social arm signs in,',
       click_on '#2 Planning'
       click_on 'Next'
       fill_in 'activity_activity_type_new_title', with: 'New public activity'
-      fill_in 'future_date_picker_0',
-              with: Date.today.next_day.strftime('%d %b, %Y')
+      tomorrow = Date.today + 1
+      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -123,8 +123,7 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Activity saved'
 
       fill_in 'activity_activity_type_new_title', with: 'New private activity'
-      fill_in 'future_date_picker_0',
-              with: Date.today.next_day.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
       choose 'No'
@@ -146,8 +145,8 @@ describe 'Active participant in a social arm signs in,',
     it 'shares Add a New Activity responses' do
       click_on 'Add a New Activity'
       fill_in 'activity_activity_type_new_title', with: 'New public activity 2'
-      fill_in 'future_date_picker_0',
-              with: Date.today.next_day.strftime('%d %b, %Y')
+      tomorrow = Date.today + 1
+      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -161,8 +160,8 @@ describe 'Active participant in a social arm signs in,',
     it 'does not share Add a New Activity responses' do
       click_on 'Add a New Activity'
       fill_in 'activity_activity_type_new_title', with: 'New private activity 2'
-      fill_in 'future_date_picker_0',
-              with: Date.today.next_day.strftime('%d %b, %Y')
+      tomorrow = Date.today + 1
+      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       choose 'No'

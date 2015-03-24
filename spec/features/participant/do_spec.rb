@@ -111,8 +111,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on '#2 Planning'
     click_on 'Next'
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-    fill_in 'future_date_picker_0',
-            with: Date.today.next_day.strftime('%d %b, %Y')
+    tomorrow = Date.today + 1
+    fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
     choose_rating('pleasure_0', 6)
     choose_rating('accomplishment_0', 3)
     click_on 'Next'
@@ -120,8 +120,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     expect(page).to have_content 'Activity saved'
 
     fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
-    fill_in 'future_date_picker_0',
-            with: Date.today.next_day.strftime('%d %b, %Y')
+    fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 8)
     click_on 'Next'
@@ -174,16 +173,16 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
-      expect(page).to have_content "actual accomplishment: 5\n" \
-                                   'actual pleasure: 7'
+      expect(page).to have_content "actual accomplishment: 3\n" \
+                                   'actual pleasure: 1'
     end
   end
 
   it 'completes Plan a New Activity' do
     click_on 'Add a New Activity'
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-    fill_in 'future_date_picker_0',
-            with: Date.today.next_day.strftime('%d %b, %Y')
+    tomorrow = Date.today + 1
+    fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 3)
     click_on 'Next'

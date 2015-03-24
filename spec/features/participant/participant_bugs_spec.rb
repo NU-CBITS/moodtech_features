@@ -10,9 +10,9 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
     it 'completes Planning without receiving multiple alerts' do
       click_on '#2 Planning'
       click_on 'Next'
+      tomorrow = Date.today + 1
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-      fill_in 'future_date_picker_0',
-              with: Date.today.next_day.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -21,8 +21,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
 
       fill_in 'activity_activity_type_new_title',
               with: 'Another planned activity'
-      fill_in 'future_date_picker_0',
-              with: Date.today.next_day.strftime('%d %b, %Y')
+      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
       click_on 'Next'
@@ -39,8 +38,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
     it 'completes Plan a New Activity without multiple alerts' do
       click_on 'Add a New Activity'
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-      fill_in 'future_date_picker_0',
-              with: Date.today.next_day.strftime('%d %b, %Y')
+      tomorrow = Date.today + 1
+      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
