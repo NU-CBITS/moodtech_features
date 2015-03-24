@@ -64,6 +64,7 @@ describe 'Researcher signs in and navigates to Participants',
     click_on 'Tests'
     click_on 'Assign New Group'
     select 'Group 1', from: 'membership_group_id'
+    fill_in 'membership_display_name', with: 'Tester'
     fill_in 'membership_start_date',
             with: Date.today.prev_day.strftime('%Y-%m-%d')
     next_year = Date.today + 365

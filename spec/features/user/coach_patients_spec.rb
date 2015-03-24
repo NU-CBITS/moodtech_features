@@ -243,15 +243,15 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
         one_week_ago = Date.today - 6
         one_month_ago = Date.today - 27
-        expect(page).to have_content "#{one_week_ago.strftime('%B %e, %Y')}/" \
-                                     "#{Date.today.strftime('%B %e, %Y')}"
+        expect(page).to have_content "#{one_week_ago.strftime('%B %e, %Y')} " \
+                                     "/ #{Date.today.strftime('%B %e, %Y')}"
 
         within('.btn-group') do
           find('.btn.btn-default', text: '28 day').click
         end
 
-        expect(page).to have_content "#{one_month_ago.strftime('%B %e, %Y')}/" \
-                                     "#{Date.today.strftime('%B %e, %Y')}"
+        expect(page).to have_content "#{one_month_ago.strftime('%B %e, %Y')} " \
+                                     "/ #{Date.today.strftime('%B %e, %Y')}"
 
         within('.btn-group') do
           find('.btn.btn-default', text: '7 Day').click
@@ -323,7 +323,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page).to have_content 'Audio! ' \
                                        "#{Date.today.strftime('%d %b')}" \
                                        " #{Date.today.strftime('%b. %-d')}"
-          if page.has_text?('Not completed')
+          if page.has_text?('Not Completed')
             expect(page).to have_content 'Not Completed'
 
           else
@@ -335,7 +335,10 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Activities viz' do
       select_patient('TFD-1111')
-      page.all(:link, 'Activities visualization')[1].click
+      within('h3', text: 'Activities visualization') do
+        click_on 'Activities visualization'
+      end
+
       expect(page).to have_content 'Daily Averages for ' \
                                    "#{Date.today.strftime('%b %d, %Y')}"
 
@@ -420,9 +423,19 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'views Thoughts viz' do
       select_patient('TFD-1111')
-      page.all(:link, 'Thoughts visualization')[1].click
+      within('h3', text: 'Thoughts visualization') do
+        click_on 'Thoughts visualization'
+      end
 
       page.find('#ThoughtVizContainer')
+      if page.has_text? 'Click a bubble for more info'
+        find('.thoughtviz_text.viz-clickable',
+             text: 'Magnification or Catastro...').click
+        expect(page).to have_content 'Testing add a new thought'
+
+        click_on 'Close'
+        expect(page).to have_content 'Click a bubble for more info'
+      end
     end
 
     it 'views Thoughts' do
@@ -466,10 +479,9 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     it 'views Tasks' do
       select_patient('TFD-1111')
       within('#tasks-container') do
-        within 'tr:nth-child(3)' do
+        within('tr', text: 'Do - Planning Introduction') do
           expect(page)
-            .to have_content 'Do - Planning Introduction  ' \
-                             "#{Date.today.next_day.strftime('%d %b')}" \
+            .to have_content "#{Date.today.next_day.strftime('%d %b')}" \
                              ' Incomplete'
         end
       end
@@ -517,9 +529,11 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           created_date = Date.today - 34
           deleted_date = Date.today - 30
           expect(page).to have_content 'do something  Incomplete ' \
-                                       "#{deleted_date.strftime('%d %b')} " \
-                                       "#{due_date.strftime('%d %b')} " \
-                                       "#{created_date.strftime('%d %b')}"
+                                       "#{deleted_date.strftime('%d %b')} "
+
+          expect(page).to have_content "#{due_date.strftime('%d %b')} "
+
+          expect(page).to have_content "#{created_date.strftime('%d %b')}"
 
           expect(page).to have_content ' 1 0 0'
         end

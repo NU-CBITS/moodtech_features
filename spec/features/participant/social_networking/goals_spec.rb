@@ -33,6 +33,8 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
   it 'completes a goal' do
     page.find('.list-group-item.ng-scope',
               text: 'p1 alpha').find('.btn.btn-link.complete.ng-scope').click
+    page.accept_alert 'Are you sure you would like to mark this goal as ' \
+                      'complete? This action cannot be undone.'
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
 
@@ -45,6 +47,8 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
   it 'deletes a goal' do
     page.find('.list-group-item.ng-scope',
               text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
+    page.accept_alert 'Are you sure you would like to delete this goal? This ' \
+                      'action cannot be undone.'
     expect(page).to_not have_content 'p1 gamma'
 
     click_on 'Deleted'
