@@ -392,16 +392,27 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     it 'views Activities - Past' do
       select_patient('TFD-1111')
       within('#activities-past-container') do
+        find('.sorting', text: 'Status').double_click
         within('tr', text: 'Loving') do
-          expect(page).to have_content 'Loving  '
           if page.has_text? 'Planned'
-            expect(page).to have_content 'Planned 6 4 Not Rated Not Rated ' \
+            expect(page).to have_content '6 4 Not Rated Not Rated ' \
                                          'Scheduled for ' \
                                          "#{Date.today.strftime('%d %b')}"
           else
             expect(page).to have_content 'Reviewed & Completed 6 4 7 5 ' \
                                          'Scheduled for ' \
                                          "#{Date.today.strftime('%d %b')}"
+          end
+        end
+
+        table_row = page.all('tr:nth-child(1)')
+        within table_row[1] do
+          if table_row[1].has_text? 'New planned activity'
+            click_on 'Noncompliance'
+            within('.popover.fade.right.in') do
+              expect(page).to have_content "Why was this not completed?\nI " \
+                                           "didn't have time"
+            end
           end
         end
       end

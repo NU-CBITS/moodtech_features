@@ -207,7 +207,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Activities Future' do
-    within('activities-planned-container') do
+    within('#activities-planned-container') do
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today + 4
