@@ -115,7 +115,11 @@ describe 'Active participant in a social arm signs in,',
       click_on 'Next'
       fill_in 'activity_activity_type_new_title', with: 'New public activity'
       tomorrow = Date.today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      find('.fa.fa-calendar').click
+      within('#ui-datepicker-div') do
+        click_on tomorrow.strftime('%e')
+      end
+
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -123,7 +127,11 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Activity saved'
 
       fill_in 'activity_activity_type_new_title', with: 'New private activity'
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      find('.fa.fa-calendar').click
+      within('#ui-datepicker-div') do
+        click_on tomorrow.strftime('%e')
+      end
+
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
       choose 'No'
@@ -146,7 +154,11 @@ describe 'Active participant in a social arm signs in,',
       click_on 'Add a New Activity'
       fill_in 'activity_activity_type_new_title', with: 'New public activity 2'
       tomorrow = Date.today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      find('.fa.fa-calendar').click
+      within('#ui-datepicker-div') do
+        click_on tomorrow.strftime('%e')
+      end
+
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -161,7 +173,11 @@ describe 'Active participant in a social arm signs in,',
       click_on 'Add a New Activity'
       fill_in 'activity_activity_type_new_title', with: 'New private activity 2'
       tomorrow = Date.today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      find('.fa.fa-calendar').click
+      within('#ui-datepicker-div') do
+        click_on tomorrow.strftime('%e')
+      end
+
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       choose 'No'

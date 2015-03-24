@@ -112,7 +112,11 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Next'
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
     tomorrow = Date.today + 1
-    fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+    find('.fa.fa-calendar').click
+    within('#ui-datepicker-div') do
+      click_on tomorrow.strftime('%e')
+    end
+
     choose_rating('pleasure_0', 6)
     choose_rating('accomplishment_0', 3)
     click_on 'Next'
@@ -120,7 +124,11 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     expect(page).to have_content 'Activity saved'
 
     fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
-    fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+    find('.fa.fa-calendar').click
+    within('#ui-datepicker-div') do
+      click_on tomorrow.strftime('%e')
+    end
+
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 8)
     click_on 'Next'
@@ -155,26 +163,24 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
       page.accept_alert 'Are you sure that you would like to make this ' \
                         'activity public?'
       expect(page).to have_content 'Activity saved'
-
-      if page.has_text?('You said you were going to')
-        find('.btn.btn-success').click
-        select '3', from: 'activity[actual_pleasure_intensity]'
-        select '1', from: 'activity[actual_accomplishment_intensity]'
-        click_on 'Next'
-        page.accept_alert 'Are you sure that you would like to make this ' \
-                          'activity public?'
-        expect(page).to have_content 'Activity saved'
-      end
     end
 
     visit ENV['Base_URL']
     within('.list-group-item.ng-scope',
-           text: 'Reviewed & Completed an Activity: Loving') do
+           text: 'Reviewed & Completed an Activity: Parkour') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
-      expect(page).to have_content "actual accomplishment: 3\n" \
-                                   'actual pleasure: 1'
+      expect(page).to have_content "actual accomplishment: 5\n" \
+                                   'actual pleasure: 7'
+    end
+
+    within('.list-group-item.ng-scope',
+           text: 'Reviewed and did not complete an Activity: Loving') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      expect(page).to_not have_content 'actual accomplishment:'
     end
   end
 
@@ -182,7 +188,11 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Add a New Activity'
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
     tomorrow = Date.today + 1
-    fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+    find('.fa.fa-calendar').click
+    within('#ui-datepicker-div') do
+      click_on tomorrow.strftime('%e')
+    end
+
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 3)
     click_on 'Next'
@@ -198,12 +208,16 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Daily Summaries'
     expect(page).to have_content 'Average Accomplishment Discrepancy'
 
+    click_on 'Previous Day'
+    expect(page).to have_content 'Daily Averages for ' \
+                                 "#{Date.today.prev_day.strftime('%b %d, %Y')}"
+
     starttime = Time.now - 3600
     within('.panel.panel-default',
            text: "#{starttime.strftime('%-l %P')} - " \
-           "#{Time.now.strftime('%-l %P:')} Loving") do
+           "#{Time.now.strftime('%-l %P:')} Parkour") do
       click_on "#{starttime.strftime('%-l %P')} - " \
-               "#{Time.now.strftime('%-l %P:')} Loving"
+               "#{Time.now.strftime('%-l %P:')} Parkour"
       expect(page).to have_content 'Predicted  Average Importance: 4 Kind of ' \
                                    'fun: 6'
 
@@ -212,10 +226,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
         expect(page).to have_css('#activity_actual_accomplishment_intensity')
       end
     end
-
-    click_on 'Previous Day'
-    expect(page).to have_content 'Daily Averages for ' \
-                                 "#{Date.today.prev_day.strftime('%b %d, %Y')}"
 
     click_on 'Next Day'
     expect(page).to have_content 'Daily Averages for ' \

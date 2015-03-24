@@ -12,7 +12,11 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Next'
       tomorrow = Date.today + 1
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      find('.fa.fa-calendar').click
+      within('#ui-datepicker-div') do
+        click_on tomorrow.strftime('%e')
+      end
+
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -21,7 +25,11 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
 
       fill_in 'activity_activity_type_new_title',
               with: 'Another planned activity'
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      find('.fa.fa-calendar').click
+      within('#ui-datepicker-div') do
+        click_on tomorrow.strftime('%e')
+      end
+
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
       click_on 'Next'
@@ -39,7 +47,11 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Add a New Activity'
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
       tomorrow = Date.today + 1
-      fill_in 'future_date_picker_0', with: tomorrow.strftime('%d %b, %Y')
+      find('.fa.fa-calendar').click
+      within('#ui-datepicker-div') do
+        click_on tomorrow.strftime('%e')
+      end
+
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'

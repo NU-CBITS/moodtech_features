@@ -100,8 +100,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page)
             .to have_content 'Last Logged In: ' \
                              "#{Time.now.strftime('%-l%P on %b %-d')}" \
-                             "\nLogins Today: 60\nLogins in the " \
-                             "last seven days: 60\nTotal Logins: 60"
+                             "\nLogins Today: 61\nLogins in the " \
+                             "last seven days: 61\nTotal Logins: 61"
         end
       end
     end
@@ -127,11 +127,11 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         end
 
         within('tr', text: 'Activities Planned') do
-          expect(page).to have_content 'Activities Planned   1 9 9'
+          expect(page).to have_content 'Activities Planned   2 2 2'
         end
 
         within('tr', text: 'Activities Monitored') do
-          expect(page).to have_content 'Activities Monitored   1 9 9'
+          expect(page).to have_content 'Activities Monitored   4 20 20'
         end
 
         within('tr', text: 'Activities Reviewed and Completed') do
@@ -140,7 +140,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
         within('tr', text: 'Activities Reviewed and Incomplete') do
           expect(page).to have_content 'Activities Reviewed and Incomplete ' \
-                                       '0 1 1'
+                                       '1 1 1'
         end
       end
     end
@@ -345,12 +345,17 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       click_on 'Daily Summaries'
       expect(page).to have_content 'Average Accomplishment Discrepancy'
 
+      click_on 'Previous Day'
+      expect(page)
+        .to have_content 'Daily Averages for ' \
+                         "#{Date.today.prev_day.strftime('%b %d, %Y')}"
+
       starttime = Time.now - 3600
       within('.panel.panel-default',
              text: "#{starttime.strftime('%-l %P')} - " \
-                   "#{Time.now.strftime('%-l %P:')} Loving") do
+                   "#{Time.now.strftime('%-l %P:')} Parkour") do
         click_on "#{starttime.strftime('%-l %P')} - " \
-                 "#{Time.now.strftime('%-l %P:')} Loving"
+                 "#{Time.now.strftime('%-l %P:')} Parkour"
         within('.panel-collapse.collapse.in') do
           expect(page).to have_content 'Predicted'
 
@@ -358,11 +363,6 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page).to have_css('#activity_actual_accomplishment_intensity')
         end
       end
-
-      click_on 'Previous Day'
-      expect(page)
-        .to have_content 'Daily Averages for ' \
-                         "#{Date.today.prev_day.strftime('%b %d, %Y')}"
 
       click_on 'Next Day'
       expect(page).to have_content 'Daily Averages for ' \
@@ -385,7 +385,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     it 'views Activities - Future' do
       select_patient('TFD-1111')
       within('#activities-future-container') do
-        within('tr:nth-child(4)') do
+        find('.sorting', text: 'Activity').click
+        within('tr:nth-child(3)') do
           two_days = Date.today + 2
           expect(page).to have_content 'Going to school  2 6 Scheduled for ' \
                                        "#{two_days.strftime('%d %b')}"
@@ -397,15 +398,15 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       select_patient('TFD-1111')
       within('#activities-past-container') do
         find('.sorting', text: 'Status').double_click
-        within('tr', text: 'Loving') do
+        within('tr', text: 'Parkour') do
           if page.has_text? 'Planned'
-            expect(page).to have_content '6 4 Not Rated Not Rated ' \
-                                         'Scheduled for ' \
-                                         "#{Date.today.strftime('%d %b')}"
+            expect(page).
+              to have_content '9 4 Not Rated Not Rated  Scheduled for ' \
+                              "#{Date.today.prev_day.strftime('%d %b')}"
           else
-            expect(page).to have_content 'Reviewed & Completed 6 4 7 5 ' \
-                                         'Scheduled for ' \
-                                         "#{Date.today.strftime('%d %b')}"
+            expect(page).
+              to have_content 'Reviewed & Completed 9 4 7 5 Scheduled for ' \
+                              "#{Date.today.prev_day.strftime('%d %b')}"
           end
         end
 
