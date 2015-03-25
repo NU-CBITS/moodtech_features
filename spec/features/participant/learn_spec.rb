@@ -7,7 +7,7 @@ describe 'Active participant in group 1 signs in, navigates to LEARN,',
     visit "#{ENV['Base_URL']}/navigator/contexts/LEARN"
   end
 
-  it 'sees list opened to this week and is able to collapse list' do
+  it 'sees list opened to this week, collapses list' do
     expect(page).to have_content 'Week 1'
 
     expect(page).to have_content 'Do - Awareness Introduction'

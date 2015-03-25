@@ -1,6 +1,6 @@
 # filename: content_author_lessons_spec.rb
 
-describe 'Content Author signs in and navigates to Lesson Modules tool',
+describe 'Content Author signs in , navigates to Lesson Modules tool,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])

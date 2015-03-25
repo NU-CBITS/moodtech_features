@@ -1,12 +1,12 @@
 # filename: participant_login_spec.rb
 
 describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
-  it 'is an active participant and signs in' do
+  it 'is an active participant, signs in' do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
     expect(page).to have_content 'Signed in successfully.'
   end
 
-  it 'is an active participant, signs in, visits another page, and uses ' \
+  it 'is an active participant, signs in, visits another page, uses ' \
      'brand link to get to home page' do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
@@ -17,7 +17,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     expect(page).to have_content "What's on your mind?"
   end
 
-  it 'is an activie participant, signs in and signs out' do
+  it 'is an activie participant, signs in, signs out' do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
     within '.navbar-collapse' do
@@ -49,7 +49,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
                                  'because you are not assigned to a group'
   end
 
-  it 'tries to visit a specific page and is redirected to log in page' do
+  it 'tries to visit a specific page, is redirected to log in page' do
     visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
     expect(page).to have_content 'You need to sign in or sign up before ' \
                                  'continuing'
@@ -63,7 +63,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
                                  'continuing.'
   end
 
-  it 'is an active participant and uses the forgot password functionality' do
+  it 'is an active participant, uses the forgot password functionality' do
     visit ENV['Base_URL']
     click_on 'Forgot your password?'
     expect(page).to have_content 'Forgot your password?'

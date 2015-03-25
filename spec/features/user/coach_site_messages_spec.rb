@@ -1,6 +1,6 @@
 # filename: coach_site_messages_spec.rb
 
-describe 'Coach signs in and navigates to Site Messages tool',
+describe 'Coach signs in, navigates to Site Messages tool,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])

@@ -1,6 +1,6 @@
 # filename: researcher_groups_spec.rb
 
-describe 'Researcher signs in and navigates to Groups',
+describe 'Researcher signs in, navigates to Groups,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])

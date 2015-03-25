@@ -27,7 +27,7 @@ describe 'Researcher signs in,' do
     FileUtils.rm_rf @download_dir
   end
 
-  it 'navigates to CSV reports, and downloads all reports' do
+  it 'navigates to CSV reports, downloads all reports' do
     @driver.get "#{ENV['Base_URL']}/think_feel_do_dashboard/reports"
     download_link = @driver.find_elements(class: 'list-group-item')[0]
     download_link.click

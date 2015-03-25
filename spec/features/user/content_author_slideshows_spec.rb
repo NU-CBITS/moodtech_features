@@ -1,6 +1,6 @@
 # filename: content_author_slideshows_spec.rb
 
-describe 'Content Author signs in and navigate to Slideshows tool',
+describe 'Content Author signs in, navigates to Slideshows tool,',
          type: :feature, sauce: sauce_labs do
   before do
     sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])

@@ -1,23 +1,23 @@
 # filename: user_login_spec.rb
 
-describe 'Visitor to the site', type: :feature, sauce: sauce_labs do
-  it 'is an authorized user and signs in' do
+describe 'Visitor to the site,', type: :feature, sauce: sauce_labs do
+  it 'is an authorized user, signs in' do
     sign_in_user(ENV['User_Email'], ENV['User_Password'])
     expect(page).to have_content 'Signed in successfully'
   end
 
-  it 'is not an authorized user and fails to sign in' do
+  it 'is not an authorized user, fails to sign in' do
     sign_in_user('asdf@test.com', 'asdf')
     expect(page).to have_content 'Invalid email address or password'
   end
 
-  it 'is not signed and visits a specific page' do
+  it 'is not signed, visits a specific page' do
     visit ENV['Base_URL'] + '/think_feel_do_dashboard'
     expect(page).to have_content 'You need to sign in or sign up before ' \
                                  'continuing'
   end
 
-  it 'is not signed in and views the intro slideshow' do
+  it 'is not signed in, views the intro slideshow' do
     visit "#{ENV['Base_URL']}/users/sign_in"
     click_on 'Introduction to ThinkFeelDo'
     expect(page).to have_content 'Welcome to ThiFeDo'

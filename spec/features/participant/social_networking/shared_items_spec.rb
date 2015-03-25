@@ -2,7 +2,7 @@
 
 describe 'Active participant in a social arm signs in,',
          type: :feature, sauce: sauce_labs do
-  context 'visits the THINK tool,' do
+  describe 'visits the THINK tool,' do
     before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
       visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
@@ -64,7 +64,7 @@ describe 'Active participant in a social arm signs in,',
     end
   end
 
-  context 'visits the DO tool,' do
+  describe 'visits the DO tool,' do
     before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
@@ -192,7 +192,7 @@ end
 
 describe 'Active participant in a non-social arm signs in,',
          type: :feature, sauce: sauce_labs do
-  context 'visits the THINK tool,' do
+  describe 'visits the THINK tool,' do
     before do
       sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
       visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
@@ -226,7 +226,7 @@ describe 'Active participant in a non-social arm signs in,',
     end
   end
 
-  context 'visits the DO tool,' do
+  describe 'visits the DO tool,' do
     before do
       sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"

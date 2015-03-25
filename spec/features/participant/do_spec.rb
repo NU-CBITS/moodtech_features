@@ -77,7 +77,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     end
   end
 
-  it 'completes Awareness for different time on same day and overlaps days' do
+  it 'completes Awareness for different time on same day that overlaps days' do
     click_on '#1 Awareness'
     click_on 'Next'
     select "#{Date.today.prev_day.strftime('%a')} 11 PM",

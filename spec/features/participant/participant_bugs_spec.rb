@@ -1,13 +1,13 @@
 # filename: participant_bugs_spec.rb
 
 describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
-  context 'Participant 1 signs in, navigates to the DO tool,' do
+  describe 'Participant 1 signs in, navigates to the DO tool,' do
     before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
     end
 
-    it 'completes Planning without receiving multiple alerts' do
+    it 'completes Planning without multiple alerts' do
       click_on '#2 Planning'
       click_on 'Next'
       tomorrow = Date.today + 1
@@ -125,7 +125,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
     end
   end
 
-  context 'Participant 2 signs in,' do
+  describe 'Participant 2 signs in,' do
     before do
       sign_in_pt(ENV['Participant_2_Email'], ENV['Participant_2_Password'])
     end

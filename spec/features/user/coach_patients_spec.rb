@@ -1,7 +1,7 @@
 # filename: coach_patients_spec.rb
 
 describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
-  context 'navigate to Patient Dashboard of active patient in Group 1' do
+  describe 'navigates to Patient Dashboard of active patient in Group 1,' do
     before do
       sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
       click_on 'Arms'
@@ -499,7 +499,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
   end
 
-  context 'navigates to Patient Dashboard of active patient in Group 6' do
+  describe 'navigates to Patient Dashboard of active patient in Group 6,' do
     before do
       sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
       click_on 'Arms'

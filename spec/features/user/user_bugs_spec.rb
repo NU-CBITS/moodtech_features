@@ -1,7 +1,7 @@
 # filename: user_bugs_spec.rb
 
 describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
-  context 'Researcher signs in,' do
+  describe 'Researcher signs in,' do
     before do
       sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
     end
@@ -63,7 +63,7 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
     end
   end
 
-  context 'Clinician signs in,' do
+  describe 'Clinician signs in,' do
     before do
       sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
     end
