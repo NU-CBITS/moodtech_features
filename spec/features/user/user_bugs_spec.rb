@@ -25,15 +25,15 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
       next_year = Date.today + 365
       fill_in 'membership_end_date', with: next_year.strftime('%Y-%m-%d')
       weeks_later = Date.today + 56
-      expect(page).to have_content 'Standard number of weeks: 8, Projected End ' \
-                                   'Date from today: ' \
+      expect(page).to have_content 'Standard number of weeks: 8, Projected ' \
+                                   'End Date from today: ' \
                                    "#{weeks_later.strftime('%-m/%-d/%Y')}"
 
       click_on 'Assign'
       expect(page).to have_content 'Group was successfully assigned'
 
-      expect(page).to have_content "Membership Status: Active\nCurrent Group: " \
-                                   'Group 1'
+      expect(page).to have_content "Membership Status: Active\nCurrent " \
+                                   'Group: Group 1'
     end
 
     it 'creates a participant, assigns a social group membership without a ' \
