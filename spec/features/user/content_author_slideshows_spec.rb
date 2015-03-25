@@ -44,6 +44,7 @@ describe 'Content Author signs in, navigates to Slideshows tool,',
   end
 
   it 'uses breadcrumbs to return home' do
+    expect(page).to have_content 'New'
     click_on 'Arm'
     within('.breadcrumb') do
       click_on 'Arms'
@@ -55,6 +56,7 @@ describe 'Content Author signs in, navigates to Slideshows tool,',
       click_on 'Home'
     end
 
-    expect(page).to have_content 'Arms'
+    expect(page).to have_content "Arms\nNavigate to groups and participants " \
+                                 'through arms.'
   end
 end

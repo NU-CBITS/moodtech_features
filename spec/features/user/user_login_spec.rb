@@ -30,7 +30,7 @@ describe 'Visitor to the site,', type: :feature, sauce: sauce_labs do
   it 'uses the forgot password functionality' do
     visit "#{ENV['Base_URL']}/users/sign_in"
     click_on 'Forgot your password?'
-    expect(page).to have_content 'Forgot your password?'
+    find('h2', text: 'Forgot your password?')
 
     within('#new_user') do
       fill_in 'user_email', with: ENV['User_Email']

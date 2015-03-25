@@ -212,14 +212,14 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     expect(page).to have_content 'Daily Averages for ' \
                                  "#{Date.today.prev_day.strftime('%b %d, %Y')}"
 
-    starttime = Time.now - 3600
+    endtime = Time.now + (60 * 60)
     within('.panel.panel-default',
-           text: "#{starttime.strftime('%-l %P')} - " \
-           "#{Time.now.strftime('%-l %P:')} Parkour") do
-      click_on "#{starttime.strftime('%-l %P')} - " \
-               "#{Time.now.strftime('%-l %P:')} Parkour"
-      expect(page).to have_content 'Predicted  Average Importance: 4 Kind of ' \
-                                   'fun: 6'
+           text: "#{Time.now.strftime('%-l %P')} - " \
+           "#{endtime.strftime('%-l %P')}: Parkour") do
+      click_on "#{Time.now.strftime('%-l %P')} - " \
+               "#{endtime.strftime('%-l %P')}: Parkour"
+      expect(page).to have_content 'Predicted  Average Importance: 4 Really ' \
+                                   'fun: 9'
 
       within('.panel-collapse.collapse.in') do
         click_on 'Edit'

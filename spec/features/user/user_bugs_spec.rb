@@ -65,7 +65,7 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
 
   describe 'Clinician signs in,' do
     before do
-      sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
+      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
     end
 
     it 'navigates to Patient Dashboard, views Tool Use table, sees correct ' \

@@ -350,12 +350,12 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         .to have_content 'Daily Averages for ' \
                          "#{Date.today.prev_day.strftime('%b %d, %Y')}"
 
-      starttime = Time.now - 3600
+      endtime = Time.now + (60 * 60)
       within('.panel.panel-default',
-             text: "#{starttime.strftime('%-l %P')} - " \
-                   "#{Time.now.strftime('%-l %P:')} Parkour") do
-        click_on "#{starttime.strftime('%-l %P')} - " \
-                 "#{Time.now.strftime('%-l %P:')} Parkour"
+             text: "#{Time.now.strftime('%-l %P')} - " \
+                   "#{endtime.strftime('%-l %P')}: Parkour") do
+        click_on "#{Time.now.strftime('%-l %P')} - " \
+                 "#{endtime.strftime('%-l %P')}: Parkour"
         within('.panel-collapse.collapse.in') do
           expect(page).to have_content 'Predicted'
 

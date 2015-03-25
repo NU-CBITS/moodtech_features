@@ -16,7 +16,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
     it 'creates a slide' do
       click_on 'Add Slide'
       fill_in 'slide_title', with: 'Test slide 2'
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur ' \
                             'adipiscing elit. Vivamus vitae viverra leo, at ' \
                             'tincidunt enim. Nulla vitae enim. Suspendisse.'
@@ -27,13 +27,14 @@ describe 'Content Author signs in, navigates to Arm 1,',
     end
 
     it 'updates a slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[1].click
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
 
       page.all('a', text: 'Edit')[1].click
-      check 'slide_is_title_visible'
+      check 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
     end
@@ -47,6 +48,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
     end
 
     it 'destroys a slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('.btn.btn-danger', text: 'Remove')[4].click
       page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test slide 2'
@@ -56,7 +58,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
       click_on 'Add Video Slide'
       fill_in 'slide_title', with: 'Test video slide 2'
       fill_in 'slide_options_vimeo_id', with: '111087687'
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       find('.md-input').set 'This is a video slide'
       click_on 'Create'
       expect(page).to have_content 'Successfully created slide for lesson'
@@ -65,13 +67,14 @@ describe 'Content Author signs in, navigates to Arm 1,',
     end
 
     it 'updates a video slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[5].click
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
 
       page.all('a', text: 'Edit')[5].click
-      check 'slide_is_title_visible'
+      check 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
     end
@@ -82,6 +85,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
     end
 
     it 'destroys a video slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('.btn.btn-danger', text: 'Remove')[4].click
       page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test video slide 2'
@@ -99,19 +103,21 @@ describe 'Content Author signs in, navigates to Arm 1,',
     end
 
     it 'updates an audio slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[5].click
       expect(page).to have_content 'Edit Slide'
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
 
       page.all('a', text: 'Edit')[5].click
-      check 'slide_is_title_visible'
+      check 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
     end
 
     it 'deletes an audio slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('.btn.btn-danger', text: 'Remove')[4].click
       page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test audio slide'
@@ -132,7 +138,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
     it 'adds a slide' do
       click_on 'Add Slide'
       fill_in 'slide_title', with: 'Test slide 2'
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur ' \
                             'adipiscing elit. Vivamus vitae viverra leo, at ' \
                             'tincidunt enim. Nulla vitae enim. Suspendisse.'
@@ -141,13 +147,14 @@ describe 'Content Author signs in, navigates to Arm 1,',
     end
 
     it 'updates a slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[1].click
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Add Video Slide'
 
       page.all('a', text: 'Edit')[1].click
-      check 'slide_is_title_visible'
+      check 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Add Video Slide'
     end
@@ -161,6 +168,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
     end
 
     it 'destroys a slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       within('li:nth-child(5)') do
         click_on 'Remove'
       end
@@ -173,20 +181,21 @@ describe 'Content Author signs in, navigates to Arm 1,',
       click_on 'Add Video Slide'
       fill_in 'slide_title', with: 'Test video slide 2'
       fill_in 'slide_options_vimeo_id', with: '107231188'
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       find('.md-input').set 'This is a video slide'
       click_on 'Create'
       expect(page).to have_content 'Test video slide 2'
     end
 
     it 'updates a video slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[4].click
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Add Slide'
 
       page.all('a', text: 'Edit')[4].click
-      check 'slide_is_title_visible'
+      check 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Add Slide'
     end
@@ -197,6 +206,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
     end
 
     it 'destroys a video slideo' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       within('li:nth-child(5)') do
         click_on 'Remove'
       end
@@ -215,18 +225,20 @@ describe 'Content Author signs in, navigates to Arm 1,',
     end
 
     it 'updates an audio slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[5].click
-      uncheck 'slide_is_title_visible'
+      uncheck 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Testing adding/updating slides/lessons'
 
       page.all('a', text: 'Edit')[5].click
-      check 'slide_is_title_visible'
+      check 'slide[is_title_visible]'
       click_on 'Update'
       expect(page).to have_content 'Test audio slide'
     end
 
     it 'deletes an audio slide' do
+      find('small', text: 'Testing adding/updating slides/lessons')
       within('li:nth-child(5)') do
         click_on 'Remove'
       end

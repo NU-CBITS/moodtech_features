@@ -91,7 +91,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
 
     click_on 'Home Introduction'
     click_on '1 slideshow provider'
-    expect(page).to have_content 'Content Provider'
+    expect(page).to have_content 'Is skippable after first viewing: false'
 
     click_on 'Edit'
     fill_in 'content_provider[position]', with: '10'
@@ -127,6 +127,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
   end
 
   it 'uses breadcrumbs to return home' do
+    expect(page).to have_content 'New'
     click_on 'Arm'
     within('.breadcrumb') do
       click_on 'Arms'
@@ -138,6 +139,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
       click_on 'Home'
     end
 
-    expect(page).to have_content 'Arms'
+    expect(page).to have_content "Arms\nNavigate to groups and participants " \
+                                 'through arms.'
   end
 end
