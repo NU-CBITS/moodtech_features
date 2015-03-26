@@ -77,6 +77,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     select 'Personalization', from: 'thought_pattern_id'
     click_on 'Next'
+    page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Thought saved'
   end
 

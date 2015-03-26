@@ -27,6 +27,7 @@ end
 
 def compare_thought(thought)
   click_on 'Next'
+  page.accept_alert 'Are you sure that you would like to make these public?'
   expect(page).to have_content 'Thought saved'
   within('.panel-body.adjusted-list-group-item') do
     expect(page).to_not have_content thought

@@ -153,7 +153,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     select '5', from: 'activity[actual_accomplishment_intensity]'
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make this ' \
-                      'activity public?'
+                      'public?'
     expect(page).to have_content 'Activity saved'
 
     if page.has_text?('You said you were going to')
@@ -161,7 +161,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
       fill_in 'activity[noncompliance_reason]', with: "I didn't have time"
       click_on 'Next'
       page.accept_alert 'Are you sure that you would like to make this ' \
-                        'activity public?'
+                        'public?'
       expect(page).to have_content 'Activity saved'
     end
 
