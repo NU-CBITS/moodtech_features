@@ -61,6 +61,12 @@ describe 'Active participant in a social arm signs in,',
   end
 
   it 'likes a whats on your mind post written by another participant' do
+    find('h1', text: 'HOME')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'nudged participant1')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
+
     within('.list-group-item.ng-scope',
            text: "said it's always sunny in Philadelphia") do
       find('.btn.btn-link.like.ng-scope').click
@@ -69,6 +75,12 @@ describe 'Active participant in a social arm signs in,',
   end
 
   it 'comments on a nudge post' do
+    find('h1', text: 'HOME')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'nudged participant1')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
+
     within first('.list-group-item.ng-scope', text: 'nudged participant1') do
       find('.btn.btn-link.comment').click
     end
@@ -77,6 +89,12 @@ describe 'Active participant in a social arm signs in,',
 
     fill_in 'comment-text', with: 'Sweet Dude!'
     click_on 'Save'
+    find('h1', text: 'HOME')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'nudged participant1')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
+
     within first('.list-group-item.ng-scope', text: 'nudged participant1') do
       find('.fa.fa-comments.fa-2x').click
       expect(page).to have_content ': Sweet Dude!'
@@ -84,6 +102,12 @@ describe 'Active participant in a social arm signs in,',
   end
 
   it 'checks for due date of a goal post' do
+    find('h1', text: 'HOME')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'nudged participant1')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
+
     within first('.list-group-item.ng-scope', text: 'a Goal: p1 alpha') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click

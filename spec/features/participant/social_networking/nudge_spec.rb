@@ -27,6 +27,12 @@ describe 'Active participant in a social arm signs in,',
   end
 
   it 'sees nudge on landing page' do
+    find('h1', text: 'HOME')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'nudged participant1')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
+
     expect(page).to have_content 'nudged participant1'
   end
 end
