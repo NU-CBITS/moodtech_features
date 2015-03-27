@@ -115,32 +115,31 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         end
 
         within table_row[1] do
-          expect(page).to have_content 'Lessons Read    1 1 1'
+          expect(page).to have_content 'Lessons Read 1 1 1'
         end
 
         within('tr', text: 'Moods') do
-          expect(page).to have_content 'Moods   1 1 3'
+          expect(page).to have_content '1 1 3'
         end
 
         within('tr', text: 'Thoughts') do
-          expect(page).to have_content 'Thoughts   12 12 12'
-        end
-
-        within('tr', text: 'Activities Planned') do
-          expect(page).to have_content 'Activities Planned   2 2 2'
+          expect(page).to have_content '12 12 12'
         end
 
         within('tr', text: 'Activities Monitored') do
-          expect(page).to have_content 'Activities Monitored   4 20 20'
+          expect(page).to have_content '21 21 21'
+        end
+
+        within('tr', text: 'Activities Planned') do
+          expect(page).to have_content '13 13 13'
         end
 
         within('tr', text: 'Activities Reviewed and Completed') do
-          expect(page).to have_content 'Activities Reviewed and Completed 1 2 2'
+          expect(page).to have_content '1 2 2'
         end
 
         within('tr', text: 'Activities Reviewed and Incomplete') do
-          expect(page).to have_content 'Activities Reviewed and Incomplete ' \
-                                       '1 1 1'
+          expect(page).to have_content '1 1 1'
         end
       end
     end
