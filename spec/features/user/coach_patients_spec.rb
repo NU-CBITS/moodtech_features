@@ -100,8 +100,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page)
             .to have_content 'Last Logged In: ' \
                              "#{Time.now.strftime('%-l%P on %b %-d')}" \
-                             "\nLogins Today: 61\nLogins in the " \
-                             "last seven days: 61\nTotal Logins: 61"
+                             "\nLogins Today: 60\nLogins in the " \
+                             "last seven days: 60\nTotal Logins: 60"
         end
       end
     end
@@ -131,7 +131,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         end
 
         within('tr', text: 'Activities Planned') do
-          expect(page).to have_content '13 13 13'
+          expect(page).to have_content '14 16 16'
         end
 
         within('tr', text: 'Activities Reviewed and Completed') do
@@ -532,7 +532,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page).to have_content 'do something  Incomplete ' \
                                        "#{deleted_date.strftime('%d %b')} "
 
-          expect(page).to have_content "#{due_date.strftime('%d %b')} "
+          expect(page).to have_content "#{due_date.strftime('%-d %b')} "
 
           expect(page).to have_content "#{created_date.strftime('%d %b')}"
 
