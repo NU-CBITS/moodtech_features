@@ -36,6 +36,25 @@ def compare_thought(thought)
   page.find('.panel-body.adjusted-list-group-item').text
 end
 
+def reshape(challenge, action)
+  expect(page).to have_content 'You said that you thought...'
+
+  click_on 'Next'
+  fill_in 'thought[challenging_thought]', with: challenge
+  click_on 'Next'
+  expect(page).to have_content 'Thought saved'
+
+  expect(page).to have_content 'Because what you THINK, FEEL, Do'
+
+  click_on 'Next'
+  expect(page).to have_content 'What could you do to ACT AS IF you believe ' \
+                               'this?'
+
+  fill_in 'thought_act_as_if', with: action
+  click_on 'Next'
+  expect(page).to have_content 'Thought saved'
+end
+
 def select_patient(patient)
   within('#patients', text: patient) do
     click_on patient

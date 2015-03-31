@@ -24,6 +24,7 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Thought saved'
 
       visit ENV['Base_URL']
+      page.execute_script('window.scrollTo(0,100000)')
       expect(page).to_not have_content 'Private thought'
 
       expect(page).to have_content 'Public thought 1'
@@ -43,6 +44,7 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Add a New Thought'
 
       visit ENV['Base_URL']
+      page.execute_script('window.scrollTo(0,100000)')
       expect(page).to have_content 'Public thought 3'
     end
 
@@ -60,6 +62,7 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Add a New Thought'
 
       visit ENV['Base_URL']
+      page.execute_script('window.scrollTo(0,100000)')
       expect(page).to_not have_content 'Private thought 2'
     end
   end
@@ -105,6 +108,7 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Add a New Activity'
 
       visit ENV['Base_URL']
+      page.execute_script('window.scrollTo(0,100000)')
       expect(page).to_not have_content 'private sleep'
 
       expect(page).to have_content 'public sleep 1'
@@ -117,7 +121,12 @@ describe 'Active participant in a social arm signs in,',
       tomorrow = Date.today + 1
       find('.fa.fa-calendar').click
       within('#ui-datepicker-div') do
-        click_on tomorrow.strftime('%e')
+        if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
+                         text: "#{tomorrow.strftime('%-e')}")
+          find('.ui-datepicker-next.ui-corner-all').click
+        end
+
+        click_on tomorrow.strftime('%-e')
       end
 
       choose_rating('pleasure_0', 6)
@@ -129,7 +138,12 @@ describe 'Active participant in a social arm signs in,',
       fill_in 'activity_activity_type_new_title', with: 'New private activity'
       find('.fa.fa-calendar').click
       within('#ui-datepicker-div') do
-        click_on tomorrow.strftime('%e')
+        if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
+                         text: "#{tomorrow.strftime('%-e')}")
+          find('.ui-datepicker-next.ui-corner-all').click
+        end
+
+        click_on tomorrow.strftime('%-e')
       end
 
       choose_rating('pleasure_0', 4)
@@ -145,6 +159,7 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Upcoming Activities'
 
       visit ENV['Base_URL']
+      page.execute_script('window.scrollTo(0,100000)')
       expect(page).to_not have_content 'New private activity'
 
       expect(page).to have_content 'New public activity'
@@ -156,7 +171,12 @@ describe 'Active participant in a social arm signs in,',
       tomorrow = Date.today + 1
       find('.fa.fa-calendar').click
       within('#ui-datepicker-div') do
-        click_on tomorrow.strftime('%e')
+        if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
+                         text: "#{tomorrow.strftime('%-e')}")
+          find('.ui-datepicker-next.ui-corner-all').click
+        end
+
+        click_on tomorrow.strftime('%-e')
       end
 
       choose_rating('pleasure_0', 4)
@@ -166,6 +186,7 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Activity saved'
 
       visit ENV['Base_URL']
+      page.execute_script('window.scrollTo(0,100000)')
       expect(page).to have_content 'New public activity 2'
     end
 
@@ -185,6 +206,7 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Activity saved'
 
       visit ENV['Base_URL']
+      page.execute_script('window.scrollTo(0,100000)')
       expect(page).to_not have_content 'New private activity 2'
     end
   end

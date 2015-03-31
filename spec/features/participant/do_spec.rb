@@ -61,6 +61,22 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
     click_on 'Next'
     expect(page).to have_content 'Add a New Activity'
+
+    visit ENV['Base_URL']
+    page.execute_script('window.scrollTo(0,100000)')
+    within('.list-group-item.ng-scope',
+           text: 'Monitored an Activity: Get ready for bed') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      yesterday = Date.today - 1
+      expect(page).to have_content 'start: ' \
+                                   "#{yesterday.strftime('%b. %-d, %Y')}" \
+                                   " at 9:00PM\nend: " \
+                                   "#{yesterday.strftime('%b. %-d, %Y')}" \
+                                   " at 10:00PM actual accomplishment: 3\n" \
+                                   'actual pleasure: 2'
+    end
   end
 
   it 'cannot complete Awareness for a time period already completed' do
@@ -114,7 +130,12 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     tomorrow = Date.today + 1
     find('.fa.fa-calendar').click
     within('#ui-datepicker-div') do
-      click_on tomorrow.strftime('%e')
+      if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
+                       text: "#{tomorrow.strftime('%-e')}")
+        find('.ui-datepicker-next.ui-corner-all').click
+      end
+
+      click_on tomorrow.strftime('%-e')
     end
 
     choose_rating('pleasure_0', 6)
@@ -126,7 +147,12 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
     find('.fa.fa-calendar').click
     within('#ui-datepicker-div') do
-      click_on tomorrow.strftime('%e')
+      if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
+                       text: "#{tomorrow.strftime('%-e')}")
+        find('.ui-datepicker-next.ui-corner-all').click
+      end
+
+      click_on tomorrow.strftime('%-e')
     end
 
     choose_rating('pleasure_0', 4)
@@ -140,6 +166,23 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
     click_on 'Next'
     expect(page).to have_content 'Upcoming Activities'
+
+    visit ENV['Base_URL']
+    page.execute_script('window.scrollTo(0,100000)')
+    within('.list-group-item.ng-scope',
+           text: 'Planned an Activity: New planned activity') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      time1 = Time.now + (60 * 60 * 25)
+      time2 = Time.now + (60 * 60 * 26)
+      expect(page)
+        .to have_content "start: #{time1.strftime('%b. %-d, %Y at %-l')}"
+      expect(page)
+        .to have_content "end: #{time2.strftime('%b. %-d, %Y at %-l')}"
+      expect(page).to have_content "predicted accomplishment: 3\npredicted " \
+                                   'pleasure: 6'
+    end
   end
 
   it 'completes Reviewing' do
@@ -172,8 +215,17 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
-      expect(page).to have_content "actual accomplishment: 5\n" \
-                                   'actual pleasure: 7'
+      time1 = Time.now - (60 * 60 * 24)
+      time2 = Time.now - (60 * 60 * 23)
+      expect(page)
+        .to have_content "start: #{time1.strftime('%b. %-d, %Y at %-l')}"
+
+      expect(page)
+        .to have_content "end: #{time2.strftime('%b. %-d, %Y at %-l')}"
+
+      expect(page)
+        .to have_content "predicted accomplishment: 4\npredicted pleasure: " \
+                         "9\nactual accomplishment: 5\nactual pleasure: 7"
     end
 
     within('.list-group-item.ng-scope',
@@ -191,7 +243,12 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     tomorrow = Date.today + 1
     find('.fa.fa-calendar').click
     within('#ui-datepicker-div') do
-      click_on tomorrow.strftime('%e')
+      if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
+                       text: "#{tomorrow.strftime('%-e')}")
+        find('.ui-datepicker-next.ui-corner-all').click
+      end
+
+      click_on tomorrow.strftime('%-e')
     end
 
     choose_rating('pleasure_0', 4)

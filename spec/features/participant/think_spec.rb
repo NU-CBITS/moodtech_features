@@ -42,6 +42,16 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     click_on 'Next'
     expect(page).to have_content 'Add a New Thought'
+
+    visit ENV['Base_URL']
+    page.execute_script('window.scrollTo(0,100000)')
+    within('.list-group-item.ng-scope',
+           text: 'Identified a Thought: Testing helpful thought') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      expect(page).to have_content 'this thought is: Testing helpful thought'
+    end
   end
 
   it 'completes Patterns module' do
@@ -79,6 +89,18 @@ describe 'Active participant signs in, navigates to THINK tool,',
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Thought saved'
+
+    visit ENV['Base_URL']
+    page.execute_script('window.scrollTo(0,100000)')
+    within('.list-group-item.ng-scope',
+           text: 'Assigned a pattern to a Thought: Testing helpful thought') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      expect(page).to have_content 'this thought is: Testing helpful thought' \
+                                   "\nthought pattern: Magnification or " \
+                                   'Catastrophizing'
+    end
   end
 
   it 'completes Reshape module' do
@@ -91,60 +113,25 @@ describe 'Active participant signs in, navigates to THINK tool,',
     expect(page).to have_content 'Challenging a thought means'
 
     click_on 'Next'
-    expect(page).to have_content 'You said that you thought...'
+    reshape('Example challenge', 'Example act-as-if')
 
-    click_on 'Next'
-    fill_in 'thought[challenging_thought]', with: 'Example challenge'
-    click_on 'Next'
-    expect(page).to have_content 'Thought saved'
+    reshape('Example challenge', 'Example act-as-if')
 
-    expect(page).to have_content 'Because what you THINK, FEEL, Do'
+    reshape('Example challenge', 'Example act-as-if')
 
-    click_on 'Next'
-    expect(page).to have_content 'What could you do to ACT AS IF you believe ' \
-                                 'this?'
-
-    fill_in 'thought_act_as_if', with: 'Example act-as-if'
-    click_on 'Next'
-    expect(page).to have_content 'Thought saved'
-
-    expect(page).to have_content 'You said that you thought...'
-
-    click_on 'Next'
-    expect(page).to have_content 'Come up with a challenging'
-
-    fill_in 'thought[challenging_thought]', with: 'Example challenge'
-    click_on 'Next'
-    expect(page).to have_content 'Thought saved'
-
-    expect(page).to have_content 'Because what you THINK, FEEL, Do'
-
-    click_on 'Next'
-    expect(page).to have_content 'What could you do to ACT AS IF you believe ' \
-                                 'this?'
-
-    fill_in 'thought_act_as_if', with: 'Example act-as-if'
-    click_on 'Next'
-    expect(page).to have_content 'Thought saved'
-
-    expect(page).to have_content 'You said that you thought...'
-
-    click_on 'Next'
-    expect(page).to have_content 'Come up with a challenging'
-
-    fill_in 'thought[challenging_thought]', with: 'Example challenge'
-    click_on 'Next'
-    expect(page).to have_content 'Thought saved'
-
-    expect(page).to have_content 'Because what you THINK, FEEL, Do'
-
-    click_on 'Next'
-    expect(page).to have_content 'What could you do to ACT AS IF you believe ' \
-                                 'this?'
-
-    fill_in 'thought_act_as_if', with: 'Example act-as-if'
-    click_on 'Next'
-    expect(page).to have_content 'Thought saved'
+    visit ENV['Base_URL']
+    page.execute_script('window.scrollTo(0,100000)')
+    within('.list-group-item.ng-scope',
+           text: 'Reshaped a Thought: Testing helpful thought') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      expect(page).to have_content 'this thought is: Testing helpful thought' \
+                                   "\nthought pattern: Magnification or " \
+                                   "Catastrophizing\nchallenging thought: " \
+                                   "Example challenge\nas if action: Example" \
+                                   ' act-as-if'
+    end
   end
 
   it 'completes Add a New Thought module' do
@@ -159,6 +146,21 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     click_on 'Next'
     expect(page).to have_content 'Add a New Thought'
+
+    visit ENV['Base_URL']
+    page.execute_script('window.scrollTo(0,100000)')
+    within('.list-group-item.ng-scope',
+           text: 'Reshaped a Thought: Testing add a new thought') do
+      within('.actions') do
+        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+      end
+      expect(page).to have_content 'this thought is: Testing add a new' \
+                                   " thought\nthought pattern: " \
+                                   'Magnification or Catastrophizing' \
+                                   "\nchallenging thought: " \
+                                   "Testing challenge thought\nas if action:" \
+                                   ' Testing act-as-if action'
+    end
   end
 
   it 'cancels Add a New Thought' do
