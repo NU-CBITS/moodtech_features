@@ -10,12 +10,9 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
     it 'completes Planning without multiple alerts' do
       click_on '#2 Planning'
       click_on 'Next'
-      tomorrow = Date.today + 1
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
       find('.fa.fa-calendar').click
-      within('#ui-datepicker-div') do
-        click_on tomorrow.strftime('%e')
-      end
+      pick_tomorrow
 
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
@@ -26,9 +23,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       fill_in 'activity_activity_type_new_title',
               with: 'Another planned activity'
       find('.fa.fa-calendar').click
-      within('#ui-datepicker-div') do
-        click_on tomorrow.strftime('%e')
-      end
+      pick_tomorrow
 
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
@@ -46,11 +41,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
     it 'completes Plan a New Activity without multiple alerts' do
       click_on 'Add a New Activity'
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-      tomorrow = Date.today + 1
       find('.fa.fa-calendar').click
-      within('#ui-datepicker-div') do
-        click_on tomorrow.strftime('%e')
-      end
+      pick_tomorrow
 
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)

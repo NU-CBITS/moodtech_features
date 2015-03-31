@@ -118,16 +118,8 @@ describe 'Active participant in a social arm signs in,',
       click_on '#2 Planning'
       click_on 'Next'
       fill_in 'activity_activity_type_new_title', with: 'New public activity'
-      tomorrow = Date.today + 1
       find('.fa.fa-calendar').click
-      within('#ui-datepicker-div') do
-        if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
-                         text: "#{tomorrow.strftime('%-e')}")
-          find('.ui-datepicker-next.ui-corner-all').click
-        end
-
-        click_on tomorrow.strftime('%-e')
-      end
+      pick_tomorrow
 
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
@@ -137,14 +129,7 @@ describe 'Active participant in a social arm signs in,',
 
       fill_in 'activity_activity_type_new_title', with: 'New private activity'
       find('.fa.fa-calendar').click
-      within('#ui-datepicker-div') do
-        if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
-                         text: "#{tomorrow.strftime('%-e')}")
-          find('.ui-datepicker-next.ui-corner-all').click
-        end
-
-        click_on tomorrow.strftime('%-e')
-      end
+      pick_tomorrow
 
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
@@ -168,16 +153,8 @@ describe 'Active participant in a social arm signs in,',
     it 'shares Add a New Activity responses' do
       click_on 'Add a New Activity'
       fill_in 'activity_activity_type_new_title', with: 'New public activity 2'
-      tomorrow = Date.today + 1
       find('.fa.fa-calendar').click
-      within('#ui-datepicker-div') do
-        if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
-                         text: "#{tomorrow.strftime('%-e')}")
-          find('.ui-datepicker-next.ui-corner-all').click
-        end
-
-        click_on tomorrow.strftime('%-e')
-      end
+      pick_tomorrow
 
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
@@ -193,11 +170,8 @@ describe 'Active participant in a social arm signs in,',
     it 'does not share Add a New Activity responses' do
       click_on 'Add a New Activity'
       fill_in 'activity_activity_type_new_title', with: 'New private activity 2'
-      tomorrow = Date.today + 1
       find('.fa.fa-calendar').click
-      within('#ui-datepicker-div') do
-        click_on tomorrow.strftime('%e')
-      end
+      pick_tomorrow
 
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)

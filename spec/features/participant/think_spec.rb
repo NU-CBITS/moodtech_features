@@ -157,9 +157,9 @@ describe 'Active participant signs in, navigates to THINK tool,',
       expect(page).to have_content 'this thought is: Testing add a new' \
                                    " thought\nthought pattern: " \
                                    'Magnification or Catastrophizing' \
-                                   "\nchallenging thought: " \
-                                   "Testing challenge thought\nas if action:" \
-                                   ' Testing act-as-if action'
+                                   "\nchallenging thought: Testing challenge " \
+                                   "thought\nas if action: Testing act-as-if " \
+                                   ' action'
     end
   end
 

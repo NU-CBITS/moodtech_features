@@ -388,7 +388,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         within('tr:nth-child(3)') do
           two_days = Date.today + 2
           expect(page).to have_content 'Going to school  2 6 Scheduled for ' \
-                                       "#{two_days.strftime('%d %b')}"
+                                       "#{two_days.strftime('%-d %b')}"
         end
       end
     end
@@ -401,11 +401,11 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           if page.has_text? 'Planned'
             expect(page).
               to have_content '9 4 Not Rated Not Rated  Scheduled for ' \
-                              "#{Date.today.prev_day.strftime('%d %b')}"
+                              "#{Date.today.prev_day.strftime('%-d %b')}"
           else
             expect(page).
               to have_content 'Reviewed & Completed 9 4 7 5 Scheduled for ' \
-                              "#{Date.today.prev_day.strftime('%d %b')}"
+                              "#{Date.today.prev_day.strftime('%-d %b')}"
           end
         end
 
@@ -482,7 +482,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       within('#tasks-container') do
         within('tr', text: 'Do - Planning Introduction') do
           tomorrow = Date.today + 1
-          expect(page).to have_content "#{tomorrow.strftime('%d %b')}" \
+          expect(page).to have_content "#{tomorrow.strftime('%-d %b')}" \
                              ' Incomplete'
         end
       end

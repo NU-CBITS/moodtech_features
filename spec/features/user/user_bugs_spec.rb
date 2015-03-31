@@ -82,7 +82,7 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
         end
 
         within('tr', text: 'Activities Planned') do
-          expect(page).to have_content '13 13 13'
+          expect(page).to have_content '14 16 16'
         end
 
         within('tr', text: 'Activities Reviewed and Completed') do

@@ -21,8 +21,8 @@ def sign_in_user(user, password)
 end
 
 def choose_rating(element_id, value)
-  find("##{ element_id } select").find(:xpath,
-                                       "option[#{(value + 1)}]").select_option
+  find("##{ element_id } select")
+    .find(:xpath, "option[#{(value + 1)}]").select_option
 end
 
 def compare_thought(thought)
@@ -53,6 +53,18 @@ def reshape(challenge, action)
   fill_in 'thought_act_as_if', with: action
   click_on 'Next'
   expect(page).to have_content 'Thought saved'
+end
+
+def pick_tomorrow
+  tomorrow = Date.today + 1
+  within('#ui-datepicker-div') do
+    if page.has_css?('.ui-datepicker-unselectable.ui-state-disabled',
+                     text: "#{tomorrow.strftime('%-e')}")
+      find('.ui-datepicker-next.ui-corner-all').click
+    end
+
+    click_on tomorrow.strftime('%-e')
+  end
 end
 
 def select_patient(patient)
