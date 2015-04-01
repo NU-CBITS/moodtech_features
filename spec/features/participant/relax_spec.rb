@@ -16,6 +16,8 @@ describe 'Active participant signs in, navigates to RELAX tool,',
     end
 
     click_on 'Next'
+    expect(page).to have_content 'Home'
+
     visit ENV['Base_URL']
     expect(page).to have_content 'Listened to a Relaxation Exercise: Audio!'
   end

@@ -305,7 +305,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         within table_row[1] do
           unless page.has_text?('No data available in table')
             expect(page).to have_content 'Do - Awareness Introduction' \
-                                         " #{Date.today.strftime('%d %b')}" \
+                                         " #{Date.today.strftime('%-d %b')}" \
                                          " #{Date.today.strftime('%b. %-d')}"
 
             expect(page).to have_content 'less than a minute'
@@ -320,7 +320,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           expect(page).to have_content 'Audio! ' \
-                                       "#{Date.today.strftime('%d %b')}" \
+                                       "#{Date.today.strftime('%-d %b')}" \
                                        " #{Date.today.strftime('%b. %-d')}"
           if page.has_text?('Not Completed')
             expect(page).to have_content 'Not Completed'
@@ -388,7 +388,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         within('tr:nth-child(3)') do
           two_days = Date.today + 2
           expect(page).to have_content 'Going to school  2 6 Scheduled for ' \
-                                       "#{two_days.strftime('%-d %b')}"
+                                       "#{two_days.strftime('%d %b')}"
         end
       end
     end
