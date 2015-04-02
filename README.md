@@ -32,12 +32,13 @@ is formatted 1(888) 555-9999. The "Audio_File" variable is a URL specific to
 the app. 
 
     Base_URL; Participant_Email; Participant_Password; Participant_2_Email;
-    Participant_2_Password; Old_Participant_Email; Old_Participant_Password; 
-    Alt_Participant_Email; Alt_Participant_Password; NS_Participant_Email;
-    NS_Participant_Password; Completed_Pt_Email; Completed_Pt_Password;User_Email; 
-    User_Password; Clinician_Email; Clinician_Password; Researcher_Email; 
-    Researcher_Password; Content_Author_Email; Content_Author_Password; 
-    Participant_Phone_Number; Participant_Phone_Number_1; Audio_File
+    Participant_2_Password; PT61_Email; PT61_Password; Old_Participant_Email;
+    Old_Participant_Password; Alt_Participant_Email; Alt_Participant_Password;
+    NS_Participant_Email; NS_Participant_Password; Completed_Pt_Email;
+    Completed_Pt_Password; User_Email; User_Password; Clinician_Email;
+    Clinician_Password; Researcher_Email; Researcher_Password;
+    Content_Author_Email; Content_Author_Password; Participant_Phone_Number;
+    Participant_Phone_Number_1; Audio_File
 
 To run on Sauce Labs you will need to set the following environment variables, 
 otherwise you can run it locally on your machine:

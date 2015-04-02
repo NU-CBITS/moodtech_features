@@ -374,6 +374,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'uses breadcrumbs to return to home' do
     click_on 'Group'
+    expect(page).to have_content 'Title: Group 6'
+
     within('.breadcrumb') do
       click_on 'Home'
     end

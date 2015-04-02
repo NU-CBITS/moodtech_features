@@ -36,12 +36,42 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
 
   it 'was an active participant who has completed' do
     sign_in_pt(ENV['Completed_Pt_Email'], ENV['Completed_Pt_Password'])
-    expect(page).to have_content 'HOME'
+    find('h1', text: 'HOME')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'nudged participant1')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
+
+    expect(page).to have_content 'nudged participant1'
+
+    visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
+
+    click_on 'Compose'
+    expect(page).to have_content 'To Coach'
+
+    within('#new_message') do
+      fill_in 'message_subject', with: 'Test message from completer'
+      fill_in 'message_body',
+              with: 'Test'
+    end
+
+    click_on 'Send'
+    expect(page).to have_content 'Message saved'
+
+    visit "#{ENV['Base_URL']}/users/sign_in"
+    sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
+
+    click_on 'Arms'
+    find('h1', text: 'Arms')
+    click_on 'Arm 1'
+    click_on 'Group 1'
+    click_on 'Messaging'
+    click_on 'Messages'
+    click_on 'Test message from completer'
+    expect(page).to have_content 'From Completer'
+
+    expect(page).to have_content 'test'
   end
-
-  it 'was an active participant in a social arm who has completed'
-
-  it 'was an active participant in a non-social arm who has completed'
 
   it 'was an active participant who has withdrawn' do
     sign_in_pt(ENV['Old_Participant_Email'], ENV['Old_Participant_Password'])

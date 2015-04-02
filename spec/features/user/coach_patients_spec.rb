@@ -21,28 +21,6 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Completer'
     end
 
-    it 'selects Discontinue to end active status of participant' do
-      within('#patients', text: 'TFD-1111') do
-        within('table#patients tr', text: 'TFD-Discontinue') do
-          click_on 'Discontinue'
-        end
-      end
-
-      page.accept_alert 'Are you sure you would like to end this study? ' \
-                        'You will not be able to undo this.'
-      expect(page).to_not have_content 'TFD-Discontinue'
-
-      click_on 'Inactive Patients'
-      expect(page).to have_content 'TFD-Discontinue'
-      within('#patients', text: 'TFD-Discontinue') do
-        within('table#patients tr', text: 'TFD-Discontinue') do
-          expect(page)
-            .to have_content 'Discontinued ' \
-                             "#{Date.today.prev_day.strftime('%Y-%m-%d')}"
-        end
-      end
-    end
-
     it 'selects Withdraw to end active status of participant' do
       within('#patients', text: 'TFD-1111') do
         within('table#patients tr', text: 'TFD-Withdraw') do
@@ -401,11 +379,11 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           if page.has_text? 'Planned'
             expect(page).
               to have_content '9 4 Not Rated Not Rated  Scheduled for ' \
-                              "#{Date.today.prev_day.strftime('%-d %b')}"
+                              "#{Date.today.prev_day.strftime('%d %b')}"
           else
             expect(page).
               to have_content 'Reviewed & Completed 9 4 7 5 Scheduled for ' \
-                              "#{Date.today.prev_day.strftime('%-d %b')}"
+                              "#{Date.today.prev_day.strftime('%d %b')}"
           end
         end
 
@@ -490,6 +468,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'uses breadcrumbs to return to home' do
       click_on 'Group'
+      expect(page).to have_content 'Title: Group 6'
+
       within('.breadcrumb') do
         click_on 'Home'
       end
@@ -589,5 +569,44 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         end
       end
     end
+  end
+end
+
+describe 'Coach signs in, navigates to Patient Dashboard',
+         type: :feature, sauce: sauce_labs do
+  before do
+    sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
+    click_on 'Arms'
+    find('h1', text: 'Arms')
+    click_on 'Arm 1'
+    click_on 'Group 6'
+    click_on 'Patient Dashboard'
+  end
+
+  it 'selects Terminate Access to end active status of participant,' \
+     ' checks to make sure profile is removed' do
+    within('#patients', text: 'participant65') do
+      within('table#patients tr', text: 'participant65') do
+        click_on 'Terminate Access'
+      end
+    end
+
+    page.accept_alert 'Are you sure you would like to terminate access to ' \
+                      'this membership? This option should also be used ' \
+                      'before changing membership of the patient to a ' \
+                      'different group or to completely revoke access to ' \
+                      'this membership. You will not be able to undo this.'
+    expect(page).to_not have_content 'participant65'
+
+    click_on 'Inactive Patients'
+    expect(page).to have_content 'TFD-Withdraw'
+
+    visit "#{ENV['Base_URL']}/participants/sign_in"
+
+    sign_in_pt(ENV['PT61_Email'], ENV['PT61_Password'])
+
+    expect(page).to have_content 'HOME'
+
+    expect(page).to_not have_content 'Fifth'
   end
 end
