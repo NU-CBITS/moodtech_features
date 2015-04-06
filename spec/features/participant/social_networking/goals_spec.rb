@@ -11,11 +11,12 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     click_on '+ add a goal'
     fill_in 'new-goal-description', with: 'eat a whole pizza'
     choose '8 weeks (end of study)'
-    find('.btn.btn-primary').click
+    click_on 'Save'
 
-    expect(page).to have_content 'eat a whole pizza'
+    find('.list-group-item.ng-scope', text: 'eat a whole pizza')
 
     visit ENV['Base_URL']
+    page.execute_script('window.scrollTo(0,100000)')
     within('.list-group-item.ng-scope',
            text: 'Created a Goal: eat a whole pizza') do
       within('.actions') do
@@ -34,7 +35,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
               text: 'p1 alpha').find('.btn.btn-link.complete.ng-scope').click
     page.accept_alert 'Are you sure you would like to mark this goal as ' \
                       'complete? This action cannot be undone.'
-    expect(page).to have_content 'p1 alpha'
+    find('.list-group-item.ng-scope.list-group-item-success', text: 'p1 alpha')
 
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
@@ -50,6 +51,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
               text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
     page.accept_alert 'Are you sure you would like to delete this goal? This ' \
                       'action cannot be undone.'
+    find('.list-group-item.ng-scope', text: 'p1 epsilon')
     expect(page).to_not have_content 'p1 gamma'
 
     click_on 'Deleted'

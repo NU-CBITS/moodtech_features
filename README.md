@@ -1,5 +1,5 @@
 MoodTech Features
-===========
+=================
 
 This is a test suite aimed at moodtech-staging and will be used to 
 test the app via Selenium and SauceLabs
@@ -18,6 +18,7 @@ You will need to set up the following participants and users in the app:
   * NS_Participant - an active participant in a non-social arm with access to 
   many tools (see tests for granular detail)
   * Completed_Pt - a participant who's flagged as completed
+  * PT61 - an active participant in a social arm
   * User - user given a super user role
   * Clinician - user with a clinician role
   * Researcher - user with a researcher role

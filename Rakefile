@@ -57,6 +57,16 @@ task :load_tfdso_selenium do
   end
 end
 
+# If there are errors you may need to run:
+# ssh deploy@moodtech-staging.cbits.northwestern.edu "pg_dump -h
+#  localhost -d tfdo_aux -U tfdo_user -f
+#  /var/www/apps/think_feel_do_so/shared/db/clean.sql -c"
+#
+# then you will need to hand clean (remove all CREATE table blocks at 
+# bottom of file): /var/www/apps/think_feel_do_so/shared/db/clean.sql
+# by opening it using vi after ssh-ing into the server:
+# ssh deploy@moodtech-staging.cbits.northwestern.edu
+
 
 # load development version of think_feel_do_so on staging and switch driver 
 # to sauce

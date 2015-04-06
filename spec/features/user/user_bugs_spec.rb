@@ -27,7 +27,7 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
       weeks_later = Date.today + 56
       expect(page).to have_content 'Standard number of weeks: 8, Projected ' \
                                    'End Date from today: ' \
-                                   "#{weeks_later.strftime('%-m/%-d/%Y')}"
+                                   "#{weeks_later.strftime('%m/%d/%Y')}"
 
       click_on 'Assign'
       expect(page).to have_content 'Group was successfully assigned'

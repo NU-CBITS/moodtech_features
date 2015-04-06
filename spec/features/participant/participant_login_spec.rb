@@ -68,9 +68,9 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     click_on 'Messaging'
     click_on 'Messages'
     click_on 'Test message from completer'
-    expect(page).to have_content 'From Completer'
+    expect(page).to have_content 'From You'
 
-    expect(page).to have_content 'test'
+    expect(page).to have_content 'Test'
   end
 
   it 'was an active participant who has withdrawn' do
