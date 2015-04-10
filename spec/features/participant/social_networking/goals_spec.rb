@@ -54,7 +54,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
                       'action cannot be undone.'
     find('.list-group-item.ng-scope', text: 'p1 epsilon')
     expect(page).to_not have_content 'p1 gamma'
-    byebug
+
     click_on 'Deleted'
     expect(page).to_not have_content 'p1 alpha'
 
