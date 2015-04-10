@@ -8,6 +8,7 @@ task :load_tfdso_local do
   Dir.chdir('/Users/Chris/Work/think_feel_do_so') do
     system('rake db:drop db:create db:migrate')
     system('rake selenium_seed:with_fixtures')
+    system('rake goal_tasks:share_past_due')
     system('rails s')
   end
 end
@@ -54,6 +55,7 @@ task :load_tfdso_selenium do
     system('cap staging deploy:clean_db')
     system('cap staging deploy:migrate')
     system('cap staging deploy:seed_selenium_db')
+    system('rake goal_tasks:share_past_due')
   end
 end
 
@@ -81,6 +83,7 @@ task :load_tfdso_sauce do
     system('cap staging deploy:clean_db')
     system('cap staging deploy:migrate_db')
     system('cap staging deploy:seed_selenium_db')
+    system('rake goal_tasks:share_past_due')
   end
 end
 

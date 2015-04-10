@@ -117,4 +117,16 @@ describe 'Active participant in a social arm signs in,',
                                    ' at 12:00AM'
     end
   end
+
+  it 'checks for a goal that was due yesterday and is now incomplete' do
+    find('h1', text: 'HOME')
+    page.execute_script('window.scrollTo(0,100000)')
+    expect(page).to have_content 'Did Not Complete Goal: due yesterday'
+  end
+
+  it 'does not see an incomplete goal for a goal that was due two days ago' do
+    find('h1', text: 'HOME')
+    page.execute_script('window.scrollTo(0,100000)')
+    expect(page).to_not have_content 'Did Not Complete Goal: due two days ago'
+  end
 end

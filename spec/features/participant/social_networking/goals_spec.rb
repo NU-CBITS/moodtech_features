@@ -13,6 +13,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     choose '8 weeks (end of study)'
     click_on 'Save'
 
+    page.should have_css('.list-group-item.ng-scope', text: 'due yesterday')
     find('.list-group-item.ng-scope', text: 'eat a whole pizza')
 
     visit ENV['Base_URL']
@@ -31,18 +32,18 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
   end
 
   it 'completes a goal' do
-    page.find('.list-group-item.ng-scope',
-              text: 'p1 alpha').find('.btn.btn-link.complete.ng-scope').click
+    find('.list-group-item.ng-scope', text: 'p1 alpha')
+      .find('.btn.btn-link.complete.ng-scope').click
     page.accept_alert 'Are you sure you would like to mark this goal as ' \
                       'complete? This action cannot be undone.'
-    find('.list-group-item.ng-scope.list-group-item-success', text: 'p1 alpha')
-
+    find('.list-group-item-success', text: 'p1 alpha')
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
 
     expect(page).to have_content 'p1 alpha'
 
     visit ENV['Base_URL']
+    page.execute_script('window.scrollTo(0,100000)')
     expect(page).to have_content 'Completed a Goal: p1 alpha'
   end
 
@@ -53,7 +54,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
                       'action cannot be undone.'
     find('.list-group-item.ng-scope', text: 'p1 epsilon')
     expect(page).to_not have_content 'p1 gamma'
-
+    byebug
     click_on 'Deleted'
     expect(page).to_not have_content 'p1 alpha'
 
