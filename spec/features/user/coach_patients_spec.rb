@@ -78,8 +78,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page)
             .to have_content 'Last Logged In: ' \
                              "#{Time.now.strftime('%-l%P on %b %-d')}" \
-                             "\nLogins Today: 60\nLogins in the " \
-                             "last seven days: 60\nTotal Logins: 60"
+                             "\nLogins Today: 62\nLogins in the " \
+                             "last seven days: 62\nTotal Logins: 62"
         end
       end
     end
@@ -283,7 +283,6 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         within table_row[1] do
           unless page.has_text?('No data available in table')
             expect(page).to have_content 'Do - Awareness Introduction' \
-                                         " #{Date.today.strftime('%b %d %Y')}" \
                                          " #{Date.today.strftime('%b %d %Y')}"
 
             expect(page).to have_content 'less than a minute'
@@ -298,7 +297,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           expect(page).to have_content 'Audio! ' \
-                                       "#{Date.today.strftime('%b %d %Y')}" \
+                                       "#{Date.today.strftime('%m/%d/%Y')}" \
                                        " #{Date.today.strftime('%b %d %Y')}"
           if page.has_text?('Not Completed')
             expect(page).to have_content 'Not Completed'
@@ -468,7 +467,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
     it 'uses breadcrumbs to return to home' do
       click_on 'Group'
-      expect(page).to have_content 'Title: Group 6'
+      expect(page).to have_content 'Title: Group 1'
 
       within('.breadcrumb') do
         click_on 'Home'

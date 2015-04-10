@@ -67,8 +67,9 @@ describe 'Active participant in a social arm signs in,',
       page.execute_script('window.scrollTo(0,100000)')
     end
 
-    within('.list-group-item.ng-scope',
-           text: "said it's always sunny in Philadelphia") do
+    philly_comment = page.all('.list-group-item.ng-scope',
+                              text: "said it's always sunny in Philadelphia")[1]
+    within philly_comment do
       find('.btn.btn-link.like.ng-scope').click
       expect(page).to have_css '.fa.fa-thumbs-up.fa-2x'
     end
