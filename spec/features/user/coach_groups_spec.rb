@@ -162,7 +162,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         expect(page).to have_content 'First I am no good  Labeling and ' \
                                      'Mislabeling  I did good at work '  \
                                      'today  I am good  ' \
-                                     "#{date_1.strftime('%d %b')}"
+                                     "#{date_1.strftime('%b %d %Y')}"
 
         expect(page).to have_content '  1 1 1'
       end
@@ -172,7 +172,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         expect(page).to have_content 'First This is stupid  Fortune ' \
                                      'Telling  It could be useful  I ' \
                                      'should try it out  ' \
-                                     "#{date_2.strftime('%d %b')}"
+                                     "#{date_2.strftime('%b %d %Y')}"
 
         expect(page).to have_content '  3 0 0'
       end
@@ -186,9 +186,9 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_1 = Date.today - 33
         date_2 = Date.today - 34
         expect(page).to have_content 'First Running reviewed and complete ' \
-                                     "#{date_1.strftime('%d %b')}"
+                                     "#{date_1.strftime('%b %d %Y')}"
 
-        expect(page).to have_content "6 5 6 8 #{date_2.strftime('%d %b')}"
+        expect(page).to have_content "6 5 6 8 #{date_2.strftime('%b %d %Y')}"
 
         expect(page).to have_content '1 0 0'
       end
@@ -197,9 +197,9 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_3 = Date.today - 20
         date_4 = Date.today - 21
         expect(page).to have_content 'Second Jumping reviewed and complete ' \
-                                     "#{date_3.strftime('%d %b')}"
+                                     "#{date_3.strftime('%b %d %Y')}"
 
-        expect(page).to have_content "6 9 9 3 #{date_4.strftime('%d %b')}"
+        expect(page).to have_content "6 9 9 3 #{date_4.strftime('%b %d %Y')}"
 
         expect(page).to have_content '3 1 1'
       end
@@ -212,21 +212,23 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
       within table_row[1] do
         date_1 = Date.today + 4
         expect(page).to have_content 'Third Go to movie ' \
-                                     "#{date_1.strftime('%d %b')}"
+                                     "#{date_1.strftime('%b %d %Y')}"
 
+        date_2 = Date.today - 1
         expect(page).to have_content '9 7 ' \
-                                     "#{Date.today.prev_day.strftime('%d %b')}"
+                                     "#{date_2.strftime('%b %d %Y')}"
 
         expect(page).to have_content '5 1 1'
       end
 
       within('tr:nth-child(2)') do
-        date_2 = Date.today + 7
+        date_3 = Date.today + 7
         expect(page).to have_content 'Fourth Yelling ' \
-                                     "#{date_2.strftime('%d %b')}"
+                                     "#{date_3.strftime('%b %d %Y')}"
 
+        date_4 = Date.today - 1
         expect(page).to have_content '0 2 ' \
-                                     "#{Date.today.prev_day.strftime('%d %b')}"
+                                     "#{date_4.strftime('%b %d %Y')}"
 
         expect(page).to have_content '5 0 0'
       end
@@ -239,7 +241,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
       within table_row[1] do
         date_1 = Date.today - 14
         expect(page).to have_content "First I'm feeling great!  " \
-                                     "#{date_1.strftime('%d %b')}"
+                                     "#{date_1.strftime('%b %d %Y')}"
 
         expect(page).to have_content '4 0 0'
       end
@@ -253,7 +255,8 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_1 = Date.today - 20
         expect(page).to have_content 'Second Nice job on identifying the ' \
                                      'pattern!  Thought: participant61, ' \
-                                     "I am no good #{date_1.strftime('%d %b')}"
+                                     'I am no good ' \
+                                     "#{date_1.strftime('%b %d %Y')}"
 
         expect(page).to have_content '1'
       end
@@ -262,7 +265,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_2 = Date.today - 18
         expect(page).to have_content 'First Great activity! Activity: ' \
                                      'participant62, Jumping, ' \
-                                     "#{date_2.strftime('%d %b')}"
+                                     "#{date_2.strftime('%b %d %Y')}"
 
         expect(page).to have_content '3'
       end
@@ -271,7 +274,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_3 = Date.today - 1
         expect(page).to have_content 'Fifth That sounds like fun! Activity: ' \
                                      'participant63, Go to movie, ' \
-                                     "#{date_3.strftime('%d %b')}"
+                                     "#{date_3.strftime('%b %d %Y')}"
 
         expect(page).to have_content '5'
       end
@@ -286,11 +289,11 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_2 = Date.today - 26
         date_3 = Date.today - 34
         expect(page).to have_content 'First do something  incomplete ' \
-                                     "#{date_1.strftime('%d %b')} "
+                                     "#{date_1.strftime('%b %d %Y')} "
 
-        expect(page).to have_content "#{date_2.strftime('%-d %b')} "
+        expect(page).to have_content "#{date_2.strftime('%m/%d/%Y')} "
 
-        expect(page).to have_content "#{date_3.strftime('%-d %b')}"
+        expect(page).to have_content "#{date_3.strftime('%b %d %Y')}"
 
         expect(page).to have_content '1 0 0'
       end
@@ -299,9 +302,9 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_4 = Date.today + 3
         date_5 = Date.today - 26
         expect(page).to have_content 'Third Get crazy incomplete not deleted ' \
-                                     "#{date_4.strftime('%-d %b')} "
+                                     "#{date_4.strftime('%m/%d/%Y')} "
 
-        expect(page).to have_content "#{date_5.strftime('%-d %b')}"
+        expect(page).to have_content "#{date_5.strftime('%b %d %Y')}"
 
         expect(page).to have_content '2 1 0'
       end
@@ -311,12 +314,12 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_7 = Date.today - 14
         date_8 = Date.today - 24
         expect(page).to have_content 'Fifth go to work ' \
-                                     "#{date_6.strftime('%d %b')} "
+                                     "#{date_6.strftime('%b %d %Y')} "
 
         expect(page).to have_content 'not deleted ' \
-                                     "#{date_7.strftime('%-d %b')} "
+                                     "#{date_7.strftime('%m/%d/%Y')} "
 
-        expect(page).to have_content "#{date_8.strftime('%-d %b')}"
+        expect(page).to have_content "#{date_8.strftime('%b %d %Y')}"
 
         expect(page).to have_content '2 1 0'
       end
@@ -330,7 +333,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_1 = Date.today - 33
         expect(page).to have_content 'Second  SocialNetworking::SharedItem  ' \
                                      'Thought: I am no good ' \
-                                     "#{date_1.strftime('%d %b')}"
+                                     "#{date_1.strftime('%b %d %Y')}"
 
         expect(page).to have_content '1'
       end
@@ -339,7 +342,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_2 = Date.today - 24
         expect(page).to have_content 'First SocialNetworking::SharedItem  ' \
                                      'Goal: Get crazy ' \
-                                     "#{date_2.strftime('%d %b')}"
+                                     "#{date_2.strftime('%b %d %Y')}"
 
         expect(page).to have_content '2'
       end
@@ -348,7 +351,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_3 = Date.today - 24
         expect(page).to have_content 'Second  SocialNetworking::SharedItem  ' \
                                      'Goal: go to work ' \
-                                     "#{date_3.strftime('%d %b')}"
+                                     "#{date_3.strftime('%b %d %Y')}"
 
         expect(page).to have_content '2'
       end
@@ -357,15 +360,16 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         date_4 = Date.today - 19
         expect(page).to have_content 'Third  SocialNetworking::SharedItem  ' \
                                      'Activity: Jumping ' \
-                                     "#{date_4.strftime('%d %b')}"
+                                     "#{date_4.strftime('%b %d %Y')}"
 
         expect(page).to have_content '3'
       end
 
       within('tr:nth-child(5)') do
+        date_5 = Date.today - 1
         expect(page).to have_content 'Fifth  SocialNetworking::SharedItem  ' \
                                      'Activity: Go to movie ' \
-                                     "#{Date.today.prev_day.strftime('%d %b')}"
+                                     "#{date_5.strftime('%b %d %Y')}"
 
         expect(page).to have_content '5'
       end
