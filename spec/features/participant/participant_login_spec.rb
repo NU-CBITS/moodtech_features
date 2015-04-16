@@ -83,7 +83,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
 
     expect(page).to have_content 'nudged participant1'
 
-    within('.navbar navbar-default') do
+    within('.navbar.navbar-default') do
       expect(page).to have_content 'THINK'
       expect(page).to_not have_content 'MESSAGES'
     end
