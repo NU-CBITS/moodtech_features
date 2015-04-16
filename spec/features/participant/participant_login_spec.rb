@@ -34,7 +34,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Invalid email address or password'
   end
 
-  it 'was an active participant who has completed' do
+  it 'was an active participant in a social arm who has completed' do
     sign_in_pt(ENV['Completed_Pt_Email'], ENV['Completed_Pt_Password'])
     find('h1', text: 'HOME')
     while page.has_no_css?('.list-group-item.ng-scope',
@@ -71,6 +71,25 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'From You'
 
     expect(page).to have_content 'Test'
+  end
+
+  it 'was an active participant in a mobile arm who has completed' do
+    sign_in_pt(ENV['Mobile_Comp_Pt_Email'], ENV['Mobile_Comp_Pt_Password'])
+    find('h1', text: 'HOME')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'nudged participant1')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
+
+    expect(page).to have_content 'nudged participant1'
+
+    within('.navbar navbar-default') do
+      expect(page).to have_content 'THINK'
+      expect(page).to_not have_content 'MESSAGES'
+    end
+
+    visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
+    expect(page).to have_content 'Oops, did you expect a content provider here?'
   end
 
   it 'was an active participant who has withdrawn' do
