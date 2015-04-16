@@ -76,12 +76,6 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   it 'was an active participant in a mobile arm who has completed' do
     sign_in_pt(ENV['Mobile_Comp_Pt_Email'], ENV['Mobile_Comp_Pt_Password'])
     find('h1', text: 'HOME')
-    while page.has_no_css?('.list-group-item.ng-scope',
-                           text: 'nudged participant1')
-      page.execute_script('window.scrollTo(0,100000)')
-    end
-
-    expect(page).to have_content 'nudged participant1'
 
     within('.navbar.navbar-default') do
       expect(page).to have_content 'THINK'
