@@ -121,7 +121,11 @@ describe 'Active participant in a social arm signs in,',
 
   it 'checks for a goal that was due yesterday and is now incomplete' do
     find('h1', text: 'HOME')
-    page.execute_script('window.scrollTo(0,100000)')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'nudged participant1')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
+
     expect(page).to have_content 'Did Not Complete Goal: due yesterday'
   end
 

@@ -75,11 +75,12 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
                                        "seven days: 0\nTotal Logins: 0"
 
         else
+          # 59 logins while goals_spec.rb is commented out
           expect(page)
             .to have_content 'Last Logged In: ' \
                              "#{Time.now.strftime('%-l%P on %b %-d')}" \
-                             "\nLogins Today: 62\nLogins in the " \
-                             "last seven days: 62\nTotal Logins: 62"
+                             "\nLogins Today: 59\nLogins in the " \
+                             "last seven days: 59\nTotal Logins: 59"
         end
       end
     end
@@ -283,7 +284,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         within table_row[1] do
           unless page.has_text?('No data available in table')
             expect(page).to have_content 'Do - Awareness Introduction' \
-                                         " #{Date.today.strftime('%b %d %Y')}"
+                                         " #{Date.today.strftime('%m/%d/%Y')}"
 
             expect(page).to have_content 'less than a minute'
           end

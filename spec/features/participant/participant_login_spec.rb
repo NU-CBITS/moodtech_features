@@ -17,7 +17,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     expect(page).to have_content "What's on your mind?"
   end
 
-  it 'is an activie participant, signs in, signs out' do
+  it 'is an active participant, signs in, signs out' do
     sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
 
     within '.navbar-collapse' do
@@ -77,7 +77,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     sign_in_pt(ENV['Mobile_Comp_Pt_Email'], ENV['Mobile_Comp_Pt_Password'])
     find('h1', text: 'HOME')
 
-    within('.navbar.navbar-default') do
+    within('#navbar-collapse') do
       expect(page).to have_content 'THINK'
       expect(page).to_not have_content 'MESSAGES'
     end
