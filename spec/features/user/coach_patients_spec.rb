@@ -76,11 +76,11 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
         else
           # 59 logins while goals_spec.rb is commented out
-          expect(page)
-            .to have_content 'Last Logged In: ' \
-                             "#{Time.now.strftime('%-l%P on %b %-d')}" \
-                             "\nLogins Today: 59\nLogins in the " \
-                             "last seven days: 59\nTotal Logins: 59"
+          expect(page).to have_content 'Last Logged In: ' \
+                                       "#{Time.now.strftime('%b %d %Y %H')}"
+
+          expect(page).to have_content "Logins Today: 59\nLogins in the last " \
+                                       "seven days: 59\nTotal Logins: 59"
         end
       end
     end
