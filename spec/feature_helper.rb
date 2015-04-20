@@ -2,22 +2,26 @@
 
 def sign_in_pt(participant, password)
   visit "#{ENV['Base_URL']}/participants/sign_in"
-  within('#new_participant') do
-    fill_in 'participant_email', with: participant
-    fill_in 'participant_password', with: password
-  end
+  if page.has_css?('#new_participant')
+    within('#new_participant') do
+      fill_in 'participant_email', with: participant
+      fill_in 'participant_password', with: password
+    end
 
-  click_on 'Sign in'
+    click_on 'Sign in'
+  end
 end
 
 def sign_in_user(user, password)
   visit "#{ENV['Base_URL']}/users/sign_in"
-  within('#new_user') do
-    fill_in 'user_email', with: user
-    fill_in 'user_password', with: password
-  end
+  if page.has_css?('#new_user')
+    within('#new_user') do
+      fill_in 'user_email', with: user
+      fill_in 'user_password', with: password
+    end
 
-  click_on 'Sign in'
+    click_on 'Sign in'
+  end
 end
 
 def choose_rating(element_id, value)

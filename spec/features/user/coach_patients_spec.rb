@@ -146,23 +146,23 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         end
 
         within table_row[1] do
-          expect(page).to have_content 'Likes    1 1 1'
+          expect(page).to have_content 'Likes 1 1 1'
         end
 
         within('tr', text: 'Nudges') do
-          expect(page).to have_content 'Nudges   2 3 3'
+          expect(page).to have_content 'Nudges 2 3 3'
         end
 
         within('tr', text: 'Comments') do
-          expect(page).to have_content 'Comments   1 1 1'
+          expect(page).to have_content 'Comments 1 1 1'
         end
 
         within('tr', text: 'Goals') do
-          expect(page).to have_content 'Goals   6 6 6'
+          expect(page).to have_content 'Goals 4 5 7'
         end
 
         within('tr', text: '"On My Mind" Statements') do
-          expect(page).to have_content '"On My Mind" Statements   2 2 2'
+          expect(page).to have_content '"On My Mind" Statements 2 2 2'
         end
       end
     end

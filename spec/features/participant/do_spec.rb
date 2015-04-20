@@ -194,7 +194,10 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     end
 
     visit ENV['Base_URL']
-    page.execute_script('window.scrollTo(0,100000)')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'Reviewed & Completed an Activity: Parkour')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
     within('.list-group-item.ng-scope',
            text: 'Reviewed & Completed an Activity: Parkour') do
       within('.actions') do

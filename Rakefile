@@ -68,6 +68,10 @@ end
 # bottom of file): /var/www/apps/think_feel_do_so/shared/db/clean.sql
 # by opening it using vi after ssh-ing into the server:
 # ssh deploy@moodtech-staging.cbits.northwestern.edu
+# 
+# exit vm by typing 'exit'
+#
+# run cap commands from clean_db
 
 
 # load development version of think_feel_do_so on staging and switch driver 
