@@ -76,12 +76,6 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   it 'was an active participant in a mobile arm who has completed' do
     sign_in_pt(ENV['Mobile_Comp_Pt_Email'], ENV['Mobile_Comp_Pt_Password'])
     find('h1', text: 'HOME')
-
-    within('#navbar-collapse') do
-      expect(page).to have_content 'THINK'
-      expect(page).to_not have_content 'MESSAGES'
-    end
-
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
     expect(page).to have_content 'Inbox'
     expect(page).to_not have_content 'Compose'

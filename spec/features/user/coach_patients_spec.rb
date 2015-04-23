@@ -157,7 +157,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         end
 
         within('tr', text: 'Goals') do
-          expect(page).to have_content 'Goals 4 5 7'
+          expect(page).to have_content 'Goals 5 6 8'
         end
 
         within('tr', text: '"On My Mind" Statements') do
@@ -220,15 +220,15 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
         one_week_ago = Date.today - 6
         one_month_ago = Date.today - 27
-        expect(page).to have_content "#{one_week_ago.strftime('%B %e, %Y')} " \
-                                     "/ #{Date.today.strftime('%B %e, %Y')}"
+        expect(page).to have_content "#{one_week_ago.strftime('%m/%d/%Y')} " \
+                                     "- #{Date.today.strftime('%m/%d/%Y')}"
 
         within('.btn-group') do
           find('.btn.btn-default', text: '28 day').click
         end
 
-        expect(page).to have_content "#{one_month_ago.strftime('%B %e, %Y')} " \
-                                     "/ #{Date.today.strftime('%B %e, %Y')}"
+        expect(page).to have_content "#{one_month_ago.strftime('%m/%d/%Y')} " \
+                                     "- #{Date.today.strftime('%m/%d/%Y')}"
 
         within('.btn-group') do
           find('.btn.btn-default', text: '7 Day').click
@@ -237,8 +237,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         click_on 'Previous Period'
         one_week_ago_1 = Date.today - 7
         two_weeks_ago = Date.today - 13
-        expect(page).to have_content "#{two_weeks_ago.strftime('%B %e, %Y')} " \
-                                     "/ #{one_week_ago_1.strftime('%B %e, %Y')}"
+        expect(page).to have_content "#{two_weeks_ago.strftime('%m/%d/%Y')} " \
+                                     "- #{one_week_ago_1.strftime('%m/%d/%Y')}"
       end
     end
 
