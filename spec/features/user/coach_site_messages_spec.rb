@@ -32,7 +32,8 @@ describe 'Coach signs in, navigates to Site Messages tool,',
     within('tr:nth-child(2)') do
       expect(page).to have_content 'TFD-1111  Testing site messaging  ' \
                                    'This message is intended to test the ' \
-                                   'functionality of site messaging.'
+                                   'functionality of site messaging. ' \
+                                   "#{Date.today.strftime('%b %d %Y')}"
     end
   end
 
