@@ -83,7 +83,8 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     end
 
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
-    expect(page).to have_content 'Oops, did you expect a content provider here?'
+    expect(page).to have_content 'Inbox'
+    expect(page).to_not have_content 'Compose'
   end
 
   it 'was an active participant who has withdrawn' do
