@@ -12,7 +12,6 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     fill_in 'new-goal-description', with: 'eat a whole pizza'
     choose '8 weeks (end of study)'
     click_on 'Save'
-
     page.should have_css('.list-group-item.ng-scope', text: 'due yesterday')
     find('.list-group-item.ng-scope', text: 'eat a whole pizza')
 

@@ -1,6 +1,6 @@
 --require spec_helper
---require configure_cloud
---require feature_helper
+--require configure_cloud.rb
+--require support/feature_helper.rb
 --format documentation
 --format progress
 --out 'output/rspec <%= Time.now.strftime('%m.%e.%y %H.%M.%S') %>.txt'

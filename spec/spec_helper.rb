@@ -8,16 +8,6 @@ require 'selenium-webdriver'
 require 'sauce'
 require 'sauce/capybara'
 require 'sauce_whisk'
-require 'byebug'
-
-# RSpec configuration options
-RSpec.configure do |config|
-  config.full_backtrace = false
-  config.expect_with :rspec do |c|
-    c.syntax = [:should, :expect]
-  end
-  config.profile_examples = 10
-end
 
 # define methods for setting the driver
 def sauce_labs
@@ -34,18 +24,31 @@ def test_driver
   end
 end
 
+# RSpec configuration options
+RSpec.configure do |config|
+  config.full_backtrace = false
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
+  config.profile_examples = 10
+end
+
 # Capybara configuration options
-Capybara.default_wait_time = 15
-Capybara.default_driver = test_driver
+Capybara.configure do |config|
+  config.default_wait_time = 15
+  config.default_driver = test_driver
+  config.save_and_open_page_path = 'screenshots/'
+end
+
+# capybara-screenshot configuration options
 Capybara::Screenshot.register_driver(:sauce) do |driver, path|
-  driver.render(path)
+    driver.render(path)
+end
+Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
+    "#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
 end
 Capybara::Screenshot.autosave_on_failure = !sauce_labs
-Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
-  "#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
-end
-Capybara.save_and_open_page_path = 'screenshots/'
-Capybara::Screenshot.prune_strategy = :keep_last_run
+Capybara::Screenshot.prune_strategy = :keep_last_run 
 
 # Sauce configuration options
 Sauce.config do |config|
