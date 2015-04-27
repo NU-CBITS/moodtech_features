@@ -68,8 +68,44 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
       sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
     end
 
+    it 'navigates to Patient Dashboard, see consistent # of Logins in ' \
+       'listing page and Patient Report' do
+      click_on 'Arms'
+      find('h1', text: 'Arms')
+      click_on 'Arm 1'
+      click_on 'Group 1'
+      click_on 'Patient Dashboard'
+      within('#patients') do
+        within('table#patients tr', text: 'TFD-1111') do
+          if page.has_text?('Never Logged In')
+            expect(page).to have_content 'TFD-1111 1 1 0'
+
+          else
+            expect(page).to have_content 'TFD-1111 1 1 62'
+          end
+        end
+      end
+
+      select_patient('TFD-1111')
+      within('.panel.panel-default', text: 'Login Info') do
+        if page.has_text?('Never Logged In')
+          expect(page).to have_content "Last Logged In: Never Logged In\n" \
+                                       "Logins Today: 0\nLogins in the last " \
+                                       "seven days: 0\nTotal Logins: 0"
+
+        else
+          expect(page).to have_content 'Last Logged In: ' \
+                                       "#{Time.now.strftime('%b %d %Y %H')}"
+
+          expect(page).to have_content "Logins Today: 62\nLogins in the last " \
+                                       "seven days: 62\nTotal Logins: 62"
+        end
+      end
+    end
+
+
     it 'navigates to Patient Dashboard, views Tool Use table, sees correct ' \
-     'data for activities'do
+       'data for activities'do
       click_on 'Arms'
       find('h1', text: 'Arms')
       click_on 'Arm 1'

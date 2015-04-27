@@ -16,6 +16,19 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'TFD-1111'
     end
 
+    it 'sees consistent # of Logins' do
+      within('#patients') do
+        within('table#patients tr', text: 'TFD-1111') do
+          if page.has_text?('Never Logged In')
+            expect(page).to have_content 'TFD-1111 1 1 0'
+
+          else
+            expect(page).to have_content 'TFD-1111 1 1 62'
+          end
+        end
+      end
+    end
+
     it 'views a list of inactive participants assigned to the coach' do
       page.find('.btn.btn-default', text: 'Inactive Patients').click
       expect(page).to have_content 'Completer'
