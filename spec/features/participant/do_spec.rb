@@ -48,22 +48,25 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     choose_rating('accomplishment_14', 3)
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
-    expect(page).to have_content 'Activity saved'
-
-    expect(page).to have_content 'Take a look - does this all seem right?'
-
+    within('#recent_activities') do
+      expect(page).to have_css('tr', count: '17')
+    end
     click_on 'Next'
-    expect(page).to have_content 'Things you found fun.'
-
+    within('#fun_activities') do
+      expect(page).to have_css('tr', count: '4')
+    end
     click_on 'Next'
-    expect(page).to have_content "Things that make you feel like you've " \
-                                 'accomplished something.'
-
+    within('#accomplished_activities') do
+      expect(page).to have_css('tr', count: '5')
+    end
     click_on 'Next'
-    expect(page).to have_content 'Add a New Activity'
+    find('h1', text: 'Do Landing')
 
     visit ENV['Base_URL']
-    page.execute_script('window.scrollTo(0,100000)')
+    while page.has_no_css?('.list-group-item.ng-scope',
+                           text: 'Monitored an Activity: Get ready for bed')
+      page.execute_script('window.scrollTo(0,100000)')
+    end
     within('.list-group-item.ng-scope',
            text: 'Monitored an Activity: Get ready for bed') do
       within('.actions') do
@@ -108,19 +111,13 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'copy_1'
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
-    expect(page).to have_content 'Activity saved'
-
-    expect(page).to have_content 'Take a look - does this all seem right?'
-
+    find('#recent_activities')
     click_on 'Next'
-    expect(page).to have_content 'Things you found fun.'
-
+    find('#fun_activities')
     click_on 'Next'
-    expect(page).to have_content "Things that make you feel like you've " \
-                                 'accomplished something.'
-
+    find('#accomplished_activities')
     click_on 'Next'
-    expect(page).to have_content 'Add a New Activity'
+    find('h1', text: 'Do Landing')
   end
 
   it 'completes Planning' do
@@ -144,13 +141,14 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     choose_rating('accomplishment_0', 8)
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
-    expect(page).to have_content 'Activity saved'
+    find('h1', text: 'OK...')
+    click_on 'Next'
+    within('#previous_activities') do
+      expect(page).to have_css('tr', count: '6')
+    end
 
     click_on 'Next'
-    expect(page).to have_content 'Your Planned Activities'
-
-    click_on 'Next'
-    expect(page).to have_content 'Upcoming Activities'
+    find('h1', text: 'Do Landing')
 
     visit ENV['Base_URL']
     page.execute_script('window.scrollTo(0,100000)')
@@ -163,8 +161,10 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
       time2 = Time.now + (60 * 60 * 26)
       expect(page)
         .to have_content "start: #{time1.strftime('%b. %-d, %Y at %-l')}"
+
       expect(page)
         .to have_content "end: #{time2.strftime('%b. %-d, %Y at %-l')}"
+
       expect(page).to have_content "predicted accomplishment: 3\npredicted " \
                                    'pleasure: 6'
     end
@@ -228,7 +228,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
   it 'completes Plan a New Activity' do
     click_on 'Add a New Activity'
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
-    tomorrow = Date.today + 1
     find('.fa.fa-calendar').click
     pick_tomorrow
 
@@ -378,19 +377,13 @@ describe 'Active participant in group 3 signs in, navigates to DO tool,',
     choose_rating('accomplishment_2', 9)
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
-    expect(page).to have_content 'Activity saved'
-
-    expect(page).to have_content 'Take a look - does this all seem right?'
-
+    find('#recent_activities')
     click_on 'Next'
-    expect(page).to have_content 'Things you found fun.'
-
+    find('#fun_activities')
     click_on 'Next'
-    expect(page).to have_content "Things that make you feel like you've " \
-                                 'accomplished something.'
-
+    find('#accomplished_activities')
     click_on 'Next'
-    expect(page).to have_content 'Your Activities'
+    find('h1', text: 'Do Landing')
   end
 
   it 'visits Reviewing from viz at bottom of DO > Landing' do
