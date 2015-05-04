@@ -23,7 +23,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
             expect(page).to have_content 'TFD-1111 1 1 0'
 
           else
-            expect(page).to have_content 'TFD-1111 1 1 62'
+            expect(page).to have_content 'TFD-1111 2 1 62'
           end
         end
       end
@@ -34,7 +34,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Completer'
     end
 
-    it 'selects Withdraw to end active status of participant' do
+    it 'selects Withdraw to end active status of participant and is still' \
+       'able to see patient specific data' do
       within('#patients', text: 'TFD-1111') do
         within('table#patients tr', text: 'TFD-Withdraw') do
           click_on 'Terminate Access'
@@ -56,8 +57,11 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page)
             .to have_content 'Withdrawn ' \
                              "#{Date.today.prev_day.strftime('%m/%d/%Y')}"
+          click_on 'TFD-Withdraw'
         end
       end
+
+      expect(page).to have_css('h1', text: 'Participant TFD-Withdraw')
     end
 
     it 'views General Patient Info' do
@@ -611,7 +615,7 @@ describe 'Coach signs in, navigates to Patient Dashboard',
     expect(page).to_not have_content 'participant65'
 
     click_on 'Inactive Patients'
-    expect(page).to have_content 'TFD-Withdraw'
+    expect(page).to have_content 'participant65'
 
     visit "#{ENV['Base_URL']}/participants/sign_in"
 

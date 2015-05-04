@@ -184,6 +184,8 @@ describe 'Active participant in a social arm signs in,',
       visit ENV['Base_URL']
       page.execute_script('window.scrollTo(0,100000)')
       expect(page).to_not have_content 'New private activity 2'
+
+      expect(page).to have_content 'New public activity 2'
     end
   end
 end

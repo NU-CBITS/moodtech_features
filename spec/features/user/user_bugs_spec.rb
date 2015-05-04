@@ -81,7 +81,7 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
             expect(page).to have_content 'TFD-1111 1 1 0'
 
           else
-            expect(page).to have_content 'TFD-1111 1 1 62'
+            expect(page).to have_content 'TFD-1111 2 1 62'
           end
         end
       end
