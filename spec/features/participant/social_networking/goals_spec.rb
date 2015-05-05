@@ -47,7 +47,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
   end
 
   it 'deletes a goal' do
-    page.find('.list-group-item.ng-scope',
+    find('.list-group-item.ng-scope',
               text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
     page.accept_alert 'Are you sure you would like to delete this goal? This ' \
                       'action cannot be undone.'

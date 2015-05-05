@@ -37,7 +37,7 @@ def compare_thought(thought)
     expect(page).to_not have_content thought
   end
 
-  page.find('.panel-body.adjusted-list-group-item').text
+  find('.panel-body.adjusted-list-group-item').text
 end
 
 def reshape(challenge, action)

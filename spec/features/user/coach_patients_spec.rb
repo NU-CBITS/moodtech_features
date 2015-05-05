@@ -31,7 +31,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views a list of inactive participants assigned to the coach' do
-      page.find('.btn.btn-default', text: 'Inactive Patients').click
+      find('.btn.btn-default', text: 'Inactive Patients').click
       expect(page).to have_content 'Completer'
     end
 
@@ -423,7 +423,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         click_on 'Thoughts visualization'
       end
 
-      page.find('#ThoughtVizContainer')
+      find('#ThoughtVizContainer')
       if page.has_text? 'Click a bubble for more info'
         find('.thoughtviz_text.viz-clickable',
              text: 'Magnification or Catastro...').click

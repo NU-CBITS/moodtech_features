@@ -42,7 +42,7 @@ describe 'Content Author signs in , navigates to Lesson Modules tool,',
   # drag_to doesn't play nice with sortable list
   #
   # it 'updates position of lessons by using drag and drop sorting' do
-  #   lesson_value = page.find('tr:nth-child(11)').text
+  #   lesson_value = find('tr:nth-child(11)').text
   #   lesson = page.all('.fa.fa-sort.fa-lg')
   #   lesson[11].drag_to(lesson[3])
 

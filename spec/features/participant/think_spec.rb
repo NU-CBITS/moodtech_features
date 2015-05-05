@@ -59,7 +59,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     click_on 'Next'
     expect(page).to have_content "Let's start by"
 
-    thought_value = page.find('.panel-body.adjusted-list-group-item').text
+    thought_value = find('.panel-body.adjusted-list-group-item').text
 
     select 'Personalization', from: 'thought_pattern_id'
 
