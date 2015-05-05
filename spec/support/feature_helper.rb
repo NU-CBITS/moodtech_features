@@ -7,8 +7,9 @@ def sign_in_pt(participant, password)
       fill_in 'participant_email', with: participant
       fill_in 'participant_password', with: password
     end
-
     click_on 'Sign in'
+  else
+    puts 'LOGIN FAILED'
   end
 end
 
@@ -19,7 +20,6 @@ def sign_in_user(user, password)
       fill_in 'user_email', with: user
       fill_in 'user_password', with: password
     end
-
     click_on 'Sign in'
   end
 end
