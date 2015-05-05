@@ -12,8 +12,9 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views a list of active participants assigned to the coach' do
-      page.find('#patients')[:class].include?('table table-hover')
-      expect(page).to have_content 'TFD-1111'
+      within('#patients') do
+        expect(page).to have_content 'TFD-1111'
+      end
     end
 
     it 'sees consistent # of Logins' do
