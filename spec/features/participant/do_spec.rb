@@ -67,8 +67,10 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
                            text: 'Monitored an Activity: Get ready for bed')
       page.execute_script('window.scrollTo(0,100000)')
     end
-    within('.list-group-item.ng-scope',
-           text: 'Monitored an Activity: Get ready for bed') do
+
+    activity = page.all('.list-group-item.ng-scope',
+                        text: 'Monitored an Activity: Get ready for bed')
+    within activity[0] do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
