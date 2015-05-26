@@ -97,8 +97,8 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
           expect(page).to have_content 'Last Logged In: ' \
                                        "#{Time.now.strftime('%b %d %Y %H')}"
 
-          expect(page).to have_content "Logins Today: 62\nLogins in the last " \
-                                       "seven days: 62\nTotal Logins: 62"
+          expect(page).to have_content "Logins Today: 62\nLogins during this " \
+                                       "treatment week: 62\nTotal Logins: 62"
         end
       end
     end
