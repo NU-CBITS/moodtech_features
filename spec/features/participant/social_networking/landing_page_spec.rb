@@ -107,12 +107,12 @@ describe 'Active participant in a social arm signs in,',
   it 'checks for a goal that was due yesterday and is now incomplete' do
     find('h1', text: 'HOME')
     find_feed_item('nudged participant1')
-    expect(page).to have_content 'Did Not Complete Goal: due yesterday'
+    expect(page).to have_content 'Did Not Complete a Goal: due yesterday'
   end
 
   it 'does not see an incomplete goal for a goal that was due two days ago' do
     find('h1', text: 'HOME')
     find_feed_item('nudged participant1')
-    expect(page).to_not have_content 'Did Not Complete Goal: due two days ago'
+    expect(page).to_not have_content 'Did Not Complete a Goal: due two days ago'
   end
 end
