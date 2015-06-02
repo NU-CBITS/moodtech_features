@@ -36,6 +36,7 @@ describe 'Active participant in a social arm signs in,',
     expect(page).to have_css '.fa.fa-pencil'
 
     visit ENV['Base_URL']
+    find_feed_item('Shared a Profile: Welcome, participant1')
     expect(page).to have_content 'Shared a Profile: Welcome, participant1'
   end
 
@@ -62,11 +63,7 @@ describe 'Active participant in a social arm signs in,',
 
   it 'likes a whats on your mind post written by another participant' do
     find('h1', text: 'HOME')
-    while page.has_no_css?('.list-group-item.ng-scope',
-                           text: 'nudged participant1')
-      page.execute_script('window.scrollTo(0,100000)')
-    end
-
+    find_feed_item('nudged participant1')
     philly_comment = page.all('.list-group-item.ng-scope',
                               text: "said it's always sunny in Philadelphia")
     within philly_comment[0] do
@@ -77,11 +74,7 @@ describe 'Active participant in a social arm signs in,',
 
   it 'comments on a nudge post' do
     find('h1', text: 'HOME')
-    while page.has_no_css?('.list-group-item.ng-scope',
-                           text: 'nudged participant1')
-      page.execute_script('window.scrollTo(0,100000)')
-    end
-
+    find_feed_item('nudged participant1')
     within first('.list-group-item.ng-scope', text: 'nudged participant1') do
       find('.btn.btn-link.comment').click
     end
@@ -91,11 +84,7 @@ describe 'Active participant in a social arm signs in,',
     fill_in 'comment-text', with: 'Sweet Dude!'
     click_on 'Save'
     find('h1', text: 'HOME')
-    while page.has_no_css?('.list-group-item.ng-scope',
-                           text: 'nudged participant1')
-      page.execute_script('window.scrollTo(0,100000)')
-    end
-
+    find_feed_item('nudged participant1')
     within first('.list-group-item.ng-scope', text: 'nudged participant1') do
       find('.fa.fa-comments.fa-2x').click
       expect(page).to have_content ': Sweet Dude!'
@@ -104,11 +93,7 @@ describe 'Active participant in a social arm signs in,',
 
   it 'checks for due date of a goal post' do
     find('h1', text: 'HOME')
-    while page.has_no_css?('.list-group-item.ng-scope',
-                           text: 'nudged participant1')
-      page.execute_script('window.scrollTo(0,100000)')
-    end
-
+    find_feed_item('nudged participant1')
     within first('.list-group-item.ng-scope', text: 'a Goal: p1 alpha') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
@@ -121,17 +106,13 @@ describe 'Active participant in a social arm signs in,',
 
   it 'checks for a goal that was due yesterday and is now incomplete' do
     find('h1', text: 'HOME')
-    while page.has_no_css?('.list-group-item.ng-scope',
-                           text: 'nudged participant1')
-      page.execute_script('window.scrollTo(0,100000)')
-    end
-
+    find_feed_item('nudged participant1')
     expect(page).to have_content 'Did Not Complete Goal: due yesterday'
   end
 
   it 'does not see an incomplete goal for a goal that was due two days ago' do
     find('h1', text: 'HOME')
-    page.execute_script('window.scrollTo(0,100000)')
+    find_feed_item('nudged participant1')
     expect(page).to_not have_content 'Did Not Complete Goal: due two days ago'
   end
 end

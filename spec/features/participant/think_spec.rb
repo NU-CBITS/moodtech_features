@@ -44,12 +44,13 @@ describe 'Active participant signs in, navigates to THINK tool,',
     expect(page).to have_content 'Add a New Thought'
 
     visit ENV['Base_URL']
-    page.execute_script('window.scrollTo(0,100000)')
+    find_feed_item('Identified a Thought: Testing helpful thought')
     within('.list-group-item.ng-scope',
            text: 'Identified a Thought: Testing helpful thought') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
+
       expect(page).to have_content 'this thought is: Testing helpful thought'
     end
   end
@@ -60,43 +61,31 @@ describe 'Active participant signs in, navigates to THINK tool,',
     expect(page).to have_content "Let's start by"
 
     thought_value = find('.panel-body.adjusted-list-group-item').text
-
     select 'Personalization', from: 'thought_pattern_id'
-
     thought_value = compare_thought(thought_value)
-
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-
     thought_value = compare_thought(thought_value)
-
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-
     thought_value = compare_thought(thought_value)
-
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-
     thought_value = compare_thought(thought_value)
-
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-
     thought_value = compare_thought(thought_value)
-
     select 'Personalization', from: 'thought_pattern_id'
-
     compare_thought(thought_value)
-
     select 'Personalization', from: 'thought_pattern_id'
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Thought saved'
 
     visit ENV['Base_URL']
-    page.execute_script('window.scrollTo(0,100000)')
+    find_feed_item('Assigned a pattern to a Thought: Testing helpful thought')
     within('.list-group-item.ng-scope',
            text: 'Assigned a pattern to a Thought: Testing helpful thought') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
+
       expect(page).to have_content 'this thought is: Testing helpful thought' \
                                    "\nthought pattern: Magnification or " \
                                    'Catastrophizing'
@@ -114,18 +103,17 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     click_on 'Next'
     reshape('Example challenge', 'Example act-as-if')
-
     reshape('Example challenge', 'Example act-as-if')
-
     reshape('Example challenge', 'Example act-as-if')
 
     visit ENV['Base_URL']
-    page.execute_script('window.scrollTo(0,100000)')
+    find_feed_item('Reshaped a Thought: Testing helpful thought')
     within('.list-group-item.ng-scope',
            text: 'Reshaped a Thought: Testing helpful thought') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
+
       expect(page).to have_content 'this thought is: Testing helpful thought' \
                                    "\nthought pattern: Magnification or " \
                                    "Catastrophizing\nchallenging thought: " \
@@ -148,12 +136,13 @@ describe 'Active participant signs in, navigates to THINK tool,',
     expect(page).to have_content 'Add a New Thought'
 
     visit ENV['Base_URL']
-    page.execute_script('window.scrollTo(0,100000)')
+    find_feed_item('Reshaped a Thought: Testing add a new thought')
     within('.list-group-item.ng-scope',
            text: 'Reshaped a Thought: Testing add a new thought') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
+
       expect(page).to have_content 'this thought is: Testing add a new' \
                                    " thought\nthought pattern: " \
                                    'Magnification or Catastrophizing' \

@@ -13,7 +13,6 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
       find('.fa.fa-calendar').click
       pick_tomorrow
-
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -24,7 +23,6 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
               with: 'Another planned activity'
       find('.fa.fa-calendar').click
       pick_tomorrow
-
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
       click_on 'Next'
@@ -43,7 +41,6 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
       find('.fa.fa-calendar').click
       pick_tomorrow
-
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
       click_on 'Next'
@@ -106,11 +103,13 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Activity saved'
 
       visit ENV['Base_URL']
+      find_feed_item('Monitored an Activity: doing whatever thing')
       within('.list-group-item.ng-scope',
              text: 'Monitored an Activity: doing whatever thing') do
         within('.actions') do
           find('.fa.fa-folder-open.fa-2x.ng-scope').click
         end
+
         expect(page).to have_content "actual accomplishment: 7\n" \
                                      'actual pleasure: 6'
       end
@@ -140,7 +139,6 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       select 'anxious', from: 'emotional_rating_emotion_id'
       select 'negative', from: 'emotional_rating_is_positive'
       select '4', from: 'emotional_rating[rating]'
-
       click_on 'Next'
       expect(page).to have_content 'Emotional Rating saved'
 

@@ -26,6 +26,7 @@ describe 'Active participant in group 1 signs in, navigates to LEARN,',
     expect(page).to have_content 'Printable'
 
     visit ENV['Base_URL']
+    find_feed_item('Read a Lesson: Do - Awareness Introduction')
     expect(page).to have_content 'Read a Lesson: Do - Awareness Introduction'
   end
 

@@ -19,6 +19,7 @@ describe 'Active participant signs in, navigates to RELAX tool,',
     expect(page).to have_content 'Home'
 
     visit ENV['Base_URL']
+    find_feed_item('Listened to a Relaxation Exercise: Audio!')
     expect(page).to have_content 'Listened to a Relaxation Exercise: Audio!'
   end
 end

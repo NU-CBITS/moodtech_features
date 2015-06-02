@@ -51,29 +51,28 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     within('#recent_activities') do
       expect(page).to have_css('tr', count: '17')
     end
+
     click_on 'Next'
     within('#fun_activities') do
       expect(page).to have_css('tr', count: '4')
     end
+
     click_on 'Next'
     within('#accomplished_activities') do
       expect(page).to have_css('tr', count: '5')
     end
+
     click_on 'Next'
     find('h1', text: 'Do Landing')
-
     visit ENV['Base_URL']
-    while page.has_no_css?('.list-group-item.ng-scope',
-                           text: 'Monitored an Activity: Get ready for bed')
-      page.execute_script('window.scrollTo(0,100000)')
-    end
-
+    find_feed_item('Monitored an Activity: Get ready for bed')
     activity = page.all('.list-group-item.ng-scope',
                         text: 'Monitored an Activity: Get ready for bed')
     within activity[0] do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
+
       yesterday = Date.today - 1
       expect(page).to have_content 'start: ' \
                                    "#{yesterday.strftime('%b. %-d, %Y')}" \
@@ -128,7 +127,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
     find('.fa.fa-calendar').click
     pick_tomorrow
-
     choose_rating('pleasure_0', 6)
     choose_rating('accomplishment_0', 3)
     click_on 'Next'
@@ -138,7 +136,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
     find('.fa.fa-calendar').click
     pick_tomorrow
-
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 8)
     click_on 'Next'
@@ -151,14 +148,14 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
     click_on 'Next'
     find('h1', text: 'Do Landing')
-
     visit ENV['Base_URL']
-    page.execute_script('window.scrollTo(0,100000)')
+    find_feed_item('Planned an Activity: New planned activity')
     within('.list-group-item.ng-scope',
            text: 'Planned an Activity: New planned activity') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
+
       time1 = Time.now + (60 * 60 * 25)
       time2 = Time.now + (60 * 60 * 26)
       expect(page)
@@ -196,15 +193,13 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     end
 
     visit ENV['Base_URL']
-    while page.has_no_css?('.list-group-item.ng-scope',
-                           text: 'Reviewed & Completed an Activity: Parkour')
-      page.execute_script('window.scrollTo(0,100000)')
-    end
+    find_feed_item('Reviewed & Completed an Activity: Parkour')
     within('.list-group-item.ng-scope',
            text: 'Reviewed & Completed an Activity: Parkour') do
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
+
       time1 = Time.now - (60 * 60 * 24)
       time2 = Time.now - (60 * 60 * 23)
       expect(page)
@@ -223,6 +218,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
       within('.actions') do
         find('.fa.fa-folder-open.fa-2x.ng-scope').click
       end
+
       expect(page).to_not have_content 'actual accomplishment:'
     end
   end
@@ -232,7 +228,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
     find('.fa.fa-calendar').click
     pick_tomorrow
-
     choose_rating('pleasure_0', 4)
     choose_rating('accomplishment_0', 3)
     click_on 'Next'

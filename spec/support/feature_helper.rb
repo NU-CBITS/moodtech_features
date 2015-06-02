@@ -76,3 +76,12 @@ def select_patient(patient)
     click_on patient
   end
 end
+
+def find_feed_item(item)
+  counter = 0
+  while page.has_no_css?('.list-group-item.ng-scope',
+                         text: item) && counter < 15
+    page.execute_script('window.scrollTo(0,100000)')
+    counter += 1
+  end
+end

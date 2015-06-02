@@ -16,7 +16,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     find('.list-group-item.ng-scope', text: 'eat a whole pizza')
 
     visit ENV['Base_URL']
-    page.execute_script('window.scrollTo(0,100000)')
+    find_feed_item('Created a Goal: eat a whole pizza')
     within('.list-group-item.ng-scope',
            text: 'Created a Goal: eat a whole pizza') do
       within('.actions') do
@@ -42,13 +42,13 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     expect(page).to have_content 'p1 alpha'
 
     visit ENV['Base_URL']
-    page.execute_script('window.scrollTo(0,100000)')
+    find_feed_item('Completed a Goal: p1 alpha')
     expect(page).to have_content 'Completed a Goal: p1 alpha'
   end
 
   it 'deletes a goal' do
     find('.list-group-item.ng-scope',
-              text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
+         text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
     page.accept_alert 'Are you sure you would like to delete this goal? This ' \
                       'action cannot be undone.'
     expect(page).to_not have_content 'p1 gamma'
