@@ -127,8 +127,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
     find('.fa.fa-calendar').click
     pick_tomorrow
-    choose_rating('pleasure_0', 6)
-    choose_rating('accomplishment_0', 3)
+    select '6', from: 'planned_activity[predicted_pleasure_intensity]'
+    select '3', from: 'planned_activity[predicted_accomplishment_intensity]'
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
@@ -136,8 +136,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
     find('.fa.fa-calendar').click
     pick_tomorrow
-    choose_rating('pleasure_0', 4)
-    choose_rating('accomplishment_0', 8)
+    select '4', from: 'planned_activity[predicted_pleasure_intensity]'
+    select '8', from: 'planned_activity[predicted_accomplishment_intensity]'
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     find('h1', text: 'OK...')
@@ -228,8 +228,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
     find('.fa.fa-calendar').click
     pick_tomorrow
-    choose_rating('pleasure_0', 4)
-    choose_rating('accomplishment_0', 3)
+    select '4', from: 'planned_activity[predicted_pleasure_intensity]'
+    select '3', from: 'planned_activity[predicted_accomplishment_intensity]'
     click_on 'Next'
     page.accept_alert 'Are you sure that you would like to make these public?'
     expect(page).to have_content 'Activity saved'
