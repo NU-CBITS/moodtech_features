@@ -18,7 +18,7 @@ You will need to set up the following participants and users in the app:
   many tools (see tests for granular detail)
 * Completed_Pt - a participant who is in an arm that allows messaging
   functionality after completion and is flagged as completed
-* Mobile_Compt_Pt - a participant who is an arm that does not allow messaging
+* Mobile_Comp_Pt - a participant who is an arm that does not allow messaging
   functionality after completion and is flagged as complete
 * PT61 - an active participant in a social arm
 * User - user given a super user role
