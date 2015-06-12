@@ -17,19 +17,6 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       end
     end
 
-    it 'sees consistent # of Logins' do
-      within('#patients') do
-        within('table#patients tr', text: 'TFD-1111') do
-          if page.has_text?('Never Logged In')
-            expect(page).to have_content 'TFD-1111 1 1 0'
-
-          else
-            expect(page).to have_content 'TFD-1111 2 1 62'
-          end
-        end
-      end
-    end
-
     it 'views a list of inactive participants assigned to the coach' do
       find('.btn.btn-default', text: 'Inactive Patients').click
       expect(page).to have_content 'Completer'
@@ -80,24 +67,6 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
         else
           expect(page).to have_content 'Lessons read this week: 1'
-        end
-      end
-    end
-
-    it 'views Login Info' do
-      select_patient('TFD-1111')
-      within('.panel.panel-default', text: 'Login Info') do
-        if page.has_text?('Never Logged In')
-          expect(page).to have_content "Last Logged In: Never Logged In\n" \
-                                       "Logins Today: 0\nLogins in the last " \
-                                       "seven days: 0\nTotal Logins: 0"
-
-        else
-          expect(page).to have_content 'Last Logged In: ' \
-                                       "#{Time.now.strftime('%b %d %Y %H')}"
-
-          expect(page).to have_content "Logins Today: 62\nLogins during this " \
-                                       "treatment week: 62\nTotal Logins: 62"
         end
       end
     end
@@ -503,10 +472,32 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       click_on 'Arm 1'
       click_on 'Group 6'
       click_on 'Patient Dashboard'
+    end
+
+    it 'sees consistent # of Logins' do
+      within('#patients') do
+        within('table#patients tr', text: 'participant61') do
+          date1 = Date.today - 4
+          expect(page).to have_content 'participant61 0 6 11 ' \
+                                       "#{date1.strftime('%b %d %Y')}"
+        end
+      end
+    end
+
+    it 'views Login Info' do
       select_patient('participant61')
+      within('.panel.panel-default', text: 'Login Info') do
+        date1 = Date.today - 4
+        expect(page).to have_content 'Last Logged In: ' \
+                                     "#{date1.strftime('%b %d %Y')}"
+
+        expect(page).to have_content "Logins Today: 0\nLogins during this " \
+                                     "treatment week: 0\nTotal Logins: 11"
+      end
     end
 
     it 'views Likes' do
+      select_patient('participant61')
       within('#goals-container', text: 'Item Liked') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
@@ -520,6 +511,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Goals' do
+      select_patient('participant61')
       within('#goals-container', text: 'Goals') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
@@ -539,6 +531,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Comments' do
+      select_patient('participant61')
       within('#comments-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
@@ -553,6 +546,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Nudges Initiated' do
+      select_patient('participant61')
       within('.panel.panel-default', text: 'Nudges Initiated') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
@@ -564,6 +558,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views Nudges Received' do
+      select_patient('participant61')
       within('.panel.panel-default', text: 'Nudges Received') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
@@ -575,6 +570,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
 
     it 'views On-My-Mind Statements' do
+      select_patient('participant61')
       within('#on-my-mind-container') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do

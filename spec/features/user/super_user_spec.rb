@@ -31,16 +31,16 @@ describe 'Super User signs in,', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'Title: Arm 1'
   end
 
-  it 'destroys an arm' do
+  it 'sees appropriate alert when trying to destroy an arm' do
     click_on 'Arms'
     click_on 'Test Arm'
     expect(page).to have_content 'Title: Test Arm'
 
     click_on 'Destroy'
     page.accept_alert 'Are you sure?'
-    expect(page).to have_content 'Arm was successfully destroyed.'
-
-    expect(page).to_not have_content 'Test Arm'
+    expect(page).to have_content 'You do not have privileges to delete an ' \
+                                 'arm. Please contact the site administrator ' \
+                                 'to remove this arm.'
   end
 
   it 'creates a super user' do
