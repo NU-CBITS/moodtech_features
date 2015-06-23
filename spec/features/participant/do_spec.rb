@@ -271,11 +271,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
     click_on 'Visualize'
     click_on 'Last 3 Days'
-    if page.has_text?('Notice! No activities were completed during this ' \
-                      '3-day period.')
-      expect(page).to_not have_content Date.today.strftime('%A, %m/%d')
-
-    else
+    unless page.has_text?('Notice! No activities were completed during this ' \
+                          '3-day period.')
       expect(page).to have_content Date.today.strftime('%A, %m/%d')
 
       click_on 'Day'
@@ -341,10 +338,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     expect(page).to have_content 'Welcome back!'
 
     click_on 'Skip'
-    if page.has_text?('You said you were going to')
-      expect(page).to have_content 'You said you were going to'
-
-    else
+    unless page.has_text?('You said you were going to')
       expect(page).to have_content "It doesn't look like there are any " \
                                    'activities for you to review at this time'
     end

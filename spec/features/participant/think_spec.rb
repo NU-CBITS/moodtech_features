@@ -182,11 +182,8 @@ describe 'Active participant signs in, navigates to THINK tool,',
     expect(page).to have_content 'Challenging Harmful Thoughts'
 
     click_on 'Skip'
-    if page.has_text?('You said you had')
+    unless page.has_text?("You don't have")
       expect(page).to have_content "In case you've forgotten"
-
-    else
-      expect(page).to have_content "You don't have"
     end
   end
 

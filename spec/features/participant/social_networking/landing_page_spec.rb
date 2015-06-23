@@ -48,8 +48,8 @@ describe 'Active participant in a social arm signs in,',
   end
 
   it 'selects link in TODO list' do
-    click_on 'FEEL: Your Recent Moods & Emotions'
-    expect(page).to have_content 'Positive and Negative Emotions'
+    click_on 'THINK: Add a New Thought'
+    expect(page).to have_content 'Add a New Harmful Thought'
   end
 
   it 'views another participants profile' do

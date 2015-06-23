@@ -344,6 +344,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     it 'views Activities - Future' do
       select_patient('TFD-1111')
       within('#activities-future-container') do
+        find('.sorting', text: 'Activity').click
         within('tr', text: 'Going to school') do
           two_days = Date.today + 2
           expect(page).to have_content 'Going to school  2 6 Scheduled for ' \
@@ -401,21 +402,12 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     it 'views Thoughts' do
       select_patient('TFD-1111')
       within('#thoughts-container') do
-        within('tr:nth-child(3)') do
-          if page.has_text?('I am a magnet')
-            expect(page).to have_content 'I am a magnet for birds Labeling ' \
-                                         'and Mislabeling  It was nature ' \
-                                         'Birds have no idea what they are ' \
-                                         'doing ' \
-                                         "#{Date.today.strftime('%b %d %Y')}"
-
-          else
-            expect(page).to have_content 'Testing negative thought ' \
-                                         'Magnification or Catastrophizing ' \
-                                         'Example challenge Example ' \
-                                         'act-as-if ' \
-                                         "#{Date.today.strftime('%b %d %Y')}"
-          end
+        within('tr', text: 'Testing negative thought') do
+          expect(page).to have_content 'Testing negative thought ' \
+                                       'Magnification or Catastrophizing ' \
+                                       'Example challenge Example ' \
+                                       'act-as-if ' \
+                                       "#{Date.today.strftime('%b %d %Y')}"
         end
       end
     end
@@ -423,15 +415,9 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     it 'views Messages' do
       select_patient('TFD-1111')
       within('#messages-container') do
-        table_row = page.all('tr:nth-child(1)')
-        within table_row[1] do
-          if page.has_text? 'I like'
-            expect(page).to have_content 'I like this app ' \
-                                         "#{Date.today.strftime('%m/%d/%Y')}"
-          else
-            expect(page).to have_content 'Reply: Try out the LEARN tool ' \
-                                         "#{Date.today.strftime('%m/%d/%Y')}"
-          end
+        within('tr', text: 'I like') do
+          expect(page).to have_content 'I like this app ' \
+                                       "#{Date.today.strftime('%m/%d/%Y')}"
         end
       end
     end

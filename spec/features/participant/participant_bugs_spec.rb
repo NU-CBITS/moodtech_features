@@ -1,15 +1,16 @@
 # filename: participant_bugs_spec.rb
 
 describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
-  describe 'Participant 1 signs in, navigates to the DO tool,' do
+  describe 'Participant 1 signs in,' do
     before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
     end
 
-    it 'completes Planning without multiple alerts' do
+    it 'navigates to the DO tool, completes Planning without multiple alerts' do
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
       click_on '#2 Planning'
       click_on 'Next'
+      find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
       find('.fa.fa-calendar').click
       pick_tomorrow
@@ -19,6 +20,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       page.accept_alert 'Are you sure that you would like to make these public?'
       expect(page).to have_content 'Activity saved'
 
+      find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title',
               with: 'Another planned activity'
       find('.fa.fa-calendar').click
@@ -36,9 +38,11 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Do Landing'
     end
 
-    it 'completes Plan a New Activity without multiple alerts' do
+    it 'navigates to the DO tool, completes Plan a New Activity without ' \
+       'multiple alerts' do
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
       click_on 'Add a New Activity'
+      find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
       find('.fa.fa-calendar').click
       pick_tomorrow
@@ -49,7 +53,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Activity saved'
     end
 
-    it 'visits Your Activities, selects Previous Day w/out exception' do
+    it 'navigates to the DO tool, visits Your Activities, selects Previous ' \
+       'Day w/out exception' do
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
       click_on '#1 Awareness'
       click_on 'Next'
@@ -88,7 +93,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
                          "#{Date.today.prev_day.strftime('%b %d, %Y')}"
     end
 
-    it 'completes Awareness, finds the activity properly displayed on feed' do
+    it 'navigates to the DO tool, completes Awareness, finds the activity ' \
+       'properly displayed on feed' do
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
       click_on '#1 Awareness'
       click_on 'Next'
