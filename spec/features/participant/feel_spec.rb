@@ -64,9 +64,13 @@ describe 'Active participant in group 3 signs in, navigates to FEEL tool,',
     expect(page).to have_content 'Feeling Tracker Landing'
   end
 
-  it 'views recent ratings in Your Recent Mood & Emtions' do
+  it 'views recent ratings in Your Recent Mood & Emotions' do
     click_on 'Your Recent Moods & Emotions'
     expect(page).to have_content 'Positive and Negative Emotions'
+
+    expect(page).to have_css('.bar.positive', count: 1)
+
+    expect(page).to have_css('.bar.negative', count: 1)
 
     click_on 'Next'
     expect(page).to have_content 'Feeling Tracker Landing'

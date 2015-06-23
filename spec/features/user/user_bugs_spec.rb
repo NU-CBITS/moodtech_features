@@ -84,7 +84,7 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
       select_patient('participant61')
       within('.panel.panel-default', text: 'Login Info') do
         expect(page).to have_content 'Last Logged In: ' \
-                                     "#{Date.today.strftime('%b %d %Y')}"
+                                     "#{Date.today.strftime('%A, %b %d %Y')}"
 
         expect(page).to have_content "Logins Today: 1\nLogins during this " \
                                      "treatment week: 1\nTotal Logins: 12"

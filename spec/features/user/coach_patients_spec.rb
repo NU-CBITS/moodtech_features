@@ -57,7 +57,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       within('.panel.panel-default', text: 'General Patient Info') do
         weeks_later = Date.today + 56
         expect(page).to have_content 'Started on: ' \
-                                     "#{Date.today.strftime('%m/%d/%Y')}" \
+                                     "#{Date.today.strftime('%A, %m/%d/%Y')}" \
                                      "\n8 weeks from the start date is: " \
                                      "#{weeks_later.strftime('%m/%d/%Y')}" \
                                      "\nStatus: Active Currently in week 1"
@@ -269,8 +269,10 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           unless page.has_text?('No data available in table')
-            expect(page).to have_content 'Do - Awareness Introduction' \
-                                         " #{Date.today.strftime('%m/%d/%Y')}"
+            expect(page)
+              .to have_content 'Do - Awareness Introduction This is just the ' \
+                               'beginning... ' \
+                               "#{Time.now.strftime('%b %d %Y %H')}"
 
             expect(page).to have_content 'less than a minute'
           end
@@ -286,10 +288,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
           expect(page).to have_content 'Audio! ' \
                                        "#{Date.today.strftime('%m/%d/%Y')}" \
                                        " #{Date.today.strftime('%b %d %Y')}"
-          if page.has_text?('Not Completed')
-            expect(page).to have_content 'Not Completed'
-
-          else
+          unless page.has_text?('Not Completed')
             expect(page).to have_content '2 minutes'
           end
         end
@@ -333,11 +332,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
       click_on 'Visualize'
       click_on 'Last 3 Days'
-      if page.has_text? 'Notice! No activities were completed during this ' \
-                        '3-day period.'
-        expect(page).to_not have_content Date.today.strftime('%A, %m/%d')
-
-      else
+      unless page.has_text? 'Notice! No activities were completed during ' \
+                        'this 3-day period.'
         expect(page).to have_content Date.today.strftime('%A, %m/%d')
       end
 
@@ -348,8 +344,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     it 'views Activities - Future' do
       select_patient('TFD-1111')
       within('#activities-future-container') do
-        find('.sorting', text: 'Activity').click
-        within('tr:nth-child(3)') do
+        within('tr', text: 'Going to school') do
           two_days = Date.today + 2
           expect(page).to have_content 'Going to school  2 6 Scheduled for ' \
                                        "#{two_days.strftime('%b %d %Y')}"
@@ -489,7 +484,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       within('.panel.panel-default', text: 'Login Info') do
         date1 = Date.today - 4
         expect(page).to have_content 'Last Logged In: ' \
-                                     "#{date1.strftime('%b %d %Y')}"
+                                     "#{date1.strftime('%A, %b %d %Y')}"
 
         expect(page).to have_content "Logins Today: 0\nLogins during this " \
                                      "treatment week: 0\nTotal Logins: 11"

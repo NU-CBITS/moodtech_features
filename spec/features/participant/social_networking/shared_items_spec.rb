@@ -119,6 +119,7 @@ describe 'Active participant in a social arm signs in,',
     it 'shares DO > Planning responses' do
       click_on '#2 Planning'
       click_on 'Next'
+      find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New public activity'
       find('.fa.fa-calendar').click
       pick_tomorrow
@@ -128,6 +129,7 @@ describe 'Active participant in a social arm signs in,',
       page.accept_alert 'Are you sure that you would like to make these public?'
       expect(page).to have_content 'Activity saved'
 
+      find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New private activity'
       find('.fa.fa-calendar').click
       pick_tomorrow
@@ -152,6 +154,7 @@ describe 'Active participant in a social arm signs in,',
 
     it 'shares Add a New Activity responses' do
       click_on 'Add a New Activity'
+      find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New public activity 2'
       find('.fa.fa-calendar').click
       pick_tomorrow
@@ -168,6 +171,7 @@ describe 'Active participant in a social arm signs in,',
 
     it 'does not share Add a New Activity responses' do
       click_on 'Add a New Activity'
+      find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New private activity 2'
       find('.fa.fa-calendar').click
       pick_tomorrow
