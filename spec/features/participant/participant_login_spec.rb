@@ -78,7 +78,8 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   it 'was an active participant who has withdrawn' do
     sign_in_pt(ENV['Old_Participant_Email'], ENV['Old_Participant_Password'])
     expect(page).to have_content "We're sorry, but you can't sign in yet " \
-                                 'because you are not assigned to a group'
+                                 'because you are not assigned to an active ' \
+                                 'group'
   end
 
   it 'tries to visit a specific page, is redirected to log in page' do

@@ -273,7 +273,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Last 3 Days'
     unless page.has_text?('Notice! No activities were completed during this ' \
                           '3-day period.')
-      expect(page).to have_content Date.today.strftime('%A, %m/%d')
+      date1 = Date.today - 1
+      expect(page).to have_content date1.today.strftime('%A, %m/%d')
 
       click_on 'Day'
       expect(page).to have_css('#datepicker')
