@@ -332,10 +332,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
 
       click_on 'Visualize'
       click_on 'Last 3 Days'
-      unless page.has_text? 'Notice! No activities were completed during ' \
-                        'this 3-day period.'
-        expect(page).to have_content Date.today.strftime('%A, %m/%d')
-      end
+      date1 = Date.today - 2
+      expect(page).to have_content date1.strftime('%A, %m/%d')
 
       click_on 'Day'
       expect(page).to have_css('#datepicker')
