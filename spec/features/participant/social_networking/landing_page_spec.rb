@@ -115,4 +115,11 @@ describe 'Active participant in a social arm signs in,',
     find_feed_item('nudged participant1')
     expect(page).to_not have_content 'Did Not Complete a Goal: due two days ago'
   end
+
+  it 'is able to scroll for more feed items when the browser window is mobile' do
+    page.driver.browser.manage.window.resize_to(400,800)
+    find('.list-group-item', text: "What's on your mind?")
+    find_feed_item('nudged participant1')
+    expect(page).to have_content 'nudged participant1'
+  end
 end
