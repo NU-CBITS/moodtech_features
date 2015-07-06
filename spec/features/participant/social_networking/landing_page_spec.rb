@@ -1,125 +1,136 @@
 # filename: landing_page_spec.rb
 
-describe 'Active participant in a social arm signs in,',
-         type: :feature, sauce: sauce_labs do
-  before do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-  end
-
-  it 'creates a profile' do
-    click_on 'Create a Profile'
-    within('.modal-content') do
-      page.all('img')[2].click
+describe 'Social Networking Landing Page - ', type: :feature, sauce: sauce_labs do
+  describe 'Active participant in social arm signs in,' do
+    before do
+      sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
     end
 
-    within('.list-group-item.ng-scope', text: 'What are your hobbies?') do
-      fill_in 'new-answer-description-781294868', with: 'Running'
-      click_on 'Save'
-    end
-
-    within('.list-group-item.ng-scope', text: 'What is your favorite color?') do
-      fill_in 'new-answer-description-932760744', with: 'Blue'
-      click_on 'Save'
-    end
-
-    within('.list-group-item.ng-scope',
-           text: 'Animal, vegetable or mineral?') do
-      fill_in 'new-answer-description-10484799', with: 'Mineral'
-      click_on 'Save'
-    end
-
-    within('.list-group-item.ng-scope', text: 'Group 1 profile question') do
-      fill_in 'new-answer-description-933797305', with: 'Group 1'
-      click_on 'Save'
-    end
-
-    expect(page).to have_css '.fa.fa-pencil'
-
-    visit ENV['Base_URL']
-    find_feed_item('Shared a Profile: Welcome, participant1')
-    expect(page).to have_content 'Shared a Profile: Welcome, participant1'
-  end
-
-  it 'creates a whats on your mind post' do
-    click_on "What's on your mind?"
-    fill_in 'new-on-your-mind-description', with: "I'm feeling happy!"
-    click_on 'Save'
-    expect(page).to have_content "said I'm feeling happy!"
-  end
-
-  it 'selects link in TODO list' do
-    click_on 'THINK: Add a New Thought'
-    expect(page).to have_content 'Add a New Harmful Thought'
-  end
-
-  it 'views another participants profile' do
-    within('.profile-border.profile-icon-top',
-           text: 'profile question participant') do
-      click_on 'profile question participant'
-    end
-
-    expect(page).to have_content 'What is your favorite color?'
-  end
-
-  it 'likes a whats on your mind post written by another participant' do
-    find('h1', text: 'HOME')
-    find_feed_item('nudged participant1')
-    philly_comment = page.all('.list-group-item.ng-scope',
-                              text: "said it's always sunny in Philadelphia")
-    within philly_comment[0] do
-      find('.btn.btn-link.like.ng-scope').click
-      expect(page).to have_css '.fa.fa-thumbs-up.fa-2x'
-    end
-  end
-
-  it 'comments on a nudge post' do
-    find('h1', text: 'HOME')
-    find_feed_item('nudged participant1')
-    within first('.list-group-item.ng-scope', text: 'nudged participant1') do
-      find('.btn.btn-link.comment').click
-    end
-
-    expect(page).to have_content 'What do you think?'
-
-    fill_in 'comment-text', with: 'Sweet Dude!'
-    click_on 'Save'
-    find('h1', text: 'HOME')
-    find_feed_item('nudged participant1')
-    within first('.list-group-item.ng-scope', text: 'nudged participant1') do
-      find('.fa.fa-comments.fa-2x').click
-      expect(page).to have_content ': Sweet Dude!'
-    end
-  end
-
-  it 'checks for due date of a goal post' do
-    find('h1', text: 'HOME')
-    find_feed_item('nudged participant1')
-    within first('.list-group-item.ng-scope', text: 'a Goal: p1 alpha') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
+    it 'creates a profile' do
+      click_on 'Create a Profile'
+      within('.modal-content') do
+        page.all('img')[2].click
       end
 
-      expect(page).to have_content "due #{Date.today.strftime('%b. %e, %Y')}" \
-                                   ' at 12:00AM'
+      within('.list-group-item.ng-scope', text: 'What are your hobbies?') do
+        fill_in 'new-answer-description-781294868', with: 'Running'
+        click_on 'Save'
+      end
+
+      within('.list-group-item.ng-scope', text: 'What is your favorite color?') do
+        fill_in 'new-answer-description-932760744', with: 'Blue'
+        click_on 'Save'
+      end
+
+      within('.list-group-item.ng-scope',
+             text: 'Animal, vegetable or mineral?') do
+        fill_in 'new-answer-description-10484799', with: 'Mineral'
+        click_on 'Save'
+      end
+
+      within('.list-group-item.ng-scope', text: 'Group 1 profile question') do
+        fill_in 'new-answer-description-933797305', with: 'Group 1'
+        click_on 'Save'
+      end
+
+      expect(page).to have_css '.fa.fa-pencil'
+
+      visit ENV['Base_URL']
+      find_feed_item('Shared a Profile: Welcome, participant1')
+      expect(page).to have_content 'Shared a Profile: Welcome, participant1'
+    end
+
+    it 'creates a whats on your mind post' do
+      click_on "What's on your mind?"
+      fill_in 'new-on-your-mind-description', with: "I'm feeling happy!"
+      click_on 'Save'
+      expect(page).to have_content "said I'm feeling happy!"
+    end
+
+    it 'selects link in TODO list' do
+      click_on 'THINK: Add a New Thought'
+      expect(page).to have_content 'Add a New Harmful Thought'
+    end
+
+    it 'views another participants profile' do
+      within('.profile-border.profile-icon-top',
+             text: 'profile question participant') do
+        click_on 'profile question participant'
+      end
+
+      expect(page).to have_content 'What is your favorite color?'
+    end
+
+    it 'likes a whats on your mind post written by another participant' do
+      find('h1', text: 'HOME')
+      find_feed_item('nudged participant1')
+      philly_comment = page.all('.list-group-item.ng-scope',
+                                text: "said it's always sunny in Philadelphia")
+      within philly_comment[0] do
+        find('.btn.btn-link.like.ng-scope').click
+        expect(page).to have_css '.fa.fa-thumbs-up.fa-2x'
+      end
+    end
+
+    it 'comments on a nudge post' do
+      find('h1', text: 'HOME')
+      find_feed_item('nudged participant1')
+      within first('.list-group-item.ng-scope', text: 'nudged participant1') do
+        find('.btn.btn-link.comment').click
+      end
+
+      expect(page).to have_content 'What do you think?'
+
+      fill_in 'comment-text', with: 'Sweet Dude!'
+      click_on 'Save'
+      find('h1', text: 'HOME')
+      find_feed_item('nudged participant1')
+      within first('.list-group-item.ng-scope', text: 'nudged participant1') do
+        find('.fa.fa-comments.fa-2x').click
+        expect(page).to have_content ': Sweet Dude!'
+      end
+    end
+
+    it 'checks for due date of a goal post' do
+      find('h1', text: 'HOME')
+      find_feed_item('nudged participant1')
+      within first('.list-group-item.ng-scope', text: 'a Goal: p1 alpha') do
+        within('.actions') do
+          find('.fa.fa-folder-open.fa-2x.ng-scope').click
+        end
+
+        expect(page).to have_content "due #{Date.today.strftime('%b. %e, %Y')}" \
+                                     ' at 12:00AM'
+      end
+    end
+
+    it 'checks for a goal that was due yesterday and is now incomplete' do
+      find('h1', text: 'HOME')
+      find_feed_item('nudged participant1')
+      expect(page).to have_content 'Did Not Complete a Goal: due yesterday'
+    end
+
+    it 'does not see an incomplete goal for a goal that was due two days ago' do
+      find('h1', text: 'HOME')
+      find_feed_item('nudged participant1')
+      expect(page).to_not have_content 'Did Not Complete a Goal: due two days ago'
     end
   end
 
-  it 'checks for a goal that was due yesterday and is now incomplete' do
-    find('h1', text: 'HOME')
-    find_feed_item('nudged participant1')
-    expect(page).to have_content 'Did Not Complete a Goal: due yesterday'
-  end
+  describe 'Active participant signs in, resizes window to mobile' do
+    before do
+      sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+      page.driver.browser.manage.window.resize_to(400,800)
+    end
 
-  it 'does not see an incomplete goal for a goal that was due two days ago' do
-    find('h1', text: 'HOME')
-    find_feed_item('nudged participant1')
-    expect(page).to_not have_content 'Did Not Complete a Goal: due two days ago'
-  end
+    after do
+      page.driver.browser.manage.window.resize_to(1024,768)
+    end
 
-  it 'is able to scroll for more feed items when the browser window is mobile' do
-    page.driver.browser.manage.window.resize_to(400,800)
-    find('.list-group-item', text: "What's on your mind?")
-    find_feed_item('nudged participant1')
-    expect(page).to have_content 'nudged participant1'
+    it 'is able to scroll for more feed items' do
+      find('.list-group-item', text: "What's on your mind?")
+      find_feed_item('nudged participant1')
+      expect(page).to have_content 'nudged participant1'
+    end
   end
 end
