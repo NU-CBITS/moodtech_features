@@ -1,6 +1,6 @@
 # filename: landing_page_spec.rb
 
-describe 'Social Networking Landing Page - ', type: :feature, sauce: sauce_labs do
+describe 'Social Networking Landing Page, ', type: :feature, sauce: sauce_labs do
   describe 'Active participant in social arm signs in,' do
     before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
@@ -12,12 +12,19 @@ describe 'Social Networking Landing Page - ', type: :feature, sauce: sauce_labs 
         page.all('img')[2].click
       end
 
+      expect(page).to have_content 'Fill out your profile so other group ' \
+                                   'members can get to know you!'
+
       within('.list-group-item.ng-scope', text: 'What are your hobbies?') do
         fill_in 'new-answer-description-781294868', with: 'Running'
         click_on 'Save'
       end
 
-      within('.list-group-item.ng-scope', text: 'What is your favorite color?') do
+      expect(page).to_not have_content 'Fill out your profile so other group ' \
+                                       'members can get to know you!'
+
+      within('.list-group-item.ng-scope',
+             text: 'What is your favorite color?') do
         fill_in 'new-answer-description-932760744', with: 'Blue'
         click_on 'Save'
       end
@@ -38,6 +45,16 @@ describe 'Social Networking Landing Page - ', type: :feature, sauce: sauce_labs 
       visit ENV['Base_URL']
       find_feed_item('Shared a Profile: Welcome, participant1')
       expect(page).to have_content 'Shared a Profile: Welcome, participant1'
+    end
+
+    it 'navigates to the profile page from a page other than home' do
+      visit "#{ENV['Base_URL']}/navigator/contexts/DO"
+      within '.navbar-collapse' do
+        click_on 'participant1'
+        click_on 'My Profile'
+      end
+
+      expect(page).to have_content 'Group 1 profile question'
     end
 
     it 'creates a whats on your mind post' do
@@ -67,8 +84,8 @@ describe 'Social Networking Landing Page - ', type: :feature, sauce: sauce_labs 
       philly_comment = page.all('.list-group-item.ng-scope',
                                 text: "said it's always sunny in Philadelphia")
       within philly_comment[0] do
-        find('.btn.btn-link.like.ng-scope').click
-        expect(page).to have_css '.fa.fa-thumbs-up.fa-2x'
+        click_on 'Like (0)'
+        expect(page).to have_content 'Like (1)'
       end
     end
 
@@ -76,18 +93,15 @@ describe 'Social Networking Landing Page - ', type: :feature, sauce: sauce_labs 
       find('h1', text: 'HOME')
       find_feed_item('nudged participant1')
       within first('.list-group-item.ng-scope', text: 'nudged participant1') do
-        find('.btn.btn-link.comment').click
-      end
+        click_on 'Comment (0)'
+        click_on 'Add Comment'
+        expect(page).to have_content 'What do you think?'
 
-      expect(page).to have_content 'What do you think?'
+        fill_in 'comment-text', with: 'Sweet Dude!'
+        click_on 'Save'
+        expect(page).to have_content 'Comment (1)'
 
-      fill_in 'comment-text', with: 'Sweet Dude!'
-      click_on 'Save'
-      find('h1', text: 'HOME')
-      find_feed_item('nudged participant1')
-      within first('.list-group-item.ng-scope', text: 'nudged participant1') do
-        find('.fa.fa-comments.fa-2x').click
-        expect(page).to have_content ': Sweet Dude!'
+        expect(page).to have_content 'participant1: Sweet Dude!'
       end
     end
 
@@ -95,12 +109,10 @@ describe 'Social Networking Landing Page - ', type: :feature, sauce: sauce_labs 
       find('h1', text: 'HOME')
       find_feed_item('nudged participant1')
       within first('.list-group-item.ng-scope', text: 'a Goal: p1 alpha') do
-        within('.actions') do
-          find('.fa.fa-folder-open.fa-2x.ng-scope').click
-        end
-
-        expect(page).to have_content "due #{Date.today.strftime('%b. %e, %Y')}" \
-                                     ' at 12:00AM'
+        click_on 'More'
+        expect(page)
+          .to have_content "due #{Date.today.strftime('%b. %e, %Y')}" \
+                           ' at 12:00AM'
       end
     end
 
@@ -113,23 +125,30 @@ describe 'Social Networking Landing Page - ', type: :feature, sauce: sauce_labs 
     it 'does not see an incomplete goal for a goal that was due two days ago' do
       find('h1', text: 'HOME')
       find_feed_item('nudged participant1')
-      expect(page).to_not have_content 'Did Not Complete a Goal: due two days ago'
+      expect(page).to_not have_content 'Did Not Complete a Goal: due two days' \
+                                       ' ago'
     end
   end
 
   describe 'Active participant signs in, resizes window to mobile' do
     before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-      page.driver.browser.manage.window.resize_to(400,800)
+      page.driver.browser.manage.window.resize_to(400, 800)
     end
 
     after do
-      page.driver.browser.manage.window.resize_to(1024,768)
+      page.driver.browser.manage.window.resize_to(1024, 768)
     end
 
     it 'is able to scroll for more feed items' do
-      find('.list-group-item', text: "What's on your mind?")
-      find_feed_item('nudged participant1')
+      find('.panel-title', text: 'TO DO')
+      counter = 0
+      while page.has_no_css?('.list-group-item.ng-scope',
+                             text: 'nudged participant1') && counter < 15
+        page.execute_script('window.scrollTo(0,100000)')
+        counter += 1
+      end
+
       expect(page).to have_content 'nudged participant1'
     end
   end
