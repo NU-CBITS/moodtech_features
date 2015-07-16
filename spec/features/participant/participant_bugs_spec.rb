@@ -115,9 +115,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       find_feed_item('Monitored an Activity: doing whatever thing')
       within('.list-group-item.ng-scope',
              text: 'Monitored an Activity: doing whatever thing') do
-        within('.actions') do
-          find('.fa.fa-folder-open.fa-2x.ng-scope').click
-        end
+        click_on 'More'
 
         expect(page).to have_content "actual accomplishment: 7\n" \
                                      'actual pleasure: 6'

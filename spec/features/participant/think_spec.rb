@@ -47,9 +47,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     find_feed_item('Identified a Thought: Testing helpful thought')
     within('.list-group-item.ng-scope',
            text: 'Identified a Thought: Testing helpful thought') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
-      end
+      click_on 'More'
 
       expect(page).to have_content 'this thought is: Testing helpful thought'
     end
@@ -82,9 +80,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     find_feed_item('Assigned a pattern to a Thought: Testing helpful thought')
     within('.list-group-item.ng-scope',
            text: 'Assigned a pattern to a Thought: Testing helpful thought') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
-      end
+      click_on 'More'
 
       expect(page).to have_content 'this thought is: Testing helpful thought' \
                                    "\nthought pattern: Magnification or " \
@@ -110,9 +106,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     find_feed_item('Reshaped a Thought: Testing helpful thought')
     within('.list-group-item.ng-scope',
            text: 'Reshaped a Thought: Testing helpful thought') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
-      end
+      click_on 'More'
 
       expect(page).to have_content 'this thought is: Testing helpful thought' \
                                    "\nthought pattern: Magnification or " \
@@ -139,9 +133,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     find_feed_item('Reshaped a Thought: Testing add a new thought')
     within('.list-group-item.ng-scope',
            text: 'Reshaped a Thought: Testing add a new thought') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
-      end
+      click_on 'More'
 
       expect(page).to have_content 'this thought is: Testing add a new' \
                                    " thought\nthought pattern: " \

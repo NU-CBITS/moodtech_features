@@ -69,9 +69,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     activity = page.all('.list-group-item.ng-scope',
                         text: 'Monitored an Activity: Get ready for bed')
     within activity[0] do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
-      end
+      click_on 'More'
 
       yesterday = Date.today - 1
       expect(page).to have_content 'start: ' \
@@ -154,9 +152,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     find_feed_item('Planned an Activity: New planned activity')
     within('.list-group-item.ng-scope',
            text: 'Planned an Activity: New planned activity') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
-      end
+      click_on 'More'
 
       time1 = Time.now + (60 * 60 * 25)
       time2 = Time.now + (60 * 60 * 26)
@@ -198,9 +194,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     find_feed_item('Reviewed & Completed an Activity: Parkour')
     within('.list-group-item.ng-scope',
            text: 'Reviewed & Completed an Activity: Parkour') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
-      end
+      click_on 'More'
 
       time1 = Time.now - (60 * 60 * 24)
       time2 = Time.now - (60 * 60 * 23)
@@ -217,9 +211,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
     within('.list-group-item.ng-scope',
            text: 'Reviewed and did not complete an Activity: Loving') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
-      end
+      click_on 'More'
 
       expect(page).to_not have_content 'actual accomplishment:'
     end

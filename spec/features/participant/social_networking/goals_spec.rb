@@ -19,9 +19,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     find_feed_item('Created a Goal: eat a whole pizza')
     within('.list-group-item.ng-scope',
            text: 'Created a Goal: eat a whole pizza') do
-      within('.actions') do
-        find('.fa.fa-folder-open.fa-2x.ng-scope').click
-      end
+      click_on 'More'
 
       end_of_study = Date.today + 4
       expect(page).to have_content 'due ' \
