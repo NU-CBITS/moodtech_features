@@ -8,14 +8,16 @@ describe 'Social Networking Landing Page, ', type: :feature, sauce: sauce_labs d
 
     it 'creates a profile' do
       click_on 'Create a Profile'
-      within('.modal-content') do
-        page.all('img')[2].click
+      if page.has_css?('.modal-content')
+        within('.modal-content') do
+          page.all('img')[2].click
+        end
       end
 
       expect(page).to have_content 'Fill out your profile so other group ' \
                                    'members can get to know you!'
 
-      within('.list-group-item.ng-scope', text: 'What are your hobbies?') do
+      within('.panel.panel-default.ng-scope', text: 'What are your hobbies?') do
         fill_in 'new-answer-description-781294868', with: 'Running'
         click_on 'Save'
       end
@@ -23,24 +25,24 @@ describe 'Social Networking Landing Page, ', type: :feature, sauce: sauce_labs d
       expect(page).to_not have_content 'Fill out your profile so other group ' \
                                        'members can get to know you!'
 
-      within('.list-group-item.ng-scope',
+      within('.panel.panel-default.ng-scope',
              text: 'What is your favorite color?') do
         fill_in 'new-answer-description-932760744', with: 'Blue'
         click_on 'Save'
       end
 
-      within('.list-group-item.ng-scope',
+      within('.panel.panel-default.ng-scope',
              text: 'Animal, vegetable or mineral?') do
         fill_in 'new-answer-description-10484799', with: 'Mineral'
         click_on 'Save'
       end
 
-      within('.list-group-item.ng-scope', text: 'Group 1 profile question') do
+      within('.panel.panel-default.ng-scope',
+             text: 'Group 1 profile question') do
         fill_in 'new-answer-description-933797305', with: 'Group 1'
         click_on 'Save'
+        expect(page).to have_css '.fa.fa-pencil'
       end
-
-      expect(page).to have_css '.fa.fa-pencil'
 
       visit ENV['Base_URL']
       find_feed_item('Shared a Profile: Welcome, participant1')
@@ -141,7 +143,7 @@ describe 'Social Networking Landing Page, ', type: :feature, sauce: sauce_labs d
     end
 
     it 'is able to scroll for more feed items' do
-      find('.panel-title', text: 'TO DO')
+      find('.panel-title', text: 'To Do')
       counter = 0
       while page.has_no_css?('.list-group-item.ng-scope',
                              text: 'nudged participant1') && counter < 15

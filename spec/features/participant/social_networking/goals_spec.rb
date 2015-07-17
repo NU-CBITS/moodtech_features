@@ -29,8 +29,10 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
   end
 
   it 'completes a goal' do
-    find('.list-group-item.ng-scope', text: 'p1 alpha')
-      .find('.btn.btn-link.complete.ng-scope').click
+    within('.list-group-item.ng-scope', text: 'p1 alpha') do
+      click_on 'Complete'
+    end
+
     page.accept_alert 'Are you sure you would like to mark this goal as ' \
                       'complete? This action cannot be undone.'
     page.should have_css('.list-group-item-success', text: 'p1 alpha')

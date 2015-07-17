@@ -318,7 +318,7 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
                    "#{endtime.strftime('%-l %P')}: Parkour") do
         click_on "#{Time.now.strftime('%-l %P')} - " \
                  "#{endtime.strftime('%-l %P')}: Parkour"
-        within('.panel-collapse.collapse.in') do
+        within('.collapse.in') do
           expect(page).to have_content 'Predicted'
 
           click_on 'Edit'

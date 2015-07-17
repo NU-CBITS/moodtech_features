@@ -251,7 +251,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
       expect(page).to have_content 'Predicted  Average Importance: 4 Really ' \
                                    'fun: 9'
 
-      within('.panel-collapse.collapse.in') do
+      within('.collapse.in') do
         click_on 'Edit'
         expect(page).to have_css('#activity_actual_accomplishment_intensity')
       end
