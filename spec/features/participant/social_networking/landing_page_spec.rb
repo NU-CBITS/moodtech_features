@@ -1,6 +1,6 @@
 # filename: landing_page_spec.rb
 
-describe 'Social Networking Landing Page, ', type: :feature, sauce: sauce_labs do
+describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
   describe 'Active participant in social arm signs in,' do
     before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
@@ -136,10 +136,11 @@ describe 'Social Networking Landing Page, ', type: :feature, sauce: sauce_labs d
     before do
       sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
       page.driver.browser.manage.window.resize_to(400, 800)
+      visit ENV['Base_URL']
     end
 
     after do
-      page.driver.browser.manage.window.resize_to(1024, 768)
+      page.driver.browser.manage.window.resize_to(1080, 618)
     end
 
     it 'is able to scroll for more feed items' do
@@ -152,6 +153,35 @@ describe 'Social Networking Landing Page, ', type: :feature, sauce: sauce_labs d
       end
 
       expect(page).to have_content 'nudged participant1'
+    end
+  end
+
+  describe 'Active participant signs in,' do
+    before do
+      sign_in_pt(ENV['Participant_4_Email'], ENV['Participant_4_Password'])
+    end
+
+    it 'complete last task in To Do, sees appropriate message' do
+      within('.panel.panel-default.ng-scope', text: 'To Do') do
+        expect(page).to have_link 'Create a Profile'
+        expect(page).to_not have_content 'You are all caught up! Great work!'
+      end
+
+      click_on 'Create a Profile'
+      expect(page).to have_content 'Fill out your profile so other group ' \
+                                   'members can get to know you!'
+
+      within('.panel.panel-success.ng-scope', text: 'What are your hobbies?') do
+        fill_in 'new-answer-description-803829648', with: 'Running'
+        click_on 'Save'
+        expect(page).to have_css '.fa.fa-pencil'
+      end
+
+      visit ENV['Base_URL']
+      within('.panel.panel-default.ng-scope', text: 'To Do') do
+        expect(page).to_not have_link 'Create a Profile'
+        expect(page).to have_content 'You are all caught up! Great work!'
+      end
     end
   end
 end
