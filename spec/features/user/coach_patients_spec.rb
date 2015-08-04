@@ -1,7 +1,8 @@
 # filename: coach_patients_spec.rb
 
-describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
-  describe 'navigates to Patient Dashboard of active patient in Group 1,' do
+describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
+  describe 'Coach signs in, navigates to Patient Dashboard of ' \
+           'active patient in Group 1,' do
     before do
       sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
       click_on 'Arms'
@@ -445,7 +446,8 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
     end
   end
 
-  describe 'navigates to Patient Dashboard of active patient in Group 6,' do
+  describe 'Coach signs in, navigates to Patient Dashboard ' \
+           'of active patient in Group 6,' do
     before do
       sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
       click_on 'Arms'
@@ -564,43 +566,67 @@ describe 'Coach signs in,', type: :feature, sauce: sauce_labs do
       end
     end
   end
-end
 
-describe 'Coach signs in, navigates to Patient Dashboard',
-         type: :feature, sauce: sauce_labs do
-  before do
-    sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-    click_on 'Arms'
-    find('h1', text: 'Arms')
-    click_on 'Arm 1'
-    click_on 'Group 6'
-    click_on 'Patient Dashboard'
+  describe 'Terminate Access - ' do
+    it 'Coach signs in, navigates to Patient Dashboard, ' \
+       'selects Terminate Access to end active status of participant,' \
+       ' checks to make sure profile is removed' do
+      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
+      click_on 'Arms'
+      find('h1', text: 'Arms')
+      click_on 'Arm 1'
+      click_on 'Group 6'
+      click_on 'Patient Dashboard'
+      within('#patients', text: 'participant65') do
+        within('table#patients tr', text: 'participant65') do
+          click_on 'Terminate Access'
+        end
+      end
+
+      page.accept_alert 'Are you sure you would like to terminate access to ' \
+                        'this membership? This option should also be used ' \
+                        'before changing membership of the patient to a ' \
+                        'different group or to completely revoke access to ' \
+                        'this membership. You will not be able to undo this.'
+      expect(page).to_not have_content 'participant65'
+
+      click_on 'Inactive Patients'
+      expect(page).to have_content 'participant65'
+
+      visit "#{ENV['Base_URL']}/participants/sign_in"
+
+      sign_in_pt(ENV['PT61_Email'], ENV['PT61_Password'])
+
+      expect(page).to have_content 'HOME'
+
+      expect(page).to_not have_content 'Fifth'
+    end
   end
 
-  it 'selects Terminate Access to end active status of participant,' \
-     ' checks to make sure profile is removed' do
-    within('#patients', text: 'participant65') do
-      within('table#patients tr', text: 'participant65') do
-        click_on 'Terminate Access'
+  describe 'Patient signs in, reads a lesson, signs out,' do
+    before do
+      sign_in_pt(ENV['PT61_Email'], ENV['PT61_Password'])
+      expect(page).to have_content 'HOME'
+      within '.navbar-collapse' do
+        click_on 'First'
+        click_on 'Sign Out'
       end
     end
 
-    page.accept_alert 'Are you sure you would like to terminate access to ' \
-                      'this membership? This option should also be used ' \
-                      'before changing membership of the patient to a ' \
-                      'different group or to completely revoke access to ' \
-                      'this membership. You will not be able to undo this.'
-    expect(page).to_not have_content 'participant65'
+    it 'Coach signs in, navigates to Patient Dashboard, views ' \
+       "'Last Activity Detected At' and 'Duration of Last Session'" do
+      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
+      click_on 'Arms'
+      find('h1', text: 'Arms')
+      click_on 'Arm 1'
+      click_on 'Group 6'
+      click_on 'Patient Dashboard'
+      select_patient('participant61')
+      expect(page).to have_content 'Last Activity Detected At: ' \
+                                   "#{Time.now.strftime('%A, %b %d %Y %H:%M')}"
 
-    click_on 'Inactive Patients'
-    expect(page).to have_content 'participant65'
-
-    visit "#{ENV['Base_URL']}/participants/sign_in"
-
-    sign_in_pt(ENV['PT61_Email'], ENV['PT61_Password'])
-
-    expect(page).to have_content 'HOME'
-
-    expect(page).to_not have_content 'Fifth'
+      expect(page).to have_content 'Duration of Last Session: ' \
+                                   'less than a minute'
+    end
   end
 end
