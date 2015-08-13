@@ -180,4 +180,17 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       end
     end
   end
+
+  describe 'Active participant in group 5 signs in,' do
+    before do
+      sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
+    end
+
+    it 'cannot select My Profile from navbar dropdown' do
+      within '.navbar-collapse' do
+        click_on 'nonsocialpt'
+        expect { click_on 'My Profile' }.to raise_error
+      end
+    end
+  end
 end
