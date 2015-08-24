@@ -24,7 +24,7 @@ describe 'Active participant in a social arm signs in,',
       end
     end
 
-    expect(page).to have_content 'clinician1@example.com nudged you!'
+    expect(page).to have_content 'TFD Moderator nudged you!'
   end
 
   it 'sees nudge on landing page' do

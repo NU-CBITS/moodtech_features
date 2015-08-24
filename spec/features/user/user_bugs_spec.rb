@@ -48,6 +48,7 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
 
       click_on 'Assign New Group'
       select 'Group 6', from: 'membership_group_id'
+      fill_in 'membership_display_name', with: ''
       fill_in 'membership_start_date',
               with: Date.today.prev_day.strftime('%Y-%m-%d')
       next_year = Date.today + 365

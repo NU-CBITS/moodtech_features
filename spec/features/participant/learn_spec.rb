@@ -21,7 +21,7 @@ describe 'Active participant in group 1 signs in, navigates to LEARN,',
     expect(page).to have_content 'This is just the beginning...'
 
     click_on 'Finish'
-    expect(page).to have_content "Read on #{Date.today.strftime('%b %e')}"
+    expect(page).to have_content "Read on #{Date.today.strftime('%b %d %Y')}"
 
     expect(page).to have_content 'Printable'
 

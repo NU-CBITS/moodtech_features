@@ -40,7 +40,7 @@ describe 'Active participant in a social arm signs in,',
       page.accept_alert 'Are you sure that you would like to make these public?'
       expect(page).to have_content 'Thought saved'
 
-      click_on 'Next'
+      find('.btn.btn-primary.pull-right', text: 'Next').click
       expect(page).to have_content 'Add a New Thought'
 
       visit ENV['Base_URL']
@@ -58,7 +58,7 @@ describe 'Active participant in a social arm signs in,',
       click_on 'Next'
       expect(page).to have_content 'Thought saved'
 
-      click_on 'Next'
+      find('.btn.btn-primary.pull-right', text: 'Next').click
       expect(page).to have_content 'Add a New Thought'
 
       visit ENV['Base_URL']

@@ -90,7 +90,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Previous Day'
       expect(page)
         .to have_content 'Daily Averages for ' \
-                         "#{Date.today.prev_day.strftime('%b %d, %Y')}"
+                         "#{Date.today.prev_day.strftime('%b %d %Y')}"
     end
 
     it 'navigates to the DO tool, completes Awareness, finds the activity ' \

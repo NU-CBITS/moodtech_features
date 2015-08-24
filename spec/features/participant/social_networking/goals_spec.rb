@@ -22,9 +22,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
       click_on 'More'
 
       end_of_study = Date.today + 4
-      expect(page).to have_content 'due ' \
-                                   "#{end_of_study.strftime('%b. %e, %Y')}" \
-                                   ' at 12:00AM'
+      expect(page).to have_content "due #{end_of_study.strftime('%b %d %Y')}"
     end
   end
 

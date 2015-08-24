@@ -242,7 +242,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
     click_on 'Previous Day'
     expect(page).to have_content 'Daily Averages for ' \
-                                 "#{Date.today.prev_day.strftime('%b %d, %Y')}"
+                                 "#{Date.today.prev_day.strftime('%b %d %Y')}"
 
     endtime = Time.now + (60 * 60)
     within('.panel.panel-default',
@@ -261,7 +261,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
     click_on 'Next Day'
     expect(page).to have_content 'Daily Averages for ' \
-                                 "#{Date.today.strftime('%b %d, %Y')}"
+                                 "#{Date.today.strftime('%b %d %Y')}"
 
     click_on 'Visualize'
     click_on 'Last 3 Days'

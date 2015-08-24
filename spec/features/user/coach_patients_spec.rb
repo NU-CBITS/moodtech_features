@@ -418,7 +418,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
       within('#messages-container') do
         within('tr', text: 'I like') do
           expect(page).to have_content 'I like this app ' \
-                                       "#{Date.today.strftime('%m/%d/%Y')}"
+                                       "#{Date.today.strftime('%b %d %Y')}"
         end
       end
     end

@@ -116,8 +116,7 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
       within first('.list-group-item.ng-scope', text: 'a Goal: p1 alpha') do
         click_on 'More'
         expect(page)
-          .to have_content "due #{Date.today.strftime('%b. %e, %Y')}" \
-                           ' at 12:00AM'
+          .to have_content "due #{Date.today.strftime('%b %e %Y')}"
       end
     end
 
