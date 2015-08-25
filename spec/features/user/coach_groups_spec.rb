@@ -156,6 +156,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'views Thoughts' do
     within('#thoughts-container') do
+      find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 34
@@ -181,6 +182,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'views Activities Past' do
     within('#activities-past-container') do
+      find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 33
@@ -208,6 +210,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'views Activities Future' do
     within('#activities-planned-container') do
+      find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today + 4
@@ -237,6 +240,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'views On-My-Mind Statements' do
     within('#on-my-mind-container') do
+      find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 14
@@ -250,6 +254,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'views Comments' do
     within('#comments-container') do
+      find('.sorting', text: 'Created At').click
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 20
@@ -283,6 +288,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'views Goals' do
     within('#goals-container') do
+      find('.sorting', text: 'Created Date').click
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 30
@@ -328,6 +334,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'views Likes' do
     within('#likes-container') do
+      find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')
       within table_row[1] do
         date_1 = Date.today - 33
