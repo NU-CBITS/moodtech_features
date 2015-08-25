@@ -128,19 +128,19 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Your Recent Moods & Emotions'
       one_week_ago = Date.today - 6
       one_month_ago = Date.today - 27
-      expect(page).to have_content "#{one_week_ago.strftime('%m/%d/%Y')} - " \
-                                   "#{Date.today.strftime('%m/%d/%Y')}"
+      expect(page).to have_content "#{one_week_ago.strftime('%b %d %Y')} - " \
+                                   "#{Date.today.strftime('%b %d %Y')}"
 
       find('.btn.btn-default', text: '28 day').click
-      expect(page).to have_content "#{one_month_ago.strftime('%m/%d/%Y')} - " \
-                                   "#{Date.today.strftime('%m/%d/%Y')}"
+      expect(page).to have_content "#{one_month_ago.strftime('%b %d %Y')} - " \
+                                   "#{Date.today.strftime('%b %d %Y')}"
 
       find('.btn.btn-default', text: '7 Day').click
       click_on 'Previous Period'
       one_week_ago_1 = Date.today - 7
       two_weeks_ago = Date.today - 13
-      expect(page).to have_content "#{two_weeks_ago.strftime('%m/%d/%Y')} - " \
-                                   "#{one_week_ago_1.strftime('%m/%d/%Y')}"
+      expect(page).to have_content "#{two_weeks_ago.strftime('%b %d %Y')} - " \
+                                   "#{one_week_ago_1.strftime('%b %d %Y')}"
     end
   end
 
