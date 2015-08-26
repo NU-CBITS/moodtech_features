@@ -233,6 +233,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
     it 'views Mood' do
       select_patient('TFD-1111')
       within('#mood-container') do
+        find('.sorting_desc', text: 'Date').click
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           four_wks_ago = Date.today - 28
