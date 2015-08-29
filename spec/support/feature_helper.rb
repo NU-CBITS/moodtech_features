@@ -2,12 +2,16 @@
 
 def sign_in_pt(participant, password)
   visit "#{ENV['Base_URL']}/participants/sign_in"
+  if ENV['safari'] && page.has_css?('.navbar-collapse', text: 'Sign Out')
+    sign_out
+  end
   if page.has_css?('#new_participant')
     within('#new_participant') do
       fill_in 'participant_email', with: participant
       fill_in 'participant_password', with: password
     end
     click_on 'Sign in'
+    expect(page).to have_content 'HOME'
   else
     puts 'LOGIN FAILED'
   end
@@ -15,13 +19,25 @@ end
 
 def sign_in_user(user, password)
   visit "#{ENV['Base_URL']}/users/sign_in"
+  if ENV['safari'] && page.has_css?('.navbar-collapse', text: 'Sign Out')
+    sign_out
+  end
   if page.has_css?('#new_user')
     within('#new_user') do
       fill_in 'user_email', with: user
       fill_in 'user_password', with: password
     end
     click_on 'Sign in'
+    expect(page).to have_content 'Home'
   end
+end
+
+def sign_out
+  within('.navbar-collapse') do
+    click_on 'Sign Out'
+  end
+
+  expect(page).to have_content 'Forget your password?'
 end
 
 def choose_rating(element_id, value)
@@ -30,8 +46,15 @@ def choose_rating(element_id, value)
 end
 
 def compare_thought(thought)
+  if driver != :firefox
+    page.driver.execute_script('window.confirm = function() {return true}')
+  end
+
   click_on 'Next'
-  page.accept_alert 'Are you sure that you would like to make these public?'
+  if driver == :firefox
+    page.accept_alert 'Are you sure that you would like to make these public?'
+  end
+
   expect(page).to have_content 'Thought saved'
   within('.panel-body.adjusted-list-group-item') do
     expect(page).to_not have_content thought
