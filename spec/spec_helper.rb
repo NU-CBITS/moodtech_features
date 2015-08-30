@@ -56,10 +56,10 @@ end
 
 # capybara-screenshot configuration options
 Capybara::Screenshot.register_driver(:sauce) do |driver, path|
-    driver.render(path)
+  driver.render(path)
 end
 Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
-    "#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
+  "#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
 end
 Capybara::Screenshot.autosave_on_failure = !sauce_labs
 Capybara::Screenshot.prune_strategy = :keep_last_run 

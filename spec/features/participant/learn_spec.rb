@@ -2,8 +2,19 @@
 
 describe 'Active participant in group 1 signs in, navigates to LEARN,',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_pt(ENV['Participant_Email'], 'participant3',
+                 ENV['Participant_Password'])
+    end
+  end
+
   before do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+    unless ENV['safari']
+      sign_in_pt(ENV['Participant_Email'], 'participant3',
+                 ENV['Participant_Password'])
+    end
+
     visit "#{ENV['Base_URL']}/navigator/contexts/LEARN"
   end
 

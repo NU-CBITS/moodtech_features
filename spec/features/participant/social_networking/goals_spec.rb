@@ -2,8 +2,19 @@
 
 describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_pt(ENV['Participant_Email'], 'participant1',
+                 ENV['Participant_Password'])
+    end
+  end
+
   before do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+    unless ENV['safari']
+      sign_in_pt(ENV['Participant_Email'], 'participant1',
+                 ENV['Participant_Password'])
+    end
+
     visit "#{ENV['Base_URL']}/navigator/contexts/ACHIEVE"
   end
 
@@ -28,11 +39,18 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
 
   it 'completes a goal' do
     within('.list-group-item.ng-scope', text: 'p1 alpha') do
+      if driver != :firefox
+        page.driver.execute_script('window.confirm = function() {return true}')
+      end
+
       click_on 'Complete'
     end
 
-    page.accept_alert 'Are you sure you would like to mark this goal as ' \
+    if driver == :firefox
+      page.accept_alert 'Are you sure you would like to mark this goal as ' \
                       'complete? This action cannot be undone.'
+    end
+
     page.should have_css('.list-group-item-success', text: 'p1 alpha')
     click_on 'Completed'
     expect(page).to_not have_content 'p1 gamma'
@@ -45,10 +63,17 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
   end
 
   it 'deletes a goal' do
-    find('.list-group-item.ng-scope',
-         text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
-    page.accept_alert 'Are you sure you would like to delete this goal? This ' \
-                      'action cannot be undone.'
+    if driver != :firefox
+      page.driver.execute_script('window.confirm = function() {return true}')
+      find('.list-group-item.ng-scope',
+           text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
+    end
+
+    if driver == :firefox
+      page.accept_alert 'Are you sure you would like to delete this goal? ' \
+                        'This action cannot be undone.'
+    end
+
     expect(page).to_not have_content 'p1 gamma'
 
     click_on 'Deleted'

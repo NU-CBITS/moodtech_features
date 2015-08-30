@@ -2,13 +2,17 @@
 
 describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   it 'is an active participant, signs in' do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+    sign_in_pt(ENV['Participant_Email'], 'nonsocialpt',
+               ENV['Participant_Password'])
     expect(page).to have_content 'Signed in successfully.'
   end
 
   it 'is an active participant, signs in, visits another page, uses ' \
      'brand link to get to home page' do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+    unless ENV['safari']
+      sign_in_pt(ENV['Participant_Email'], 'participant1',
+                 ENV['Participant_Password'])
+    end
 
     visit "#{ENV['Base_URL']}/navigator/contexts/LEARN"
     expect(page).to have_content 'Lessons'
@@ -18,24 +22,32 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it 'is an active participant, signs in, signs out' do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-
-    within '.navbar-collapse' do
-      click_on 'participant1'
-      click_on 'Sign Out'
+    if ENV['safari']
+      visit ENV['Base_URL']
+    else
+      sign_in_pt(ENV['Participant_Email'], 'participant1',
+                 ENV['Participant_Password'])
     end
 
+    sign_out('participant1')
     expect(page).to have_content 'You need to sign in or sign up before ' \
                                  'continuing.'
   end
 
   it 'is not able to log in' do
-    sign_in_pt('asdf@test.com', 'asdf')
+    visit "#{ENV['Base_URL']}/participants/sign_in"
+    within('#new_participant') do
+      fill_in 'participant_email', with: 'asdf@example.com'
+      fill_in 'participant_password', with: 'asdf'
+    end
+
+    click_on 'Sign in'
     expect(page).to have_content 'Invalid email address or password'
   end
 
   it 'was an active participant in a social arm who has completed' do
-    sign_in_pt(ENV['Completed_Pt_Email'], ENV['Completed_Pt_Password'])
+    sign_in_pt(ENV['Completed_Pt_Email'], 'participant1',
+               ENV['Completed_Pt_Password'])
     find('h1', text: 'HOME')
     find_feed_item('nudged participant1')
     expect(page).to have_content 'nudged participant1'
@@ -65,10 +77,13 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     expect(page).to have_content 'From You'
 
     expect(page).to have_content 'Test'
+
+    sign_out('TFD Moderator')
   end
 
   it 'was an active participant in a mobile arm who has completed' do
-    sign_in_pt(ENV['Mobile_Comp_Pt_Email'], ENV['Mobile_Comp_Pt_Password'])
+    sign_in_pt(ENV['Mobile_Comp_Pt_Email'], 'completer',
+               ENV['Mobile_Comp_Pt_Password'])
     find('h1', text: 'HOME')
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
     expect(page).to have_content 'Inbox'
@@ -76,7 +91,17 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it 'was an active participant who has withdrawn' do
-    sign_in_pt(ENV['Old_Participant_Email'], ENV['Old_Participant_Password'])
+    visit "#{ENV['Base_URL']}/participants/sign_in"
+    if ENV['safari']
+      sign_out('mobilecompleter')
+    end
+
+    within('#new_participant') do
+      fill_in 'participant_email', with: ENV['Old_Participant_Email']
+      fill_in 'participant_password', with: ENV['Old_Participant_Password']
+    end
+
+    click_on 'Sign in'
     expect(page).to have_content "We're sorry, but you can't sign in yet " \
                                  'because you are not assigned to an active ' \
                                  'group'

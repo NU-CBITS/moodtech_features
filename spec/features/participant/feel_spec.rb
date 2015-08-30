@@ -2,8 +2,19 @@
 
 describe 'Active participant in group 1 signs in, navigates to FEEL tool,',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_pt(ENV['Participant_Email'], 'participant3',
+                 ENV['Participant_Password'])
+    end
+  end
+
   before do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+    unless ENV['safari']
+      sign_in_pt(ENV['Participant_Email'], 'participant3',
+                 ENV['Participant_Password'])
+    end
+
     visit "#{ENV['Base_URL']}/navigator/contexts/FEEL"
   end
 
@@ -13,6 +24,7 @@ describe 'Active participant in group 1 signs in, navigates to FEEL tool,',
     click_on 'Next'
     expect(page).to have_content 'Mood saved'
 
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Next'
     expect(page).to have_content 'Feeling Tracker Landing'
   end
@@ -20,8 +32,19 @@ end
 
 describe 'Active participant in group 3 signs in, navigates to FEEL tool,',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_pt(ENV['Alt_Participant_Email'], 'participant1',
+                 ENV['Alt_Participant_Password'])
+    end
+  end
+
   before do
-    sign_in_pt(ENV['Alt_Participant_Email'], ENV['Alt_Participant_Password'])
+    unless ENV['safari']
+      sign_in_pt(ENV['Alt_Participant_Email'], 'participant1',
+                 ENV['Alt_Participant_Password'])
+    end
+
     visit "#{ENV['Base_URL']}/navigator/contexts/FEEL"
   end
 
@@ -60,6 +83,7 @@ describe 'Active participant in group 3 signs in, navigates to FEEL tool,',
     expect(page).to have_content "#{two_weeks_ago.strftime('%b %d %Y')} - " \
                                  "#{one_week_ago_1.strftime('%b %d %Y')}"
 
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Next'
     expect(page).to have_content 'Feeling Tracker Landing'
   end
@@ -72,6 +96,7 @@ describe 'Active participant in group 3 signs in, navigates to FEEL tool,',
 
     expect(page).to have_css('.bar.negative', count: 1)
 
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Next'
     expect(page).to have_content 'Feeling Tracker Landing'
   end

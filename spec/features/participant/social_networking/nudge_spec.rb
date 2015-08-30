@@ -2,8 +2,18 @@
 
 describe 'Active participant in a social arm signs in,',
          type: :feature, sauce: sauce_labs do
-  before do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+  if ENV['safari']
+    before(:all) do
+      sign_in_pt(ENV['Participant_Email'], 'participant4',
+                 ENV['Participant_Password'])
+    end
+  end
+
+  unless ENV['safari']
+    before do
+      sign_in_pt(ENV['Participant_Email'], 'participant4',
+                 ENV['Participant_Password'])
+    end
   end
 
   it 'nudges another participant' do
@@ -28,6 +38,7 @@ describe 'Active participant in a social arm signs in,',
   end
 
   it 'sees nudge on landing page' do
+    visit ENV['Base_URL']
     find('h1', text: 'HOME')
     find_feed_item('nudged participant1')
     expect(page).to have_content 'nudged participant1'

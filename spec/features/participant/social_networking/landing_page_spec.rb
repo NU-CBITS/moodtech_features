@@ -3,7 +3,12 @@
 describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
   describe 'Active participant in social arm signs in,' do
     before do
-      sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+      unless ENV['safari']
+        sign_in_pt(ENV['Participant_Email'], 'participant1',
+                   ENV['Participant_Password'])
+      end
+
+      visit ENV['Base_URL']
     end
 
     it 'creates a profile' do
@@ -37,6 +42,7 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
         click_on 'Save'
       end
 
+      page.execute_script('window.scrollTo(0,5000)')
       within('.panel.panel-default.ng-scope',
              text: 'Group 1 profile question') do
         fill_in 'new-answer-description-933797305', with: 'Group 1'
@@ -99,10 +105,12 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
       find_feed_item('nudged participant1')
       within first('.list-group-item.ng-scope', text: 'nudged participant1') do
         click_on 'Comment (0)'
+        page.execute_script('window.scrollTo(0,5000)')
         click_on 'Add Comment'
         expect(page).to have_content 'What do you think?'
 
         fill_in 'comment-text', with: 'Sweet Dude!'
+        page.execute_script('window.scrollTo(0,5000)')
         click_on 'Save'
         expect(page).to have_content 'Comment (1)'
 
@@ -114,6 +122,7 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
       find('h1', text: 'HOME')
       find_feed_item('nudged participant1')
       within first('.list-group-item.ng-scope', text: 'a Goal: p1 alpha') do
+        page.execute_script('window.scrollTo(0,5000)')
         click_on 'More'
         expect(page)
           .to have_content "due #{Date.today.strftime('%b %e %Y')}"
@@ -136,13 +145,18 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
 
   describe 'Active participant signs in, resizes window to mobile' do
     before do
-      sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+      unless ENV['safari']
+        sign_in_pt(ENV['Participant_Email'], 'participant1',
+                   ENV['Participant_Password'])
+      end
+
+      visit ENV['Base_URL']
       page.driver.browser.manage.window.resize_to(400, 800)
       visit ENV['Base_URL']
     end
 
     after do
-      page.driver.browser.manage.window.resize_to(1080, 618)
+      page.driver.browser.manage.window.resize_to(1280, 743)
     end
 
     it 'is able to scroll for more feed items' do
@@ -160,7 +174,8 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
 
   describe 'Active participant signs in,' do
     before do
-      sign_in_pt(ENV['Participant_4_Email'], ENV['Participant_4_Password'])
+      sign_in_pt(ENV['Participant_4_Email'], 'participant1',
+                 ENV['Participant_4_Password'])
     end
 
     it 'complete last task in To Do, sees appropriate message' do

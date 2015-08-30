@@ -2,8 +2,18 @@
 
 describe 'Active participant signs in, navigates to THINK tool,',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_pt(ENV['Participant_Email'], 'nonsocialpt',
+                 ENV['Participant_Password'])
+    end
+  end
+
   before do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+    unless ENV['safari']
+      sign_in_pt(ENV['Participant_Email'], 'nonsocial',
+                 ENV['Participant_Password'])
+    end
 
     visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
     expect(page).to have_content 'Add a New Thought'
@@ -11,9 +21,12 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
   it 'completes Identifying module' do
     click_on '#1 Identifying'
+    expect(page).to have_content 'You are what you think'
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Next'
     expect(page).to have_content 'Helpful thoughts are...'
 
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Next'
     expect(page).to have_content 'Harmful thoughts are:'
 
@@ -22,22 +35,19 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     click_on 'Next'
     fill_in 'thought_content', with: 'Testing helpful thought'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    accept_social_plural
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Now list another harmful thought...'
 
     fill_in 'thought_content', with: 'Testing negative thought'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    accept_social_plural
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Just one more'
 
     fill_in 'thought_content', with: 'Forced negative thought'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    accept_social_plural
     expect(page).to have_content 'Good work'
 
     click_on 'Next'
@@ -72,14 +82,14 @@ describe 'Active participant signs in, navigates to THINK tool,',
     select 'Personalization', from: 'thought_pattern_id'
     compare_thought(thought_value)
     select 'Personalization', from: 'thought_pattern_id'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    accept_social_plural
     expect(page).to have_content 'Thought saved'
 
     visit ENV['Base_URL']
     find_feed_item('Assigned a pattern to a Thought: Testing helpful thought')
-    within('.list-group-item.ng-scope',
-           text: 'Assigned a pattern to a Thought: Testing helpful thought') do
+    test_thought = page.all('.list-group-item.ng-scope', text: 'Assigned a ' \
+                            'pattern to a Thought: Testing helpful thought')[0]
+    within test_thought do
       click_on 'More'
 
       expect(page).to have_content 'this thought is: Testing helpful thought' \
@@ -97,6 +107,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     click_on 'Next'
     expect(page).to have_content 'Challenging a thought means'
 
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Next'
     reshape('Example challenge', 'Example act-as-if')
     reshape('Example challenge', 'Example act-as-if')
@@ -122,10 +133,11 @@ describe 'Active participant signs in, navigates to THINK tool,',
     select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
     fill_in 'thought_challenging_thought', with: 'Testing challenge thought'
     fill_in 'thought_act_as_if', with: 'Testing act-as-if action'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    page.execute_script('window.scrollTo(0,5000)')
+    accept_social_plural
     expect(page).to have_content 'Thought saved'
 
+    page.execute_script('window.scrollTo(0,5000)')
     find('.btn.btn-primary.pull-right', text: 'Next').click
     expect(page).to have_content 'Add a New Thought'
 
@@ -205,7 +217,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
   it 'uses the visualization' do
     find('.thoughtviz_text.viz-clickable',
          text: 'Magnification or Catastro...').click
-    expect(page).to have_content 'Click a bubble for more info'
+    expect(page).to have_content 'Thought Distortions'
 
     find('.thoughtviz_text.viz-clickable',
          text: 'Magnification or Catastro...').click
@@ -213,5 +225,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     click_on 'Close'
     expect(page).to have_content 'Click a bubble for more info'
+
+    sign_out('participant1')
   end
 end

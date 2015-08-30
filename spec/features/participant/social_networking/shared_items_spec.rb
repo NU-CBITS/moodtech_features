@@ -4,7 +4,11 @@ describe 'Active participant in a social arm signs in,',
          type: :feature, sauce: sauce_labs do
   describe 'visits the THINK tool,' do
     before do
-      sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+      unless ENV['safari']
+        sign_in_pt(ENV['Participant_Email'], 'participant1',
+                   ENV['Participant_Password'])
+      end
+
       visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
     end
 
@@ -12,8 +16,7 @@ describe 'Active participant in a social arm signs in,',
       click_on '#1 Identifying'
       click_on 'Skip'
       fill_in 'thought_content', with: 'Public thought 1'
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      accept_social_plural
       expect(page).to have_content 'Thought saved'
 
       expect(page).to have_content 'Now list another harmful thought...'
@@ -36,10 +39,11 @@ describe 'Active participant in a social arm signs in,',
       select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
       fill_in 'thought_challenging_thought', with: 'Testing challenge thought'
       fill_in 'thought_act_as_if', with: 'Testing act-as-if action'
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      page.execute_script('window.scrollTo(0,5000)')
+      accept_social_plural
       expect(page).to have_content 'Thought saved'
 
+      page.execute_script('window.scrollTo(0,5000)')
       find('.btn.btn-primary.pull-right', text: 'Next').click
       expect(page).to have_content 'Add a New Thought'
 
@@ -55,9 +59,11 @@ describe 'Active participant in a social arm signs in,',
       fill_in 'thought_challenging_thought', with: 'Testing challenge thought'
       fill_in 'thought_act_as_if', with: 'Testing act-as-if action'
       choose 'No'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Next'
       expect(page).to have_content 'Thought saved'
 
+      page.execute_script('window.scrollTo(0,5000)')
       find('.btn.btn-primary.pull-right', text: 'Next').click
       expect(page).to have_content 'Add a New Thought'
 
@@ -71,7 +77,11 @@ describe 'Active participant in a social arm signs in,',
 
   describe 'visits the DO tool,' do
     before do
-      sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+      unless ENV['safari']
+        sign_in_pt(ENV['Participant_Email'], 'participant1',
+                   ENV['Participant_Password'])
+      end
+
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
     end
 
@@ -96,9 +106,11 @@ describe 'Active participant in a social arm signs in,',
         choose 'No'
       end
 
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      accept_social_plural
       expect(page).to have_content 'Activity saved'
+
+      expect(page).to have_content 'Take a look'
+
       click_on 'Next'
       expect(page).to have_content 'Things you found fun.'
 
@@ -121,16 +133,18 @@ describe 'Active participant in a social arm signs in,',
       click_on 'Next'
       find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New public activity'
+      page.execute_script('window.scrollTo(0,5000)')
       find('.fa.fa-calendar').click
       pick_tomorrow
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      accept_social_plural
       expect(page).to have_content 'Activity saved'
 
+      page.execute_script('window.scrollTo(0,5000)')
       find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New private activity'
+      page.execute_script('window.scrollTo(0,5000)')
       find('.fa.fa-calendar').click
       pick_tomorrow
       choose_rating('pleasure_0', 4)
@@ -138,6 +152,8 @@ describe 'Active participant in a social arm signs in,',
       choose 'No'
       click_on 'Next'
       expect(page).to have_content 'Activity saved'
+
+      expect(page).to have_content 'OK...'
 
       click_on 'Next'
       expect(page).to have_content 'Your Planned Activities'
@@ -156,12 +172,12 @@ describe 'Active participant in a social arm signs in,',
       click_on 'Add a New Activity'
       find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New public activity 2'
+      page.execute_script('window.scrollTo(0,5000)')
       find('.fa.fa-calendar').click
       pick_tomorrow
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      accept_social_plural
       expect(page).to have_content 'Activity saved'
 
       visit ENV['Base_URL']
@@ -173,6 +189,7 @@ describe 'Active participant in a social arm signs in,',
       click_on 'Add a New Activity'
       find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New private activity 2'
+      page.execute_script('window.scrollTo(0,5000)')
       find('.fa.fa-calendar').click
       pick_tomorrow
       choose_rating('pleasure_0', 4)
@@ -193,16 +210,29 @@ end
 describe 'Active participant in a non-social arm signs in,',
          type: :feature, sauce: sauce_labs do
   describe 'visits the THINK tool,' do
+    if ENV['safari']
+      before(:all) do
+        sign_in_pt(ENV['NS_Participant_Email'], 'participant1',
+                   ENV['NS_Participant_Password'])
+      end
+    end
+
     before do
-      sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
+      unless ENV['safari']
+        sign_in_pt(ENV['NS_Participant_Email'], 'participant1',
+                   ENV['NS_Participant_Password'])
+      end
+
       visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
     end
 
     it 'is not able to create a shared item in Identifying' do
       click_on '#1 Identifying'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Next'
       expect(page).to have_content 'Helpful thoughts are...'
 
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Next'
       expect(page).to have_content 'Harmful thoughts are:'
 
@@ -227,8 +257,19 @@ describe 'Active participant in a non-social arm signs in,',
   end
 
   describe 'visits the DO tool,' do
+    if ENV['safari']
+      before(:all) do
+        sign_in_pt(ENV['NS_Participant_Email'], 'nonsocialpt',
+                   ENV['NS_Participant_Password'])
+      end
+    end
+
     before do
-      sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
+      unless ENV['safari']
+        sign_in_pt(ENV['NS_Participant_Email'], 'nonsocialpt',
+                   ENV['NS_Participant_Password'])
+      end
+
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
     end
 

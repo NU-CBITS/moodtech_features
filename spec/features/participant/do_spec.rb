@@ -2,8 +2,19 @@
 
 describe 'Active participant in group 1 signs in, navigates to DO tool,',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_pt(ENV['Participant_Email'], 'participant1',
+                 ENV['Participant_Password'])
+    end
+  end
+
   before do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+    unless ENV['safari']
+      sign_in_pt(ENV['Participant_Email'], 'participant1',
+                 ENV['Participant_Password'])
+    end
+
     visit "#{ENV['Base_URL']}/navigator/contexts/DO"
   end
 
@@ -26,32 +37,41 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     fill_in 'activity_type_2', with: 'Work'
     choose_rating('pleasure_2', 5)
     choose_rating('accomplishment_2', 8)
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'copy_3'
     click_on 'copy_4'
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'copy_5'
     click_on 'copy_6'
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'copy_7'
     click_on 'copy_8'
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'copy_9'
     fill_in 'activity_type_10', with: 'Travel from work'
     choose_rating('pleasure_10', 5)
     choose_rating('accomplishment_10', 8)
+    page.execute_script('window.scrollTo(0,5000)')
     fill_in 'activity_type_11', with: 'eat dinner'
     choose_rating('pleasure_11', 8)
     choose_rating('accomplishment_11', 8)
     fill_in 'activity_type_12', with: 'Watch TV'
     choose_rating('pleasure_12', 9)
     choose_rating('accomplishment_12', 3)
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'copy_13'
     fill_in 'activity_type_14', with: 'Get ready for bed'
     choose_rating('pleasure_14', 2)
     choose_rating('accomplishment_14', 3)
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    page.execute_script('window.scrollTo(0,5000)')
+    accept_social_plural
+    expect(page).to have_content 'Take a look'
+    page.execute_script('window.scrollTo(0,5000)')
     within('#recent_activities') do
-      expect(page).to have_css('tr', count: '17')
+      expect(page).to have_css('tr', count: '16')
     end
 
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Next'
     within('#fun_activities') do
       expect(page).to have_css('tr', count: '4')
@@ -108,8 +128,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     choose_rating('pleasure_0', 6)
     choose_rating('accomplishment_0', 1)
     click_on 'copy_1'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    page.execute_script('window.scrollTo(0,5000)')
+    accept_social_plural
     find('#recent_activities')
     click_on 'Next'
     find('#fun_activities')
@@ -124,22 +144,23 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Next'
     find('#new_activity_radio').click
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
+    page.execute_script('window.scrollTo(0,5000)')
     find('.fa.fa-calendar').click
     pick_tomorrow
     select '6', from: 'planned_activity[predicted_pleasure_intensity]'
     select '3', from: 'planned_activity[predicted_accomplishment_intensity]'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    accept_social_plural
     expect(page).to have_content 'Activity saved'
 
+    page.execute_script('window.scrollTo(0,5000)')
     find('#new_activity_radio').click
     fill_in 'activity_activity_type_new_title', with: 'Another planned activity'
+    page.execute_script('window.scrollTo(0,5000)')
     find('.fa.fa-calendar').click
     pick_tomorrow
     select '4', from: 'planned_activity[predicted_pleasure_intensity]'
     select '8', from: 'planned_activity[predicted_accomplishment_intensity]'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    accept_social_plural
     find('h1', text: 'OK...')
     click_on 'Next'
     within('#previous_activities') do
@@ -176,17 +197,13 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     find('.btn.btn-success').click
     select '7', from: 'activity[actual_pleasure_intensity]'
     select '5', from: 'activity[actual_accomplishment_intensity]'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make this ' \
-                      'public?'
+    accept_social_singular
     expect(page).to have_content 'Activity saved'
 
     if page.has_text?('You said you were going to')
       find('.btn.btn-danger').click
       fill_in 'activity[noncompliance_reason]', with: "I didn't have time"
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make this ' \
-                        'public?'
+      accept_social_singular
       expect(page).to have_content 'Activity saved'
     end
 
@@ -221,12 +238,12 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Add a New Activity'
     find('#new_activity_radio').click
     fill_in 'activity_activity_type_new_title', with: 'New planned activity'
+    page.execute_script('window.scrollTo(0,5000)')
     find('.fa.fa-calendar').click
     pick_tomorrow
     select '4', from: 'planned_activity[predicted_pleasure_intensity]'
     select '3', from: 'planned_activity[predicted_accomplishment_intensity]'
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    accept_social_plural
     expect(page).to have_content 'Activity saved'
   end
 
@@ -240,10 +257,12 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     click_on 'Daily Summaries'
     expect(page).to_not have_content 'Average Accomplishment Discrepancy'
 
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Previous Day'
     expect(page).to have_content 'Daily Averages for ' \
                                  "#{Date.today.prev_day.strftime('%b %d %Y')}"
 
+    page.execute_script('window.scrollTo(0,5000)')
     endtime = Time.now + (60 * 60)
     within('.panel.panel-default',
            text: "#{Time.now.strftime('%-l %P')} - " \
@@ -259,6 +278,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
       end
     end
 
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Next Day'
     expect(page).to have_content 'Daily Averages for ' \
                                  "#{Date.today.strftime('%b %d %Y')}"
@@ -343,8 +363,19 @@ end
 
 describe 'Active participant in group 3 signs in, navigates to DO tool,',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_pt(ENV['Alt_Participant_Email'], 'participant1',
+                 ENV['Alt_Participant_Password'])
+    end
+  end
+
   before do
-    sign_in_pt(ENV['Alt_Participant_Email'], ENV['Alt_Participant_Password'])
+    unless ENV['safari']
+      sign_in_pt(ENV['Alt_Participant_Email'], 'participant1',
+                 ENV['Alt_Participant_Password'])
+    end
+
     visit "#{ENV['Base_URL']}/navigator/contexts/DO"
   end
 
@@ -361,8 +392,8 @@ describe 'Active participant in group 3 signs in, navigates to DO tool,',
     fill_in 'activity_type_2', with: 'Work'
     choose_rating('pleasure_2', 8)
     choose_rating('accomplishment_2', 9)
-    click_on 'Next'
-    page.accept_alert 'Are you sure that you would like to make these public?'
+    page.execute_script('window.scrollTo(0,5000)')
+    accept_social_plural
     find('#recent_activities')
     click_on 'Next'
     find('#fun_activities')

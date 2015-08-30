@@ -3,7 +3,11 @@
 describe 'Active participant in group 1 signs in, navigates to MESSAGES,',
          type: :feature, sauce: sauce_labs do
   before do
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+    unless ENV['safari']
+      sign_in_pt(ENV['Participant_Email'], 'participant1',
+                 ENV['Participant_Password'])
+    end
+
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
   end
 
@@ -71,7 +75,8 @@ end
 describe 'Active participant in group 3 signs in, navigates to MESSAGES',
          type: :feature, sauce: sauce_labs do
   before do
-    sign_in_pt(ENV['Alt_Participant_Email'], ENV['Alt_Participant_Password'])
+    sign_in_pt(ENV['Alt_Participant_Email'], 'participant1',
+               ENV['Alt_Participant_Password'])
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
   end
 

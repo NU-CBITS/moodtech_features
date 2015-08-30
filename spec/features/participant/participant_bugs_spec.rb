@@ -2,8 +2,18 @@
 
 describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
   describe 'Participant 1 signs in,' do
+    if ENV['safari']
+      before(:all) do
+        sign_in_pt(ENV['Participant_Email'], 'participant3',
+                   ENV['Participant_Password'])
+      end
+    end
+
     before do
-      sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
+      unless ENV['safari']
+        sign_in_pt(ENV['Participant_Email'], 'participant3',
+                   ENV['Participant_Password'])
+      end
     end
 
     it 'navigates to the DO tool, completes Planning without multiple alerts' do
@@ -12,14 +22,15 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Next'
       find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
+      page.execute_script('window.scrollTo(0,5000)')
       find('.fa.fa-calendar').click
       pick_tomorrow
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      accept_social_plural
       expect(page).to have_content 'Activity saved'
 
+      page.execute_script('window.scrollTo(0,5000)')
       find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title',
               with: 'Another planned activity'
@@ -27,10 +38,10 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       pick_tomorrow
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      accept_social_plural
       expect(page).to have_content 'Activity saved'
 
+      find('h1', text: 'OK...')
       click_on 'Next'
       expect(page).to have_content 'Your Planned Activities'
 
@@ -44,12 +55,12 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Add a New Activity'
       find('#new_activity_radio').click
       fill_in 'activity_activity_type_new_title', with: 'New planned activity'
+      page.execute_script('window.scrollTo(0,5000)')
       find('.fa.fa-calendar').click
       pick_tomorrow
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      accept_social_plural
       expect(page).to have_content 'Activity saved'
     end
 
@@ -67,8 +78,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       fill_in 'activity_type_0', with: 'Sleep'
       choose_rating('pleasure_0', 9)
       choose_rating('accomplishment_0', 3)
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      accept_social_plural
       expect(page).to have_content 'Activity saved'
 
       expect(page).to have_content 'Take a look - does this all seem right? ' \
@@ -87,6 +97,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       click_on 'Your Activities'
       expect(page).to have_content 'Today'
 
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Previous Day'
       expect(page)
         .to have_content 'Daily Averages for ' \
@@ -107,8 +118,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       fill_in 'activity_type_0', with: 'doing whatever thing'
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 7)
-      click_on 'Next'
-      page.accept_alert 'Are you sure that you would like to make these public?'
+      accept_social_plural
       expect(page).to have_content 'Activity saved'
 
       visit ENV['Base_URL']
@@ -146,7 +156,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
 
   describe 'Participant 2 signs in,' do
     before do
-      sign_in_pt(ENV['Participant_2_Email'], ENV['Participant_2_Password'])
+      sign_in_pt(ENV['Participant_2_Email'], 'participant1',
+                 ENV['Participant_2_Password'])
     end
 
     it 'navigates to a module from the dropdown, completes the module, the ' \
@@ -167,6 +178,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       select 'anxious', from: 'emotional_rating_emotion_id'
       select 'negative', from: 'emotional_rating_is_positive'
       select '4', from: 'emotional_rating[rating]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Next'
       expect(page).to have_content 'Emotional Rating saved'
 
@@ -183,7 +195,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
 
   describe 'Active participant in group 5 signs in,' do
     before do
-      sign_in_pt(ENV['NS_Participant_Email'], ENV['NS_Participant_Password'])
+      sign_in_pt(ENV['NS_Participant_Email'], 'TFD Moderator',
+                 ENV['NS_Participant_Password'])
     end
 
     it 'cannot select My Profile from navbar dropdown' do

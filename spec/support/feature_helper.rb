@@ -1,13 +1,13 @@
 # filename: feature_helper.rb
 
-def sign_in_pt(participant, password)
+def sign_in_pt(new_participant, old_participant, password)
   visit "#{ENV['Base_URL']}/participants/sign_in"
-  if ENV['safari'] && page.has_css?('.navbar-collapse', text: 'Sign Out')
-    sign_out
+  if ENV['safari'] && page.has_css?('.navbar-collapse', text: old_participant)
+    sign_out(old_participant)
   end
   if page.has_css?('#new_participant')
     within('#new_participant') do
-      fill_in 'participant_email', with: participant
+      fill_in 'participant_email', with: new_participant
       fill_in 'participant_password', with: password
     end
     click_on 'Sign in'
@@ -32,12 +32,16 @@ def sign_in_user(user, password)
   end
 end
 
-def sign_out
+def sign_out(display_name)
   within('.navbar-collapse') do
+    unless page.has_text?('Sign Out')
+      click_on display_name
+    end
+
     click_on 'Sign Out'
   end
 
-  expect(page).to have_content 'Forget your password?'
+  expect(page).to have_content 'Forgot your password?'
 end
 
 def choose_rating(element_id, value)
@@ -46,15 +50,7 @@ def choose_rating(element_id, value)
 end
 
 def compare_thought(thought)
-  if driver != :firefox
-    page.driver.execute_script('window.confirm = function() {return true}')
-  end
-
-  click_on 'Next'
-  if driver == :firefox
-    page.accept_alert 'Are you sure that you would like to make these public?'
-  end
-
+  accept_social_plural
   expect(page).to have_content 'Thought saved'
   within('.panel-body.adjusted-list-group-item') do
     expect(page).to_not have_content thought
@@ -65,7 +61,6 @@ end
 
 def reshape(challenge, action)
   expect(page).to have_content 'You said that you thought...'
-
   click_on 'Next'
   fill_in 'thought[challenging_thought]', with: challenge
   click_on 'Next'
@@ -73,6 +68,7 @@ def reshape(challenge, action)
 
   expect(page).to have_content 'Because what you THINK, FEEL, Do'
 
+  page.execute_script('window.scrollTo(0,5000)')
   click_on 'Next'
   expect(page).to have_content 'What could you do to ACT AS IF you believe ' \
                                'this?'
@@ -106,5 +102,27 @@ def find_feed_item(item)
                          text: item) && counter < 15
     page.execute_script('window.scrollTo(0,100000)')
     counter += 1
+  end
+end
+
+def accept_social_plural
+  if driver != :firefox
+    page.driver.execute_script('window.confirm = function() {return true}')
+  end
+
+  click_on 'Next'
+  if driver == :firefox
+    page.accept_alert 'Are you sure that you would like to make these public?'
+  end
+end
+
+def accept_social_singular
+  if driver != :firefox
+    page.driver.execute_script('window.confirm = function() {return true}')
+  end
+
+  click_on 'Next'
+  if driver == :firefox
+    page.accept_alert 'Are you sure that you would like to make these public?'
   end
 end
