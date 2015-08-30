@@ -62,7 +62,7 @@ Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
   "#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
 end
 Capybara::Screenshot.autosave_on_failure = !sauce_labs
-Capybara::Screenshot.prune_strategy = :keep_last_run 
+Capybara::Screenshot.prune_strategy = :keep_last_run
 
 # Sauce configuration options
 Sauce.config do |config|
