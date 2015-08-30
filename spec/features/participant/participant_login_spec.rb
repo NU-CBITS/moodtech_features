@@ -65,24 +65,27 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     click_on 'Send'
     expect(page).to have_content 'Message saved'
 
-    visit "#{ENV['Base_URL']}/users/sign_in"
-    sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-    click_on 'Arms'
-    find('h1', text: 'Arms')
-    click_on 'Arm 1'
-    click_on 'Group 1'
-    click_on 'Messaging'
-    click_on 'Messages'
-    click_on 'Test message from completer'
-    expect(page).to have_content 'From You'
+    unless ENV['safari']
+      visit "#{ENV['Base_URL']}/users/sign_in"
+      sign_in_user(ENV['Clinician_Email'], 'completer',
+                   ENV['Clinician_Password'])
+      click_on 'Arms'
+      find('h1', text: 'Arms')
+      click_on 'Arm 1'
+      click_on 'Group 1'
+      click_on 'Messaging'
+      click_on 'Messages'
+      click_on 'Test message from completer'
+      expect(page).to have_content 'From You'
 
-    expect(page).to have_content 'Test'
+      expect(page).to have_content 'Test'
 
-    sign_out('TFD Moderator')
+      sign_out('TFD Moderator')
+    end
   end
 
   it 'was an active participant in a mobile arm who has completed' do
-    sign_in_pt(ENV['Mobile_Comp_Pt_Email'], 'completer',
+    sign_in_pt(ENV['Mobile_Comp_Pt_Email'], 'TFD Moderator',
                ENV['Mobile_Comp_Pt_Password'])
     find('h1', text: 'HOME')
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"

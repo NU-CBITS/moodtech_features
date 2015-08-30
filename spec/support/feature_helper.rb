@@ -17,10 +17,10 @@ def sign_in_pt(new_participant, old_participant, password)
   end
 end
 
-def sign_in_user(user, password)
+def sign_in_user(user, old_user, password)
   visit "#{ENV['Base_URL']}/users/sign_in"
   if ENV['safari'] && page.has_css?('.navbar-collapse', text: 'Sign Out')
-    sign_out
+    sign_out(old_user)
   end
   if page.has_css?('#new_user')
     within('#new_user') do
