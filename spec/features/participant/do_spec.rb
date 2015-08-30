@@ -68,7 +68,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     expect(page).to have_content 'Take a look'
     page.execute_script('window.scrollTo(0,5000)')
     within('#recent_activities') do
-      expect(page).to have_css('tr', count: '16')
+      expect(page).to have_css('tr', count: '17')
     end
 
     page.execute_script('window.scrollTo(0,5000)')

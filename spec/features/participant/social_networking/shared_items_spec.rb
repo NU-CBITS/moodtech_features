@@ -228,6 +228,7 @@ describe 'Active participant in a non-social arm signs in,',
 
     it 'is not able to create a shared item in Identifying' do
       click_on '#1 Identifying'
+      expect(page).to have_content 'You are what you think'
       page.execute_script('window.scrollTo(0,5000)')
       click_on 'Next'
       expect(page).to have_content 'Helpful thoughts are...'
