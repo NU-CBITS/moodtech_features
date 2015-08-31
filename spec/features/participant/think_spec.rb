@@ -35,19 +35,19 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     click_on 'Next'
     fill_in 'thought_content', with: 'Testing helpful thought'
-    accept_social_plural
+    accept_social
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Now list another harmful thought...'
 
     fill_in 'thought_content', with: 'Testing negative thought'
-    accept_social_plural
+    accept_social
     expect(page).to have_content 'Thought saved'
 
     expect(page).to have_content 'Just one more'
 
     fill_in 'thought_content', with: 'Forced negative thought'
-    accept_social_plural
+    accept_social
     expect(page).to have_content 'Good work'
 
     click_on 'Next'
@@ -83,7 +83,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     select 'Personalization', from: 'thought_pattern_id'
     compare_thought(thought_value)
     select 'Personalization', from: 'thought_pattern_id'
-    accept_social_plural
+    accept_social
     expect(page).to have_content 'Thought saved'
 
     visit ENV['Base_URL']
@@ -135,7 +135,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     fill_in 'thought_challenging_thought', with: 'Testing challenge thought'
     fill_in 'thought_act_as_if', with: 'Testing act-as-if action'
     page.execute_script('window.scrollTo(0,5000)')
-    accept_social_plural
+    accept_social
     expect(page).to have_content 'Thought saved'
 
     page.execute_script('window.scrollTo(0,5000)')

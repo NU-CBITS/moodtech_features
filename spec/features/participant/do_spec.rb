@@ -90,7 +90,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
                         text: 'Monitored an Activity: Get ready for bed')
     within activity[0] do
       click_on 'More'
-
       yesterday = Date.today - 1
       expect(page).to have_content 'start: ' \
                                    "#{yesterday.strftime('%b. %-d, %Y')}" \

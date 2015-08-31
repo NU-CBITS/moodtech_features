@@ -50,7 +50,7 @@ def choose_rating(element_id, value)
 end
 
 def compare_thought(thought)
-  accept_social_plural
+  accept_social
   expect(page).to have_content 'Thought saved'
   within('.panel-body.adjusted-list-group-item') do
     expect(page).to_not have_content thought
@@ -105,24 +105,7 @@ def find_feed_item(item)
   end
 end
 
-def accept_social_plural
-  if driver != :firefox
-    page.driver.execute_script('window.confirm = function() {return true}')
-  end
-
+def accept_social
+  page.driver.execute_script('window.confirm = function() {return true}')
   click_on 'Next'
-  if driver == :firefox
-    page.accept_alert 'Are you sure that you would like to make these public?'
-  end
-end
-
-def accept_social_singular
-  if driver != :firefox
-    page.driver.execute_script('window.confirm = function() {return true}')
-  end
-
-  click_on 'Next'
-  if driver == :firefox
-    page.accept_alert 'Are you sure that you would like to make these public?'
-  end
 end
