@@ -2,9 +2,20 @@
 
 describe 'Researcher signs in, navigates to Groups,',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_user(ENV['Researcher_Email'], 'TFD Moderator',
+                   ENV['Researcher_Password'])
+    end
+  end
+
   before do
-    sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
-    click_on 'Groups'
+    unless ENV['safari']
+      sign_in_user(ENV['Researcher_Email'], 'TFD Moderator',
+                   ENV['Researcher_Password'])
+    end
+
+    visit "#{ENV['Base_URL']}/think_feel_do_dashboard/groups"
   end
 
   it 'creates a group' do
@@ -34,6 +45,8 @@ describe 'Researcher signs in, navigates to Groups,',
   end
 
   it 'updates moderator for Group 1' do
+    find('h1', text: 'Groups')
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Group 1'
     click_on 'Edit'
     select ENV['User_Email'], from: 'group_moderator_id'
@@ -51,17 +64,21 @@ describe 'Researcher signs in, navigates to Groups,',
   end
 
   it 'destroys a group' do
+    find('h1', text: 'Groups')
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Testing Group'
     expect(page).to have_content 'Title: Testing Group'
 
+    page.driver.execute_script('window.confirm = function() {return true}')
     click_on 'Destroy'
-    page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Group was successfully destroyed.'
 
     expect(page).to_not have_content 'Testing Group'
   end
 
   it 'manages tasks within a group' do
+    find('h1', text: 'Groups')
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Group 1'
     click_on 'Manage Tasks'
     select 'LEARN: Do - Planning Slideshow 3 of 4',
@@ -70,11 +87,12 @@ describe 'Researcher signs in, navigates to Groups,',
     click_on 'Assign'
     expect(page).to have_content 'Task assigned.'
 
+    page.execute_script('window.scrollTo(0,5000)')
     within('tr', text: 'LEARN: Do - Planning Slideshow 3 of 4') do
+      page.driver.execute_script('window.confirm = function() {return true}')
       click_on 'Unassign'
     end
 
-    page.accept_alert 'Are you sure?'
     within '#tasks' do
       expect(page).to_not have_content 'LEARN: Do - Planning Slideshow 3 of 4'
     end

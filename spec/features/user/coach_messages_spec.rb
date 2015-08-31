@@ -3,9 +3,12 @@
 describe 'Coach signs in and navigates to messages tool for Group 1',
          type: :feature, sauce: sauce_labs do
   before do
-    sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-    click_on 'Arms'
-    find('h1', text: 'Arms')
+    unless ENV['safari']
+      sign_in_user(ENV['Clinician_Email'], 'TFD Moderator',
+                   ENV['Clinician_Password'])
+    end
+
+    visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
     click_on 'Arm 1'
     click_on 'Group 1'
     click_on 'Messaging'
@@ -26,12 +29,16 @@ describe 'Coach signs in and navigates to messages tool for Group 1',
 
     fill_in 'message[body]',
             with: 'This message is to test the reply functionality'
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Send'
     expect(page).to have_content 'Message saved'
 
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-    visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
-    expect(page).to have_content 'Reply: I like this app'
+    unless ENV['safari']
+      sign_in_pt(ENV['Participant_Email'], 'TFD Moderator',
+                 ENV['Participant_Password'])
+      visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
+      expect(page).to have_content 'Reply: I like this app'
+    end
   end
 
   it 'reads a sent message' do
@@ -50,9 +57,12 @@ describe 'Coach signs in and navigates to messages tool for Group 1',
     click_on 'Send'
     expect(page).to have_content 'Message saved'
 
-    sign_in_pt(ENV['Participant_Email'], ENV['Participant_Password'])
-    visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
-    expect(page).to have_content 'Testing compose functionality'
+    unless ENV['safari']
+      sign_in_pt(ENV['Participant_Email'], 'TFD Moderator',
+                 ENV['Participant_Password'])
+      visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
+      expect(page).to have_content 'Testing compose functionality'
+    end
   end
 
   it 'searches for a specific participants messages' do

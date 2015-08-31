@@ -3,9 +3,12 @@
 describe 'Content Author signs in, visits Content Modules tool,',
          type: :feature, sauce: sauce_labs do
   before do
-    sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
-    click_on 'Arms'
-    find('h1', text: 'Arms')
+    unless ENV['safari']
+      sign_in_user(ENV['Content_Author_Email'], 'TFD Moderator',
+                   ENV['Content_Author_Password'])
+    end
+
+    visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
     click_on 'Arm 1'
     click_on 'Manage Content'
     click_on 'Content Modules'
@@ -21,6 +24,9 @@ describe 'Content Author signs in, visits Content Modules tool,',
   end
 
   it 'edits a module' do
+    expect(page).to have_content 'Listing Content Modules'
+
+    page.execute_script('window.scrollTo(0,5000)')
     click_on '#1 Awareness'
     click_on 'Edit'
     select 'THINK', from: 'content_module_bit_core_tool_id'
@@ -41,14 +47,15 @@ describe 'Content Author signs in, visits Content Modules tool,',
 
   it 'destroys a module' do
     unless page.has_text? 'Test content module'
+      page.execute_script('window.scrollTo(0,5000)')
       within('.pagination') do
         click_on '2'
       end
     end
 
     click_on 'Test content module'
+    page.driver.execute_script('window.confirm = function() {return true}')
     click_on 'Destroy'
-    page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Content module along with any associated ' \
                                  'tasks were successfully destroyed.'
 
@@ -56,6 +63,8 @@ describe 'Content Author signs in, visits Content Modules tool,',
   end
 
   it 'creates a provider' do
+    find('h1', text: 'Listing Content Modules')
+    page.execute_script('window.scrollTo(0,5000)')
     unless page.has_text? 'Home Introduction'
       within('.pagination') do
         click_on '2'
@@ -75,6 +84,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
     fill_in 'content_provider_position', with: '4'
     check 'content_provider_show_next_nav'
     check 'content_provider_is_skippable_after_first_viewing'
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Create'
     expect(page).to have_content 'ContentProvider was successfully created.'
     expect(page).to have_content "Tool: LEARN\nModule: Home Introduction" \
@@ -83,6 +93,8 @@ describe 'Content Author signs in, visits Content Modules tool,',
   end
 
   it 'updates a provider' do
+    find('h1', text: 'Listing Content Modules')
+    page.execute_script('window.scrollTo(0,5000)')
     unless page.has_text? 'Home Introduction'
       within('.pagination') do
         click_on '2'
@@ -95,6 +107,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
 
     click_on 'Edit'
     fill_in 'content_provider[position]', with: '10'
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Update'
     expect(page).to have_content 'ContentProvider was successfully updated.'
 
@@ -102,6 +115,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
 
     click_on 'Edit'
     fill_in 'content_provider[position]', with: '1'
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Update'
     expect(page).to have_content 'ContentProvider was successfully updated.'
 
@@ -111,6 +125,8 @@ describe 'Content Author signs in, visits Content Modules tool,',
   end
 
   it 'destroys a provider' do
+    find('h1', text: 'Listing Content Modules')
+    page.execute_script('window.scrollTo(0,5000)')
     unless page.has_text? 'Home Introduction'
       within('.pagination') do
         click_on '2'
@@ -121,8 +137,8 @@ describe 'Content Author signs in, visits Content Modules tool,',
     click_on '4 slideshow provider'
     expect(page).to have_content 'Slideshow: Home Intro'
 
+    page.driver.execute_script('window.confirm = function() {return true}')
     click_on 'Destroy'
-    page.accept_alert 'Are you sure?'
     expect(page).to have_content 'Content Providers'
   end
 

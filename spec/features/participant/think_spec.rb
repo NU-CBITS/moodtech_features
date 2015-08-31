@@ -57,6 +57,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     find_feed_item('Identified a Thought: Testing helpful thought')
     within('.list-group-item.ng-scope',
            text: 'Identified a Thought: Testing helpful thought') do
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'More'
 
       expect(page).to have_content 'this thought is: Testing helpful thought'

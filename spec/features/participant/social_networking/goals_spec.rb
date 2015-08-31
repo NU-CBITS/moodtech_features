@@ -30,6 +30,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     find_feed_item('Created a Goal: eat a whole pizza')
     within('.list-group-item.ng-scope',
            text: 'Created a Goal: eat a whole pizza') do
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'More'
 
       end_of_study = Date.today + 4

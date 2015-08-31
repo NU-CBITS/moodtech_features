@@ -2,10 +2,20 @@
 
 describe 'Coach signs in and navigates to Group Dashboard of Group 6',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_user(ENV['Clinician_Email'], 'participant1',
+                   ENV['Clinician_Password'])
+    end
+  end
+
   before do
-    sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-    click_on 'Arms'
-    find('h1', text: 'Arms')
+    unless ENV['safari']
+      sign_in_user(ENV['Clinician_Email'], 'TFD Moderator',
+                   ENV['Clinician_Password'])
+    end
+
+    visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
     click_on 'Arm 1'
     click_on 'Group 6'
     click_on 'Group Dashboard'
@@ -92,12 +102,14 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
       within table_row_0[0] do
         expect(page).to have_content 'Home Introduction 1 of 5 COMPLETE'
 
+        page.execute_script('window.scrollTo(0,5000)')
         click_on 'View Complete Participants'
         within('.well') do
           expect(page).to have_content 'First'
         end
 
         click_on 'View Incomplete Participants'
+        find('.collapse.in')
         well = page.all('.well')
         within well[1] do
           expect(page).to have_content 'Second Third Fourth Fifth'
@@ -114,6 +126,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         end
 
         click_on 'View Incomplete Participants'
+        find('.collapse.in')
         well = page.all('.well')
         within well[1] do
           expect(page).to have_content 'First Fourth Fifth'
@@ -130,6 +143,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         end
 
         click_on 'View Incomplete Participants'
+        find('.collapse.in')
         well = page.all('.well')
         within well[1] do
           expect(page).to have_content 'First Third Fourth Fifth'
@@ -140,12 +154,14 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         expect(page).to have_content 'Think - Identifying Conclusion 3 of 5 ' \
                                      'COMPLETE'
 
+        page.execute_script('window.scrollTo(0,5000)')
         click_on 'View Complete Participants'
         within('.well') do
           expect(page).to have_content 'First Second Third'
         end
 
         click_on 'View Incomplete Participants'
+        find('.collapse.in')
         well = page.all('.well')
         within well[1] do
           expect(page).to have_content 'Fourth Fifth'
@@ -155,6 +171,10 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Thoughts' do
+    within('.panel.panel-default', text: 'Group Summary') do
+      click_on 'thoughts'
+    end
+
     within('#thoughts-container') do
       find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')
@@ -181,6 +201,10 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Activities Past' do
+    within('.panel.panel-default', text: 'Group Summary') do
+      click_on 'activities past'
+    end
+
     within('#activities-past-container') do
       find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')
@@ -209,6 +233,10 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Activities Future' do
+    within('.panel.panel-default', text: 'Group Summary') do
+      click_on 'activities future'
+    end
+
     within('#activities-planned-container') do
       find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')
@@ -239,6 +267,10 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views On-My-Mind Statements' do
+    within('.panel.panel-default', text: 'Group Summary') do
+      click_on 'on the mind statements'
+    end
+
     within('#on-my-mind-container') do
       find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')
@@ -253,6 +285,10 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Comments' do
+    within('.panel.panel-default', text: 'Group Summary') do
+      click_on 'comments'
+    end
+
     within('#comments-container') do
       find('.sorting', text: 'Created At').click
       table_row = page.all('tr:nth-child(1)')
@@ -287,6 +323,10 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Goals' do
+    within('.panel.panel-default', text: 'Group Summary') do
+      click_on 'goals'
+    end
+
     within('#goals-container') do
       find('.sorting', text: 'Created Date').click
       table_row = page.all('tr:nth-child(1)')
@@ -333,6 +373,10 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   end
 
   it 'views Likes' do
+    within('.panel.panel-default', text: 'Group Summary') do
+      click_on 'likes'
+    end
+
     within('#likes-container') do
       find('.sorting', text: 'Week').click
       table_row = page.all('tr:nth-child(1)')

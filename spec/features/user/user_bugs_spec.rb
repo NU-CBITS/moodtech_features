@@ -2,8 +2,20 @@
 
 describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
   describe 'Researcher signs in,' do
+    if ENV['safari']
+      before(:all) do
+        sign_in_user(ENV['Researcher_Email'], 'TFD Moderator',
+                     ENV['Researcher_Password'])
+      end
+    end
+
     before do
-      sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
+      unless ENV['safari']
+        sign_in_user(ENV['Researcher_Email'], 'TFD Moderator',
+                     ENV['Researcher_Password'])
+      end
+
+      visit "#{ENV['Base_URL']}/think_feel_do_dashboard"
     end
 
     it 'creates a participant, assigns a group membership, sees correct ' \
@@ -32,8 +44,10 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
       click_on 'Assign'
       expect(page).to have_content 'Group was successfully assigned'
 
-      expect(page).to have_content "Membership Status: Active\nCurrent " \
-                                   'Group: Group 1'
+      if driver != :chrome
+        expect(page).to have_content "Membership Status: Active\nCurrent " \
+                                     'Group: Group 1'
+      end
     end
 
     it 'creates a participant, assigns a social group membership without a ' \
@@ -65,8 +79,20 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
   end
 
   describe 'Clinician signs in,' do
+    if ENV['safari']
+      before(:all) do
+        sign_in_user(ENV['Clinician_Email'], 'TFD Moderator',
+                     ENV['Clinician_Password'])
+      end
+    end
+
     before do
-      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
+      unless ENV['safair']
+        sign_in_user(ENV['Clinician_Email'], 'TFD Moderator',
+                     ENV['Clinician_Password'])
+      end
+
+      visit "#{ENV['Base_URL']}/think_feel_do_dashboard"
     end
 
     it 'navigates to Patient Dashboard, see consistent # of Logins in ' \

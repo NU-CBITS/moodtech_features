@@ -2,12 +2,24 @@
 
 describe 'Visitor to the site,', type: :feature, sauce: sauce_labs do
   it 'is an authorized user, signs in' do
-    sign_in_user(ENV['User_Email'], ENV['User_Password'])
+    sign_in_user(ENV['User_Email'], 'TFD Moderator', ENV['User_Password'])
     expect(page).to have_content 'Signed in successfully'
   end
 
   it 'is not an authorized user, fails to sign in' do
-    sign_in_user('asdf@test.com', 'asdf')
+    visit "#{ENV['Base_URL']}/users/sign_in"
+
+    if ENV['safari']
+      sign_out('TFD Moderator')
+    end
+
+    within('#new_user') do
+      fill_in 'user_email', with: 'asdf@example.com'
+      fill_in 'user_password', with: 'asdf'
+    end
+
+    click_on 'Sign in'
+
     expect(page).to have_content 'Invalid email address or password'
   end
 
@@ -43,7 +55,8 @@ describe 'Visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it "is an authorized clinician, only sees what they're authorized to see" do
-    sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
+    sign_in_user(ENV['Clinician_Email'], 'TFD Moderator',
+                 ENV['Clinician_Password'])
     expect(page).to_not have_content "Groups\nCreate, update, delete, and " \
                                      'associate groups with arms along with ' \
                                      "set moderators.\nParticipants\nCreate, " \
@@ -66,7 +79,13 @@ describe 'Visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it "is an authorized researcher, only sees what they're authorized to see" do
-    sign_in_user(ENV['Researcher_Email'], ENV['Researcher_Password'])
+    visit "#{ENV['Base_URL']}/users/sign_in"
+    if ENV['safari']
+      sign_out('TFD Moderator')
+    end
+
+    sign_in_user(ENV['Researcher_Email'], 'TFD Moderator',
+                 ENV['Researcher_Password'])
     expect(page).to have_content "Arms\nNavigate to groups and participants " \
                                  "through arms.\nGroups\nCreate, update, " \
                                  'delete, and associate groups with arms ' \
@@ -93,7 +112,13 @@ describe 'Visitor to the site,', type: :feature, sauce: sauce_labs do
 
   it "is an authorized content author, only sees what they're authorized " \
      'to see' do
-    sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
+    visit "#{ENV['Base_URL']}/users/sign_in"
+    if ENV['safari']
+      sign_out('TFD Moderator')
+    end
+
+    sign_in_user(ENV['Content_Author_Email'], 'TFD Moderator',
+                 ENV['Content_Author_Password'])
     expect(page).to_not have_content "Groups\nCreate, update, delete, and " \
                                      'associate groups with arms along with ' \
                                      "set moderators.\nParticipants\nCreate, " \
@@ -112,7 +137,13 @@ describe 'Visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it 'is an authorized super user' do
-    sign_in_user(ENV['User_Email'], ENV['User_Password'])
+    visit "#{ENV['Base_URL']}/users/sign_in"
+    if ENV['safari']
+      sign_out('TFD Moderator')
+    end
+
+    sign_in_user(ENV['User_Email'], 'TFD Moderator',
+                 ENV['User_Password'])
     expect(page).to have_content "Arms\nNavigate to groups and participants " \
                                  "through arms.\nGroups\nCreate, update, " \
                                  'delete, and associate groups with arms ' \
@@ -129,6 +160,7 @@ describe 'Visitor to the site,', type: :feature, sauce: sauce_labs do
     click_on 'Arm 1'
     expect(page).to have_content 'Edit  Manage Content  Destroy'
 
+    page.execute_script('window.scrollTo(0,5000)')
     click_on 'Group 1'
     expect(page).to have_content 'Patient Dashboard  Group Dashboard  ' \
                                  'Messaging  Moderate  Manage Profile ' \
@@ -136,7 +168,13 @@ describe 'Visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it 'is an authorized super user, uses brand link to return to home page' do
-    sign_in_user(ENV['User_Email'], ENV['User_Password'])
+    if ENV['safari']
+      visit "#{ENV['Base_URL']}/users/sign_in"
+    else
+      sign_in_user(ENV['User_Email'], 'TFD Moderator',
+                   ENV['User_Password'])
+    end
+
     click_on 'Arms'
     click_on 'Arm 1'
     click_on 'Manage Content'

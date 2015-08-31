@@ -4,12 +4,17 @@ describe 'Content Author signs in, navigates to Arm 1,',
          type: :feature, sauce: sauce_labs do
   describe 'navigates to Lesson Modules, selects a lesson,' do
     before do
-      sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
-      click_on 'Arms'
-      find('h1', text: 'Arms')
+      unless ENV['safari']
+        sign_in_user(ENV['Content_Author_Email'], 'TFD Moderator',
+                     ENV['Content_Author_Password'])
+      end
+
+      visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
       click_on 'Arm 1'
       click_on 'Manage Content'
       click_on 'Lesson Modules'
+      find('h1', text: 'Listing Lesson Modules')
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Testing adding/updating slides/lessons'
     end
 
@@ -20,6 +25,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
       find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur ' \
                             'adipiscing elit. Vivamus vitae viverra leo, at ' \
                             'tincidunt enim. Nulla vitae enim. Suspendisse.'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Create'
       expect(page).to have_content 'Successfully created slide for lesson'
 
@@ -30,11 +36,13 @@ describe 'Content Author signs in, navigates to Arm 1,',
       find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[1].click
       uncheck 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
 
       page.all('a', text: 'Edit')[1].click
       check 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
     end
@@ -49,8 +57,8 @@ describe 'Content Author signs in, navigates to Arm 1,',
 
     it 'destroys a slide' do
       find('small', text: 'Testing adding/updating slides/lessons')
+      page.driver.execute_script('window.confirm = function() {return true}')
       page.all('.btn.btn-danger', text: 'Remove')[4].click
-      page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test slide 2'
     end
 
@@ -60,6 +68,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
       fill_in 'slide_options_vimeo_id', with: '111087687'
       uncheck 'slide[is_title_visible]'
       find('.md-input').set 'This is a video slide'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Create'
       expect(page).to have_content 'Successfully created slide for lesson'
 
@@ -70,11 +79,13 @@ describe 'Content Author signs in, navigates to Arm 1,',
       find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[5].click
       uncheck 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
 
       page.all('a', text: 'Edit')[5].click
       check 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
     end
@@ -86,8 +97,8 @@ describe 'Content Author signs in, navigates to Arm 1,',
 
     it 'destroys a video slide' do
       find('small', text: 'Testing adding/updating slides/lessons')
+      page.driver.execute_script('window.confirm = function() {return true}')
       page.all('.btn.btn-danger', text: 'Remove')[4].click
-      page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test video slide 2'
     end
 
@@ -96,6 +107,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
       fill_in 'slide_title', with: 'Test audio slide'
       fill_in 'slide_options_audio_url', with: ENV['Audio_File']
       find('.md-input').set 'This is an audio slide'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Create'
       expect(page).to have_content 'Successfully created slide for lesson'
 
@@ -107,31 +119,38 @@ describe 'Content Author signs in, navigates to Arm 1,',
       page.all('a', text: 'Edit')[5].click
       expect(page).to have_content 'Edit Slide'
       uncheck 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
 
       page.all('a', text: 'Edit')[5].click
       check 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Successfully updated slide for lesson'
     end
 
     it 'deletes an audio slide' do
       find('small', text: 'Testing adding/updating slides/lessons')
+      page.driver.execute_script('window.confirm = function() {return true}')
       page.all('.btn.btn-danger', text: 'Remove')[4].click
-      page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test audio slide'
     end
   end
 
   describe 'navigates to Slideshows, selects a slideshow,' do
     before do
-      sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
-      click_on 'Arms'
-      find('h1', text: 'Arms')
+      unless ENV['safari']
+        sign_in_user(ENV['Content_Author_Email'], 'TFD Moderator',
+                     ENV['Content_Author_Password'])
+      end
+
+      visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
       click_on 'Arm 1'
       click_on 'Manage Content'
       click_on 'Slideshows'
+      find('h1', text: 'Listing Slideshows')
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Testing adding/updating slides/lessons'
     end
 
@@ -142,6 +161,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
       find('.md-input').set 'Lorem ipsum dolor sit amet, consectetur ' \
                             'adipiscing elit. Vivamus vitae viverra leo, at ' \
                             'tincidunt enim. Nulla vitae enim. Suspendisse.'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Create'
       expect(page).to have_content 'Test slide 2'
     end
@@ -150,11 +170,13 @@ describe 'Content Author signs in, navigates to Arm 1,',
       find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[1].click
       uncheck 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Add Video Slide'
 
       page.all('a', text: 'Edit')[1].click
       check 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Add Video Slide'
     end
@@ -170,10 +192,10 @@ describe 'Content Author signs in, navigates to Arm 1,',
     it 'destroys a slide' do
       find('small', text: 'Testing adding/updating slides/lessons')
       within('li:nth-child(5)') do
+        page.driver.execute_script('window.confirm = function() {return true}')
         click_on 'Remove'
       end
 
-      page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test slide 2'
     end
 
@@ -183,6 +205,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
       fill_in 'slide_options_vimeo_id', with: '107231188'
       uncheck 'slide[is_title_visible]'
       find('.md-input').set 'This is a video slide'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Create'
       expect(page).to have_content 'Test video slide 2'
     end
@@ -191,11 +214,13 @@ describe 'Content Author signs in, navigates to Arm 1,',
       find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[4].click
       uncheck 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Add Slide'
 
       page.all('a', text: 'Edit')[4].click
       check 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Add Slide'
     end
@@ -208,10 +233,10 @@ describe 'Content Author signs in, navigates to Arm 1,',
     it 'destroys a video slideo' do
       find('small', text: 'Testing adding/updating slides/lessons')
       within('li:nth-child(5)') do
+        page.driver.execute_script('window.confirm = function() {return true}')
         click_on 'Remove'
       end
 
-      page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test video slide 2'
     end
 
@@ -220,6 +245,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
       fill_in 'slide_title', with: 'Test audio slide'
       fill_in 'slide_options_audio_url', with: ENV['Audio_File']
       find('.md-input').set 'This is an audio slide'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Create'
       expect(page).to have_content 'Test audio slide'
     end
@@ -228,11 +254,13 @@ describe 'Content Author signs in, navigates to Arm 1,',
       find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[5].click
       uncheck 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Testing adding/updating slides/lessons'
 
       page.all('a', text: 'Edit')[5].click
       check 'slide[is_title_visible]'
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Update'
       expect(page).to have_content 'Test audio slide'
     end
@@ -240,10 +268,10 @@ describe 'Content Author signs in, navigates to Arm 1,',
     it 'deletes an audio slide' do
       find('small', text: 'Testing adding/updating slides/lessons')
       within('li:nth-child(5)') do
+        page.driver.execute_script('window.confirm = function() {return true}')
         click_on 'Remove'
       end
 
-      page.accept_alert 'Are you sure?'
       expect(page).to_not have_content 'Test audio slide'
     end
 

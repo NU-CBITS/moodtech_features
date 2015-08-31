@@ -85,7 +85,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
   end
 
   it 'was an active participant in a mobile arm who has completed' do
-    sign_in_pt(ENV['Mobile_Comp_Pt_Email'], 'TFD Moderator',
+    sign_in_pt(ENV['Mobile_Comp_Pt_Email'], 'completer',
                ENV['Mobile_Comp_Pt_Password'])
     find('h1', text: 'HOME')
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"

@@ -2,10 +2,20 @@
 
 describe 'Content Author signs in , navigates to Lesson Modules tool,',
          type: :feature, sauce: sauce_labs do
+  if ENV['safari']
+    before(:all) do
+      sign_in_user(ENV['Content_Author_Email'], 'TFD Moderator',
+                   ENV['Content_Author_Password'])
+    end
+  end
+
   before do
-    sign_in_user(ENV['Content_Author_Email'], ENV['Content_Author_Password'])
-    click_on 'Arms'
-    find('h1', text: 'Arms')
+    unless ENV['safari']
+      sign_in_user(ENV['Content_Author_Email'], 'TFD Moderator',
+                   ENV['Content_Author_Password'])
+    end
+
+    visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
     click_on 'Arm 1'
     click_on 'Manage Content'
     click_on 'Lesson Modules'
@@ -52,11 +62,13 @@ describe 'Content Author signs in , navigates to Lesson Modules tool,',
   # end
 
   it 'destroys lesson' do
+    find('h1', text: 'Listing Lesson Modules')
+    page.execute_script('window.scrollTo(0,5000)')
     within('tr', text: 'Test lesson') do
+      page.driver.execute_script('window.confirm = function() {return true}')
       find('.btn.btn-danger').click
     end
 
-    page.accept_alert 'Are you sure?'
     expect(page).to_not have_content 'Test lesson'
   end
 

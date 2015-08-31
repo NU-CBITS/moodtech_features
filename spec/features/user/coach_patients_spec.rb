@@ -4,9 +4,12 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
   describe 'Coach signs in, navigates to Patient Dashboard of ' \
            'active patient in Group 1,' do
     before do
-      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-      click_on 'Arms'
-      find('h1', text: 'Arms')
+      unless ENV['safari']
+        sign_in_user(ENV['Clinician_Email'], 'TFD Moderator',
+                     ENV['Clinician_Password'])
+      end
+
+      visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
       click_on 'Arm 1'
       click_on 'Group 1'
       click_on 'Patient Dashboard'
@@ -27,15 +30,23 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
        'able to see patient specific data' do
       within('#patients', text: 'TFD-1111') do
         within('table#patients tr', text: 'TFD-Withdraw') do
+          unless driver == :firefox
+            page.driver
+              .execute_script('window.confirm = function() {return true}')
+          end
+
           click_on 'Terminate Access'
         end
       end
 
-      page.accept_alert 'Are you sure you would like to terminate access to ' \
-                        'this membership? This option should also be used ' \
-                        'before changing membership of the patient to a ' \
-                        'different group or to completely revoke access to ' \
-                        'this membership. You will not be able to undo this.'
+      if driver == :firefox
+        page.accept_alert 'Are you sure you would like to terminate access to' \
+                          ' this membership? This option should also be used ' \
+                          'before changing membership of the patient to a ' \
+                          'different group or to completely revoke access to ' \
+                          'this membership. You will not be able to undo this.'
+      end
+
       expect(page).to_not have_content 'TFD-Withdraw'
 
       click_on 'Inactive Patients'
@@ -63,10 +74,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
                                      "#{weeks_later.strftime('%m/%d/%Y')}" \
                                      "\nStatus: Active Currently in week 1"
 
-        if page.has_text? 'week: 0'
-          expect(page).to have_content 'Lessons read this week: 0'
-
-        else
+        unless page.has_text? 'week: 0'
           expect(page).to have_content 'Lessons read this week: 1'
         end
       end
@@ -156,6 +164,9 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
     it 'uses the links within Social Activity table' do
       select_patient('TFD-1111')
+      expect(page).to have_content 'General Patient Info'
+
+      page.execute_script('window.scrollTo(0,5000)')
       within('.table.table-hover', text: 'Social Activity') do
         click_on 'Nudges'
         click_on 'Comments'
@@ -166,6 +177,9 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
     it 'uses the table of contents in the patient report' do
       select_patient('TFD-1111')
+      expect(page).to have_content 'General Patient Info'
+
+      page.execute_script('window.scrollTo(0,5000)')
       within('.list-group') do
         find('a', text: 'Mood and Emotions Visualizations').click
         page.all('a', text: 'Mood')[1].click
@@ -189,6 +203,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
       click_on 'Patient Dashboard'
       expect(page).to have_content 'General Patient Info'
 
+      page.execute_script('window.scrollTo(0,5000)')
       within('.list-group') do
         find('a', text: 'Thoughts visualization').click
       end
@@ -211,6 +226,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
         expect(page).to have_content "#{one_week_ago.strftime('%b %d %Y')} " \
                                      "- #{Date.today.strftime('%b %d %Y')}"
 
+        page.execute_script('window.scrollTo(0,5000)')
         within('.btn-group') do
           find('.btn.btn-default', text: '28 day').click
         end
@@ -222,6 +238,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
           find('.btn.btn-default', text: '7 Day').click
         end
 
+        page.execute_script('window.scrollTo(0,5000)')
         click_on 'Previous Period'
         one_week_ago_1 = Date.today - 7
         two_weeks_ago = Date.today - 13
@@ -232,6 +249,9 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
     it 'views Mood' do
       select_patient('TFD-1111')
+      expect(page).to have_content 'General Patient Info'
+
+      page.execute_script('window.scrollTo(0,5000)')
       within('#mood-container') do
         find('.sorting_desc', text: 'Date').click
         table_row = page.all('tr:nth-child(1)')
@@ -299,6 +319,9 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
     it 'views Activities viz' do
       select_patient('TFD-1111')
+      expect(page).to have_content 'General Patient Info'
+
+      page.execute_script('window.scrollTo(0,5000)')
       within('h3', text: 'Activities visualization') do
         click_on 'Activities visualization'
       end
@@ -316,6 +339,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
         .to have_content 'Daily Averages for ' \
                          "#{Date.today.prev_day.strftime('%b %d, %Y')}"
 
+      page.execute_script('window.scrollTo(0.5000)')
       endtime = Time.now + (60 * 60)
       within('.panel.panel-default',
              text: "#{Time.now.strftime('%-l %P')} - " \
@@ -330,6 +354,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
         end
       end
 
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Next Day'
       expect(page).to have_content 'Daily Averages for ' \
                                    "#{Date.today.strftime('%b %d, %Y')}"
@@ -345,6 +370,9 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
     it 'views Activities - Future' do
       select_patient('TFD-1111')
+      expect(page).to have_content 'General Patient Info'
+
+      page.execute_script('window.scrollTo(0,5000)')
       within('#activities-future-container') do
         find('.sorting', text: 'Activity').click
         within('tr', text: 'Going to school') do
@@ -357,8 +385,12 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
     it 'views Activities - Past' do
       select_patient('TFD-1111')
+      expect(page).to have_content 'General Patient Info'
+
+      page.execute_script('window.scrollTo(0,5000)')
       within('#activities-past-container') do
-        find('.sorting', text: 'Status').double_click
+        find('.sorting', text: 'Status').click
+        find('.sorting_asc', text: 'Status').click
         within('tr', text: 'Parkour') do
           if page.has_text? 'Planned'
             expect(page).
@@ -386,6 +418,9 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
     it 'views Thoughts viz' do
       select_patient('TFD-1111')
+      expect(page).to have_content 'General Patient Info'
+
+      page.execute_script('window.scrollTo(0,10000)')
       within('h3', text: 'Thoughts visualization') do
         click_on 'Thoughts visualization'
       end
@@ -450,9 +485,12 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
   describe 'Coach signs in, navigates to Patient Dashboard ' \
            'of active patient in Group 6,' do
     before do
-      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-      click_on 'Arms'
-      find('h1', text: 'Arms')
+      unless ENV['safari']
+        sign_in_user(ENV['Clinician_Email'], 'TFD Moderator',
+                     ENV['Clinician_Password'])
+      end
+
+      visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
       click_on 'Arm 1'
       click_on 'Group 6'
       click_on 'Patient Dashboard'
@@ -572,62 +610,77 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
     it 'Coach signs in, navigates to Patient Dashboard, ' \
        'selects Terminate Access to end active status of participant,' \
        ' checks to make sure profile is removed' do
-      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-      click_on 'Arms'
-      find('h1', text: 'Arms')
+      unless ENV['safari']
+        sign_in_user(ENV['Clinician_Email'], 'TFD Moderator',
+                     ENV['Clinician_Password'])
+      end
+
+      visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
       click_on 'Arm 1'
       click_on 'Group 6'
       click_on 'Patient Dashboard'
       within('#patients', text: 'participant65') do
         within('table#patients tr', text: 'participant65') do
+          unless driver == :firefox
+            page.driver
+              .execute_script('window.confirm = function() {return true}')
+          end
+
           click_on 'Terminate Access'
         end
       end
 
-      page.accept_alert 'Are you sure you would like to terminate access to ' \
-                        'this membership? This option should also be used ' \
-                        'before changing membership of the patient to a ' \
-                        'different group or to completely revoke access to ' \
-                        'this membership. You will not be able to undo this.'
+      if driver == :firefox
+        page.accept_alert 'Are you sure you would like to terminate access to' \
+                          ' this membership? This option should also be used ' \
+                          'before changing membership of the patient to a ' \
+                          'different group or to completely revoke access to ' \
+                          'this membership. You will not be able to undo this.'
+      end
+
       expect(page).to_not have_content 'participant65'
 
       click_on 'Inactive Patients'
       expect(page).to have_content 'participant65'
 
-      visit "#{ENV['Base_URL']}/participants/sign_in"
+      unless ENV['safari']
+        visit "#{ENV['Base_URL']}/participants/sign_in"
+        sign_in_pt(ENV['PT61_Email'], 'TFD Moderator',
+                   ENV['PT61_Password'])
+        expect(page).to have_content 'HOME'
 
-      sign_in_pt(ENV['PT61_Email'], ENV['PT61_Password'])
-
-      expect(page).to have_content 'HOME'
-
-      expect(page).to_not have_content 'Fifth'
+        expect(page).to_not have_content 'Fifth'
+      end
     end
   end
 
-  describe 'Patient signs in, reads a lesson, signs out,' do
-    before do
-      sign_in_pt(ENV['PT61_Email'], ENV['PT61_Password'])
-      expect(page).to have_content 'HOME'
-      within '.navbar-collapse' do
-        click_on 'First'
-        click_on 'Sign Out'
+  unless ENV['safari']
+    describe 'Patient signs in, reads a lesson, signs out,' do
+      before do
+        sign_in_pt(ENV['PT61_Email'], 'TFD Moderator',
+                   ENV['PT61_Password'])
+        expect(page).to have_content 'HOME'
+        within '.navbar-collapse' do
+          click_on 'First'
+          click_on 'Sign Out'
+        end
       end
-    end
 
-    it 'Coach signs in, navigates to Patient Dashboard, views ' \
-       "'Last Activity Detected At' and 'Duration of Last Session'" do
-      sign_in_user(ENV['Clinician_Email'], ENV['Clinician_Password'])
-      click_on 'Arms'
-      find('h1', text: 'Arms')
-      click_on 'Arm 1'
-      click_on 'Group 6'
-      click_on 'Patient Dashboard'
-      select_patient('participant61')
-      expect(page).to have_content 'Last Activity Detected At: ' \
-                                   "#{Time.now.strftime('%A, %b %d %Y %H:%M')}"
+      it 'Coach signs in, navigates to Patient Dashboard, views ' \
+         "'Last Activity Detected At' and 'Duration of Last Session'" do
+        sign_in_user(ENV['Clinician_Email'], 'First', ENV['Clinician_Password'])
+        visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
+        click_on 'Arm 1'
+        click_on 'Group 6'
+        click_on 'Patient Dashboard'
+        select_patient('participant61')
+        expect(page)
+          .to have_content 'Last Activity Detected At: ' \
+                           "#{Time.now.strftime('%A, %b %d %Y %H:%M')}"
 
-      expect(page).to have_content 'Duration of Last Session: ' \
-                                   'less than a minute'
+        expect(page).to have_content 'Duration of Last Session: ' \
+                                     'less than a minute'
+      end
     end
   end
 end
