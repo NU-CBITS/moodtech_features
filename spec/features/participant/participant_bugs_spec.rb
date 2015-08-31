@@ -27,7 +27,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       pick_tomorrow
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Activity saved'
 
       page.execute_script('window.scrollTo(0,5000)')
@@ -38,7 +38,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       pick_tomorrow
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 8)
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Activity saved'
 
       find('h1', text: 'OK...')
@@ -60,7 +60,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       pick_tomorrow
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Activity saved'
     end
 
@@ -78,7 +78,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       fill_in 'activity_type_0', with: 'Sleep'
       choose_rating('pleasure_0', 9)
       choose_rating('accomplishment_0', 3)
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Activity saved'
 
       expect(page).to have_content 'Take a look - does this all seem right? ' \
@@ -118,7 +118,7 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       fill_in 'activity_type_0', with: 'doing whatever thing'
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 7)
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Activity saved'
 
       visit ENV['Base_URL']

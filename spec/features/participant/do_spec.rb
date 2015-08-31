@@ -64,7 +64,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     choose_rating('pleasure_14', 2)
     choose_rating('accomplishment_14', 3)
     page.execute_script('window.scrollTo(0,5000)')
-    accept_social_plural
+    accept_social
     expect(page).to have_content 'Take a look'
     page.execute_script('window.scrollTo(0,5000)')
     within('#recent_activities') do
@@ -128,7 +128,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     choose_rating('accomplishment_0', 1)
     click_on 'copy_1'
     page.execute_script('window.scrollTo(0,5000)')
-    accept_social_plural
+    accept_social
     find('#recent_activities')
     click_on 'Next'
     find('#fun_activities')
@@ -148,7 +148,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     pick_tomorrow
     select '6', from: 'planned_activity[predicted_pleasure_intensity]'
     select '3', from: 'planned_activity[predicted_accomplishment_intensity]'
-    accept_social_plural
+    accept_social
     expect(page).to have_content 'Activity saved'
 
     page.execute_script('window.scrollTo(0,5000)')
@@ -159,7 +159,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     pick_tomorrow
     select '4', from: 'planned_activity[predicted_pleasure_intensity]'
     select '8', from: 'planned_activity[predicted_accomplishment_intensity]'
-    accept_social_plural
+    accept_social
     find('h1', text: 'OK...')
     click_on 'Next'
     within('#previous_activities') do
@@ -173,7 +173,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     within('.list-group-item.ng-scope',
            text: 'Planned an Activity: New planned activity') do
       click_on 'More'
-
       time1 = Time.now + (60 * 60 * 25)
       time2 = Time.now + (60 * 60 * 26)
       expect(page)
@@ -196,13 +195,13 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     find('.btn.btn-success').click
     select '7', from: 'activity[actual_pleasure_intensity]'
     select '5', from: 'activity[actual_accomplishment_intensity]'
-    accept_social_singular
+    accept_social
     expect(page).to have_content 'Activity saved'
 
     if page.has_text?('You said you were going to')
       find('.btn.btn-danger').click
       fill_in 'activity[noncompliance_reason]', with: "I didn't have time"
-      accept_social_singular
+      accept_social
       expect(page).to have_content 'Activity saved'
     end
 
@@ -211,7 +210,6 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     within('.list-group-item.ng-scope',
            text: 'Reviewed & Completed an Activity: Parkour') do
       click_on 'More'
-
       time1 = Time.now - (60 * 60 * 24)
       time2 = Time.now - (60 * 60 * 23)
       expect(page)
@@ -242,7 +240,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     pick_tomorrow
     select '4', from: 'planned_activity[predicted_pleasure_intensity]'
     select '3', from: 'planned_activity[predicted_accomplishment_intensity]'
-    accept_social_plural
+    accept_social
     expect(page).to have_content 'Activity saved'
   end
 
@@ -392,7 +390,7 @@ describe 'Active participant in group 3 signs in, navigates to DO tool,',
     choose_rating('pleasure_2', 8)
     choose_rating('accomplishment_2', 9)
     page.execute_script('window.scrollTo(0,5000)')
-    accept_social_plural
+    accept_social
     find('#recent_activities')
     click_on 'Next'
     find('#fun_activities')
