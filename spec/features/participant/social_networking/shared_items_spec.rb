@@ -16,7 +16,7 @@ describe 'Active participant in a social arm signs in,',
       click_on '#1 Identifying'
       click_on 'Skip'
       fill_in 'thought_content', with: 'Public thought 1'
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Thought saved'
 
       expect(page).to have_content 'Now list another harmful thought...'
@@ -40,7 +40,7 @@ describe 'Active participant in a social arm signs in,',
       fill_in 'thought_challenging_thought', with: 'Testing challenge thought'
       fill_in 'thought_act_as_if', with: 'Testing act-as-if action'
       page.execute_script('window.scrollTo(0,5000)')
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Thought saved'
 
       page.execute_script('window.scrollTo(0,5000)')
@@ -106,7 +106,7 @@ describe 'Active participant in a social arm signs in,',
         choose 'No'
       end
 
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Activity saved'
 
       expect(page).to have_content 'Take a look'
@@ -138,7 +138,7 @@ describe 'Active participant in a social arm signs in,',
       pick_tomorrow
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 3)
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Activity saved'
 
       page.execute_script('window.scrollTo(0,5000)')
@@ -177,7 +177,7 @@ describe 'Active participant in a social arm signs in,',
       pick_tomorrow
       choose_rating('pleasure_0', 4)
       choose_rating('accomplishment_0', 3)
-      accept_social_plural
+      accept_social
       expect(page).to have_content 'Activity saved'
 
       visit ENV['Base_URL']
