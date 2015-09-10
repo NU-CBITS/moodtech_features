@@ -81,7 +81,7 @@ describe 'Researcher signs in, navigates to Participants,',
     expect(page).to have_content 'Memberships is invalid'
   end
 
-  if driver != :chrome
+  unless driver == :chrome
     it 'cannot assign a group membership with blank end date' do
       page.execute_script('window.scrollTo(0,5000)')
       click_on 'Tests'
@@ -188,7 +188,6 @@ describe 'Researcher signs in, navigates to Participants,',
     end
 
     expect(page).to have_content 'New'
-
     within('.breadcrumb') do
       click_on 'Home'
     end

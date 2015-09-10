@@ -32,29 +32,28 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
 
       within('.panel.panel-default.ng-scope',
              text: 'What is your favorite color?') do
+        page.execute_script('window.scrollBy(0,500)')
         fill_in 'new-answer-description-932760744', with: 'Blue'
         click_on 'Save'
       end
 
       within('.panel.panel-default.ng-scope',
              text: 'Animal, vegetable or mineral?') do
+        page.execute_script('window.scrollBy(0,500)')
         fill_in 'new-answer-description-10484799', with: 'Mineral'
         click_on 'Save'
       end
 
-      page.execute_script('window.scrollTo(0,5000)')
       within('.panel.panel-default.ng-scope',
              text: 'Group 1 profile question') do
+        page.execute_script('window.scrollBy(0,500)')
         fill_in 'new-answer-description-933797305', with: 'Group 1'
         click_on 'Save'
         expect(page).to have_css '.fa.fa-pencil'
       end
 
       visit ENV['Base_URL']
-      # at the moment this is not displaying when run locally but works when
-      # run manually on staging
-      # find_feed_item('Shared a Profile: Welcome, participant1')
-      # expect(page).to have_content 'Shared a Profile: Welcome, participant1'
+      find_feed_item('Shared a Profile: Welcome, participant1')
       expect(page).to_not have_content 'Create a Profile'
     end
 

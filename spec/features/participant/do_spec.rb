@@ -247,7 +247,7 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
   it 'uses Your Activities viz' do
     click_on 'Your Activities'
     expect(page).to have_content 'Daily Averages for ' \
-                                 "#{Date.today.strftime('%b %d, %Y')}"
+                                 "#{Date.today.strftime('%b %d %Y')}"
 
     expect(page).to have_content 'Average Accomplishment Discrepancy'
 

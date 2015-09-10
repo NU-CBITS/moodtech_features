@@ -7,9 +7,7 @@ describe 'Active participant in a social arm signs in,',
       sign_in_pt(ENV['Participant_Email'], 'participant4',
                  ENV['Participant_Password'])
     end
-  end
-
-  unless ENV['safari']
+  else
     before do
       sign_in_pt(ENV['Participant_Email'], 'participant4',
                  ENV['Participant_Password'])

@@ -25,7 +25,6 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
     click_on 'Save'
     page.should have_css('.list-group-item.ng-scope', text: 'due yesterday')
     find('.list-group-item.ng-scope', text: 'eat a whole pizza')
-
     visit ENV['Base_URL']
     find_feed_item('Created a Goal: eat a whole pizza')
     within('.list-group-item.ng-scope',
@@ -40,7 +39,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
 
   it 'completes a goal' do
     within('.list-group-item.ng-scope', text: 'p1 alpha') do
-      if driver != :firefox
+      unless driver == :firefox
         page.driver.execute_script('window.confirm = function() {return true}')
       end
 
@@ -64,13 +63,15 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
   end
 
   it 'deletes a goal' do
-    if driver != :firefox
+    unless driver == :firefox
       page.driver.execute_script('window.confirm = function() {return true}')
       find('.list-group-item.ng-scope',
            text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
     end
 
     if driver == :firefox
+      find('.list-group-item.ng-scope',
+           text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
       page.accept_alert 'Are you sure you would like to delete this goal? ' \
                         'This action cannot be undone.'
     end

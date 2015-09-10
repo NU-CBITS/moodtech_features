@@ -151,7 +151,6 @@ describe 'Research signs in, navigates to Users,',
     end
 
     expect(page).to have_content 'New'
-
     within('.breadcrumb') do
       click_on 'Home'
     end

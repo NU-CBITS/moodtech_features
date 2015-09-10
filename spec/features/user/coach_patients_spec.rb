@@ -334,10 +334,11 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
       click_on 'Daily Summaries'
       expect(page).to_not have_content 'Average Accomplishment Discrepancy'
 
+      page.execute_script('window.scrollTo(0,5000)')
       click_on 'Previous Day'
       expect(page)
         .to have_content 'Daily Averages for ' \
-                         "#{Date.today.prev_day.strftime('%b %d, %Y')}"
+                         "#{Date.today.prev_day.strftime('%b %d %Y')}"
 
       page.execute_script('window.scrollTo(0.5000)')
       endtime = Time.now + (60 * 60)
@@ -357,7 +358,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
       page.execute_script('window.scrollTo(0,5000)')
       click_on 'Next Day'
       expect(page).to have_content 'Daily Averages for ' \
-                                   "#{Date.today.strftime('%b %d, %Y')}"
+                                   "#{Date.today.strftime('%b %d %Y')}"
 
       click_on 'Visualize'
       click_on 'Last 3 Days'
@@ -520,7 +521,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
     it 'views Likes' do
       select_patient('participant61')
-      within('#goals-container', text: 'Item Liked') do
+      within('#likes-container', text: 'Item Liked') do
         table_row = page.all('tr:nth-child(1)')
         within table_row[1] do
           created_date = Date.today - 24
@@ -676,7 +677,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
         select_patient('participant61')
         expect(page)
           .to have_content 'Last Activity Detected At: ' \
-                           "#{Time.now.strftime('%A, %b %d %Y %H:%M')}"
+                           "#{Time.now.strftime('%A, %b %d %Y %I:%M %P')}"
 
         expect(page).to have_content 'Duration of Last Session: ' \
                                      'less than a minute'

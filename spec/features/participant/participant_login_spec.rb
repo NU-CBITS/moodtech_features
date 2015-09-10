@@ -90,6 +90,7 @@ describe 'A visitor to the site,', type: :feature, sauce: sauce_labs do
     find('h1', text: 'HOME')
     visit "#{ENV['Base_URL']}/navigator/contexts/MESSAGES"
     expect(page).to have_content 'Inbox'
+
     expect(page).to_not have_content 'Compose'
   end
 

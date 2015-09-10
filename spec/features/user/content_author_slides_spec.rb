@@ -140,10 +140,10 @@ describe 'Content Author signs in, navigates to Arm 1,',
 
   describe 'navigates to Slideshows, selects a slideshow,' do
     before do
-      unless ENV['safari']
+      # unless ENV['safari']
         sign_in_user(ENV['Content_Author_Email'], 'TFD Moderator',
                      ENV['Content_Author_Password'])
-      end
+      # end
 
       visit "#{ENV['Base_URL']}/think_feel_do_dashboard/arms"
       click_on 'Arm 1'
@@ -258,6 +258,7 @@ describe 'Content Author signs in, navigates to Arm 1,',
       click_on 'Update'
       expect(page).to have_content 'Testing adding/updating slides/lessons'
 
+      find('small', text: 'Testing adding/updating slides/lessons')
       page.all('a', text: 'Edit')[5].click
       check 'slide[is_title_visible]'
       page.execute_script('window.scrollTo(0,5000)')

@@ -97,7 +97,6 @@ describe 'Active participant in a social arm signs in,',
       fill_in 'activity_type_0', with: 'public sleep 1'
       choose_rating('pleasure_0', 6)
       choose_rating('accomplishment_0', 7)
-
       fill_in 'activity_type_1', with: 'private sleep'
       choose_rating('pleasure_1', 2)
       choose_rating('accomplishment_1', 3)
@@ -245,7 +244,6 @@ describe 'Active participant in a non-social arm signs in,',
 
       fill_in 'thought_content', with: 'Test thought 1'
       click_on 'Next'
-
       expect(page).to have_content 'Now list another harmful thought...'
     end
 

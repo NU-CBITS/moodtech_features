@@ -11,7 +11,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
   before do
     unless ENV['safari']
-      sign_in_pt(ENV['Participant_Email'], 'nonsocial',
+      sign_in_pt(ENV['Participant_Email'], 'nonsocialpt',
                  ENV['Participant_Password'])
     end
 
@@ -108,12 +108,11 @@ describe 'Active participant signs in, navigates to THINK tool,',
     click_on 'Next'
     expect(page).to have_content 'Challenging a thought means'
 
-    page.execute_script('window.scrollTo(0,5000)')
+    page.execute_script('window.scrollTo(0,10000)')
     click_on 'Next'
     reshape('Example challenge', 'Example act-as-if')
     reshape('Example challenge', 'Example act-as-if')
     reshape('Example challenge', 'Example act-as-if')
-
     visit ENV['Base_URL']
     find_feed_item('Reshaped a Thought: Testing helpful thought')
     within('.list-group-item.ng-scope',
