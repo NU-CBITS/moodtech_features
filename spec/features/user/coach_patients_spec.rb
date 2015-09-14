@@ -28,15 +28,13 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
     it 'selects Withdraw to end active status of participant and is still' \
        'able to see patient specific data' do
-      within('#patients', text: 'TFD-1111') do
-        within('table#patients tr', text: 'TFD-Withdraw') do
-          unless driver == :firefox
-            page.driver
-              .execute_script('window.confirm = function() {return true}')
-          end
-
-          click_on 'Terminate Access'
+      within('table#patients tr', text: 'TFD-Withdraw') do
+        unless driver == :firefox
+          page.driver
+            .execute_script('window.confirm = function() {return true}')
         end
+
+        click_on 'Terminate Access'
       end
 
       if driver == :firefox
@@ -52,13 +50,11 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
       click_on 'Inactive Patients'
       expect(page).to have_content 'TFD-Withdraw'
 
-      within('#patients', text: 'TFD-Withdraw') do
-        within('table#patients tr', text: 'TFD-Withdraw') do
-          expect(page)
-            .to have_content 'Withdrawn ' \
-                             "#{Date.today.prev_day.strftime('%m/%d/%Y')}"
-          click_on 'TFD-Withdraw'
-        end
+      within('table#patients tr', text: 'TFD-Withdraw') do
+        expect(page)
+          .to have_content 'Withdrawn ' \
+                           "#{Date.today.prev_day.strftime('%m/%d/%Y')}"
+        click_on 'TFD-Withdraw'
       end
 
       expect(page).to have_css('h1', text: 'Participant TFD-Withdraw')
@@ -254,33 +250,26 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
       page.execute_script('window.scrollTo(0,5000)')
       within('#mood-container') do
         find('.sorting_desc', text: 'Date').click
-        table_row = page.all('tr:nth-child(1)')
-        within table_row[1] do
-          four_wks_ago = Date.today - 28
-          expect(page).to have_content "9 #{four_wks_ago.strftime('%b %d %Y')}"
-        end
+        four_wks_ago = Date.today - 28
+        expect(page.all('tr:nth-child(1)')[1])
+          .to have_content "9 #{four_wks_ago.strftime('%b %d %Y')}"
       end
     end
 
     it 'views Feelings' do
       select_patient('TFD-1111')
       within('#feelings-container') do
-        table_row = page.all('tr:nth-child(1)')
-        within table_row[1] do
-          expect(page).to have_content 'longing 2 ' \
-                                       "#{Date.today.strftime('%b %d %Y')}"
-        end
+        expect(page.all('tr:nth-child(1)')[1])
+          .to have_content "longing 2 #{Date.today.strftime('%b %d %Y')}"
       end
     end
 
     it 'views Logins' do
       select_patient('TFD-1111')
       within('#logins-container') do
-        table_row = page.all('tr:nth-child(1)')
-        within table_row[1] do
-          unless page.has_text?('No data available in table')
-            expect(page).to have_content Date.today.strftime('%b %d %Y')
-          end
+        unless page.has_text?('No data available in table')
+          expect(page.all('tr:nth-child(1)')[1])
+            .to have_content Date.today.strftime('%b %d %Y')
         end
       end
     end
@@ -288,16 +277,14 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
     it 'views Lessons' do
       select_patient('TFD-1111')
       within('#lessons-container') do
-        table_row = page.all('tr:nth-child(1)')
-        within table_row[1] do
-          unless page.has_text?('No data available in table')
-            expect(page)
-              .to have_content 'Do - Awareness Introduction This is just the ' \
-                               'beginning... ' \
-                               "#{Time.now.strftime('%b %d %Y %I')}"
+        unless page.has_text?('No data available in table')
+          expect(page.all('tr:nth-child(1)')[1])
+            .to have_content 'Do - Awareness Introduction This is just the ' \
+                             'beginning... ' \
+                             "#{Time.now.strftime('%b %d %Y %I')}"
 
-            expect(page).to have_content 'less than a minute'
-          end
+          expect(page.all('tr:nth-child(1)')[1])
+            .to have_content 'less than a minute'
         end
       end
     end
@@ -305,14 +292,11 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
     it 'views Audio Access' do
       select_patient('TFD-1111')
       within('#media-access-container') do
-        table_row = page.all('tr:nth-child(1)')
-        within table_row[1] do
-          expect(page).to have_content 'Audio! ' \
-                                       "#{Date.today.strftime('%m/%d/%Y')}" \
-                                       " #{Date.today.strftime('%b %d %Y')}"
-          unless page.has_text?('Not Completed')
-            expect(page).to have_content '2 minutes'
-          end
+        expect(page.all('tr:nth-child(1)')[1]).to have_content 'Audio! ' \
+                                     "#{Date.today.strftime('%m/%d/%Y')}" \
+                                     " #{Date.today.strftime('%b %d %Y')}"
+        unless page.has_text?('Not Completed')
+          expect(page.all('tr:nth-child(1)')[1]).to have_content '2 minutes'
         end
       end
     end
@@ -404,14 +388,12 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
           end
         end
 
-        table_row = page.all('tr:nth-child(1)')
-        within table_row[1] do
-          if table_row[1].has_text? 'Reviewed and did not complete'
-            click_on 'Noncompliance'
-            within('.popover.fade.right.in') do
-              expect(page).to have_content "Why was this not completed?\nI " \
-                                           "didn't have time"
-            end
+        if page.all('tr:nth-child(1)')[1]
+           .has_text? 'Reviewed and did not complete'
+          click_on 'Noncompliance'
+          within('.popover.fade.right.in') do
+            expect(page).to have_content "Why was this not completed?\nI " \
+                                         "didn't have time"
           end
         end
       end
