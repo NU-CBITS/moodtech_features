@@ -17,8 +17,8 @@ describe 'Researcher signs in,' do
 
     @driver.get "#{ENV['Base_URL']}/users/sign_in"
     @driver.find_element(id: 'user_email').send_keys(ENV['Researcher_Email'])
-    @driver.find_element(id: 'user_password').send_keys(ENV['Researcher_Passw' \
-                                                        'ord'])
+    @driver.find_element(id: 'user_password')
+      .send_keys(ENV['Researcher_Password'])
     @driver.find_element(css: '.btn.btn-default').submit
   end
 
@@ -89,8 +89,11 @@ describe 'Researcher signs in,' do
     download_link = @driver.find_elements(class: 'list-group-item')[19]
     download_link.click
 
+    download_link = @driver.find_elements(class: 'list-group-item')[20]
+    download_link.click
+
     files = Dir.glob("#{@download_dir}/**")
-    files.count.should be == 20
+    files.count.should be == 21
 
     sorted_files = files.sort_by { |file| File.mtime(file) }
     File.size(sorted_files.last).should be > 0
