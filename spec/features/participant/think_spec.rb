@@ -162,7 +162,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
     expect(page).to have_content '#1 Identifying'
   end
 
-  it 'visits Thoughts' do
+  it 'visits Thoughts and sort by column Pattern' do
     click_on 'Thoughts'
     expect(page).to have_content 'I am insignificant'
 
