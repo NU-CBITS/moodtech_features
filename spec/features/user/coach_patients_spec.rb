@@ -324,7 +324,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
         .to have_content 'Daily Averages for ' \
                          "#{Date.today.prev_day.strftime('%b %d %Y')}"
 
-      page.execute_script('window.scrollTo(0.5000)')
+      page.execute_script('window.scrollTo(0,5000)')
       endtime = Time.now + (60 * 60)
       within('.panel.panel-default',
              text: "#{Time.now.strftime('%-l %P')} - " \

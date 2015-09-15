@@ -94,8 +94,8 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
       philly_comment = page.all('.list-group-item.ng-scope',
                                 text: "said it's always sunny in Philadelphia")
       within philly_comment[0] do
-        click_on 'Like (0)'
-        expect(page).to have_content 'Like (1)'
+        click_on 'Likes (0)'
+        expect(page).to have_content 'Likes (1)'
       end
     end
 
@@ -103,7 +103,7 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
       find('h1', text: 'HOME')
       find_feed_item('nudged participant1')
       within first('.list-group-item.ng-scope', text: 'nudged participant1') do
-        click_on 'Comment (0)'
+        click_on 'Comments (0)'
         page.execute_script('window.scrollTo(0,5000)')
         click_on 'Add Comment'
         expect(page).to have_content 'What do you think?'
@@ -111,7 +111,7 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
         fill_in 'comment-text', with: 'Sweet Dude!'
         page.execute_script('window.scrollTo(0,5000)')
         click_on 'Save'
-        expect(page).to have_content 'Comment (1)'
+        expect(page).to have_content 'Comments (1)'
 
         expect(page).to have_content 'participant1: Sweet Dude!'
       end
