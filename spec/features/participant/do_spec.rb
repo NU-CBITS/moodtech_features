@@ -64,8 +64,9 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     choose_rating('pleasure_14', 2)
     choose_rating('accomplishment_14', 3)
     page.execute_script('window.scrollTo(0,5000)')
-    expect(page).to have_content 'Take a look'
+    click_on 'Next'
     # accept_social
+    expect(page).to have_content 'Take a look'
     page.execute_script('window.scrollTo(0,5000)')
     within('#recent_activities') do
       expect(page).to have_css('tr', count: '17')

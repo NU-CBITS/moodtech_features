@@ -67,7 +67,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
         expect(page).to have_content 'Started on: ' \
                                      "#{Date.today.strftime('%A, %m/%d/%Y')}" \
                                      "\n8 weeks from the start date is: " \
-                                     "#{weeks_later.strftime('%m/%d/%Y')}" \
+                                     "#{weeks_later.strftime('%A, %m/%d/%Y')}" \
                                      "\nStatus: Active Currently in week 1"
 
         unless page.has_text? 'week: 0'
@@ -97,7 +97,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
         end
 
         within('tr', text: 'Activities Monitored') do
-          expect(page).to have_content '21 21 21'
+          expect(page).to have_content '18 18 18'
         end
 
         within('tr', text: 'Activities Planned') do
