@@ -64,8 +64,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     choose_rating('pleasure_14', 2)
     choose_rating('accomplishment_14', 3)
     page.execute_script('window.scrollTo(0,5000)')
-    accept_social
     expect(page).to have_content 'Take a look'
+    # accept_social
     page.execute_script('window.scrollTo(0,5000)')
     within('#recent_activities') do
       expect(page).to have_css('tr', count: '17')
@@ -84,20 +84,23 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
     click_on 'Next'
     find('h1', text: 'Do Landing')
-    visit ENV['Base_URL']
-    find_feed_item('Monitored an Activity: Get ready for bed')
-    activity = page.all('.list-group-item.ng-scope',
-                        text: 'Monitored an Activity: Get ready for bed')
-    within activity[0] do
-      click_on 'More'
-      yesterday = Date.today - 1
-      expect(page).to have_content 'start: ' \
-                                   "#{yesterday.strftime('%b. %-d, %Y')}" \
-                                   " at 9:00PM\nend: " \
-                                   "#{yesterday.strftime('%b. %-d, %Y')}" \
-                                   " at 10:00PM actual accomplishment: 3\n" \
-                                   'actual pleasure: 2'
-    end
+
+    # Monitoring an activity is not longer something can be shared, holding
+    # on to the code in case it is reinstated in some way
+    # visit ENV['Base_URL']
+    # find_feed_item('Monitored an Activity: Get ready for bed')
+    # activity = page.all('.list-group-item.ng-scope',
+    #                     text: 'Monitored an Activity: Get ready for bed')
+    # within activity[0] do
+    #   click_on 'More'
+    #   yesterday = Date.today - 1
+    #   expect(page).to have_content 'start: ' \
+    #                                "#{yesterday.strftime('%b. %-d, %Y')}" \
+    #                                " at 9:00PM\nend: " \
+    #                                "#{yesterday.strftime('%b. %-d, %Y')}" \
+    #                                " at 10:00PM actual accomplishment: 3\n" \
+    #                                'actual pleasure: 2'
+    # end
   end
 
   it 'cannot complete Awareness for a time period already completed' do

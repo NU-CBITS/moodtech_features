@@ -63,17 +63,15 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
   end
 
   it 'deletes a goal' do
-    unless driver == :firefox
-      page.driver.execute_script('window.confirm = function() {return true}')
-      find('.list-group-item.ng-scope',
-           text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
-    end
-
     if driver == :firefox
       find('.list-group-item.ng-scope',
            text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
       page.accept_alert 'Are you sure you would like to delete this goal? ' \
                         'This action cannot be undone.'
+    else
+      page.driver.execute_script('window.confirm = function() {return true}')
+      find('.list-group-item.ng-scope',
+           text: 'p1 gamma').find('.btn.btn-link.delete.ng-scope').click
     end
 
     expect(page).to_not have_content 'p1 gamma'

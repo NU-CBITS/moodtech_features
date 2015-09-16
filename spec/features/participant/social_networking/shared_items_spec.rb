@@ -31,6 +31,10 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to_not have_content 'Private thought'
 
       expect(page).to have_content 'Public thought 1'
+
+      within('.list-group-item.ng-scope', text: 'Public thought 1') do
+        expect(page).to have_content "Today at #{Time.now.strftime('%l:%M %p')}"
+      end
     end
 
     it 'shares Add a New Thought responses' do
@@ -50,6 +54,10 @@ describe 'Active participant in a social arm signs in,',
       visit ENV['Base_URL']
       find_feed_item('Public thought 3')
       expect(page).to have_content 'Public thought 3'
+
+      within('.list-group-item.ng-scope', text: 'Public thought 3') do
+        expect(page).to have_content "Today at #{Time.now.strftime('%l:%M %p')}"
+      end
     end
 
     it 'does not share Add a New Thought responses' do
@@ -85,47 +93,50 @@ describe 'Active participant in a social arm signs in,',
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
     end
 
-    it 'shares DO > Awareness responses' do
-      click_on '#1 Awareness'
-      click_on 'Next'
-      select "#{Date.today.strftime('%a')} 6 AM",
-             from: 'awake_period_start_time'
-      select "#{Date.today.strftime('%a')} 8 AM", from: 'awake_period_end_time'
-      click_on 'Create'
-      expect(page).to have_content 'Awake Period saved'
+    # Monitoring an activity is not longer something can be shared, holding
+    # on to the code in case it is reinstated in some way
+    # it 'shares DO > Awareness responses' do
+    #   click_on '#1 Awareness'
+    #   click_on 'Next'
+    #   select "#{Date.today.strftime('%a')} 6 AM",
+    #          from: 'awake_period_start_time'
+    #   select "#{Date.today.strftime('%a')} 8 AM",
+    #           from: 'awake_period_end_time'
+    #   click_on 'Create'
+    #   expect(page).to have_content 'Awake Period saved'
 
-      fill_in 'activity_type_0', with: 'public sleep 1'
-      choose_rating('pleasure_0', 6)
-      choose_rating('accomplishment_0', 7)
-      fill_in 'activity_type_1', with: 'private sleep'
-      choose_rating('pleasure_1', 2)
-      choose_rating('accomplishment_1', 3)
-      shareable_form = page.all('.new-shareable-form-after-form-groups')
-      within shareable_form[1] do
-        choose 'No'
-      end
+    #   fill_in 'activity_type_0', with: 'public sleep 1'
+    #   choose_rating('pleasure_0', 6)
+    #   choose_rating('accomplishment_0', 7)
+    #   fill_in 'activity_type_1', with: 'private sleep'
+    #   choose_rating('pleasure_1', 2)
+    #   choose_rating('accomplishment_1', 3)
+    #   shareable_form = page.all('.new-shareable-form-after-form-groups')
+    #   within shareable_form[1] do
+    #     choose 'No'
+    #   end
 
-      accept_social
-      expect(page).to have_content 'Activity saved'
+    #   accept_social
+    #   expect(page).to have_content 'Activity saved'
 
-      expect(page).to have_content 'Take a look'
+    #   expect(page).to have_content 'Take a look'
 
-      click_on 'Next'
-      expect(page).to have_content 'Things you found fun.'
+    #   click_on 'Next'
+    #   expect(page).to have_content 'Things you found fun.'
 
-      click_on 'Next'
-      expect(page).to have_content "Things that make you feel like you've " \
-                                   'accomplished something.'
+    #   click_on 'Next'
+    #   expect(page).to have_content "Things that make you feel like you've " \
+    #                                'accomplished something.'
 
-      click_on 'Next'
-      expect(page).to have_content 'Add a New Activity'
+    #   click_on 'Next'
+    #   expect(page).to have_content 'Add a New Activity'
 
-      visit ENV['Base_URL']
-      find_feed_item('public sleep 1')
-      expect(page).to_not have_content 'private sleep'
+    #   visit ENV['Base_URL']
+    #   find_feed_item('public sleep 1')
+    #   expect(page).to_not have_content 'private sleep'
 
-      expect(page).to have_content 'public sleep 1'
-    end
+    #   expect(page).to have_content 'public sleep 1'
+    # end
 
     it 'shares DO > Planning responses' do
       click_on '#2 Planning'
@@ -165,6 +176,10 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to_not have_content 'New private activity'
 
       expect(page).to have_content 'New public activity'
+
+      within('.list-group-item.ng-scope', text: 'New public activity') do
+        expect(page).to have_content "Today at #{Time.now.strftime('%l:%M %p')}"
+      end
     end
 
     it 'shares Add a New Activity responses' do
@@ -182,6 +197,10 @@ describe 'Active participant in a social arm signs in,',
       visit ENV['Base_URL']
       find_feed_item('New public activity 2')
       expect(page).to have_content 'New public activity 2'
+
+      within('.list-group-item.ng-scope', text: 'New public activity 2') do
+        expect(page).to have_content "Today at #{Time.now.strftime('%l:%M %p')}"
+      end
     end
 
     it 'does not share Add a New Activity responses' do

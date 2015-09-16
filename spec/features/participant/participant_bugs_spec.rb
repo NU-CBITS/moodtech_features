@@ -104,33 +104,36 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
                          "#{Date.today.prev_day.strftime('%b %d %Y')}"
     end
 
-    it 'navigates to the DO tool, completes Awareness, finds the activity ' \
-       'properly displayed on feed' do
-      visit "#{ENV['Base_URL']}/navigator/contexts/DO"
-      click_on '#1 Awareness'
-      click_on 'Next'
-      select "#{Date.today.strftime('%a')} 4 AM",
-             from: 'awake_period_start_time'
-      select "#{Date.today.strftime('%a')} 5 AM", from: 'awake_period_end_time'
-      click_on 'Create'
-      expect(page).to have_content 'Awake Period saved'
+    # Monitoring an activity is not longer something can be shared, holding
+    # on to the code in case it is reinstated in some way
+    # it 'navigates to the DO tool, completes Awareness, finds the activity ' \
+    #    'properly displayed on feed' do
+    #   visit "#{ENV['Base_URL']}/navigator/contexts/DO"
+    #   click_on '#1 Awareness'
+    #   click_on 'Next'
+    #   select "#{Date.today.strftime('%a')} 4 AM",
+    #          from: 'awake_period_start_time'
+    #   select "#{Date.today.strftime('%a')} 5 AM",
+    #           from: 'awake_period_end_time'
+    #   click_on 'Create'
+    #   expect(page).to have_content 'Awake Period saved'
 
-      fill_in 'activity_type_0', with: 'doing whatever thing'
-      choose_rating('pleasure_0', 6)
-      choose_rating('accomplishment_0', 7)
-      accept_social
-      expect(page).to have_content 'Activity saved'
+    #   fill_in 'activity_type_0', with: 'doing whatever thing'
+    #   choose_rating('pleasure_0', 6)
+    #   choose_rating('accomplishment_0', 7)
+    #   accept_social
+    #   expect(page).to have_content 'Activity saved'
 
-      visit ENV['Base_URL']
-      find_feed_item('Monitored an Activity: doing whatever thing')
-      within('.list-group-item.ng-scope',
-             text: 'Monitored an Activity: doing whatever thing') do
-        click_on 'More'
+    #   visit ENV['Base_URL']
+    #   find_feed_item('Monitored an Activity: doing whatever thing')
+    #   within('.list-group-item.ng-scope',
+    #          text: 'Monitored an Activity: doing whatever thing') do
+    #     click_on 'More'
 
-        expect(page).to have_content "actual accomplishment: 7\n" \
-                                     'actual pleasure: 6'
-      end
-    end
+    #     expect(page).to have_content "actual accomplishment: 7\n" \
+    #                                  'actual pleasure: 6'
+    #   end
+    # end
 
     it 'visits Your Recent Moods & Emotions, ' \
        'is able to switch view back to 7 Day' do

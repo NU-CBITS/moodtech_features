@@ -95,6 +95,8 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
                                 text: "said it's always sunny in Philadelphia")
       within philly_comment[0] do
         click_on 'Likes (0)'
+        find('p', text: 'Liked by')
+        click_on 'Like'
         expect(page).to have_content 'Likes (1)'
       end
     end
