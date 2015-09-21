@@ -171,6 +171,15 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
 
       expect(page).to have_content 'nudged participant1'
     end
+
+    it 'returns to the home page and still sees the feed' do
+      visit "#{ENV['Base_URL']}/navigator/contexts/THINK"
+      expect(page).to have_content 'Add a New Thought'
+
+      find('#hamburger_button').click
+      find('a', text: 'Home').click
+      find('.panel-title', text: 'To Do')
+    end
   end
 
   describe 'Active participant signs in,' do
