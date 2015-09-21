@@ -71,14 +71,10 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     thought_value = find('.panel-body.adjusted-list-group-item').text
     select 'Personalization', from: 'thought_pattern_id'
-    thought_value = compare_thought(thought_value)
-    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    thought_value = compare_thought(thought_value)
-    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    thought_value = compare_thought(thought_value)
-    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
-    thought_value = compare_thought(thought_value)
-    select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
+    4.times do
+      thought_value = compare_thought(thought_value)
+      select 'Magnification or Catastrophizing', from: 'thought_pattern_id'
+    end
     thought_value = compare_thought(thought_value)
     select 'Personalization', from: 'thought_pattern_id'
     compare_thought(thought_value)

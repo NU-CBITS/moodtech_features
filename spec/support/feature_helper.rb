@@ -109,3 +109,16 @@ def accept_social
   page.driver.execute_script('window.confirm = function() {return true}')
   click_on 'Next'
 end
+
+def check_data(item, data)
+  within(item) do
+    expect(page).to have_content data
+  end
+end
+
+def go_to_next_page
+  page.execute_script('window.scrollTo(0,5000)')
+  within('.pagination') do
+    click_on '2'
+  end
+end

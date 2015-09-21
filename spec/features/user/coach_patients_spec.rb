@@ -80,50 +80,33 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
       select_patient('TFD-1111')
       within('.table.table-hover', text: 'Tool Use') do
         table_row = page.all('tr:nth-child(1)')
-        within table_row[0] do
-          expect(page).to have_content 'Tool Use  Today Last 7 Days Totals'
-        end
+        check_data(table_row[0], 'Tool Use  Today Last 7 Days Totals')
 
-        within table_row[1] do
-          expect(page).to have_content 'Lessons Read 1 1 1'
-        end
+        check_data(table_row[1], 'Lessons Read 1 1 1')
 
-        within('tr', text: 'Moods') do
-          expect(page).to have_content '1 1 3'
-        end
+        check_data("'tr', text: 'Moods'", '1 1 3')
 
-        within('tr', text: 'Thoughts') do
-          expect(page).to have_content '12 12 12'
-        end
+        check_data("'tr', text: 'Thoughts'", '12 12 12')
 
-        within('tr', text: 'Activities Monitored') do
-          expect(page).to have_content '18 18 18'
-        end
+        check_data("'tr', text: 'Activities Monitored'", '18 18 18')
 
-        within('tr', text: 'Activities Planned') do
-          expect(page).to have_content '14 16 16'
-        end
+        check_data("'tr', text: 'Activities Planned'", '14 16 16')
 
-        within('tr', text: 'Activities Reviewed and Completed') do
-          expect(page).to have_content '1 2 2'
-        end
+        check_data("'tr', text: 'Activities Reviewed and Completed'", '1 2 2')
 
-        within('tr', text: 'Activities Reviewed and Incomplete') do
-          expect(page).to have_content '1 1 1'
-        end
+        check_data("'tr', text: 'Activities Reviewed and Incomplete'", '1 1 1')
       end
     end
 
     it 'uses the links within Tool Use table' do
       select_patient('TFD-1111')
       within('.table.table-hover', text: 'Tool Use') do
-        click_on 'Lessons Read'
-        click_on 'Moods'
-        click_on 'Thoughts'
-        click_on 'Activities Planned'
-        click_on 'Activities Monitored'
-        click_on 'Activities Reviewed and Completed'
-        click_on 'Activities Reviewed and Incomplete'
+        item = ['Lessons Read', 'Moods', 'Thoughts', 'Activities Planned',
+                'Activities Monitored', 'Activities Reviewed and Completed',
+                'Activities Reviewed and Incomplete']
+        item.each do |tool|
+          click_on tool
+        end
       end
     end
 
@@ -131,30 +114,17 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
       select_patient('TFD-1111')
       within('.table.table-hover', text: 'Social Activity') do
         table_row = page.all('tr:nth-child(1)')
-        within table_row[0] do
-          expect(page).to have_content 'Social Activity Today Last 7 Days ' \
-                                       'Totals'
-        end
+        check_data(table_row[0], 'Social Activity Today Last 7 Days Totals')
 
-        within table_row[1] do
-          expect(page).to have_content 'Likes 1 1 1'
-        end
+        check_data(table_row[1], 'Likes 1 1 1')
 
-        within('tr', text: 'Nudges') do
-          expect(page).to have_content 'Nudges 2 3 3'
-        end
+        check_data("'tr', text: 'Nudges'", 'Nudges 2 3 3')
 
-        within('tr', text: 'Comments') do
-          expect(page).to have_content 'Comments 1 1 1'
-        end
+        check_data("'tr', text: 'Comments'", 'Comments 1 1 1')
 
-        within('tr', text: 'Goals') do
-          expect(page).to have_content 'Goals 5 6 8'
-        end
+        check_data("'tr', text: 'Goals'", 'Goals 5 6 8')
 
-        within('tr', text: '"On My Mind" Statements') do
-          expect(page).to have_content '"On My Mind" Statements 2 2 2'
-        end
+        check_data("'tr', text: 'Statements'", '"On My Mind" Statements 2 2 2')
       end
     end
 
@@ -164,10 +134,10 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
       page.execute_script('window.scrollTo(0,5000)')
       within('.table.table-hover', text: 'Social Activity') do
-        click_on 'Nudges'
-        click_on 'Comments'
-        click_on 'Goals'
-        click_on '"On My Mind" Statements'
+        item = ['Nudges', 'Comments', 'Goals', '"On My Mind" Statements']
+        item.each do |data|
+          click_on data
+        end
       end
     end
 
@@ -177,17 +147,14 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
       page.execute_script('window.scrollTo(0,5000)')
       within('.list-group') do
-        find('a', text: 'Mood and Emotions Visualizations').click
+        item = ['Mood and Emotions Visualizations', 'Feelings', 'Logins',
+                'Lessons', 'Audio Access', 'Activities - Future',
+                'Activities - Past', 'Messages', 'Tasks']
+        item.each do |tool|
+          find('a', text: tool).click
+        end
         page.all('a', text: 'Mood')[1].click
-        find('a', text: 'Feelings').click
-        find('a', text: 'Logins').click
-        find('a', text: 'Lessons').click
-        find('a', text: 'Audio Access').click
-        find('a', text: 'Activities - Future').click
-        find('a', text: 'Activities - Past').click
         page.all('a', text: 'Thoughts')[1].click
-        find('a', text: 'Messages').click
-        find('a', text: 'Tasks').click
       end
 
       within('.list-group') do

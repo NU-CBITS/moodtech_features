@@ -47,10 +47,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
 
   it 'destroys a module' do
     unless page.has_text? 'Test content module'
-      page.execute_script('window.scrollTo(0,5000)')
-      within('.pagination') do
-        click_on '2'
-      end
+      go_to_next_page
     end
 
     click_on 'Test content module'
@@ -66,9 +63,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
     find('h1', text: 'Listing Content Modules')
     page.execute_script('window.scrollTo(0,5000)')
     unless page.has_text? 'Home Introduction'
-      within('.pagination') do
-        click_on '2'
-      end
+      go_to_next_page
     end
 
     click_on 'Home Introduction'
@@ -96,9 +91,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
     find('h1', text: 'Listing Content Modules')
     page.execute_script('window.scrollTo(0,5000)')
     unless page.has_text? 'Home Introduction'
-      within('.pagination') do
-        click_on '2'
-      end
+      go_to_next_page
     end
 
     click_on 'Home Introduction'
@@ -128,9 +121,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
     find('h1', text: 'Listing Content Modules')
     page.execute_script('window.scrollTo(0,5000)')
     unless page.has_text? 'Home Introduction'
-      within('.pagination') do
-        click_on '2'
-      end
+      go_to_next_page
     end
 
     click_on 'Home Introduction'

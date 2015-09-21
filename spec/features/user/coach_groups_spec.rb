@@ -23,74 +23,48 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'views Group Summary' do
     within('.panel.panel-default', text: 'Group Summary') do
-      within('tr', text: 'logins') do
-        expect(page).to have_content 'logins  7 10 4 3 5 0 0 0'
-      end
+      check_data("'tr', text: 'logins'", 'logins  7 10 4 3 5 0 0 0')
 
-      within('tr', text: 'thoughts') do
-        expect(page).to have_content 'thoughts  1 0 1 1 1 0 0 0'
-      end
+      check_data("'tr', text: 'thoughts'", 'thoughts  1 0 1 1 1 0 0 0')
 
-      within('tr', text: 'activities past') do
-        expect(page).to have_content 'activities past  1 0 1 0 0 0 0 0'
-      end
+      check_data("'tr', text: 'activities past'",
+                 'activities past  1 0 1 0 0 0 0 0')
 
-      within('tr', text: 'activities future') do
-        expect(page).to have_content 'activities future  0 0 0 0 2 0 0 0'
-      end
+      check_data("'tr', text: 'activities future'",
+                 'activities future  0 0 0 0 2 0 0 0')
 
-      within('tr', text: 'on the mind statements') do
-        expect(page).to have_content 'on the mind statements  0 0 0 1 0 0 0 0'
-      end
+      check_data("'tr', text: 'on the mind statements'",
+                 'on the mind statements  0 0 0 1 0 0 0 0')
 
-      within('tr', text: 'comments') do
-        expect(page).to have_content 'comments  0 0 2 0 1 0 0 0'
-      end
+      check_data("'tr', text: 'comments'", 'comments  0 0 2 0 1 0 0 0')
 
-      within('tr', text: 'goals') do
-        expect(page).to have_content 'goals  1 2 0 0 0 0 0 0'
-      end
+      check_data("'tr', text: 'goals'", 'goals  1 2 0 0 0 0 0 0')
 
-      within('tr', text: 'likes') do
-        expect(page).to have_content 'likes  1 2 1 0 1 0 0 0'
-      end
+      check_data("'tr', text: 'likes'", 'likes  1 2 1 0 1 0 0 0')
     end
   end
 
   it 'uses the links within Group Summary' do
     within('.panel.panel-default', text: 'Group Summary') do
-      click_on 'logins'
-      click_on 'thoughts'
-      click_on 'activities past'
-      click_on 'activities future'
-      click_on 'on the mind statements'
-      click_on 'comments'
-      click_on 'goals'
-      click_on 'likes'
+      items = ['logins', 'thoughts', 'activities past', 'activities future',
+               'on the mind statements', 'comments', 'goals', 'likes']
+      items.each do |tool|
+        click_on tool
+      end
     end
   end
 
   it 'views Logins by Week' do
     within('.panel.panel-default', text: 'Logins By Week') do
-      within('tr:nth-child(2)') do
-        expect(page).to have_content 'First 4 3 0 2 2 0 0 0'
-      end
+      check_data('tr:nth-child(2)', 'First 4 3 0 2 2 0 0 0')
 
-      within('tr:nth-child(3)') do
-        expect(page).to have_content 'Second  2 1 1 1 2 0 0 0'
-      end
+      check_data('tr:nth-child(3)', 'Second  2 1 1 1 2 0 0 0')
 
-      within('tr:nth-child(4)') do
-        expect(page).to have_content 'Third  1 0 1 0 1 0 0 0'
-      end
+      check_data('tr:nth-child(4)', 'Third  1 0 1 0 1 0 0 0')
 
-      within('tr:nth-child(5)') do
-        expect(page).to have_content 'Fourth  0 6 1 0 0 0 0 0'
-      end
+      check_data('tr:nth-child(5)', 'Fourth  0 6 1 0 0 0 0 0')
 
-      within('tr:nth-child(6)') do
-        expect(page).to have_content 'Fifth  0 0 1 0 0 0 0 0'
-      end
+      check_data('tr:nth-child(6)', 'Fifth  0 0 1 0 0 0 0 0')
     end
   end
 
