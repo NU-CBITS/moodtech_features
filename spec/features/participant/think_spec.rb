@@ -106,9 +106,9 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     page.execute_script('window.scrollTo(0,10000)')
     click_on 'Next'
-    reshape('Example challenge', 'Example act-as-if')
-    reshape('Example challenge', 'Example act-as-if')
-    reshape('Example challenge', 'Example act-as-if')
+    3.times do
+      reshape('Example challenge', 'Example act-as-if')
+    end
     visit ENV['Base_URL']
     find_feed_item('Reshaped a Thought: Testing helpful thought')
     within('.list-group-item.ng-scope',

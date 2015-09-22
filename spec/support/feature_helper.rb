@@ -122,3 +122,10 @@ def go_to_next_page
     click_on '2'
   end
 end
+
+def answer_profile_question(question, id, answer)
+  within('.panel.panel-success.ng-scope', text: question) do
+    fill_in "new-answer-description-#{id}", with: answer
+    click_on 'Save'
+  end
+end
