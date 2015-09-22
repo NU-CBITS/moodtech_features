@@ -68,8 +68,6 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
   it 'views Lesson View Summary' do
     within('.panel.panel-default', text: 'Lesson View Summary') do
       table_row_0 = page.all('tr:nth-child(1)')
-      table_row_1 = page.all('tr:nth-child(2)')
-      table_row_2 = page.all('tr:nth-child(3)')
       within table_row_0[0] do
         expect(page).to have_content 'Home Introduction 1 of 5 COMPLETE'
 
@@ -87,7 +85,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         end
       end
 
-      within table_row_1[0] do
+      within first('tr:nth-child(2)') do
         expect(page).to have_content 'Do - Awareness Introduction 2 of 5 ' \
                                      'COMPLETE'
 
@@ -104,7 +102,7 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
         end
       end
 
-      within table_row_2[0] do
+      within first('tr:nth-child(3)') do
         expect(page).to have_content 'Do - Planning Introduction 1 of 5 ' \
                                      'COMPLETE'
 

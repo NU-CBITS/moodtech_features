@@ -90,9 +90,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
     # on to the code in case it is reinstated in some way
     # visit ENV['Base_URL']
     # find_feed_item('Monitored an Activity: Get ready for bed')
-    # activity = page.all('.list-group-item.ng-scope',
-    #                     text: 'Monitored an Activity: Get ready for bed')
-    # within activity[0] do
+    # within first('.list-group-item.ng-scope',
+    #              text: 'Monitored an Activity: Get ready for bed') do
     #   click_on 'More'
     #   yesterday = Date.today - 1
     #   expect(page).to have_content 'start: ' \

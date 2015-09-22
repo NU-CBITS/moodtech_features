@@ -84,9 +84,8 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     visit ENV['Base_URL']
     find_feed_item('Assigned a pattern to a Thought: Testing helpful thought')
-    test_thought = page.all('.list-group-item.ng-scope', text: 'Assigned a ' \
-                            'pattern to a Thought: Testing helpful thought')[0]
-    within test_thought do
+    within first('.list-group-item.ng-scope', text: 'Assigned a ' \
+                 'pattern to a Thought: Testing helpful thought') do
       click_on 'More'
 
       expect(page).to have_content 'this thought is: Testing helpful thought' \

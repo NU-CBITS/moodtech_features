@@ -79,9 +79,8 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
     it 'likes a whats on your mind post written by another participant' do
       find('h1', text: 'HOME')
       find_feed_item('nudged participant1')
-      philly_comment = page.all('.list-group-item.ng-scope',
-                                text: "said it's always sunny in Philadelphia")
-      within philly_comment[0] do
+      within first('.list-group-item.ng-scope',
+                   text: "said it's always sunny in Philadelphia") do
         click_on 'Likes (0)'
         find('p', text: 'Liked by')
         click_on 'Like'
