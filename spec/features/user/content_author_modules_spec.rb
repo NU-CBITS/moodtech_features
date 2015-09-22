@@ -46,9 +46,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
   end
 
   it 'destroys a module' do
-    unless page.has_text? 'Test content module'
-      go_to_next_page
-    end
+    go_to_next_page('Test content module')
 
     click_on 'Test content module'
     page.driver.execute_script('window.confirm = function() {return true}')
@@ -62,9 +60,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
   it 'creates a provider' do
     find('h1', text: 'Listing Content Modules')
     page.execute_script('window.scrollTo(0,5000)')
-    unless page.has_text? 'Home Introduction'
-      go_to_next_page
-    end
+    go_to_next_page('Home Introduction')
 
     click_on 'Home Introduction'
 
@@ -90,9 +86,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
   it 'updates a provider' do
     find('h1', text: 'Listing Content Modules')
     page.execute_script('window.scrollTo(0,5000)')
-    unless page.has_text? 'Home Introduction'
-      go_to_next_page
-    end
+    go_to_next_page('Home Introduction')
 
     click_on 'Home Introduction'
     click_on '1 slideshow provider'
@@ -120,9 +114,7 @@ describe 'Content Author signs in, visits Content Modules tool,',
   it 'destroys a provider' do
     find('h1', text: 'Listing Content Modules')
     page.execute_script('window.scrollTo(0,5000)')
-    unless page.has_text? 'Home Introduction'
-      go_to_next_page
-    end
+    go_to_next_page('Home Introduction')
 
     click_on 'Home Introduction'
     click_on '4 slideshow provider'

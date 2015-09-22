@@ -33,7 +33,9 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'Public thought 1'
 
       within('.list-group-item.ng-scope', text: 'Public thought 1') do
-        expect(page).to have_content "Today at #{Time.now.strftime('%l:%M %p')}"
+        shared_time = Time.now - 60
+        expect(page)
+          .to have_content "Today at #{shared_time.strftime('%l:%M %p')}"
       end
     end
 
@@ -178,7 +180,9 @@ describe 'Active participant in a social arm signs in,',
       expect(page).to have_content 'New public activity'
 
       within('.list-group-item.ng-scope', text: 'New public activity') do
-        expect(page).to have_content "Today at #{Time.now.strftime('%l:%M %p')}"
+        shared_time = Time.now - 60
+        expect(page)
+          .to have_content "Today at #{shared_time.strftime('%l:%M %p')}"
       end
     end
 

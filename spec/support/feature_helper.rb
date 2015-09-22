@@ -116,15 +116,17 @@ def check_data(item, data)
   end
 end
 
-def go_to_next_page
-  page.execute_script('window.scrollTo(0,5000)')
-  within('.pagination') do
-    click_on '2'
+def go_to_next_page(module_text)
+  unless page.has_text? module_text
+    page.execute_script('window.scrollTo(0,5000)')
+    within('.pagination') do
+      click_on '2'
+    end
   end
 end
 
 def answer_profile_question(question, id, answer)
-  within('.panel.panel-success.ng-scope', text: question) do
+  within('.panel.panel-default.ng-scope', text: question) do
     fill_in "new-answer-description-#{id}", with: answer
     click_on 'Save'
   end

@@ -84,17 +84,18 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
         check_data(table_row[1], 'Lessons Read 1 1 1')
 
-        check_data("'tr', text: 'Moods'", '1 1 3')
+        check_data('tr:nth-child(2)', 'Moods 1 1 3')
 
-        check_data("'tr', text: 'Thoughts'", '12 12 12')
+        check_data('tr:nth-child(3)', 'Thoughts 12 12 12')
 
-        check_data("'tr', text: 'Activities Monitored'", '18 18 18')
+        check_data('tr:nth-child(4)', 'Activities Monitored 18 18 18')
 
-        check_data("'tr', text: 'Activities Planned'", '14 16 16')
+        check_data('tr:nth-child(5)', 'Activities Planned 14 16 16')
 
-        check_data("'tr', text: 'Activities Reviewed and Completed'", '1 2 2')
+        check_data('tr:nth-child(6)', 'Activities Reviewed and Completed 1 2 2')
 
-        check_data("'tr', text: 'Activities Reviewed and Incomplete'", '1 1 1')
+        check_data('tr:nth-child(7)',
+                   'Activities Reviewed and Incomplete 1 1 1')
       end
     end
 
@@ -118,13 +119,13 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
 
         check_data(table_row[1], 'Likes 1 1 1')
 
-        check_data("'tr', text: 'Nudges'", 'Nudges 2 3 3')
+        check_data('tr:nth-child(2)', 'Nudges 2 3 3')
 
-        check_data("'tr', text: 'Comments'", 'Comments 1 1 1')
+        check_data('tr:nth-child(3)', 'Comments 1 1 1')
 
-        check_data("'tr', text: 'Goals'", 'Goals 5 6 8')
+        check_data('tr:nth-child(4)', 'Goals 5 6 8')
 
-        check_data("'tr', text: 'Statements'", '"On My Mind" Statements 2 2 2')
+        check_data('tr:nth-child(5)', '"On My Mind" Statements 2 2 2')
       end
     end
 

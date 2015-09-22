@@ -27,11 +27,14 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
       expect(page).to_not have_content 'Fill out your profile so other ' \
                                        'group members can get to know you!'
 
-      answer_profile_question('What is your favorite color?', '932760744', 'Blue')
+      answer_profile_question('What is your favorite color?', '932760744',
+                              'Blue')
       page.execute_script('window.scrollBy(0,500)')
-      answer_profile_question('Animal, vegetable or mineral?', '10484799', 'Mineral')
+      answer_profile_question('Animal, vegetable or mineral?', '10484799',
+                              'Mineral')
       page.execute_script('window.scrollBy(0,500)')
-      answer_profile_question('Group 1 profile question', '933797305', 'Group 1')
+      answer_profile_question('Group 1 profile question', '933797305',
+                              'Group 1')
       within('.panel.panel-success.ng-scope',
              text: 'Group 1 profile question') do
         expect(page).to have_css '.fa.fa-pencil'

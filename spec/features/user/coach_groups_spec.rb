@@ -23,24 +23,21 @@ describe 'Coach signs in and navigates to Group Dashboard of Group 6',
 
   it 'views Group Summary' do
     within('.panel.panel-default', text: 'Group Summary') do
-      check_data("'tr', text: 'logins'", 'logins  7 10 4 3 5 0 0 0')
+      check_data('tr:nth-child(2)', 'logins  7 10 4 3 5 0 0 0')
 
-      check_data("'tr', text: 'thoughts'", 'thoughts  1 0 1 1 1 0 0 0')
+      check_data('tr:nth-child(3)', 'thoughts  1 0 1 1 1 0 0 0')
 
-      check_data("'tr', text: 'activities past'",
-                 'activities past  1 0 1 0 0 0 0 0')
+      check_data('tr:nth-child(4)', 'activities past  1 0 1 0 0 0 0 0')
 
-      check_data("'tr', text: 'activities future'",
-                 'activities future  0 0 0 0 2 0 0 0')
+      check_data('tr:nth-child(5)', 'activities future  0 0 0 0 2 0 0 0')
 
-      check_data("'tr', text: 'on the mind statements'",
-                 'on the mind statements  0 0 0 1 0 0 0 0')
+      check_data('tr:nth-child(6)', 'on the mind statements  0 0 0 1 0 0 0 0')
 
-      check_data("'tr', text: 'comments'", 'comments  0 0 2 0 1 0 0 0')
+      check_data('tr:nth-child(7)', 'comments  0 0 2 0 1 0 0 0')
 
-      check_data("'tr', text: 'goals'", 'goals  1 2 0 0 0 0 0 0')
+      check_data('tr:nth-child(8)', 'goals  1 2 0 0 0 0 0 0')
 
-      check_data("'tr', text: 'likes'", 'likes  1 2 1 0 1 0 0 0')
+      check_data('tr:nth-child(9)', 'likes  1 2 1 0 1 0 0 0')
     end
   end
 

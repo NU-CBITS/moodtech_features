@@ -128,7 +128,7 @@ describe 'User Dashboard Bugs,', type: :feature, sauce: sauce_labs do
       select_patient('TFD-1111')
       within('.table.table-hover', text: 'Tool Use') do
         within('tr', text: 'Activities Monitored') do
-          expect(page).to have_content '21 21 21'
+          expect(page).to have_content '18 18 18'
         end
 
         within('tr', text: 'Activities Planned') do
