@@ -100,6 +100,8 @@ describe 'Active participant in a social arm signs in,',
     # it 'shares DO > Awareness responses' do
     #   click_on '#1 Awareness'
     #   click_on 'Next'
+    # find('h1', text: 'Just a slide')
+    # click_on 'Next'
     #   select "#{Date.today.strftime('%a')} 6 AM",
     #          from: 'awake_period_start_time'
     #   select "#{Date.today.strftime('%a')} 8 AM",
@@ -297,6 +299,8 @@ describe 'Active participant in a non-social arm signs in,',
 
     it 'is not able to create a shared item in Awareness' do
       click_on '#1 Awareness'
+      click_on 'Next'
+      find('h1', text: 'Just a slide')
       click_on 'Next'
       select "#{Date.today.strftime('%a')} 4 AM",
              from: 'awake_period_start_time'

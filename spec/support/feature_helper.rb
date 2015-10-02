@@ -37,7 +37,6 @@ def sign_out(display_name)
     unless page.has_text?('Sign Out')
       click_on display_name
     end
-
     click_on 'Sign Out'
   end
 
@@ -45,7 +44,7 @@ def sign_out(display_name)
 end
 
 def choose_rating(element_id, value)
-  find("##{ element_id } select")
+  find("##{element_id} select")
     .find(:xpath, "option[#{(value + 1)}]").select_option
 end
 
@@ -55,7 +54,6 @@ def compare_thought(thought)
   within('.panel-body.adjusted-list-group-item') do
     expect(page).to_not have_content thought
   end
-
   find('.panel-body.adjusted-list-group-item').text
 end
 
@@ -65,9 +63,7 @@ def reshape(challenge, action)
   fill_in 'thought[challenging_thought]', with: challenge
   click_on 'Next'
   expect(page).to have_content 'Thought saved'
-
   expect(page).to have_content 'Because what you THINK, FEEL, Do'
-
   page.execute_script('window.scrollTo(0,5000)')
   click_on 'Next'
   expect(page).to have_content 'What could you do to ACT AS IF you believe ' \
@@ -85,7 +81,6 @@ def pick_tomorrow
                      text: "#{tomorrow.strftime('%-e')}")
       find('.ui-datepicker-next.ui-corner-all').click
     end
-
     click_on tomorrow.strftime('%-e')
   end
 end

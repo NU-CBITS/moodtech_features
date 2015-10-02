@@ -163,17 +163,17 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
                  ENV['Participant_2_Password'])
     end
 
-    it 'navigates to a module from the dropdown, completes the module, the ' \
-       'module appears complete on landing page' do
+    it 'navigates to a module, completes the module, the module appears complete' do
       within('.dropdown-toggle', text: 'FEEL') do
         expect(page).to have_content 'New!'
       end
 
-      find('.dropdown-toggle', text: 'FEEL').click
-      within('.dropdown-menu') do
-        click_on 'Tracking Your Mood & Emotions'
-      end
+      visit "#{ENV['Base_URL']}/navigator/contexts/FEEL"
+      expect(page)
+        .to have_css('.task-status.list-group-item.list-group-item-unread',
+                     text: 'Tracking Your Mood & Emotions')
 
+      click_on 'Tracking Your Mood & Emotions'
       select '6', from: 'mood[rating]'
       click_on 'Next'
       expect(page).to have_content 'You just rated your mood as a 6 (Good)'
@@ -186,6 +186,9 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Emotional Rating saved'
 
       visit "#{ENV['Base_URL']}/navigator/contexts/FEEL"
+      expect(page)
+        .to have_css('.task-status.list-group-item.list-group-item-read',
+                     text: 'Tracking Your Mood & Emotions')
 
       click_on 'Your Recent Moods & Emotions'
       expect(page).to have_content 'Positive and Negative Emotions'

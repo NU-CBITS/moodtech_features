@@ -13,6 +13,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
       click_on 'Arm 1'
       click_on 'Group 1'
       click_on 'Patient Dashboard'
+      find('h1', text: 'Patient Dashboard')
     end
 
     it 'views a list of active participants assigned to the coach' do
@@ -252,7 +253,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
                              "#{Time.now.strftime('%b %d %Y %I')}"
 
           expect(page.all('tr:nth-child(1)')[1])
-            .to have_content 'less than a minute'
+            .to have_content 'less than 5 seconds'
         end
       end
     end
@@ -630,7 +631,7 @@ describe 'Patient Dashboard - ', type: :feature, sauce: sauce_labs do
                            "#{Time.now.strftime('%A, %b %d %Y %I:%M %P')}"
 
         expect(page).to have_content 'Duration of Last Session: ' \
-                                     'less than a minute'
+                                     'less than 5 seconds'
       end
     end
   end

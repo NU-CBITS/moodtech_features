@@ -21,6 +21,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
   it 'completes Awareness' do
     click_on '#1 Awareness'
     click_on 'Next'
+    find('h1', text: 'Just a slide')
+    click_on 'Next'
     select "#{Date.today.prev_day.strftime('%a')} 7 AM",
            from: 'awake_period_start_time'
     select "#{Date.today.prev_day.strftime('%a')} 10 PM",
@@ -106,6 +108,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
   it 'cannot complete Awareness for a time period already completed' do
     click_on '#1 Awareness'
     click_on 'Next'
+    find('h1', text: 'Just a slide')
+    click_on 'Next'
     within('#awake_period_start_time') do
       expect(page).to_not have_content "#{Date.today.prev_day.strftime('%a')}" \
                                        ' 7 AM'
@@ -119,6 +123,8 @@ describe 'Active participant in group 1 signs in, navigates to DO tool,',
 
   it 'completes Awareness for different time on same day that overlaps days' do
     click_on '#1 Awareness'
+    click_on 'Next'
+    find('h1', text: 'Just a slide')
     click_on 'Next'
     select "#{Date.today.prev_day.strftime('%a')} 11 PM",
            from: 'awake_period_start_time'
@@ -381,6 +387,8 @@ describe 'Active participant in group 3 signs in, navigates to DO tool,',
 
   it 'completes Awareness w/ already entered but not completed awake period' do
     click_on '#1 Awareness'
+    click_on 'Next'
+    find('h1', text: 'Just a slide')
     click_on 'Next'
     click_on 'Complete'
     fill_in 'activity_type_0', with: 'Get ready for work'
