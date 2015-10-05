@@ -69,6 +69,8 @@ describe 'Participant Bugs', type: :feature, sauce: sauce_labs do
       visit "#{ENV['Base_URL']}/navigator/contexts/DO"
       click_on '#1 Awareness'
       click_on 'Next'
+      find('h1', text: 'Just a slide')
+      click_on 'Next'
       select "#{Date.today.strftime('%a')} 2 AM",
              from: 'awake_period_start_time'
       select "#{Date.today.strftime('%a')} 3 AM", from: 'awake_period_end_time'

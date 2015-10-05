@@ -27,6 +27,7 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
       expect(page).to_not have_content 'Fill out your profile so other ' \
                                        'group members can get to know you!'
 
+      page.execute_script('window.scrollBy(0,500)')
       answer_profile_question('What is your favorite color?', '932760744',
                               'Blue')
       page.execute_script('window.scrollBy(0,500)')
@@ -113,7 +114,7 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
         page.execute_script('window.scrollTo(0,5000)')
         click_on 'More'
         expect(page)
-          .to have_content "due #{Date.today.strftime('%b %e %Y')}"
+          .to have_content "due #{Date.today.strftime('%b %d %Y')}"
       end
     end
 
@@ -191,7 +192,7 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Fill out your profile so other group ' \
                                    'members can get to know you!'
 
-      answer_profile_question('What are your hobbies?', '803829648', 'Running')
+      answer_profile_question('What are your hobbies?', '225609157', 'Running')
 
       visit ENV['Base_URL']
       within('.panel.panel-default.ng-scope', text: 'To Do') do

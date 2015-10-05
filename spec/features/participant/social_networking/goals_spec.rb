@@ -32,7 +32,7 @@ describe 'Active pt in social arm signs in, navigates to ACHIEVE tool,',
       page.execute_script('window.scrollTo(0,5000)')
       click_on 'More'
 
-      end_of_study = Date.today + 4
+      end_of_study = Date.today + 365
       expect(page).to have_content "due #{end_of_study.strftime('%b %d %Y')}"
     end
   end

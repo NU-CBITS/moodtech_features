@@ -138,6 +138,7 @@ describe 'Active participant signs in, navigates to THINK tool,',
 
     visit ENV['Base_URL']
     find_feed_item('Reshaped a Thought: Testing add a new thought')
+    page.execute_script('window.scrollBy(0,1000)')
     within('.list-group-item.ng-scope',
            text: 'Reshaped a Thought: Testing add a new thought') do
       click_on 'More'
