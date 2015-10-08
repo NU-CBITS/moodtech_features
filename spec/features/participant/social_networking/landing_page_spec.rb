@@ -56,6 +56,13 @@ describe 'SocialNetworking Landing Page, ', type: :feature, sauce: sauce_labs do
       expect(page).to have_content 'Group 1 profile question'
     end
 
+    it "does not see 'Last seen:' for moderator" do
+      within('.col-xs-12.col-md-4.text-center.ng-scope', text: 'ThinkFeelDo') do
+        expect('.profile-border.profile-last-seen')
+          .to_not have_content 'Last seen:'
+      end
+    end
+
     it 'creates a whats on your mind post' do
       click_on "What's on your mind?"
       fill_in 'new-on-your-mind-description', with: "I'm feeling happy!"
