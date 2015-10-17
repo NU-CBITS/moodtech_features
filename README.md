@@ -1,3 +1,8 @@
+This test suite is deprecated and will no longer be updated or maintained
+after October 19, 2015. 
+
+See [ThinkFeelDo Core Features](https://github.com/cbrenner04/tfd_core_features)
+
 # MoodTech Features
 
 This is a test suite aimed at moodtech-staging and will be used to
