@@ -15,7 +15,6 @@ def sauce_labs
 end
 
 def driver
-  puts 'Make sure to run `do_spec.rb` in `tfd_core_features`'
   if ENV['safari']
     :safari
   elsif ENV['chrome']
@@ -24,7 +23,7 @@ def driver
     :firefox
   end
 end
-
+    
 def test_driver
   puts "Sauce Labs is set to #{sauce_labs}"
   puts "Auto screenshots is set to #{!sauce_labs}"
